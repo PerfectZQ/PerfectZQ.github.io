@@ -63,7 +63,10 @@ visudo || vi /etc/sudoers
 # 添加下面的代码，保存退出
 git     ALL=(ALL)       NOPASSWD: ALL
 ```
-### 11)在git用户下运行ssh-keygen -t rsa生成.ssh文件夹
+### 11)在git用户下生成.ssh文件夹
+```
+ssh-keygen -t rsa
+```
 ###	12)创建git远程库并初始化
 ```
 mkdir sample.git
@@ -74,8 +77,10 @@ cd sample.git
 # 也即在远程仓库的目录下对应的文件还是之前的内容，必须得使用git reset --hard才能看到push后的内容.
 git --bare init 
 ```
-		
-### 13)在客户端(windows)安装git下载地址 https://git-scm.com/download/win
+### 13)在客户端(windows)安装git下载地址 
+```
+https://git-scm.com/download/win
+```
 ###	14)运行windows git bash
 ```	
 ssh-keygen -t rsa -C "zhang_qiang_neu@neusoft.com"
