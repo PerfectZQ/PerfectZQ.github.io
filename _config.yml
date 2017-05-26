@@ -44,7 +44,6 @@ nav:
     - {title: 标签, description: tags, url: '/tags'}      
     - {title: 关于我, description: about, url: '/about'}
 
-url: "http://blog.csdn.net/github_36869152" 
 
 twitter_username: None
 github_username:  PerfectZQ
