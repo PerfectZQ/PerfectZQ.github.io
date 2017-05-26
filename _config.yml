@@ -16,7 +16,8 @@
 title: 张强
 email: inteli_zq@163.com
 description: Welcome to my blog
-baseurl: "" # the subpath of your site, e.g. /blog
+url: "http://arch-long.cn"
+baseurl: "/"
 
 # 头像里面的标题
 avatarTitle: archLong
@@ -58,7 +59,7 @@ kramdown:
 theme: minima
 
 # Pagination
-gems: [jekyll-paginate,jekyll-sitemap]
+gems: [jekyll-paginate,jekyll-sitemap,jekyll-assets]
 paginate: 20
 paginate_path: "page/:num/"
 
