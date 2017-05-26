@@ -49,7 +49,7 @@ twitter_username: None
 github_username:  PerfectZQ
 
 # Build settings
-markdown: redcarpet
+markdown: kramdown
 
 kramdown:
   input: GFM
