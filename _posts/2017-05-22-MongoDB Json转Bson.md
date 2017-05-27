@@ -4,14 +4,12 @@ title: MongoDB Json转Bson
 tag: MongoDB
 ---
 
-## MongoDB Json转Bson
-
 MongoDB中是以Bson数据格式进行存储的，Json字符串没有办法直接写入MongoDB 可以将Json字符串转换成DBObject或者Document，然后写入MongoDB
 
-## 1、将Json字符转换成com.mongodb.DBObject（准确的说是BasicDBObject）
+### 1、将Json字符转换成com.mongodb.DBObject（准确的说是BasicDBObject）
 
 
-### scala版本
+#### scala版本
 ``` scala
 import com.mongodb.DBObject
 import com.mongodb.casbah.{MongoClient, MongoCollection}
@@ -32,7 +30,7 @@ val bson: DBObject = JSON.parse(json).asInstanceOf[DBObject]
 
 collection.insert(bson) // mongodb casbah的写法
 ```
-### java版本
+#### java版本
 
 ``` java
 import com.mongodb.MongoClient;
@@ -60,8 +58,8 @@ DBObject bson = (DBObject)JSON.parse(json);
 
 collection.insertOne(bson);
 ```
-## 2、将字符串转换成org.bson.Document
-### scala版本
+### 2、将字符串转换成org.bson.Document
+#### scala版本
 
 ``` scala
 import org.bson.Document
@@ -92,7 +90,7 @@ val collection: MongoCollection = MongoClient("10.4.120.83")("dbName")("collecti
 
 collection.insert(document)
 ```
-### Java版本
+#### Java版本
 
 ``` java
 import org.bson.Document;
