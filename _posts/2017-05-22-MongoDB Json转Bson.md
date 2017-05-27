@@ -9,7 +9,7 @@ tag: MongoDB
 ### 1、将Json字符转换成com.mongodb.DBObject（准确的说是BasicDBObject）
 
 
-#### scala版本
+#### Scala版本
 ``` scala
 import com.mongodb.DBObject
 import com.mongodb.casbah.{MongoClient, MongoCollection}
@@ -30,7 +30,7 @@ val bson: DBObject = JSON.parse(json).asInstanceOf[DBObject]
 
 collection.insert(bson) // mongodb casbah的写法
 ```
-#### java版本
+#### Java版本
 
 ``` java
 import com.mongodb.MongoClient;
@@ -59,7 +59,7 @@ DBObject bson = (DBObject)JSON.parse(json);
 collection.insertOne(bson);
 ```
 ### 2、将字符串转换成org.bson.Document
-#### scala版本
+#### Scala版本
 
 ``` scala
 import org.bson.Document
