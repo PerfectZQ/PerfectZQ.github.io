@@ -1,3 +1,9 @@
+---
+layout: post
+title: 本地Git搭建
+tag: Git
+---
+
 ## 用yum安装git，并配置IDEA上传项目到本地git库中
 	
 ### 1）升级yum系统(当时未升级)

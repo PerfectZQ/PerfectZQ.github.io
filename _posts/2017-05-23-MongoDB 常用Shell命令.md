@@ -1,3 +1,8 @@
+---
+layout: post
+title: MongoDB 常用Shell命令
+tag: MongoDB
+---
 ## MongoDB 常用Shell命令
 ### 基本操作命令
 ```

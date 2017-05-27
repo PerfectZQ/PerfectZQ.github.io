@@ -1,3 +1,9 @@
+---
+layout: post
+title: Spark Configuration
+tag: Spark
+---
+
 ### Spark Configuration
 ```
 # Number of cores to use for the driver process, only in cluster mode.

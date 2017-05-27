@@ -1,3 +1,9 @@
+---
+layout: post
+title: HBase Shell 命令
+tag: HBase
+---
+
 ## HBase Shell 命令
 ### 基本命令
 ```
