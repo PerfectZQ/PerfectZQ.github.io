@@ -4,7 +4,7 @@ title: MongoDB Json转Bson
 tag: MongoDB
 ---
 
-MongoDB中是以Bson数据格式进行存储的，Json字符串没有办法直接写入MongoDB 可以将Json字符串转换成DBObject或者Document，然后写入MongoDB
+　　MongoDB中是以Bson数据格式进行存储的，Json字符串没有办法直接写入MongoDB 可以将Json字符串转换成DBObject或者Document，然后写入MongoDB
 
 ### 1、将Json字符转换成com.mongodb.DBObject（准确的说是BasicDBObject）
 
