@@ -138,7 +138,7 @@ h3 {
     text-indent: 4px;
     border-radius: 4px;
     padding: 8px 15px;
-    line-height: 20px;
+    line-height: 100%;
     margin-bottom: 20px;
     margin-top: 5px;
     background: #B9D3EE;
