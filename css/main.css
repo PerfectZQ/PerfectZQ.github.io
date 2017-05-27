@@ -138,11 +138,11 @@ h3 {
     text-indent: 4px;
     border-radius: 4px;
     padding: 8px 15px;
-
+    width: 100%;
+    display: table-cell;
     vertical-align:middle;
     margin-bottom: 20px;
     margin-top: 5px;
-    height: 25px;
     background: #B9D3EE;
     /*0px right, 5px botton, 5px fuzzy*/
     box-shadow: 0px 5px 5px #9FB6CD;
