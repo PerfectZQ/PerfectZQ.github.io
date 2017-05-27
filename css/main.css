@@ -916,6 +916,7 @@ i {
 .post-list li {
     margin: 0 0 2.2em 0;
     float: left;
+    width: auto;
 
     -moz-box-shadow: 4px 4px 4px #efefef,
     -4px -4px 4px #efefef,
