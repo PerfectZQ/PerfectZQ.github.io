@@ -12,11 +12,10 @@ layout: default
             </h2>
             <p class="excerpt">{{ post.content | strip_html | strip_newlines | truncate: 250 }}&hellip;</p>
             <div class="post-list__meta">
-                <!--<time datetime="{{post.date | date: date_to_xmlschema}}" class="post-list__meta&#45;&#45;date date"/>-->
                 <div class="tag-img-icon" style="display: block">
                     <img src="/images/calendar.png" width="20px"/>
                     <div class="post-list-icon-mate">
-                        <span>{{ post.date | date: "%F"}}</span>
+                        <span style="margin-top: 1px">{{ post.date | date: "%F"}}</span>
                     </div>
                 </div>
                 <div class="tag-img-icon" style="display: block">
