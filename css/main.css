@@ -916,7 +916,7 @@ i {
 
 .post-list li {
     margin: 0 0 2.2em 0;
-    /*float: left;*/
+    float: left;
     width: auto;
 
     -moz-box-shadow: 4px 4px 4px #efefef,
@@ -985,7 +985,7 @@ i {
     margin-left: 5px;
     margin-right: 5px;
     display: block;
-    float: left;
+    /*float: left;*/
 }
 
 .post-list__meta--date {
