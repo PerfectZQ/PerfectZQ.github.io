@@ -1030,7 +1030,7 @@ i {
     height: 30px;
     background-size: 100% 100%;
     margin-top: 3px;
-    /*float: left;*/
+    float: left;
     color: #4F4F4F;
 }
 
