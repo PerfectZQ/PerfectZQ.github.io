@@ -15,7 +15,9 @@ layout: default
                 <!--<time datetime="{{post.date | date: date_to_xmlschema}}" class="post-list__meta&#45;&#45;date date"/>-->
                 <div class="tag-img-icon" style="display: block">
                     <img src="/images/calendar.png" width="20px"/>
-                    {{ post.date | date: "%F"}}
+                    <div class="post-list-icon-mate">
+                        <span>{{ post.date | date: "%F"}}</span>
+                    </div>
                 </div>
                 <div class="tag-img-icon" style="display: block">
                     <img src="/images/tag-icon.svg" width="20px"/>
