@@ -12,11 +12,12 @@ layout: default
             </h2>
             <p class="excerpt">{{ post.content | strip_html | strip_newlines | truncate: 250 }}&hellip;</p>
             <div class="post-list__meta">
-                <time datetime="{{post.date | date: date_to_xmlschema}}" class="post-list__meta--date date">
+                <!--<time datetime="{{post.date | date: date_to_xmlschema}}" class="post-list__meta&#45;&#45;date date"/>-->
+                <div class="tag-img-icon" style="display: block">
                     <img src="/images/calendar.png" width="20px"/>
                     <span style="line-height: 100%">&nbsp;{{ post.date | date: "%F"}}</span>
-                </time>
-                <div class="tag-img-icon" style="width: 100%">
+                </div>
+                <div class="tag-img-icon" style="display: block">
                     <img src="/images/tag-icon.svg" width="20px"/>
                     <a href="/tags">
                         <div class="post-list-icon-mate">
@@ -25,7 +26,7 @@ layout: default
                     </a>
                 </div>
                 <!--<hr class="post-list__divider"/>-->
-                <div class="post-list-small-mate">
+                <div class="post-list-small-mate" style="display: block">
                     <a class="btn-border-small" href={{ post.url }}>阅读全文 » </a>
                 </div>
             </div>
