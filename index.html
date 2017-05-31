@@ -14,14 +14,14 @@ layout: default
             <div style="display: block;margin: .7em 0 0 0;font-size: .9em;color: #c7c7c7;">
                 <div style="display: block;">
                     <img src="/images/calendar.png"
-                         style="width: 20px;margin-top: 5px;margin-left: 10px;margin-right: 5px;float: left;"/>
-                    <div class="post-list-icon-mate">
-                        <span style="margin-top: 1px">{{ post.date | date: "%F"}}</span>
+                         style="width: 20px;margin-top: 5px;margin-left: 10px;margin-right: 5px;"/>
+                    <div style="height: 20px;padding-top: 0px;padding-bottom: 0px;margin-top: 3px;float: left;">
+                        {{ post.date | date: "%F"}}
                     </div>
                 </div>
                 <div style="display: block;">
                     <img src="/images/tag-icon.svg"
-                         style="width: 20px;margin-top: 5px;margin-left: 10px;margin-right: 5px;float: left;"/>
+                         style="width: 20px;margin-top: 5px;margin-left: 10px;margin-right: 5px;"/>
                     <a href="/tags">
                         <div class="post-list-icon-mate">
                             <span class="post-list__meta--tags-right">{{ post.tags }}</span>
@@ -30,7 +30,8 @@ layout: default
                 </div>
                 <!--<hr class="post-list__divider"/>-->
                 <div style="height: 30px;background-size: 100% 100%;margin-top: 3px;color: #4F4F4F;display: block;">
-                    <a style="font-size: 1.0em;height: 30px;margin-left: 10px;color: #458B74;" href={{ post.url }}>阅读全文 » </a>
+                    <a style="font-size: 1.0em;height: 30px;margin-left: 10px;color: #458B74;" href={{ post.url }}>阅读全文
+                        » </a>
                 </div>
             </div>
 
