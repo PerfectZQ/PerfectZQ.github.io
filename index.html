@@ -11,7 +11,7 @@ layout: default
                 <a href="{{ post.url }}" title="访问 {{ post.title }}">{{ post.title }}</a>
             </h2>
             <p class="excerpt">{{ post.content | strip_html | strip_newlines | truncate: 250 }}&hellip;</p>
-            <div class="post-list__meta">
+            <div style="display: block;margin: .7em 0 0 0;font-size: .9em;color: #c7c7c7;">
                 <div>
                     <img src="/images/calendar.png"
                          style="width: 20px;margin-top: 5px;margin-left: 10px;margin-right: 5px;float: left;"/>
