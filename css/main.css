@@ -977,12 +977,12 @@ i {
     margin: .7em 0 0 0;
     font-size: .9em;
     color: #c7c7c7;
-    /*display: inline-block;*/
+    display: inline-block;
 }
 
 .tag-img-icon img {
     margin-top: 5px;
-    margin-left: 15px;
+    margin-left: 10px;
     margin-right: 5px;
     display: block;
     float: left;
