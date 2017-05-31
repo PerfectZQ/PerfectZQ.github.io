@@ -12,16 +12,16 @@ layout: default
             </h2>
             <p class="excerpt">{{ post.content | strip_html | strip_newlines | truncate: 250 }}&hellip;</p>
             <div style="display: block;margin: .7em 0 0 0;font-size: .9em;color: #c7c7c7;">
-                <div style="display: block;height: 30px">
+                <div style="display: block;height: 20px">
                     <img src="/images/calendar.png"
                          style="width: 20px;margin-left: 10px;margin-right: 5px;float: left;"/>
-                    <div style="padding-top: 0px;padding-bottom: 0px;margin-top: 3px;">
+                    <div style="padding-top: 0px;padding-bottom: 0px;">
                         {{ post.date | date: "%F"}}
                     </div>
                 </div>
-                <div style="display: block;height: 30px">
+                <div style="display: block;height: 20px">
                     <img src="/images/tag-icon.svg"
-                         style="width: 20px;margin-top: 5px;margin-left: 10px;margin-right: 5px;float: left;"/>
+                         style="width: 20px;margin-left: 10px;margin-right: 5px;float: left;"/>
                     <a href="/tags">
                         <div style="height: 20px;padding-top: 0px;padding-bottom: 0px;margin-top: 2px;">
                             <span class="post-list__meta--tags-right">{{ post.tags }}</span>
