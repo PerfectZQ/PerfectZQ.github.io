@@ -14,16 +14,16 @@ layout: default
             <div style="display: block;margin: .7em 0 0 0;font-size: .9em;color: #c7c7c7;">
                 <div style="display: block;">
                     <img src="/images/calendar.png"
-                         style="width: 20px;margin-top: 5px;margin-left: 10px;margin-right: 5px;"/>
-                    <div style="height: 20px;padding-top: 0px;padding-bottom: 0px;margin-top: 3px;float: left;">
+                         style="width: 20px;margin-top: 5px;margin-left: 10px;margin-right: 5px;float: left;"/>
+                    <div style="height: 20px;padding-top: 0px;padding-bottom: 0px;margin-top: 3px;">
                         {{ post.date | date: "%F"}}
                     </div>
                 </div>
                 <div style="display: block;">
                     <img src="/images/tag-icon.svg"
-                         style="width: 20px;margin-top: 5px;margin-left: 10px;margin-right: 5px;"/>
+                         style="width: 20px;margin-top: 5px;margin-left: 10px;margin-right: 5px;float: left;"/>
                     <a href="/tags">
-                        <div class="post-list-icon-mate">
+                        <div style="height: 20px;padding-top: 0px;padding-bottom: 0px;margin-top: 2px;">
                             <span class="post-list__meta--tags-right">{{ post.tags }}</span>
                         </div>
                     </a>
