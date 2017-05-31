@@ -15,7 +15,7 @@ layout: default
                 <!--<time datetime="{{post.date | date: date_to_xmlschema}}" class="post-list__meta&#45;&#45;date date"/>-->
                 <div class="tag-img-icon" style="display: block">
                     <img src="/images/calendar.png" width="20px"/>
-                    <span style="line-height: 100%">&nbsp;{{ post.date | date: "%F"}}</span>
+                    {{ post.date | date: "%F"}}
                 </div>
                 <div class="tag-img-icon" style="display: block">
                     <img src="/images/tag-icon.svg" width="20px"/>
@@ -26,7 +26,7 @@ layout: default
                     </a>
                 </div>
                 <!--<hr class="post-list__divider"/>-->
-                <div class="post-list-small-mate" style="display: block">
+                <div class="post-list-small-mate" >
                     <a class="btn-border-small" href={{ post.url }}>阅读全文 » </a>
                 </div>
             </div>
