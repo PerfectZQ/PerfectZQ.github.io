@@ -57,15 +57,11 @@ kramdown:
       - autolink
       - footnotes
       - smart
-    use_coderay: true
-    syntax_highlighter: rouge
-    coderay:
-      coderay_line_numbers:  nil
 
 theme: minima
 
 # Pagination
-gems: [jekyll-paginate,jekyll-sitemap,jekyll-assets,rouge]
+gems: [jekyll-paginate,jekyll-sitemap,jekyll-assets]
 paginate: 20
 paginate_path: "page/:num/"
 
