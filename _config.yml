@@ -57,11 +57,12 @@ kramdown:
       - autolink
       - footnotes
       - smart
+highlighter: rouge
 
 theme: minima
 
 # Pagination
-gems: [jekyll-paginate,jekyll-sitemap,jekyll-assets]
+gems: [jekyll-paginate,jekyll-sitemap,jekyll-assets,rouge]
 paginate: 20
 paginate_path: "page/:num/"
 
