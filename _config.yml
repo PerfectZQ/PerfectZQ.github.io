@@ -53,14 +53,14 @@ markdown: kramdown
 
 kramdown:
   input: GFM
-#  extensions:
-#      - autolink
-#      - footnotes
-#      - smart
-#    use_coderay: true
-#    syntax_highlighter: rouge
-#    coderay:
-#      coderay_line_numbers:  nil
+  extensions:
+      - autolink
+      - footnotes
+      - smart
+    use_coderay: true
+    syntax_highlighter: rouge
+    coderay:
+      coderay_line_numbers:  nil
 
 theme: minima
 
