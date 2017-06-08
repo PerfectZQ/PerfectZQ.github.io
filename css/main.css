@@ -272,7 +272,7 @@ th:first-child, td:first-child {
 }
 
 tbody td {
-    font-size: 1.0em;
+    font-size: 0.95em;
     border: 1px solid #363636;
 }
 
