@@ -261,26 +261,30 @@ thead tr:first-child {
 th {
     font-weight: bold;
     border: 1px solid #363636;
+    padding: 0 15px 0 20px;
 }
 
 table thead tr th {
     text-align: center;
 }
 
+/*
 th:first-child, td:first-child {
     padding: 0 15px 0 20px;
 }
+*/
 
 tbody td {
     font-size: 0.95em;
     border: 1px solid #363636;
+    padding: 0 15px 0 20px;
 }
 
+/*
 td:last-child {
     padding-right: 10px;
-    border: 1px solid #363636;
 }
-
+*/
 /*pager start----------------*/
 .post-container
 .pager li {
