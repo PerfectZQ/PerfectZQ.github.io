@@ -37,7 +37,7 @@ tag: Spark
 　　根据工作负载动态分配集群资源。在应用程序资源空闲时及时释放回集群，应用程序资源紧张时及时向集群申请空闲资源。这在集群中存在多个Spark应用程序同时运行时尤为重要。
 
 　　使用动态资源分配时，必须要保存Executors在执行过程中写得shuffle文件，使Executors能够顺利释放，应用程序必须使用外部的shuffle服务。
-　　
+
 **配置外部shuffle服务的方式：**
 
 　　在Spark YARN集群模式下，配置`spark.dynamicAllocation.enabled`为true启用动态资源分配，并通过`*.minExecutors`和`*.maxExecutors`提供Executors的上下限。
