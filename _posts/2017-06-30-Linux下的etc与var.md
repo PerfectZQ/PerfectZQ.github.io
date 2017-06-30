@@ -1,6 +1,6 @@
 ---
 layout: post
-title: etc与var的区别与联系
+title: etc与var目录
 tag: Linux
 ---
 
