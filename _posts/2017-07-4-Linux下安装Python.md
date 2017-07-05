@@ -25,5 +25,5 @@ ln -s /usr/local/bin/python2.7 /usr/local/bin/
 ### 如果yum出现异常
 ```aidl
 vim /usr/bin/yum
-# 将头部#!/usr/bin/python 改为正确的链接
+# 将头部 #!/usr/bin/python 改为正确的链接
 ```
