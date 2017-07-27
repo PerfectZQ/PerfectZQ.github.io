@@ -49,6 +49,7 @@ Date date = sdf.parse(str);
 ```
 
 将时间类型转换成字符串:format()
+
 ```
 import java.text.SimpleDateFormat;
 import java.util.Date;
