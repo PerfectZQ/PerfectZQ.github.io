@@ -24,6 +24,7 @@ tag: Java
 * k 时 在一天中 (1~24)
 * K 时 在上午或下午 (0~11)
 * z 时区
+
 ```
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,6 +47,7 @@ String str = "24/5/2017:00:00:00";
 SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy:HH:mm:ss", Locale.ENGLISH);
 Date date = sdf.parse(str);
 ```
+
 将时间类型转换成字符串:format()
 ```
 import java.text.SimpleDateFormat;
