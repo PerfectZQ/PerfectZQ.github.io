@@ -4,6 +4,13 @@ title: 导入dmp文件
 tag: Oracle
 ---
 
+### 文件校验
+　　为了避免导入时候出现问题，先校验下文件是否在传输过程中出现问题，如果源文件和传输后的文件md5码是相同的可以确认文件在传输中没有出现问题
+```
+[oracle@dbhost impbak]$ md5sum GDI_SI_EPG_HIS_T.dmp
+c30715d195627b07693ccf5e0a6249dd  GDI_SI_EPG_HIS_T.dmp
+```
+
 ### 导入dmp文件:imp
 　　在Windows中，imp命令依赖oracle客户端bin文件夹中的命令，如果本地安装的不是完整的oracle（包含service），而是独立的客户端(instant client)，会出现`'imp' 不是内部或外部命令，也不是可运行的程序或批处理文件。`的问题，需要下载Package Tools相关的组件，[http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html](http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html)，下载`instantclient-tools-windows.x64-12.2.0.1.0`，解压到`D:\oracle\instantclient_11_2`文件夹中
 
