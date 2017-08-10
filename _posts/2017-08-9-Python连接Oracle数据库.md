@@ -18,7 +18,6 @@ TNS_ADMIN=D:\Oracle\instantclient_11_2
 NLS_LANG=SIMPLIFIED CHINESE_CHINA.ZHS16GBK #设置oracle的语言
 ```
 
-
 Mac版本文件下载清单以及配置步骤：
 * 下载 `instantclient-basic-macos.x64-12.1.0.2.0.zip`
 * 下载 `instantclient-sqlplus-macos.x64-12.1.0.2.0.zip`
@@ -41,6 +40,7 @@ export PATH=$ORACLE_HOME:$PATH
 
 source ~.bash_profile
 ```
+
 * Add links to $HOME/lib or /usr/local/lib to enable applications to find the libraries. For example, OCI based applications could do:
 ```
 $ cd /opt/oracle/instantclient_12_1
