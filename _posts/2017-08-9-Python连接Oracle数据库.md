@@ -50,7 +50,10 @@ $ ln -s libocci.dylib.12.1 libocci.dylib
 $ mkdir ~/lib
 $ ln -s ~/instantclient_12_1/libclntsh.dylib ~/lib/
 ```
-
+* 验证是否安装成功
+```
+sqlplus username/password@localhost:1521/orcl
+```
 
 ### 下载 cx_Oracle
 ```
