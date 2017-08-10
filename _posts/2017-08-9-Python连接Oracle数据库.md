@@ -13,6 +13,7 @@ Windows版本文件下载清单以及配置步骤：
 * 将文件解压到同一文件夹下 `D:\Oracle\stantclieinnt_11_2`
 * 添加文件 `tnsnames.ora`
 * 配置环境变量 
+
 ```
 TNS_ADMIN=D:\Oracle\instantclient_11_2
 NLS_LANG=SIMPLIFIED CHINESE_CHINA.ZHS16GBK #设置oracle的语言
@@ -25,6 +26,7 @@ Mac版本文件下载清单以及配置步骤：
 * 将文件解压到同一文件夹下 `/opt/oracle/instantclient_12_1`
 * 添加文件 `tnsnames.ora`到`/opt/oracle/instantclient_12_1/network/admin`下
 * 配置环境变量
+
 ```
 vim ~/.bash_profile
 
