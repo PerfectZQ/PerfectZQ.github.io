@@ -5,15 +5,22 @@ tag: Python
 ---
 ### 下载 instant_oracle
 [官方下载地址](http://www.oracle.com/technetwork/cn/database/features/instant-client/index-097480.html)
-文件下载清单以及配置步骤：
+Windows版本文件下载清单以及配置步骤：
 * 下载 `instantclient-basic-nt-11.2.0.4.0.zip`
 * 下载 `instantclient-sqlplus-nt-11.2.0.4.0.zip`
 * 下载 `instantclient-tools-nt-11.2.0.4.0.zip`
-* 下载 `instantinstantclient-jdbc-nt-11.2.0.4.0.zip
-* 将文件解压到同一文件夹下 `D:\Oracle\instantclient_11_2`
+* 下载 `instantinstantclient-jdbc-nt-11.2.0.4.0.zip`
+* 将文件解压到同一文件夹下 `D:\Oracle\stantclieinnt_11_2`
 * 添加文件 `tnsnames.ora`
 * 配置环境变量 `TNS_ADMIN=D:\Oracle\instantclient_11_2`
 * 配置环境变量 `NLS_LANG=SIMPLIFIED CHINESE_CHINA.ZHS16GBK` ，设置oracle的语言
+
+Mac版本文件下载清单以及配置步骤：
+* 下载 `instantclient-basic-macos.x64-12.1.0.2.0.zip`
+* 下载 `instantclient-sqlplus-macos.x64-12.1.0.2.0.zip`
+* 下载 `instantclient-sdk-macos.x64-12.1.0.2.0.zip` 不然会出现找不到`oci.h`的错误
+* 将文件解压到同一文件夹下 `/opt/oracle/stantclieinnt_12_1`
+
 
 ### 下载 cx_Oracle
 ```
