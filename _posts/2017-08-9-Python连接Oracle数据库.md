@@ -70,7 +70,7 @@ $ pip install cx_Oracle
 
 Note: Custom OCI applications, such as those that bundle Instant Client, may want to link with -rpath set to the directory containing Instant Client 12.1 instead of relying on libraries being in ~/lib.
 
-出现下面的问题时
+在MAC系统下出现下面的问题时
 ```
 ImportError: dlopen(/Library/Python/2.7/site-packages/cx_Oracle.so, 2): Library not loaded: @rpath/libclntsh.dylib.12.1
       Referenced from: /Library/Python/2.7/site-packages/cx_Oracle.so
