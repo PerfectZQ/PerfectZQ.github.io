@@ -44,6 +44,7 @@ source ~.bash_profile
 ```
 
 * Add links to $HOME/lib or /usr/local/lib to enable applications to find the libraries. For example, OCI based applications could do:
+
 ```
 $ cd /opt/oracle/instantclient_12_1
 $ ln -s libclntsh.dylib.12.1 libclntsh.dylib
@@ -53,6 +54,7 @@ $ mkdir ~/lib
 $ ln -s ~/instantclient_12_1/libclntsh.dylib ~/lib/
 ```
 * 验证是否安装成功
+
 ```
 sqlplus username/password@localhost:1521/orcl
 ```
