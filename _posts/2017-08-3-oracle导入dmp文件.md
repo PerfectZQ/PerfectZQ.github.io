@@ -29,7 +29,6 @@ next 10M
 maxsize unlimited 
 logging extent management local autoallocate
 segment space management auto;
-
 -- 查看已存在的表空间信息
 select * from dba_data_files
 ```
