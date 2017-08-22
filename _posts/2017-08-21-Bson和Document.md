@@ -6,7 +6,7 @@ tag: MongoDB
 
 Java Driver 中有这么几个类和接口来表示Bson Document
 ### BsonDocument
-虽然一般使用高阶API驱动的用户不使用这个类，但是BsonDocument类对于驱动程序在内部管理文档至关重要。BsonDocument类可以表示任何具有安全类型的复杂的动态结构化文档。
+虽然对于用户来说，一般使用驱动的高阶API，不使用这个类，但是BsonDocument类对于驱动程序在内部管理文档至关重要。BsonDocument类可以表示任何具有安全类型的复杂的动态结构化文档。
 
 例1：
 ```
@@ -30,7 +30,7 @@ BsonDocument实现了类型安全的Map<String,BsonValue>接口，所以即便�
 new Document().append("a", "MongoDB")
               .append("b", Arrays.asList(1, 2));
 ```
-这样的写法代码写的少，但是在你不经意间使用了不支持的值类型时，可能会出现运行异常。
+这样的写法代码写的少，但是如果你不经意间使用了不支持的值类型时，可能会出现运行时错误。
 
 常用的值类型如下：
 
