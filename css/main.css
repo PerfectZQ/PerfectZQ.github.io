@@ -1517,7 +1517,11 @@ body {
 /* 头像效果-end */
 
 /* 左侧目录栏-start */
-@media all and (max-width: 780px) {
+.panel-cover--disappear {
+    display: block;
+}
+
+@media screen and (max-width: 780px) {
     /**
      * 隐藏属性：元素在页面上将彻底消失，元素本来占有的空间就会被其他元素占有，也就是说它会导致浏览器的重排和重绘。
      */
