@@ -15,14 +15,15 @@
 # in the templates via {{ site.myvariable }}.
 title: 张强
 email: inteli_zq@163.com
-description: Welcome to my blog
+description: 儿子问爸爸：我为什么要读书？
+             爸爸回答说：我这么跟你说吧。你读了书，你在评价金融项目的时候就会知道什么是跨界思维、裂变思维、杠杆思维、创新思维、大数据思维、复利倍增思维、共享经济思维分享经济思维。如果你没有读书，你只会说一句“卧槽，传销吧”。
+welcome_message: welcome to the old man's horse farm
 url: "http://arch-long.cn"
 
 # 头像里面的标题
 avatarTitle: archLong
 # 头像里面的描述
 avatarDesc: Spark / Scala
-
 
 
 permalink: /:year/:month/:title/
