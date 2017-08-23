@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Spark笔记——Spark调度管理
+title: Spark笔记-Spark调度管理
 tag: Spark
 ---
 　　类似MapReduce的任务调度，Spark也有自身的资源调度方式，包含**应用程序间**和**应用程序中**两个层面的策略调度。
