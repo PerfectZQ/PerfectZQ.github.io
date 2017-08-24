@@ -22,7 +22,7 @@ url: "http://arch-long.cn"
 # 头像里面的标题
 avatarTitle: Despacito
 # 头像里面的描述
-avatarDesc: it's dark inside
+avatarDesc: It's dark inside
 
 
 permalink: /:year/:month/:title/
