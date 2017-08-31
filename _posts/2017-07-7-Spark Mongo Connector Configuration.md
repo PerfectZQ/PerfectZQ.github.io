@@ -53,7 +53,7 @@ import com.mongodb.spark.config._
 val uri = """mongodb://xxx.xxx.xxx.xxx:27017/db.test,xxx.xxx.xxx.xxx:27017,xxx.xxx.xxx.xxx:27017"""
 
 val conf = new SparkConf()
-      .set("spark.mongodb.input.uri", uri)) // 读配置
+      .set("spark.mongodb.input.uri", uri) // 读配置
 
 val sparkSession = SparkSession.builder().config(conf).appName("learn something").getOrCreate()
 ```
