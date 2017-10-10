@@ -67,15 +67,15 @@ tag: Maven
 
     <!--描述了这个项目构建环境中的前提条件。-->  
 
- <prerequisites>   
+    <prerequisites>   
 
-  <!--构建该项目或使用该插件所需要的Maven的最低版本-->  
+        <!--构建该项目或使用该插件所需要的Maven的最低版本-->  
 
-    <maven/>  
+        <maven/>  
 
- </prerequisites>   
+    </prerequisites>   
 
- <!--项目的问题管理系统(Bugzilla, Jira, Scarab,或任何你喜欢的问题管理系统)的名称和URL，本例为 jira-->    
+    <!--项目的问题管理系统(Bugzilla, Jira, Scarab,或任何你喜欢的问题管理系统)的名称和URL，本例为 jira-->    
 
     <issueManagement>   
 
@@ -91,59 +91,59 @@ tag: Maven
 
     <!--项目持续集成信息-->  
 
- <ciManagement>   
+    <ciManagement>   
 
-  <!--持续集成系统的名字，例如continuum-->  
+        <!--持续集成系统的名字，例如continuum-->  
 
-  <system/>   
+        <system/>   
 
-  <!--该项目使用的持续集成系统的URL（如果持续集成系统有web接口的话）。-->  
+        <!--该项目使用的持续集成系统的URL（如果持续集成系统有web接口的话）。-->  
 
-  <url/>   
+        <url/>   
 
-  <!--构建完成时，需要通知的开发者/用户的配置项。包括被通知者信息和通知条件（错误，失败，成功，警告）-->  
+         <!--构建完成时，需要通知的开发者/用户的配置项。包括被通知者信息和通知条件（错误，失败，成功，警告）-->  
 
-  <notifiers>   
+        <notifiers>   
 
-   <!--配置一种方式，当构建中断时，以该方式通知用户/开发者-->  
+            <!--配置一种方式，当构建中断时，以该方式通知用户/开发者-->  
 
-   <notifier>   
+            <notifier>   
 
-    <!--传送通知的途径-->  
+                <!--传送通知的途径-->  
+    
+                <type/>   
+    
+                <!--发生错误时是否通知-->  
+    
+                <sendOnError/>   
+    
+                <!--构建失败时是否通知-->  
+    
+                <sendOnFailure/>   
+            
+                <!--构建成功时是否通知-->  
+            
+                <sendOnSuccess/>   
+            
+                <!--发生警告时是否通知-->  
+            
+                <sendOnWarning/>   
+    
+                <!--不赞成使用。通知发送到哪里-->  
+            
+                <address/>   
+            
+                <!--扩展配置项-->  
+            
+                <configuration/>  
 
-    <type/>   
+            </notifier>  
 
-    <!--发生错误时是否通知-->  
+        </notifiers>  
 
-    <sendOnError/>   
+    </ciManagement>   
 
-    <!--构建失败时是否通知-->  
-
-    <sendOnFailure/>   
-
-    <!--构建成功时是否通知-->  
-
-    <sendOnSuccess/>   
-
-    <!--发生警告时是否通知-->  
-
-    <sendOnWarning/>   
-
-    <!--不赞成使用。通知发送到哪里-->  
-
-    <address/>   
-
-    <!--扩展配置项-->  
-
-    <configuration/>  
-
-   </notifier>  
-
-  </notifiers>  
-
- </ciManagement>   
-
- <!--项目创建年份，4位数字。当产生版权信息时需要使用这个值。-->  
+    <!--项目创建年份，4位数字。当产生版权信息时需要使用这个值。-->  
 
     <inceptionYear/>   
 
