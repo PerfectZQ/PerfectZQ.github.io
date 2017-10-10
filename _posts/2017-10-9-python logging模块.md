@@ -126,6 +126,19 @@ logger3.info('logger3 info message')
 logger4.info('logger4 info message')
 
 ```
+输出结果
+```
+logger1 debug message
+logger2 critical message
+logger2 critical message
+logger4 info message
+logger4 info message
+logger4 info message
+logger4 info message
+```
+logger1输出一遍、logger2输出两遍、logger3没有输出、logger4输出4遍原因是什么呢？
+
+logger1是root logger，它添加了一个streamHandler，logger2是logger1的子logger，它继承了根logger的handler，这样它就包含两个handler了，所以输出两遍日志。logger3是logger2的子logger，logger3为什么没有输出呢？正常它应该输出3遍才对。原因是logger2的level修改成了critical，logger3继承了logger2的level，所以info信息没有输出，当logger4修改了level为info之后，输出了4遍日志信息。
 
 **logger实例与logger.getLogger(name)中的name是一一对应的，只要name一样，返回的就是同一个logger实例。**
 
