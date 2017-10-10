@@ -441,86 +441,84 @@ tag: Maven
 
    <pluginManagement>   
 
-        <!--使用的插件列表 。-->  
-    
-        <plugins>   
-    
-         <!--plugin元素包含描述插件所需要的信息。-->  
-    
-         <plugin>   
-    
-          <!--插件在仓库里的group ID-->  
-    
-          <groupId/>   
-    
-          <!--插件在仓库里的artifact ID-->  
-    
-          <artifactId/>   
-    
-          <!--被使用的插件的版本（或版本范围）-->  
-    
-          <version/>   
-    
-          <!--是否从该插件下载Maven扩展（例如打包和类型处理器），由于性能原因，只有在真需要下载时，该元素才被设置成enabled。-->  
-    
-          <extensions/>   
-    
-          <!--在构建生命周期中执行一组目标的配置。每个目标可能有不同的配置。-->  
-    
-          <executions>   
-    
-           <!--execution元素包含了插件执行需要的信息-->  
-    
-           <execution>   
-    
-            <!--执行目标的标识符，用于标识构建过程中的目标，或者匹配继承过程中需要合并的执行目标-->  
-    
-            <id/>   
-    
-            <!--绑定了目标的构建生命周期阶段，如果省略，目标会被绑定到源数据里配置的默认阶段-->  
-    
-            <phase/>   
-    
-            <!--配置的执行目标-->  
-    
-            <goals/>   
-    
-            <!--配置是否被传播到子POM-->  
-    
-            <inherited/>   
-    
-            <!--作为DOM对象的配置-->  
-    
-            <configuration/>  
-    
-           </execution>  
-    
-          </executions>   
-    
-          <!--项目引入插件所需要的额外依赖-->  
-    
-          <dependencies>   
-    
-           <!--参见dependencies/dependency元素-->  
-    
-           <dependency>  
-    
-              
-    
-           </dependency>  
-    
-          </dependencies>        
-    
-          <!--任何配置是否被传播到子项目-->  
-    
-          <inherited/>   
-    
-          <!--作为DOM对象的配置-->  
-    
-          <configuration/>  
-    
-         </plugin>  
-    
+       <!--使用的插件列表 。-->  
+   
+       <plugins>   
+   
+           <!--plugin元素包含描述插件所需要的信息。-->  
+       
+           <plugin>   
+       
+               <!--插件在仓库里的group ID-->  
+           
+               <groupId/>   
+           
+               <!--插件在仓库里的artifact ID-->  
+           
+               <artifactId/>   
+           
+               <!--被使用的插件的版本（或版本范围）-->  
+           
+               <version/>   
+           
+               <!--是否从该插件下载Maven扩展（例如打包和类型处理器），由于性能原因，只有在真需要下载时，该元素才被设置成enabled。-->  
+           
+               <extensions/>   
+           
+               <!--在构建生命周期中执行一组目标的配置。每个目标可能有不同的配置。-->  
+           
+               <executions>       
+                   <!--execution元素包含了插件执行需要的信息-->  
+                
+                   <execution>   
+                
+                       <!--执行目标的标识符，用于标识构建过程中的目标，或者匹配继承过程中需要合并的执行目标-->  
+               
+                       <id/>   
+               
+                       <!--绑定了目标的构建生命周期阶段，如果省略，目标会被绑定到源数据里配置的默认阶段-->  
+               
+                       <phase/>   
+               
+                       <!--配置的执行目标-->  
+               
+                       <goals/>   
+               
+                       <!--配置是否被传播到子POM-->  
+               
+                       <inherited/>   
+               
+                       <!--作为DOM对象的配置-->  
+               
+                       <configuration/>  
+               
+                   </execution>  
+               
+               </executions>   
+            
+               <!--项目引入插件所需要的额外依赖-->  
+            
+               <dependencies>   
+            
+                   <!--参见dependencies/dependency元素-->  
+            
+                   <dependency>  
+            
+            
+                   </dependency>  
+            
+               </dependencies>        
+            
+               <!--任何配置是否被传播到子项目-->  
+            
+               <inherited/>   
+            
+               <!--作为DOM对象的配置-->  
+            
+               <configuration/>  
+        
+           </plugin>  
+        
         </plugins>  
 
    </pluginManagement>   
