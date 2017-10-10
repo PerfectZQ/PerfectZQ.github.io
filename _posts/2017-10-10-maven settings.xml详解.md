@@ -241,13 +241,13 @@ tag: Maven
 
      <contributors>   
 
-      <!--项目的其他贡献者。参见developers/developer元素-->  
+        <!--项目的其他贡献者。参见developers/developer元素-->  
 
-      <contributor>  
+        <contributor>  
 
-    <name/><email/><url/><organization/><organizationUrl/><roles/><timezone/><properties/>  
+            <name/><email/><url/><organization/><organizationUrl/><roles/><timezone/><properties/>  
 
-      </contributor>       
+        </contributor>       
 
      </contributors>      
 
@@ -355,23 +355,23 @@ tag: Maven
 
    <extensions>   
 
-    <!--描述使用到的构建扩展。-->  
+       <!--描述使用到的构建扩展。-->  
 
-    <extension>   
+       <extension>   
 
-     <!--构建扩展的groupId-->  
+           <!--构建扩展的groupId-->  
+    
+           <groupId/>   
+    
+           <!--构建扩展的artifactId-->  
+    
+           <artifactId/>   
+    
+           <!--构建扩展的版本-->  
+    
+           <version/>  
 
-     <groupId/>   
-
-     <!--构建扩展的artifactId-->  
-
-     <artifactId/>   
-
-     <!--构建扩展的版本-->  
-
-     <version/>  
-
-    </extension>  
+       </extension>  
 
    </extensions>   
 
@@ -383,31 +383,31 @@ tag: Maven
 
    <resources>   
 
-    <!--这个元素描述了项目相关或测试相关的所有资源路径-->  
+       <!--这个元素描述了项目相关或测试相关的所有资源路径-->  
 
-    <resource>   
+       <resource>   
 
-     <!--描述了资源的目标路径。该路径相对target/classes目录（例如${project.build.outputDirectory}）。举个例子，如果你想资源在特定的包里(org.apache.maven.messages)，你就必须该元素设置为org/apache/maven/messages。然而，如果你只是想把资源放到源码目录结构里，就不需要该配置。-->  
+           <!--描述了资源的目标路径。该路径相对target/classes目录（例如${project.build.outputDirectory}）。举个例子，如果你想资源在特定的包里(org.apache.maven.messages)，你就必须该元素设置为org/apache/maven/messages。然而，如果你只是想把资源放到源码目录结构里，就不需要该配置。-->  
+    
+           <targetPath/>   
+    
+           <!--是否使用参数值代替参数名。参数值取自properties元素或者文件里配置的属性，文件在filters元素里列出。-->  
+    
+           <filtering/>   
+    
+           <!--描述存放资源的目录，该路径相对POM路径-->  
+    
+           <directory/>   
+        
+           <!--包含的模式列表，例如**/*.xml.-->  
+        
+           <includes/>   
+        
+           <!--排除的模式列表，例如**/*.xml-->  
+        
+           <excludes/>  
 
-     <targetPath/>   
-
-     <!--是否使用参数值代替参数名。参数值取自properties元素或者文件里配置的属性，文件在filters元素里列出。-->  
-
-     <filtering/>   
-
-     <!--描述存放资源的目录，该路径相对POM路径-->  
-
-     <directory/>   
-
-     <!--包含的模式列表，例如**/*.xml.-->  
-
-     <includes/>   
-
-     <!--排除的模式列表，例如**/*.xml-->  
-
-     <excludes/>  
-
-    </resource>  
+       </resource>  
 
    </resources>   
 
