@@ -111,8 +111,6 @@ h2,
 h3,
 h4,
 h5,
-
-
 h1 {
     font-size: 1.4em;
     text-indent: 4px;
@@ -249,7 +247,7 @@ pre {
     background: #e8f2fb;
     border: 1px solid #c9e1f6;
     border-radius: 3px;
-    font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+    font-family: Consolas, Microsoft YaHei, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
     font-size: .9em;
     font-weight: normal;
     line-height: 1.3em;
