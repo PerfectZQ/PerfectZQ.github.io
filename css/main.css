@@ -1378,7 +1378,7 @@ body {
     background: #333333;
 }
 
-.ih-item.circle.effect .info h2 {
+.ih-item.circle.effect .info div {
     color: #fff;
     position: relative;
     font-size: 18px;
