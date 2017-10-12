@@ -31,9 +31,13 @@
     <link rel="alternate" type="application/rss+xml" title="{{ site.title }}"
           href='{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}'>
 
+    <!-- pygments代码高亮 -->
+    <link rel="stylesheet" href="/css/pygments.css">
+
     <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw"/>
     <!--添加LaTex支持-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+            type="text/javascript"></script>
 
     <!-- 站点统计 -->
     <script
@@ -59,8 +63,8 @@
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
             a = s.createElement(o),
                 m = s.getElementsByTagName(o)[0];
             a.async = 1;
