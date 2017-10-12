@@ -57,7 +57,7 @@ kramdown:
       - autolink
       - footnotes
       - smart
-highlighter: rouge
+highlighter: pygments
 
 theme: minima
 
