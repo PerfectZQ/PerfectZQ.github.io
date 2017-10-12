@@ -4,7 +4,6 @@ title: HBase Shell 命令
 tag: HBase
 ---
 
-## HBase Shell 命令
 ### 基本命令
 {% highlight vim %}
 # 安装完后可以在浏览器中输入下面的URL来测试安装是否成功：
@@ -21,7 +20,7 @@ hbase(main)> whoami
 {% endhighlight %}
 
 ### 表管理
-{% hightlight vim %}
+{% highlight vim %}
 # 1）查看有哪些表
 
     hbase(main)> list
