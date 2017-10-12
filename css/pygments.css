@@ -8,7 +8,7 @@ pre .ch { color: #60a0b0; font-style: italic } /* Comment.Hashbang */
 pre .cm { color: #60a0b0; font-style: italic } /* Comment.Multiline */
 pre .cp { color: #007020 } /* Comment.Preproc */
 pre .cpf { color: #60a0b0; font-style: italic } /* Comment.PreprocFile */
-pre .c1 { color: #60a0b0; font-style: italic } /* Comment.Single */
+pre .c1 { color: #60a0b0; font-style: italic; font-family: "Microsoft YaHei" } /* Comment.Single */
 pre .cs { color: #60a0b0; background-color: #fff0f0 } /* Comment.Special */
 pre .gd { color: #A00000 } /* Generic.Deleted */
 pre .ge { font-style: italic } /* Generic.Emph */
