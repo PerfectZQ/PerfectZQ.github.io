@@ -61,7 +61,7 @@ collection.insertOne(bson);
 ### 2、将字符串转换成org.bson.Document
 #### Scala版本
 
-{% highlight scala linenos%}
+{% highlight scala %}
 import org.bson.Document
 import com.mongodb.casbah.{MongoClient, MongoCollection}
 import com.mongodb.util.JSON;
