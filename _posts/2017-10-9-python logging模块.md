@@ -220,3 +220,72 @@ fileHandler.addFilter(filter)
 ```python
 logger.addFilter(filter)
 ```
+
+### 除了在程序中直接设置logger属性，还可以在配置文件中配置
+例如logging.conf
+```
+[loggers]  
+keys=root,simpleExample  
+  
+[handlers]  
+keys=consoleHandler  
+  
+[formatters]  
+keys=simpleFormatter  
+  
+[logger_root]  
+level=DEBUG  
+handlers=consoleHandler  
+  
+[logger_simpleExample]  
+level=DEBUG  
+handlers=consoleHandler  
+qualname=simpleExample  
+propagate=0  
+  
+[handler_consoleHandler]  
+class=StreamHandler  
+level=DEBUG  
+formatter=simpleFormatter  
+args=(sys.stdout,)  
+  
+[formatter_simpleFormatter]  
+format=%(asctime)s - %(name)s - %(levelname)s - %(message)s  
+```
+程序中应用
+```python
+import logging    
+import logging.config    
+    
+logging.config.fileConfig("logging.conf")  
+    
+logger = logging.getLogger("simpleExample")    
+    
+logger.debug("debug message")    
+logger.info("info message")    
+logger.warn("warn message")    
+logger.error("error message")    
+logger.critical("critical message") 
+```
+### 多个模块中使用logging
+　　logging保证在同一个python解释器中，使用相同name会返回相同的logger实例。所以当在多模块中使用时，可以在main模块中配置logging，这个配置就可以作用于多个子模块了，在子模块中直接getLogger获取logger对象就可以了。
+
+main.py
+```python
+import logging    
+import logging.config    
+    
+logging.config.fileConfig('logging.conf')    
+root_logger = logging.getLogger('root')    
+root_logger.debug('test root logger...')    
+    
+logger = logging.getLogger('main')    
+logger.info('test main logger')    
+```
+子模块
+```python
+import logging     
+    
+logger = logging.getLogger('main.mod')    
+logger.info('say something...')    
+```
