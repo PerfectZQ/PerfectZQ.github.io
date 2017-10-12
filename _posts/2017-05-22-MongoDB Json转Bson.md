@@ -10,7 +10,7 @@ tag: MongoDB
 
 
 #### Scala版本
-``` scala
+{% highlight scala %}
 import com.mongodb.DBObject
 import com.mongodb.casbah.{MongoClient, MongoCollection}
 import com.mongodb.util.JSON
@@ -29,10 +29,10 @@ val collection: MongoCollection = MongoClient("10.4.120.83")("dbName")("collecti
 val bson: DBObject = JSON.parse(json).asInstanceOf[DBObject]
 
 collection.insert(bson) // mongodb casbah的写法
-```
+{% endhighlight %}
 #### Java版本
 
-``` java
+{% highlight java %}
 import com.mongodb.MongoClient;
 import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
@@ -57,7 +57,7 @@ MongoCollection<DBObject> collection = database.getCollection("collectionName", 
 DBObject bson = (DBObject)JSON.parse(json);
 
 collection.insertOne(bson);
-```
+{% endhighlight %}
 ### 2、将字符串转换成org.bson.Document
 #### Scala版本
 
@@ -92,7 +92,7 @@ collection.insert(document)
 {% endhighlight %}
 #### Java版本
 
-``` java
+{% highlight java %}
 import org.bson.Document;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -115,4 +115,4 @@ MongoCollection<Document> collection = database.getCollection("collectionName");
 Document document = Document.parse(json);
 
 collection.insertOne(document );
-```
+{% endhighlight %}
