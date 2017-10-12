@@ -14,11 +14,11 @@
                         <div class="info">
                             <div class="info-back">
                                 <!-- 头像里面的标题 -->
-                                <h2>
+                                <div>
                                     {% if site.avatarTitle %}
                                     {{site.avatarTitle}}
                                     {% endif %}
-                                </h2>
+                                </div>
                                 <!-- 头像里面的描述 -->
                                 <p>
                                     {% if site.avatarDesc %}
@@ -30,9 +30,9 @@
                     </a>
                 </div>
                 <!-- 头像效果-end -->
-                <h1 class="panel-cover__title panel-title"><a href="/#blog"
+                <div class="panel-cover__title panel-title"><a href="/#blog"
                                                               title="link to homepage for {{ site.title }}"
-                                                              class="blog-button">{{ site.title }}</a></h1>
+                                                              class="blog-button">{{ site.title }}</a></div>
                 {% if site.subtitle %}
                 <span class="panel-cover__subtitle panel-subtitle">{{site.subtitle}}</span>
                 {% endif %}
