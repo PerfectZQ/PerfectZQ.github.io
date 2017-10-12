@@ -1532,7 +1532,7 @@ body {
         border-radius: 50%;
     }
 
-    .ih-item.circle .info .info-back div {
+    .ih-item.circle .info .info-back .back-title {
         font-size: 0.9em;
     }
 }
