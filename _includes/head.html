@@ -23,6 +23,9 @@
 
     <link rel="icon" type="image/png" href="/images/favicon.png"/>
     <link href="/images/favicon.png" rel="shortcut icon" type="image/png">
+    
+    <!-- pygments代码高亮，需要在main.css前面，这样才可以使后面的代码样式生效 -->
+    <link rel="stylesheet" href="/css/pygments.css">
 
     <link rel="stylesheet" href='{{ "/css/main.css" | prepend: site.baseurl }}'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
@@ -30,9 +33,6 @@
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
     <link rel="alternate" type="application/rss+xml" title="{{ site.title }}"
           href='{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}'>
-
-    <!-- pygments代码高亮 -->
-    <link rel="stylesheet" href="/css/pygments.css">
 
     <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw"/>
     <!--添加LaTex支持-->
