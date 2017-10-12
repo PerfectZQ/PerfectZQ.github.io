@@ -1378,7 +1378,7 @@ body {
     background: #333333;
 }
 
-.ih-item.circle.effect .info div {
+.ih-item.circle.effect .info .info-back .back-title {
     color: #fff;
     position: relative;
     font-size: 18px;
@@ -1388,7 +1388,7 @@ body {
     text-shadow: 0 0 1px white, 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-.ih-item.circle.effect .info p {
+.ih-item.circle.effect .info .info-back p {
     color: #bbb;
     padding: 0px 0px 0px 0px;
     font-style: italic;
