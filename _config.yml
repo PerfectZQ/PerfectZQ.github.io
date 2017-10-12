@@ -57,7 +57,8 @@ kramdown:
       - autolink
       - footnotes
       - smart
-highlighter: pygments
+# highlighter: pygments
+highlighter: true
 
 theme: minima
 
