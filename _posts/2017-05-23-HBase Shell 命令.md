@@ -6,7 +6,7 @@ tag: HBase
 
 ## HBase Shell 命令
 ### 基本命令
-{% hightlight vim %}
+{% highlight vim %}
 # 安装完后可以在浏览器中输入下面的URL来测试安装是否成功：
 http://localhost:60010
 
@@ -58,7 +58,7 @@ hbase(main)> whoami
     hbase(main)> enable 'test1'
 {% endhighlight %}
 ### 权限管理
-{% hightlight vim %}
+{% highlight vim %}
 # 1）分配权限
 
     # 语法 : grant <user> <permissions> <table> <column family> <column qualifier> 参数后面用逗号分隔
