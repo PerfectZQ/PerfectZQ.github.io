@@ -61,7 +61,7 @@ collection.insertOne(bson);
 ### 2、将字符串转换成org.bson.Document
 #### Scala版本
 
-``` scala
+{% highlight scala linenos%}
 import org.bson.Document
 import com.mongodb.casbah.{MongoClient, MongoCollection}
 import com.mongodb.util.JSON;
@@ -89,7 +89,7 @@ implicit def document2DBObject(doc: Document): DBObject = JSON.parse(doc.toJson)
 val collection: MongoCollection = MongoClient("10.4.120.83")("dbName")("collectionName")
 
 collection.insert(document)
-```
+{% endhighlight %}
 #### Java版本
 
 ``` java
