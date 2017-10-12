@@ -58,7 +58,7 @@ kramdown:
       - footnotes
       - smart
 # highlighter: pygments
-highlighter: true
+highlighter: rouge
 
 theme: minima
 
