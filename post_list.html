@@ -5,7 +5,7 @@ layout: default
 <div class="main-post-list">
 
     <ol class="post-list">
-        {% for post in site.posts %}
+        {% for post in paginator.posts %}
         <li style="width: 100%">
             <div class="post-list__post-title post-title" style="padding:6px 6px 6px 6px">
                 <a href="{{ post.url }}" title="访问 {{ post.title }}">{{ post.title }}</a>
