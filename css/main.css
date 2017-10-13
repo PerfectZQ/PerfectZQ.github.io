@@ -609,11 +609,9 @@ hr {
 
 .side-table-of-content {
     display: block;
-    position: fixed;
-    z-index: 900;
-    height: 100%;
-    width: 30%;
-    max-width: 360px;
+    position: relative;
+    height: auto;
+    padding: 0;
 }
 
 .panel-cover {
