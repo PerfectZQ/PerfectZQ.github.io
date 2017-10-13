@@ -1,0 +1,66 @@
+<!--  目录页，如果当前页面是博客或者博客列表则向左收缩 -->
+<header class="panel-cover {% if page.layout == 'post' or page.layout == 'page' %}panel-cover--collapsed{% endif %}">
+    <!-- 目录页 -->
+
+    <div class="panel-main__content">
+        <div class="sidebar-container">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <!-- 导航栏 -->
+                    <div class="nav_container">
+                        <nav class="nav-menu-item">
+                            <i class="nav-menu-item">
+                                <a href="/post_list" title="{{site.blog_button.description}}">
+                                    {{site.blog_button.title}}
+                                </a>
+                            </i>
+                            {% for item in site.nav %}
+                            <i class="nav-menu-item">
+
+                                <a href="{{item.url}}" title="{{item.description}}" class="btn-mobile-menu__icon">
+                                    {{item.title}}
+                                </a>
+                            </i>
+                            {% endfor %}
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <nav class="menu">
+                <ul class="nav metismenu" id="sidebar-menu">
+                    <li>
+                        <a href="javascript:void(0);"> <i class="fa fa-bar-chart"></i> 分析统计 <i
+                                class="fa arrow"></i> </a>
+                        <ul class="collapse">
+                            <li>
+                                <a target="content">
+                                    数据分类
+                                </a>
+                            </li>
+                            <li>
+                                <a target="content">
+                                    教师分析
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a target="content" href="forms.html"> <i class="fa fa-pencil-square-o"></i> Forms </a>
+                    </li>
+                    <li>
+                        <a href="forms.html"> <i class="fa fa-pencil-square-o"></i> Forms </a>
+                    </li>
+                    <li>
+                        <a href="forms.html"> <i class="fa fa-pencil-square-o"></i> Forms </a>
+                    </li>
+                    <li>
+                        <a href="forms.html"> <i class="fa fa-pencil-square-o"></i> Forms </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+</header>
+
+
