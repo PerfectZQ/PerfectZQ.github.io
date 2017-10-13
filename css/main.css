@@ -823,6 +823,35 @@ hr {
     color: #FFF;
 }
 
+
+.btn-top-navigation-menu {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    width: 100%;
+    height: 40px;
+    background: rgba(51, 51, 51, 0.98);
+    text-align: center;
+}
+
+.btn-top-navigation-menu_item {
+    position: relative;
+    top: 12px;
+    margin-right: 20px;
+    float: right;;
+    color: #FFF;
+}
+
+.btn-top-navigation-menu_item a {
+    color: #666;
+}
+
+.btn-top-navigation-menu_item a :hover,
+.btn-top-navigation-menu_item :hover {
+    color: #FFF;
+}
+
+
 nav {
     display: inline-block;
     position: relative;
