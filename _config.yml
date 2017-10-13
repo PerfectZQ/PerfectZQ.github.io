@@ -62,7 +62,7 @@ highlighter: rouge
 
 theme: minima
 
-# Pagination
+# Pagination 分页功能目前只支持html文件，不支持markdown和text file。操！
 gems: [jekyll-paginate,jekyll-sitemap,jekyll-assets,rouge]
 paginate: 5
 paginate_path: "page/:num/"
