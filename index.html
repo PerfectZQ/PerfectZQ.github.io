@@ -12,7 +12,7 @@ permalink: /index.html
       <div class="nav_container">
          <nav class="nav-menu-item" style="float:right">
             <i class="nav-menu-item">
-              <a href="/post_list.html" title="{{site.blog_button.description}}" class="blog-button">  {{site.blog_button.title}}
+              <a href="/post_list.html" title="{{site.blog_button.description}}">  {{site.blog_button.title}}
               </a>
             </i>
             {% for item in site.nav %}
@@ -25,7 +25,7 @@ permalink: /index.html
             {% endfor %}
           </nav>
       </div>
-    </span>
+</span>
 
 <!-- 当本文件为模版时，引用此模版的页面的代码填充在这里 -->
 <!-- 首页网页版，如果当前页面是博客或者博客列表则向左收缩 -->
@@ -39,7 +39,7 @@ permalink: /index.html
             <div class="panel-main__content">
                 <!-- 头像效果-start -->
                 <div class="ih-item circle effect right_to_left">
-                    <a href="/post_list.html" title="前往 {{ site.title }} 的主页" class="blog-button">
+                    <a href="/post_list.html" title="前往 {{ site.title }} 的主页">
                         <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
                         <div class="info">
                             <div class="info-back">
@@ -62,7 +62,7 @@ permalink: /index.html
                 <!-- 头像效果-end -->
                 <div class="panel-cover__title panel-title"><a href="/post_list.html"
                                                                title="link to homepage for {{ site.title }}"
-                                                               class="blog-button">{{ site.title }}</a></div>
+                                                              >{{ site.title }}</a></div>
                 {% if site.subtitle %}
                 <span class="panel-cover__subtitle panel-subtitle">{{site.subtitle}}</span>
                 {% endif %}
@@ -81,7 +81,7 @@ permalink: /index.html
                             <ul class="navigation">
                                 <li class="navigation__item"><a href="/post_list.html"
                                                                 title="{{site.blog_button.description}}"
-                                                                class="blog-button">{{site.blog_button.title}}</a>
+                                                               >{{site.blog_button.title}}</a>
                                 </li>
                                 {% for item in site.nav %}
                                 <li class="navigation__item"><a href="{{item.url}}"
