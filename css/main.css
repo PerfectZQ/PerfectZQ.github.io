@@ -1613,3 +1613,8 @@ nav a {
 }
 
 /*导航按钮-end*/
+
+/* 隐藏属性 */
+.hide {
+    display: none;
+}
