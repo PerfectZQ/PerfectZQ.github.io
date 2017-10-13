@@ -1,11 +1,9 @@
 <!-- 首页网页版，如果当前页面是博客或者博客列表则向左收缩 -->
-<header class="panel-cover {% if page.layout == 'post' or page.layout == 'page' %}panel-cover--collapsed{% endif %}">
-    <!--<header class="panel-cover {% if page.layout == 'post' or page.layout == 'page' %}panel-cover--disappear{% endif %}"-->
-    <!--style="background-image: url('/images/background-cover.jpg')">-->
+<header class="panel-cover {% if page.layout == 'post' or page.layout == 'page' %}panel-cover--collapsed{% endif %}"
+        style="background-image: url('/images/background-cover.jpg')">
 
     <!-- 首页 -->
-    <div class="panel-main {% if page.layout == 'post' or page.layout == 'page' %}hide{% endif %}"
-         style="background-image: url('/images/background-cover.jpg')">
+    <div class="panel-main">
         <div class="panel-main__inner panel-inverted">
             <div class="panel-main__content">
                 <!-- 头像效果-start -->
@@ -69,68 +67,6 @@
     {% else %}
     <div class="panel-cover--overlay cover-disabled"></div>
     {% endif %}
-    </div>
-
-    <!-- 目录页 -->
-    <div class="panel-main {% if page.layout == 'default' %}hide{% endif %}">
-        <div class="panel-main__inner panel-inverted">
-            <div class="panel-main__content">
-
-                <div class="sidebar-container">
-                    <div class="sidebar-header">
-                        <div class="brand">
-                            <div class="logo">
-                                <span class="l l1"></span>
-                                <span class="l l2"></span>
-                                <span class="l l3"></span>
-                                <span class="l l4"></span>
-                                <span class="l l5"></span>
-                            </div>
-                            哈哈哈哈
-                        </div>
-                    </div>
-                    <nav class="menu">
-                        <ul class="nav metismenu" id="sidebar-menu">
-                            <!--<li class="active">
-                                <a href="javascript:void(0);"> <i class="fa fa-home"></i> 概览 </a>
-                            </li>-->
-                            <!--<li>
-                                <a href="javascript:void(0);"> <i class="fa fa-th-large"></i> 配置 <i
-                                        class="fa arrow"></i> </a>
-                            </li>-->
-                            <li>
-                                <a href="javascript:void(0);"> <i class="fa fa-bar-chart"></i> 分析统计 <i
-                                        class="fa arrow"></i> </a>
-                                <ul class="collapse">
-                                    <li>
-                                        <a target="content">
-                                            数据分类
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a target="content">
-                                            教师分析
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a target="content" href="forms.html"> <i class="fa fa-pencil-square-o"></i> Forms </a>
-                            </li>
-                            <li>
-                                <a href="forms.html"> <i class="fa fa-pencil-square-o"></i> Forms </a>
-                            </li>
-                            <li>
-                                <a href="forms.html"> <i class="fa fa-pencil-square-o"></i> Forms </a>
-                            </li>
-                            <li>
-                                <a href="forms.html"> <i class="fa fa-pencil-square-o"></i> Forms </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
     </div>
 </header>
 
