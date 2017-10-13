@@ -5,6 +5,7 @@ tag: HBase
 ---
 
 ### 基本命令
+
 {% highlight vim %}
 # 安装完后可以在浏览器中输入下面的URL来测试安装是否成功：
 http://localhost:60010
@@ -20,6 +21,7 @@ hbase(main)> whoami
 {% endhighlight %}
 
 ### 表管理
+
 {% highlight vim %}
 # 1）查看有哪些表
 
@@ -56,7 +58,9 @@ hbase(main)> whoami
     hbase(main)> alter 'test1',{NAME=>'body',TTL=>'15552000'},{NAME=>'meta', TTL=>'15552000'}
     hbase(main)> enable 'test1'
 {% endhighlight %}
+
 ### 权限管理
+
 {% highlight vim %}
 # 1）分配权限
 
@@ -82,7 +86,9 @@ hbase(main)> whoami
     # 例如，收回test用户在表t1上的权限
     hbase(main)> revoke 'test','t1'
 {% endhighlight %}
+
 ### 表数据的增删改查
+
 {% highlight vim %}
 # 1）添加数据
 	
@@ -149,7 +155,9 @@ hbase(main)> whoami
 		# 例如：删除表t1的所有数据
 		hbase(main)> truncate 't1'
 {% endhighlight %}
+
 ### Region管理
+
 {% highlight vim %}
 # 1）移动region
 	
@@ -185,7 +193,9 @@ hbase(main)> whoami
 	# Compact a single column family within a table:
 	hbase> major_compact 't1', 'c1'
 {% endhighlight %}
+
 ### 配置管理及节点重启
+
 {% highlight vim %}
 # 1）修改hdfs配置
 	
