@@ -7,26 +7,6 @@ permalink: /index.html
 {% include head.html %}
 
 <body>
-<!-- 移动端的头，导航栏 -->
-<span class="mobile btn-mobile-menu">
-      <div class="nav_container">
-         <nav class="nav-menu-item" style="float:right">
-            <i class="nav-menu-item">
-              <a href="/post_list" title="{{site.blog_button.description}}">  {{site.blog_button.title}}
-              </a>
-            </i>
-            {% for item in site.nav %}
-                <i class="nav-menu-item">
-
-                  <a href="{{item.url}}" title="{{item.description}}" class="btn-mobile-menu__icon">
-                      {{item.title}}
-                  </a>
-                </i>
-            {% endfor %}
-          </nav>
-      </div>
-</span>
-
 <!-- 当本文件为模版时，引用此模版的页面的代码填充在这里 -->
 <!-- 首页网页版，如果当前页面是博客或者博客列表则向左收缩 -->
 <div class="panel-cover" style="background-image: url('/images/background-cover.jpg')">
