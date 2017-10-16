@@ -469,6 +469,7 @@ img::-moz-selection {
     z-index: 800;
     width: 70%;
     margin-left: 30%;
+    padding-top: 40px;
 }
 
 .content-wrapper__inner {
@@ -1662,6 +1663,10 @@ nav a {
     list-style: none;
 }
 
+.sidebar .nav {
+    font-size: 14px;
+}
+
 .sidebar .nav > li > a {
     padding-top: inherit;
     padding-bottom: 15px;
@@ -1684,4 +1689,13 @@ nav a {
     display: none;
 }
 
+.sidebar .sidebar-container {
+    position: absolute;
+    top: 0;
+    bottom: 51px;
+    width: 100%;
+    left: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 /* 侧页目录 --end */
