@@ -23,7 +23,9 @@
                         </li>
                     </ul>
                 </li>
+
                 <% for category in site.categories %>
+
                 <li>
                     <a target="content" href="javascript:void(0);"> <i class="fa fa-pencil-square-o"></i>
                         {{category.first}} {{category.last.size}}
@@ -32,7 +34,11 @@
 
                 <% endfor %>
 
-
+                {% for category in site.categories %}
+                <ul>
+                    <li><a href="{{ site.baseurl}}/category/{{ category.first }}.html">{{category.first}}（{{category.last.size}}）</a></li>
+                </ul>
+                {% endfor %}
             </ul>
         </nav>
     </div>
