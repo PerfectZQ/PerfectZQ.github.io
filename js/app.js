@@ -5,6 +5,7 @@ $(function(){
      */
     $("li.first_content").click(function(){
        var ul = $(this).next();
+       alert(ul.html());
        var className = ul.attr('class');
        if(className == 'disappear'){
            ul.removeClass('disappear');
