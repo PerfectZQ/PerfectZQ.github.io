@@ -1715,7 +1715,7 @@ nav a {
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 20px;
-    padding-right: 10px;
+    /*padding-right: 10px;*/
 }
 
 .sidebar .nav > li.active > a,
