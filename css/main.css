@@ -1618,8 +1618,12 @@ body {
 
 /* 侧页目录--begin */
 
-.hide {
+.disappear {
     display: none;
+}
+
+.appear {
+    display: block;
 }
 
 .btn-top-navigation-menu {

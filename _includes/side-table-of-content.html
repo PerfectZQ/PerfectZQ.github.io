@@ -8,22 +8,24 @@
         <nav class="menu" style="width: 100%">
             <ul class="nav metismenu" id="sidebar-menu">
                 {% for category in site.categories %}
-                <li>
-                    <a target="content" href="javascript:void(0);">
-                        <i class="fa fa-pencil-square-o"></i>
-                        {{ category.first }}
-                        <i class="fa arrow"></i>
-                    </a>
-                    <ul class="collapse" style="display: none;">
-                        {% for post in category.last %}
-                        <li>
-                            <a href="{{ site.baseurl}}{{ post.url }}">
-                                {{ post.title }} {{ post.date | date: "（%Y年%m月%d日）" }}
+                    {% if category.first != 'articles' %}
+                        <li class="first_content">
+                            <a href="javascript:void(0);">
+                                <i class="fa fa-pencil-square-o"></i>
+                                {{ category.first }}
+                                <i class="fa arrow"></i>
                             </a>
+                            <ul class="disappear">
+                                {% for post in category.last %}
+                                <li>
+                                    <a href="{{ site.baseurl}}{{ post.url }}">
+                                        {{ post.title }} {{ post.date | date: "（%Y年%m月%d日）" }}
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
                         </li>
-                        {% endfor %}
-                    </ul>
-                </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </nav>
