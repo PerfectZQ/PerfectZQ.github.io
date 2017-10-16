@@ -1646,7 +1646,6 @@ nav a {
 .sidebar {
     background-color: #3a4651;
     width: 230px;
-    padding-top: 40px;
     padding-bottom: 60px;
     position: absolute;
     top: 0;
@@ -1690,6 +1689,7 @@ nav a {
 }
 
 .sidebar .sidebar-container {
+    padding-top: 40px;
     font-family: 'Open Sans', sans-serif;
     font-size: 1rem;
     line-height: 1.5;
