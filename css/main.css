@@ -1554,13 +1554,14 @@ body {
 
 /* 左侧目录栏-start */
 
-/* 导航按钮-start */
-nav a {
-    position: relative;
-    display: inline-block;
-    margin-top: 15px;
-    margin-right: 20px;
-}
+/* 导航按钮-start 修改nav*/
+
+/*nav a {*/
+    /*position: relative;*/
+    /*display: inline-block;*/
+    /*margin-top: 15px;*/
+    /*margin-right: 20px;*/
+/*}*/
 
 .nav-menu-item a {
     padding: 0px;
@@ -1715,7 +1716,7 @@ nav a {
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 20px;
-    /*padding-right: 10px;*/
+    padding-right: 10px;
 }
 
 .sidebar .nav > li.active > a,
