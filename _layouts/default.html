@@ -24,15 +24,17 @@
       </div>
 </span>
 
-{% include side-table-of-content.html %}
-
-<div class="content-wrapper">
-    <div class="content-wrapper__inner">
-        <!-- 当本文件为模版时，引用此模版的页面的代码填充在这里 -->
-        {{ content }}
-        {% include footer.html %}
+<div>
+    {% include side-table-of-content.html %}
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <!-- 当本文件为模版时，引用此模版的页面的代码填充在这里 -->
+            {{ content }}
+            {% include footer.html %}
+        </div>
     </div>
 </div>
+
 
 {% include external.html %}
 
