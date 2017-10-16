@@ -50,6 +50,7 @@ table {
 body {
     width: 100%;
     *zoom: 1;
+    font-family: 'Open Sans', sans-serif;
 }
 
 body:before, body:after {
@@ -1698,4 +1699,5 @@ nav a {
     overflow-y: auto;
     overflow-x: hidden;
 }
+
 /* 侧页目录 --end */
