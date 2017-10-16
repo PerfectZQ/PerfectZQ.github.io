@@ -50,7 +50,6 @@ table {
 body {
     width: 100%;
     *zoom: 1;
-    font-family: 'Open Sans', sans-serif;
 }
 
 body:before, body:after {
@@ -1691,6 +1690,9 @@ nav a {
 }
 
 .sidebar .sidebar-container {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
     position: absolute;
     top: 0;
     bottom: 51px;
