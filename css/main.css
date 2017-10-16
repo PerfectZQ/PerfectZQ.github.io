@@ -1634,6 +1634,7 @@ nav a {
     position: relative;
     height: auto;
     padding: 0;
+    width: 28%;
 }
 
 .side-panel-main {
@@ -1648,7 +1649,7 @@ nav a {
 }
 
 /*.side-table-of-content .panel-main::-webkit-scrollbar-track {*/
-    /*background-color: #2c353e;*/
+/*background-color: #2c353e;*/
 /*}*/
 
 /* 侧页目录 --end */
