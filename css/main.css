@@ -1666,13 +1666,6 @@ nav a {
     font-size: 14px;
 }
 
-.sidebar .nav > li > a {
-    padding-top: inherit;
-    padding-bottom: 15px;
-    padding-left: 20px;
-    padding-right: 10px;
-}
-
 .sidebar .nav li a {
     color: rgba(255, 255, 255, 0.5);
     text-decoration: none;
@@ -1702,4 +1695,83 @@ nav a {
     overflow-x: hidden;
 }
 
+.sidebar .nav li.active ul {
+    height: auto;
+}
+
+.sidebar .nav li a {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+}
+
+.sidebar .nav li a:hover,
+.sidebar .nav li.open > a,
+.sidebar .nav li.open a:hover {
+    color: #ffffff;
+    background-color: #2d363f;
+}
+
+.sidebar .nav > li > a {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 20px;
+    padding-right: 10px;
+}
+
+.sidebar .nav > li.active > a,
+.sidebar .nav > li.active > a:hover {
+    background-color: #85CE36 !important;
+    color: #ffffff !important;
+}
+
+.sidebar .nav > li.open > a {
+    background-color: #333e48;
+}
+
+.sidebar .nav > li.open > a i.arrow {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.sidebar .nav > li > a i {
+    margin-right: 5px;
+    font-size: 16px;
+}
+
+.sidebar .nav > li > a i.arrow {
+    float: right;
+    font-size: 20px;
+    line-height: initial;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.sidebar .nav > li > a i.arrow:before {
+    content: "\f105" !important;
+}
+
+.sidebar .nav > li > ul > li a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    background-color: #333e48;
+}
+
+.sidebar .nav > li > ul > li.active a {
+    color: #ffffff;
+}
+
+.sidebar-overlay {
+    position: absolute;
+    display: none;
+    left: 200vw;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 5;
+    opacity: 0;
+    -webkit-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+    z-index: 15;
+}
 /* 侧页目录 --end */
