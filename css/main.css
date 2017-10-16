@@ -1554,14 +1554,14 @@ body {
 
 /* 左侧目录栏-start */
 
-/* 导航按钮-start 修改nav*/
+/* 导航按钮-start */
 
-/*nav a {*/
-    /*position: relative;*/
-    /*display: inline-block;*/
-    /*margin-top: 15px;*/
-    /*margin-right: 20px;*/
-/*}*/
+.btn-top-navigation-menu .nav_container .nav-menu-item a{
+    position: relative;
+    display: inline-block;
+    margin-top: 15px;
+    margin-right: 20px;
+}
 
 .nav-menu-item a {
     padding: 0px;
