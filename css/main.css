@@ -1808,6 +1808,8 @@ body {
 
 ::-webkit-scrollbar-thumb {
     transition-duration: 1s;
+    border-radius: 10px;
+    background: #3A4651;
 }
 
 /*定义滑块 内阴影+圆角 鼠标放在上面时触发*/
