@@ -1819,6 +1819,12 @@ body {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
 
+.sidebar-container::-webkit-scrollbar-thumb:hover {
+    border-radius: 10px;
+    background: #424242;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+
 /*::-webkit-scrollbar-thumb:window-inactive {*/
 /*background: #3A4651;*/
 /*}*/
