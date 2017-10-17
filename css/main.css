@@ -1655,7 +1655,7 @@ body {
 .sidebar {
     background-color: #3a4651;
     width: 25%;
-    padding-bottom: 60px;
+    overflow: hidden;
     position: fixed;
     top: 0;
     left: 0;
