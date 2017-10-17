@@ -1,8 +1,13 @@
 $(function () {
+
+    $(".sidebar-container").niceScroll();
+    $("body").niceScroll();
+
     /**
      * 侧页一级目录点击事件
      */
     $("li.first_content").click(function () {
+        $(".sidebar-container").niceScroll();
         var ul = $(this).children('ul');
         var className = ul.attr('class');
         if (className == 'disappear') {
@@ -14,8 +19,5 @@ $(function () {
         }
     });
 
-
-    $(".sidebar-container").niceScroll();
-    $("body").niceScroll();
 });
 
