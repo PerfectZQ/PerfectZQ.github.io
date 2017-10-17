@@ -1619,8 +1619,12 @@ body {
 
 .sidebar-header {
     width: 100%;
-    height: 50px;
-    margin: 15px 20px;
+    height: 80px;
+    padding: 15px 20px;
+    color: #fff;
+    text-align: left;
+    line-height: 50px;
+    font-size: 16px;
 }
 
 .sidebar-header .top-logo {
@@ -1752,13 +1756,13 @@ body {
 }
 
 .sidebar .nav > li > a i {
-    margin-right: 5px;
+    margin-right: 6px;
     font-size: 16px;
 }
 
 .sidebar .nav > li > a i.arrow {
     float: right;
-    font-size: 20px;
+    font-size: 18px;
     line-height: initial;
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
