@@ -1,6 +1,6 @@
 $(function () {
 
-    $("body").niceScroll();
+    // $("body").niceScroll();
 
     /**
      * 侧页一级目录点击事件
