@@ -23,10 +23,6 @@ body {
     line-height: 1;
 }
 
-ol, ul, li {
-    list-style: none;
-}
-
 blockquote, q {
     quotes: none;
     background-color: #f0f0f0;
@@ -229,12 +225,8 @@ ul {
     list-style-type: disc;
 }
 
-ul li.first_content {
-    margin: 0 0 0 0;
-}
-
-ul li.second_content {
-    margin: 0 0 0 0;
+nav.menu {
+    line-height: normal;
 }
 
 nav.menu ul, nav.menu li {
