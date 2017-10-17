@@ -1622,11 +1622,9 @@ body {
 /* 侧页目录--begin */
 
 .sidebar-header {
-    position: fixed;
-    width: 23%;
+    width: 100%;
     height: 50px;
     margin: 15px 20px;
-    position: fixed;
 }
 
 .sidebar-header .top-logo {
