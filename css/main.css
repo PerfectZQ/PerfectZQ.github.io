@@ -237,6 +237,10 @@ ul li.second_content {
     margin: 0 0 0 0;
 }
 
+ul.nav.metismenu {
+    margin: 0 0 0 0;
+}
+
 code {
     color: #000000;
     padding: .1em .4em;
