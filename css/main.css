@@ -1298,14 +1298,13 @@ input[type="tel"]:-ms-input-placeholder {
     }
 
     /*.content-wrapper {*/
-        /*width: 80%;*/
-        /*max-width: none;*/
-        /*margin: 0 auto;*/
+    /*width: 80%;*/
+    /*max-width: none;*/
+    /*margin: 0 auto;*/
     /*}*/
-
     /*.content-wrapper__inner {*/
-        /*margin-right: 0;*/
-        /*margin-left: 0;*/
+    /*margin-right: 0;*/
+    /*margin-left: 0;*/
     /*}*/
 }
 
@@ -1315,11 +1314,10 @@ input[type="tel"]:-ms-input-placeholder {
     }
 
     /*.content-wrapper {*/
-        /*width: 90%;*/
-        /*max-width: none;*/
-        /*margin: 0 auto;*/
+    /*width: 90%;*/
+    /*max-width: none;*/
+    /*margin: 0 auto;*/
     /*}*/
-
     h1 {
         margin-top: 0;
         font-size: 1.6em;
@@ -1618,6 +1616,14 @@ body {
 /*导航按钮-end*/
 
 /* 侧页目录--begin */
+
+.sidebar-header {
+    height: 80px;
+}
+
+.sidebar-header .brand {
+    padding: 10px 0;
+}
 
 .disappear {
     display: none;
