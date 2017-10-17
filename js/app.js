@@ -5,8 +5,7 @@ $(function () {
             railoffset: top,
             nativeparentscrolling: true
         }
-    )
-    ;
+    );
     $("body").niceScroll();
 
     /**
