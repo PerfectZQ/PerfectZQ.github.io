@@ -1692,12 +1692,10 @@ body {
 .sidebar .sidebar-container {
     font-family: 'Open Sans', sans-serif;
     position: absolute;
-    top: 40px;
     bottom: 40px;
     width: 100%;
     left: 0;
     right: 0;
-    padding-right: 17px;
     overflow-y: scroll;
     overflow-x: hidden;
 }
