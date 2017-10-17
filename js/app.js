@@ -1,13 +1,19 @@
 $(function () {
 
-    $(".sidebar-container").niceScroll(".menu");
+    $(".sidebar-container").niceScroll(".menu",
+        {
+            railoffset: top,
+            nativeparentscrolling: true
+        }
+    )
+    ;
     $("body").niceScroll();
 
     /**
      * 侧页一级目录点击事件
      */
     $("li.first_content").click(function () {
-        $(".sidebar-container").getNiceScroll(".menu").resize();
+        $(".sidebar-container").getNiceScroll().resize();
         var ul = $(this).children('ul');
         var className = ul.attr('class');
         if (className == 'disappear') {
