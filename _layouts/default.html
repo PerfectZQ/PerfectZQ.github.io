@@ -8,26 +8,26 @@
 <div style="display: block">
     {% include side-table-of-content.html %}
     <div class="content-wrapper">
-        <div class="content-wrapper__inner">
-            <!-- 导航栏 -->
-            <div class="btn-top-navigation-menu">
-                <div class="nav_container">
-                    <nav class="nav-menu-item" style="float:right">
-                        <i class="nav-menu-item">
-                            <a href="/post_list" title="{{site.blog_button.description}}" class="blog-button">  {{site.blog_button.title}}
-                            </a>
-                        </i>
-                        {% for item in site.nav %}
-                        <i class="nav-menu-item">
-
-                            <a href="{{item.url}}" title="{{item.description}}" class="btn-mobile-menu__icon">
-                                {{item.title}}
-                            </a>
-                        </i>
-                        {% endfor %}
-                    </nav>
-                </div>
+        <!-- 导航栏 -->
+        <div class="btn-top-navigation-menu">
+            <div class="nav_container">
+                <nav class="nav-menu-item" style="float:right">
+                    <i class="nav-menu-item">
+                        <a href="/post_list" title="{{site.blog_button.description}}" class="blog-button">
+                            {{site.blog_button.title}}
+                        </a>
+                    </i>
+                    {% for item in site.nav %}
+                    <i class="nav-menu-item">
+                        <a href="{{item.url}}" title="{{item.description}}" class="btn-mobile-menu__icon">
+                            {{item.title}}
+                        </a>
+                    </i>
+                    {% endfor %}
+                </nav>
             </div>
+        </div>
+        <div class="content-wrapper__inner">
             <!-- 当本文件为模版时，引用此模版的页面的代码填充在这里 -->
             {{ content }}
             {% include footer.html %}
