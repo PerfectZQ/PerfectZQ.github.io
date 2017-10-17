@@ -1618,12 +1618,13 @@ body {
 /* 侧页目录--begin */
 
 .sidebar-header {
-    height: 80px;
+    height: 60px;
 }
 
 .sidebar-header .brand {
     width: 60px;
     height: 60px;
+    margin-left: 20px;
     background-size: 100% auto;
     background-repeat: no-repeat;
     background-image: url(/assets/left_top_logo.png);
