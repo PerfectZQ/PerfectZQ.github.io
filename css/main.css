@@ -1622,12 +1622,21 @@ body {
     margin: 15px 20px;
 }
 
-.sidebar-header .brand {
+.sidebar-header .top-logo {
     width: 50px;
     height: 50px;
     background-size: 100% auto;
     background-repeat: no-repeat;
     background-image: url(/assets/left_top_logo.png);
+}
+
+.sidebar-header .top-title {
+    float: left;
+    color: #fff;
+    text-align: left;
+    padding-left: 25px;
+    line-height: 70px;
+    font-size: 16px;
 }
 
 .disappear {
