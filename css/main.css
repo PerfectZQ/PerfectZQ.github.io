@@ -1664,7 +1664,7 @@ body {
     background-color: #3a4651;
     width: 25%;
     padding-bottom: 60px;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
