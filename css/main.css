@@ -1692,7 +1692,7 @@ body {
 .sidebar .sidebar-container {
     font-family: 'Open Sans', sans-serif;
     position: absolute;
-    top: 40px;
+    top: 0;
     bottom: 40px;
     width: 100%;
     left: 0;
