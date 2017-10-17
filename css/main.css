@@ -471,8 +471,8 @@ img::-moz-selection {
 
 .content-wrapper {
     z-index: 800;
-    width: 75%;
-    margin-left: 25%;
+    width: 70%;
+    margin-left: 30%;
     padding-top: 40px;
 }
 
@@ -1639,22 +1639,13 @@ body {
     text-align: center;
 }
 
-.side-table-of-content {
-    display: block;
-    position: fixed;
-    float: left;
-    height: auto;
-    padding: 0;
-    width: 27%;
-}
-
 ::-webkit-scrollbar-track {
     border-radius: 0;
 }
 
 .sidebar {
     background-color: #3a4651;
-    width: 230px;
+    width: 27%;
     position: fixed;
     top: 0;
     left: 0;
