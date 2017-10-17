@@ -1811,7 +1811,7 @@ body {
 }
 
 /*定义滑块 内阴影+圆角 鼠标放在上面时触发*/
-::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:active {
     border-radius: 10px;
     background: #424242;
 }
