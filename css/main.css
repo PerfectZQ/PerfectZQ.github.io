@@ -1640,6 +1640,7 @@ body {
 .sidebar-header .top-title {
     color: #fff;
     text-align: left;
+    height: 50px;
     padding-left: 25px;
     line-height: 70px;
     font-size: 16px;
