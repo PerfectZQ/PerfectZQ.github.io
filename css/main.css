@@ -1795,25 +1795,26 @@ body {
     z-index: 15;
 }
 
-/* 滚动轴 */
-/*::-webkit-scrollbar {*/
-    /*width: 7px;*/
-    /*height: 7px;*/
-/*}*/
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
 
-/*!* Track *!*/
-/*::-webkit-scrollbar-track {*/
-    /*border-radius: 0;*/
-/*}*/
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+    background: #3A4651;
+    border-radius: 10px;
+}
 
-/*!* Handle *!*/
-/*::-webkit-scrollbar-thumb {*/
-    /*border-radius: 0;*/
-    /*background: #78bd2e;*/
-/*}*/
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #3A4651;
+}
 
-/*::-webkit-scrollbar-thumb:window-inactive {*/
-    /*background: #85CE36;*/
-/*}*/
+::-webkit-scrollbar-thumb:window-inactive {
+    background: #3A4651;
+}
 
 /* 侧页目录 --end */
