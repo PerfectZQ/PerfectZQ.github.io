@@ -1619,12 +1619,12 @@ body {
 
 .sidebar-header {
     height: 50px;
+    margin: 15px 20px;
 }
 
 .sidebar-header .brand {
     width: 50px;
     height: 50px;
-    margin-left: 20px;
     background-size: 100% auto;
     background-repeat: no-repeat;
     background-image: url(/assets/left_top_logo.png);
