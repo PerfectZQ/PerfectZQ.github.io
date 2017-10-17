@@ -1299,16 +1299,16 @@ input[type="tel"]:-ms-input-placeholder {
         display: block;
     }
 
-    .content-wrapper {
-        width: 80%;
-        max-width: none;
-        margin: 0 auto;
-    }
+    /*.content-wrapper {*/
+        /*width: 80%;*/
+        /*max-width: none;*/
+        /*margin: 0 auto;*/
+    /*}*/
 
-    .content-wrapper__inner {
-        margin-right: 0;
-        margin-left: 0;
-    }
+    /*.content-wrapper__inner {*/
+        /*margin-right: 0;*/
+        /*margin-left: 0;*/
+    /*}*/
 }
 
 @media all and (max-width: 420px) {
@@ -1316,11 +1316,11 @@ input[type="tel"]:-ms-input-placeholder {
         padding: 0 5%;
     }
 
-    .content-wrapper {
-        width: 90%;
-        max-width: none;
-        margin: 0 auto;
-    }
+    /*.content-wrapper {*/
+        /*width: 90%;*/
+        /*max-width: none;*/
+        /*margin: 0 auto;*/
+    /*}*/
 
     h1 {
         margin-top: 0;
