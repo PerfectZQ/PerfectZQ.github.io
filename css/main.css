@@ -470,9 +470,9 @@ img::-moz-selection {
 }
 
 .content-wrapper {
+    float: right;
     z-index: 800;
     width: 72%;
-    padding-right: 28%;
 }
 
 .content-wrapper__inner {
