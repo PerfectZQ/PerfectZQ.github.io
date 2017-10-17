@@ -1,5 +1,4 @@
 $(function(){
-
     /**
      * 侧页一级目录点击事件
      */
@@ -14,4 +13,8 @@ $(function(){
            ul.addClass('disappear');
        }
     });
+
+
+    $(".sidebar-container").niceScroll();
 });
+
