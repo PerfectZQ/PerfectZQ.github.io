@@ -1795,16 +1795,15 @@ body {
     z-index: 15;
 }
 
-/*定义滚动条轨道 内阴影+圆角*/
+/*定义滚动条*/
 ::-webkit-scrollbar {
-    width: 7px;
+    width: 6px;
     height: 7px;
 }
 
 /*定义滚动条轨道 内阴影+圆角*/
 ::-webkit-scrollbar-track {
-    background: #3A4651;
-    border-radius: 10px;
+    border-radius: 0;
 }
 
 /*定义滑块 内阴影+圆角*/
