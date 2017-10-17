@@ -1712,7 +1712,7 @@ body {
     width: 100%;
     left: 0;
     right: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
