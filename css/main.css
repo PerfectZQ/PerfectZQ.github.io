@@ -225,7 +225,7 @@ ul {
     list-style-type: disc;
 }
 
-nav.menu {
+nav.menu a {
     line-height: normal;
 }
 
