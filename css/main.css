@@ -225,10 +225,6 @@ ul {
     list-style-type: disc;
 }
 
-nav.menu {
-    top: 80px;
-}
-
 nav.menu a {
     line-height: normal;
 }
