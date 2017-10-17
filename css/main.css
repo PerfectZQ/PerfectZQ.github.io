@@ -1693,14 +1693,14 @@ body {
 .sidebar .sidebar-container {
     padding-top: 40px;
     font-family: 'Open Sans', sans-serif;
-    font-size: 1rem;
-    line-height: 1.5;
     position: absolute;
     top: 0;
     bottom: 51px;
     width: 100%;
     left: 0;
-    overflow-y: auto;
+    /* 隐藏滚动条 */
+    right: -17px;
+    overflow-y: scroll;
     overflow-x: hidden;
 }
 
