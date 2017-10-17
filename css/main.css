@@ -227,11 +227,11 @@ ul {
 
 nav.menu {
     padding-right: 17px;
+    overflow-y: scroll;
 }
 
 nav.menu a {
     line-height: normal;
-    overflow-y: scroll;
 }
 
 nav.menu ul, nav.menu li {
