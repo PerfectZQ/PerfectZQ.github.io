@@ -1,6 +1,9 @@
 $(function () {
 
-    $(".sidebar-container").niceScroll();
+    $(".sidebar-container").niceScroll(
+        {
+            zindex: 200
+        });
     $("body").niceScroll();
 
     /**
