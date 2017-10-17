@@ -1655,7 +1655,6 @@ body {
 .sidebar {
     background-color: #3a4651;
     width: 25%;
-    overflow: hidden;
     position: fixed;
     top: 0;
     left: 0;
@@ -1697,9 +1696,8 @@ body {
     bottom: 51px;
     width: 100%;
     left: 0;
-    /* 隐藏滚动条 */
-    right: -17px;
-    overflow-y: scroll;
+    right: 0;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
