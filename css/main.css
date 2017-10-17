@@ -1677,6 +1677,7 @@ body {
     -webkit-transition: left 0.3s ease;
     transition: left 0.3s ease;
     z-index: 20;
+    overflow: hidden;
 }
 
 .nav {
@@ -1707,7 +1708,7 @@ body {
 .sidebar .sidebar-container {
     font-family: 'Open Sans', sans-serif;
     position: absolute;
-    top: 0;
+    top: 80px;
     bottom: 40px;
     width: 100%;
     left: 0;
