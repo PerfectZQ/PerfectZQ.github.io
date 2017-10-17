@@ -1631,8 +1631,9 @@ body {
 
 .btn-top-navigation-menu {
     position: fixed;
+    margin-left: 23%;
     z-index: 9999;
-    width: 100%;
+    width: 77%;
     height: 40px;
     background: rgba(51, 51, 51, 0.98);
     text-align: center;
