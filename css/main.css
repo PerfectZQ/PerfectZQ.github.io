@@ -1799,7 +1799,6 @@ body {
 ::-webkit-scrollbar {
     width: 8px;
     height: 7px;
-
 }
 
 /*定义滚动条轨道 内阴影+圆角*/
@@ -1812,10 +1811,10 @@ body {
 }
 
 /*定义滑块 内阴影+圆角 鼠标放在上面时触发*/
-::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:active {
+::-webkit-scrollbar-thumb:hover {
     border-radius: 10px;
     background: #424242;
-    -webkit-box-shadow: 1px 1px 1px 1px #8C8C8C;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
 
 /*::-webkit-scrollbar-thumb:window-inactive {*/
