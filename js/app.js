@@ -1,16 +1,14 @@
 $(function () {
 
-    $(".sidebar-container").niceScroll(
-        {
-            zindex: 200
-        });
+    $(".sidebar-container").niceScroll();
     $("body").niceScroll();
 
     /**
      * 侧页一级目录点击事件
      */
     $("li.first_content").click(function () {
-        $(".sidebar-container").niceScroll();
+        $(".sidebar-container").getNiceScroll().show();
+        $(".sidebar-container").getNiceScroll().resize();
         var ul = $(this).children('ul');
         var className = ul.attr('class');
         if (className == 'disappear') {
