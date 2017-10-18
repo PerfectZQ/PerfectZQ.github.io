@@ -1833,7 +1833,7 @@ body {
 .header {
     background-color: #d7dde4;
     height: 80px;
-    position: absolute;
+    position: fixed;
     left: 23%;
     right: 0;
     -webkit-transition: left 0.3s ease;
