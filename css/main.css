@@ -1632,7 +1632,8 @@ body {
 }
 
 .sidebar-header .top-title {
-    width: 100%;
+    margin-left:50px;
+    width: auto;
     height: 50px;
     background-size: 100% auto;
     background-repeat: no-repeat;
