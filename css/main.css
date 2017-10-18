@@ -1623,7 +1623,7 @@ body {
     color: #fff;
     text-align: center;
     line-height: 50px;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .sidebar-header .top-logo {
@@ -1867,13 +1867,13 @@ body {
 }
 
 .header .top-right-menu .top-right-info {
-    width: 120px;
-    height: 40px;
-    padding: 20px 20px;
+    width: 160px;
+    height: 50px;
+    padding: 15px;
     color: #404040;
     text-align: center;
-    line-height: 40px;
-    font-size: 16px;
+    line-height: 50px;
+    font-size: 18px;
 }
 
 .header .top-right-menu .top-right-info .left-avatar {
