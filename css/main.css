@@ -1894,7 +1894,7 @@ body {
 }
 
 .header .top-right-menu .top-right-info .dropdown-menu {
-
+    position: relative;
 }
 
 /* header头 --end */
