@@ -1660,10 +1660,6 @@ body {
     text-align: center;
 }
 
-::-webkit-scrollbar-track {
-    border-radius: 0;
-}
-
 .sidebar {
     background-color: #3a4651;
     width: 330px;
@@ -1795,7 +1791,7 @@ body {
 
 /*定义滚动条*/
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 3px;
     height: 7px;
 }
 
