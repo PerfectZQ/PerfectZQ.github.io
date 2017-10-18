@@ -475,15 +475,16 @@ img::-moz-selection {
 }
 
 .content-wrapper {
+    margin-top: 120px;
+    margin-left: 380px;
+    margin-right: 50px;
     float: right;
     z-index: 800;
-    width: 72%;
+    width: auto;
 }
 
 .content-wrapper__inner {
-    padding-top: 100px;
     padding-bottom: 50px;
-    margin-right: 60px;
 }
 
 .footer {
