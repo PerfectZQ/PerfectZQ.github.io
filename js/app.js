@@ -1,6 +1,6 @@
 $(function () {
 
-    $(".content-wrapper").niceScroll({
+    $("body").niceScroll({
         cursorcolor: "#B9D3EE"
     });
 
