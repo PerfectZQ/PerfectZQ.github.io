@@ -1633,7 +1633,7 @@ body {
 
 .sidebar-header .top-title {
     margin-left:50px;
-    width: auto;
+    width: 155px;
     height: 50px;
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -1650,9 +1650,9 @@ body {
 
 .btn-top-navigation-menu {
     position: fixed;
-    margin-left: 23%;
+    margin-left: 360px;
     z-index: 9999;
-    width: 77%;
+    width: auto;
     height: 40px;
     background: rgba(51, 51, 51, 0.98);
     text-align: center;
@@ -1664,7 +1664,7 @@ body {
 
 .sidebar {
     background-color: #3a4651;
-    width: 23%;
+    width: 360px;
     position: fixed;
     top: 0;
     left: 0;
@@ -1829,7 +1829,7 @@ body {
     background-color: #d7dde4;
     height: 80px;
     position: fixed;
-    left: 23%;
+    left: 360px;
     right: 0;
     -webkit-transition: left 0.3s ease;
     transition: left 0.3s ease;
