@@ -4,6 +4,10 @@ $(function () {
         cursorcolor: "#B9D3EE"
     });
 
+    $("pre").niceScroll({
+        cursorcolor: "#B9D3EE"
+    });
+
     /**
      * 侧页一级目录点击事件
      */
