@@ -1835,6 +1835,7 @@ body {
 }
 
 .header top-right-menu .top-right-info .avatar {
+    border-radius: 0;
     width: 50px;
     height: 50px;
     background-size: 100% auto;
