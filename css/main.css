@@ -1829,6 +1829,31 @@ body {
 /* 侧页目录 --end */
 
 /* header头 --begin */
+.header {
+    background-color: #d7dde4;
+    height: 80px;
+    position: fixed;
+    left: 23%;
+    right: 0;
+    -webkit-transition: left 0.3s ease;
+    transition: left 0.3s ease;
+    z-index: 10;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.header .side-change-menu-btn {
+    width: 50px;
+    height: 100%;
+    float: left;
+}
 
 .header top-right-menu {
     float: right;
