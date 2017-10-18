@@ -7,30 +7,23 @@
 
 <div style="display: block">
     <header class="header">
-        <div class="header-block header-block-collapse hidden-lg-up">
-            <button class="collapse-btn" id="sidebar-collapse-btn">
+        <div class="side-change-menu-btn" >
+            <button>
                 <i class="fa fa-bars"></i>
             </button>
         </div>
-        <div class="header-block header-block-nav">
-            <ul class="nav-profile">
-                <li class="profile dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
-                        <div class="img" style="background-image: url('/images/avatar.jpg')">
+        <div class="top-right-menu">
+            <div class="top-right-info">
+                <div class="avatar"></div>
+                张强
+            </div>
+            <div class="dropdown-menu disappear">
+                <div class="dropdown-item" href="#"><i class="fa fa-user icon"></i> Profile</div>
+                <div class="dropdown-item" href="#"> <i class="fa fa-bell icon"></i> Notifications </div>
+                <div class="dropdown-item" href="#"> <i class="fa fa-gear icon"></i> Settings </div>
+                <div class="dropdown-item" href="login.html"> <i class="fa fa-power-off icon"></i> Logout </div>
+            </div>
 
-                        </div>
-                        <span class="name">
-    			            张强
-    			        </span>
-                    </a>
-                    <div class="dropdown-menu profile-dropdown-menu">
-                        <a class="dropdown-item" href="#"> <i class="fa fa-user icon"></i> Profile </a>
-                        <a class="dropdown-item" href="#"> <i class="fa fa-bell icon"></i> Notifications </a>
-                        <a class="dropdown-item" href="#"> <i class="fa fa-gear icon"></i> Settings </a>
-                        <a class="dropdown-item" href="login.html"> <i class="fa fa-power-off icon"></i> Logout </a>
-                    </div>
-                </li>
-            </ul>
         </div>
     </header>
     {% include side-table-of-content.html %}
