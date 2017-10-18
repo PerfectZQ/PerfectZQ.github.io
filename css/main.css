@@ -5,6 +5,11 @@
 @import url(animate.css);
 @import url(tomorrow.css);
 
+@font-face {
+    font-family: 'DeliciousMocha';
+    src: url(/font/DeliciousMocha.ttf);
+}
+
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, output, ruby, section, summary, time, mark, audio, video {
     margin: 0;
     padding: 0;
@@ -1619,7 +1624,12 @@ body {
 
 .sidebar-header {
     height: 50px;
-    padding: 20px 20px;
+    padding: 15px;
+    color: #404040;
+    text-align: center;
+    line-height: 50px;
+    font-size: 20px;
+    font-family: 'DeliciousMocha';
 }
 
 .sidebar-header .top-logo {
@@ -1629,15 +1639,6 @@ body {
     background-repeat: no-repeat;
     background-image: url(/assets/left_top_logo.png);
     float: left;
-}
-
-.sidebar-header .top-title {
-    margin-left:50px;
-    width: 155px;
-    height: 50px;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-image: url(/images/top-title.png);
 }
 
 .disappear {
