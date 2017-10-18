@@ -2033,4 +2033,26 @@ body {
     background: none;
     background-color: whitesmoke;
 }
+
+.header .header-block-nav .profile .img {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 4px;
+    background-color: #8b9cb1;
+    color: #ffffff;
+    text-align: center;
+    margin-right: 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    vertical-align: middle;
+}
+
+.header .header-block-nav .profile .name {
+    display: inline-block;
+    margin-right: 9px;
+    font-weight: bold;
+}
 /* header头 --end */
