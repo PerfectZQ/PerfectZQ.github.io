@@ -475,12 +475,10 @@ img::-moz-selection {
 }
 
 .content-wrapper {
-    margin-top: 120px;
-    margin-left: 380px;
-    margin-right: 50px;
-    float: right;
-    z-index: 800;
-    width: auto;
+    top: 120px;
+    left: 380px;
+    right: 50px;
+    position: absolute;
 }
 
 .content-wrapper__inner {
