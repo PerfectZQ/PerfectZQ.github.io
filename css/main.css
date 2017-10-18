@@ -1624,11 +1624,11 @@ body {
 
 .sidebar-header {
     height: 50px;
-    padding: 15px;
-    color: #404040;
+    padding: 15px 25px;
+    color: #FFFFFF;
     text-align: center;
-    line-height: 50px;
-    font-size: 20px;
+    line-height: 66px;
+    font-size: 35px;
     font-family: 'DeliciousMocha';
 }
 
