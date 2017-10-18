@@ -1618,8 +1618,8 @@ body {
 /* 侧页目录--begin */
 
 .sidebar-header {
-    height: 80px;
-    padding: 15px 20px;
+    height: 50px;
+    padding: 20px 20px;
     color: #fff;
     text-align: center;
     line-height: 50px;
@@ -1838,14 +1838,6 @@ body {
     -webkit-transition: left 0.3s ease;
     transition: left 0.3s ease;
     z-index: 10;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
     justify-content: space-between;
 }
 
@@ -1876,7 +1868,7 @@ body {
 
 .header .top-right-menu .top-right-info {
     width: 120px;
-    height: 80px;
+    height: 40px;
     padding: 20px 20px;
     color: #404040;
     text-align: center;
@@ -1885,6 +1877,7 @@ body {
 }
 
 .header .top-right-menu .top-right-info .left-avatar {
+    position: absolute;
     width: 40px;
     height: 40px;
     background-size: 100% auto;
