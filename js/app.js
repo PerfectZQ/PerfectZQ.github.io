@@ -1,5 +1,9 @@
 $(function () {
 
+    $("body").nicescroll();
+    $("code").niceScroll({
+        cursorcolor: "#B9D3EE"
+    });
     /**
      * 侧页一级目录点击事件
      */
@@ -13,16 +17,6 @@ $(function () {
             ul.removeClass('appear');
             ul.addClass('disappear');
         }
-    });
-
-    $(".side-container").scroll(function () {
-        $(this).removeClass('still');
-        $(this).addClass('wheel');
-    });
-
-    $(".side-container").mouseover(function () {
-        $(this).removeClass('wheel');
-        $(this).addClass('still');
     });
 
 });
