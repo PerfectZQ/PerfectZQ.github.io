@@ -15,5 +15,15 @@ $(function () {
         }
     });
 
+    $(".side-container").scroll(function () {
+        $(this).removeClass('still');
+        $(this).addClass('wheel');
+    });
+
+    $(".side-container").mouseover(function () {
+        $(this).removeClass('wheel');
+        $(this).addClass('still');
+    });
+
 });
 
