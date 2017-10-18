@@ -1651,7 +1651,7 @@ body {
 
 .btn-top-navigation-menu {
     position: fixed;
-    margin-left: 360px;
+    margin-left: 23%;
     z-index: 9999;
     width: auto;
     height: 40px;
@@ -1665,7 +1665,7 @@ body {
 
 .sidebar {
     background-color: #3a4651;
-    width: 360px;
+    width: 23%;
     position: fixed;
     top: 0;
     left: 0;
@@ -1830,7 +1830,7 @@ body {
     background-color: #d7dde4;
     height: 80px;
     position: fixed;
-    left: 360px;
+    left: 23%;
     right: 0;
     -webkit-transition: left 0.3s ease;
     transition: left 0.3s ease;
