@@ -1830,6 +1830,39 @@ body {
 
 /* header头 --begin */
 
+.header {
+    background-color: #d7dde4;
+    height: 80px;
+    position: absolute;
+    left: 23%;
+    right: 0;
+    -webkit-transition: left 0.3s ease;
+    transition: left 0.3s ease;
+    z-index: 10;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+@media (max-width: 991px) {
+    .header {
+        left: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .header {
+        left: 0;
+        height: 50px;
+    }
+}
+
 @media (max-width: 767px) {
     .header .header-block {
         padding: 5px;
