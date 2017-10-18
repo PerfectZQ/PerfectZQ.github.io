@@ -1620,11 +1620,6 @@ body {
 .sidebar-header {
     height: 50px;
     padding: 20px 20px;
-    color: #fff;
-    text-align: center;
-    line-height: 50px;
-    font-size: 18px;
-    font-style: italic;
 }
 
 .sidebar-header .top-logo {
@@ -1637,12 +1632,11 @@ body {
 }
 
 .sidebar-header .top-title {
-    color: #fff;
-    text-align: center;
     width: 100%;
     height: 50px;
-    padding-left: 25px;
-    font-size: 16px;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-image: url(/images/top-title.png);
 }
 
 .disappear {
