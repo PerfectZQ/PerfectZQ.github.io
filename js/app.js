@@ -1,9 +1,9 @@
 $(function () {
 
-    $("body").niceScroll();
     $("code").niceScroll({
         cursorcolor: "#B9D3EE"
     });
+    $(".content-wrapper").niceScroll();
     /**
      * 侧页一级目录点击事件
      */
