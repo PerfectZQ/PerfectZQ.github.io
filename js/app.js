@@ -16,14 +16,6 @@ $(function () {
     $("li.first_content").click(function () {
         var ul = $(this).children('ul');
         ul.slideToggle('slow');
-        // var className = ul.attr('class');
-        // if (className == 'disappear') {
-        //     ul.removeClass('disappear');
-        //     ul.addClass('appear');
-        // } else {
-        //     ul.removeClass('appear');
-        //     ul.addClass('disappear');
-        // }
     });
 
     /**
@@ -31,15 +23,6 @@ $(function () {
      */
     $("div.left-avatar").click(function () {
         $("#dropdown-menu").slideToggle('slow');
-        // var dropdown_menu = $("#dropdown-menu");
-        // var className = dropdown_menu.attr('class');
-        // if (className == 'disappear') {
-        //     dropdown_menu.removeClass('disappear');
-        //     dropdown_menu.addClass('appear');
-        // } else {
-        //     dropdown_menu.removeClass('appear');
-        //     dropdown_menu.addClass('disappear');
-        // }
     });
 });
 

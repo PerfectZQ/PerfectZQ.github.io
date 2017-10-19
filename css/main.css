@@ -1905,9 +1905,10 @@ body {
     box-shadow: 2px 3px 6px rgba(126, 142, 159, 0.1);
     border: 1px solid rgba(126, 142, 159, 0.1);
     border-radius: 0.25rem;
+    display: none;
 }
 
-.header .top-right-menu #dropdown-menu .dropdown-item{
+.header .top-right-menu #dropdown-menu .dropdown-item {
     padding: 15px 25px;
 }
 
