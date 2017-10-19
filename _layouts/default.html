@@ -6,8 +6,9 @@
 <body>
 
 <div style="display: block">
+    
     <header class="header">
-        <div class="side-change-container" >
+        <div class="side-change-container">
             <button class="menu-btn">
                 <i class="fa fa-bars"></i>
             </button>
@@ -19,35 +20,20 @@
                 </div>
             </a>
             <div id="dropdown-menu" class="appear">
-                <a class="dropdown-item" href="#"><i class="fa fa-user icon"></i> 主页</a>
-                <a class="dropdown-item" href="#"> <i class="fa fa-bell icon"></i> 所有文章 </a>
-                <a class="dropdown-item" href="#"> <i class="fa fa-gear icon"></i> 标签 </a>
-                <a class="dropdown-item" href="#"> <i class="fa fa-power-off icon"></i> 关于我 </a>
+                <a href="/post_list" title="{{site.blog_button.description}}" class="dropdown-item">
+                    {{site.blog_button.title}}
+                </a>
+                {% for item in site.nav %}
+                <a href="{{item.url}}" title="{{item.description}}" class="dropdown-item">
+                    {{item.title}}
+                </a>
+                {% endfor %}
             </div>
-
         </div>
     </header>
-    {% include side-table-of-content.html %}
-    <!-- 导航栏 -->
 
-    <!--<div class="btn-top-navigation-menu">-->
-    <!--<div class="nav_container">-->
-    <!--<nav class="nav-menu-item" style="float:right">-->
-    <!--<i class="nav-menu-item">-->
-    <!--<a href="/post_list" title="{{site.blog_button.description}}" class="blog-button">-->
-    <!--{{site.blog_button.title}}-->
-    <!--</a>-->
-    <!--</i>-->
-    <!--{% for item in site.nav %}-->
-    <!--<i class="nav-menu-item">-->
-    <!--<a href="{{item.url}}" title="{{item.description}}" class="btn-mobile-menu__icon">-->
-    <!--{{item.title}}-->
-    <!--</a>-->
-    <!--</i>-->
-    <!--{% endfor %}-->
-    <!--</nav>-->
-    <!--</div>-->
-    <!--</div>-->
+    {% include side-table-of-content.html %}
+
     <div class="content-wrapper">
         <div class="content-wrapper__inner">
             <!-- 当本文件为模版时，引用此模版的页面的代码填充在这里 -->
