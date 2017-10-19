@@ -21,11 +21,11 @@
             </a>
             <div id="dropdown-menu" class="appear">
                 <a href="/post_list" title="{{site.blog_button.description}}" class="dropdown-item">
-                    <i class="fa fa-home"></i> {{site.blog_button.title}}
+                    <i class="fa fa-home" style="margin-right: 20px"></i> {{site.blog_button.title}}
                 </a>
                 {% for item in site.nav %}
                 <a href="{{item.url}}" title="{{item.description}}" class="dropdown-item">
-                    <i class="{{item.style}}"></i> {{item.title}}
+                    <i class="{{item.style}}" style="margin-right: 20px"></i> {{item.title}}
                 </a>
                 {% endfor %}
             </div>
