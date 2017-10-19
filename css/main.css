@@ -1905,10 +1905,10 @@ body {
     font-size: 1rem;
     color: #3a4651;
     text-align: left;
-    background-color: #fff;
+    background-color: #F0F3F6;
     background-clip: padding-box;
-    -webkit-box-shadow: 0px 0px 0px #efefef, -2px -2px 2px #efefef, 2px -2px 2px #efefef, -2px 2px 2px #efefef;
-    border: 1px solid rgba(126, 142, 159, 0.1);
+    -webkit-box-shadow: 0px 0px 0px #efefef, -1px -1px 1px #efefef, 1px -1px 1px #efefef, -1px 1px 1px #efefef;
+    border: 2px solid rgba(126, 142, 159, 0.1);
     border-radius: 5PX;
     display: none;
 }
