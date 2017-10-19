@@ -532,8 +532,10 @@ hr {
 }
 
 .post-meta {
-    margin: 0;
+    margin: 0 0 15px 0;
     color: #c7c7c7;
+    line-height: 20px;
+    vertical-align: bottom;
 }
 
 .post-meta__date span {
