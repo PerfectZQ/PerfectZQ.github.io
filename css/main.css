@@ -1866,6 +1866,7 @@ body {
     line-height: 30px;
     font-size: 16px;
     color: #3a4651;
+    display: block;
 }
 
 .header .top-right-menu .top-right-info .left-avatar {
