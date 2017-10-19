@@ -1900,22 +1900,24 @@ body {
 
 .header .top-right-menu #dropdown-menu {
     /* 上下 左右 */
-    width: 180px;
+    width: 170px;
     z-index: 1000;
     font-size: 1rem;
     color: #3a4651;
     text-align: left;
     background-color: #fff;
     background-clip: padding-box;
-    box-shadow: 2px 3px 6px rgba(126, 142, 159, 0.1);
+    -webkit-box-shadow: 3px 3px 3px #efefef, -3px -3px 3px #efefef, 3px -3px 3px #efefef, -3px 3px 3px #efefef;
     border: 1px solid rgba(126, 142, 159, 0.1);
-    border-radius: 0.25rem;
+    border-radius: 5PX;
     display: none;
 }
 
 .header .top-right-menu #dropdown-menu .dropdown-item {
-    padding: 15px 25px;
+    padding: 10px 25px;
     display: block;
+    height: 25px;
+    line-height: 25px;
 }
 
 .header .top-right-menu #dropdown-menu .dropdown-item:hover {
