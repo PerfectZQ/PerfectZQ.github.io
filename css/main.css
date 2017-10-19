@@ -16,7 +16,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     border: 0;
     font-size: 100%;
     font: inherit;
-    vertical-align: baseline;
+    vertical-align: bottom;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -249,7 +249,8 @@ code {
 }
 
 pre {
-    margin-bottom: 1.3em;
+    margin-bottom: 10px;
+    margin-top: 10px;
     padding: 1em 2.5%;
     background: #e8f2fb;
     border: 1px solid #c9e1f6;
