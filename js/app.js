@@ -29,7 +29,7 @@ $(function () {
         $("#dropdown-menu").slideDown('normal');
     });
 
-    $("div.top-right-menu").on("mouseout",function(){
+    $("div.#dropdown-menu").on("mouseout",function(){
         $("#dropdown-menu").slideUp('normal');
     });
 
