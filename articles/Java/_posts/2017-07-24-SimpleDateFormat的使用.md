@@ -25,7 +25,7 @@ tag: Java
 * K 时 在上午或下午 (0~11)
 * z 时区
 
-```
+```java
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -50,7 +50,7 @@ Date date = sdf.parse(str);
 
 将时间类型转换成字符串:format()
 
-```
+```java
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
