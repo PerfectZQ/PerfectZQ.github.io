@@ -1895,7 +1895,7 @@ body {
 
 .header .top-right-menu .dropdown-menu {
     /* 上下 左右 */
-    padding: 0px 10px;
+    width: 180px;
     z-index: 1000;
     font-size: 1rem;
     color: #373a3c;
@@ -1908,7 +1908,7 @@ body {
 }
 
 .header .top-right-menu .dropdown-menu .dropdown-item{
-
+    padding: 15px 25px;
 }
 
 /* header头 --end */
