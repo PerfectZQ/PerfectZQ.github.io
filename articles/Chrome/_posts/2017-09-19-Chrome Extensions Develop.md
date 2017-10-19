@@ -37,4 +37,4 @@ function readXPath(element) {
 }
 // 在页面元素中添加点击监听事件
 document.addEventListener("click",function(e){console.log(readXPath(e))})
-{% highlightend %}
+{% endhighlight %}
