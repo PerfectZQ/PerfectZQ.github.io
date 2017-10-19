@@ -273,13 +273,13 @@ table {
     font-size: 1.0em;
     text-align: center;
     line-height: 40px;
-    border: 2px solid #363636;
+    border: 1px solid #363636;
     width: 90%;
-    margin: 50px auto;
+    margin: 20px auto;
 }
 
 thead tr:first-child {
-    background-color: #E0EEEE;
+    background-color: #E8F2fB;
     color: #363636;
     text-align: center;
     border: 1px solid #363636;
