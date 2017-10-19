@@ -33,15 +33,15 @@
     </header>
 
     {% include side-table-of-content.html %}
-    <iframe name="content-wrapper">
-        <div class="content-wrapper">
-            <div class="content-wrapper__inner">
-                <!-- 当本文件为模版时，引用此模版的页面的代码填充在这里 -->
-                {{ content }}
-                {% include footer.html %}
-            </div>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <!-- 当本文件为模版时，引用此模版的页面的代码填充在这里 -->
+            {{ content }}
+            {% include footer.html %}
         </div>
-    </iframe>
+    </div>
+
 </div>
 
 
