@@ -15,29 +15,31 @@ $(function () {
      */
     $("li.first_content").click(function () {
         var ul = $(this).children('ul');
-        var className = ul.attr('class');
-        if (className == 'disappear') {
-            ul.removeClass('disappear');
-            ul.addClass('appear');
-        } else {
-            ul.removeClass('appear');
-            ul.addClass('disappear');
-        }
+        ul.slideToggle('slow');
+        // var className = ul.attr('class');
+        // if (className == 'disappear') {
+        //     ul.removeClass('disappear');
+        //     ul.addClass('appear');
+        // } else {
+        //     ul.removeClass('appear');
+        //     ul.addClass('disappear');
+        // }
     });
 
     /**
      * header 头像点击事件
      */
     $("div.left-avatar").click(function () {
-        var dropdown_menu = $("#dropdown-menu");
-        var className = dropdown_menu.attr('class');
-        if (className == 'disappear') {
-            dropdown_menu.removeClass('disappear');
-            dropdown_menu.addClass('appear');
-        } else {
-            dropdown_menu.removeClass('appear');
-            dropdown_menu.addClass('disappear');
-        }
+        $("#dropdown-menu").slideToggle('slow');
+        // var dropdown_menu = $("#dropdown-menu");
+        // var className = dropdown_menu.attr('class');
+        // if (className == 'disappear') {
+        //     dropdown_menu.removeClass('disappear');
+        //     dropdown_menu.addClass('appear');
+        // } else {
+        //     dropdown_menu.removeClass('appear');
+        //     dropdown_menu.addClass('disappear');
+        // }
     });
 });
 
