@@ -1883,8 +1883,7 @@ body {
 
 .header .top-right-menu .top-right-info .left-avatar .name {
     margin-left: 32px;
-    /*font-weight: bold;*/
-    font-family: 'DeliciousMocha';
+    font-weight: bold;
 }
 
 .header .top-right-menu .top-right-info .left-avatar::after {
