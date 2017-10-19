@@ -1900,21 +1900,21 @@ body {
 
 .header .top-right-menu #dropdown-menu {
     /* 上下 左右 */
-    width: 170px;
+    width: 150px;
     z-index: 1000;
     font-size: 1rem;
     color: #3a4651;
     text-align: left;
     background-color: #F3F3F3;
     background-clip: padding-box;
-    border: 1.5px solid rgba(126, 142, 159, 0.1);
+    border: 1px solid rgba(126, 142, 159, 0.1);
     border-radius: 3px;
     display: none;
     padding-top: 10px;
 }
 
 .header .top-right-menu #dropdown-menu .dropdown-item {
-    padding: 0px 20px 10px 30px;
+    padding: 0px 0px 10px 25px;
     display: block;
     height: 20px;
     line-height: 20px;
