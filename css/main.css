@@ -1870,7 +1870,7 @@ body {
 }
 
 .header .top-right-menu .top-right-info:hover {
-    color: #b9d3ee;
+    color: #2d363f;
 }
 
 .header .top-right-menu .top-right-info .left-avatar {
@@ -1915,10 +1915,11 @@ body {
 
 .header .top-right-menu #dropdown-menu .dropdown-item {
     padding: 15px 25px;
+    display: block;
 }
 
 .header .top-right-menu #dropdown-menu .dropdown-item:hover {
-    color: #b9d3ee;
+    color: #2d363f;
 }
 
 /* header头 --end */
