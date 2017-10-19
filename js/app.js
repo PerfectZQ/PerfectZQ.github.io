@@ -15,7 +15,7 @@ $(function () {
      */
     $("li.first_content").click(function () {
         var ul = $(this).children('ul');
-        ul.slideToggle('slow');
+        ul.slideToggle('normal');
     });
 
     /**

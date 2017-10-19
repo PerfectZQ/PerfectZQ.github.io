@@ -6,7 +6,7 @@
 <body>
 
 <div style="display: block">
-    
+
     <header class="header">
         <div class="side-change-container">
             <button class="menu-btn">
@@ -21,11 +21,11 @@
             </a>
             <div id="dropdown-menu" class="appear">
                 <a href="/post_list" title="{{site.blog_button.description}}" class="dropdown-item">
-                    {{site.blog_button.title}}
+                    <i class="fa fa-home"></i> {{site.blog_button.title}}
                 </a>
                 {% for item in site.nav %}
                 <a href="{{item.url}}" title="{{item.description}}" class="dropdown-item">
-                    {{item.title}}
+                    <i class="{{item.style}}"></i> {{item.title}}
                 </a>
                 {% endfor %}
             </div>
