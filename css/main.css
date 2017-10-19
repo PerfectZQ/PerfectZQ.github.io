@@ -1903,7 +1903,7 @@ body {
     width: 180px;
     z-index: 1000;
     font-size: 1rem;
-    color: #373a3c;
+    color: #3a4651;
     text-align: left;
     background-color: #fff;
     background-clip: padding-box;
@@ -1915,6 +1915,10 @@ body {
 
 .header .top-right-menu #dropdown-menu .dropdown-item {
     padding: 15px 25px;
+}
+
+.header .top-right-menu #dropdown-menu .dropdown-item:hover {
+    color: #b9d3ee;
 }
 
 /* header头 --end */
