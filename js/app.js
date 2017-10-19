@@ -25,5 +25,19 @@ $(function () {
         }
     });
 
+    /**
+     * header 头像点击事件
+     */
+    $("div.left-avatar").click(function () {
+        var dropdown_menu = $("#dropdown-menu");
+        var className = dropdown_menu.attr('class');
+        if (className == 'disappear') {
+            dropdown_menu.removeClass('disappear');
+            dropdown_menu.addClass('appear');
+        } else {
+            dropdown_menu.removeClass('appear');
+            dropdown_menu.addClass('disappear');
+        }
+    });
 });
 
