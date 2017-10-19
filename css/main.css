@@ -1894,7 +1894,21 @@ body {
 }
 
 .header .top-right-menu .top-right-info .dropdown-menu {
-    position: relative;
+    /* 上下 左右 */
+    padding: 0px 10px;
+    z-index: 1000;
+    font-size: 1rem;
+    color: #373a3c;
+    text-align: left;
+    background-color: #fff;
+    background-clip: padding-box;
+    box-shadow: 2px 3px 6px rgba(126, 142, 159, 0.1);
+    border: 1px solid rgba(126, 142, 159, 0.1);
+    border-radius: 0.25rem;
+}
+
+.header .top-right-menu .top-right-info .dropdown-menu .dropdown-item{
+
 }
 
 /* header头 --end */
