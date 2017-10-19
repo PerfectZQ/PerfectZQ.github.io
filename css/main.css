@@ -1907,7 +1907,7 @@ body {
     text-align: left;
     background-color: #fff;
     background-clip: padding-box;
-    -webkit-box-shadow: 3px 3px 3px #efefef, -3px -3px 3px #efefef, 3px -3px 3px #efefef, -3px 3px 3px #efefef;
+    -webkit-box-shadow: 0px 0px 0px #efefef, -2px -2px 2px #efefef, 2px -2px 2px #efefef, -2px 2px 2px #efefef;
     border: 1px solid rgba(126, 142, 159, 0.1);
     border-radius: 5PX;
     display: none;
@@ -1925,7 +1925,3 @@ body {
 }
 
 /* header头 --end */
-
-body {
-    background-color: #F0F3F6;
-}
