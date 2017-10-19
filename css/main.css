@@ -1869,6 +1869,10 @@ body {
     display: block;
 }
 
+.header .top-right-menu .top-right-info:hover {
+    color: #b9d3ee;
+}
+
 .header .top-right-menu .top-right-info .left-avatar {
     width: auto;
     height: 30px;
