@@ -10,7 +10,8 @@ tag: JavaScript
 ### Chrome Extensions 开发文档（360翻译）
 [中文开发文档地址](http://open.chrome.360.cn/extension_dev/overview.html)
 ### 代码实现
-```javascript
+
+{% highlight javascript %}
 // 获取xpath表达式
 function readXPath(element) {
     if (element.id !== "") {//判断id属性，如果这个元素有id，则显 示//*[@id="xPath"]  形式内容
@@ -36,4 +37,4 @@ function readXPath(element) {
 }
 // 在页面元素中添加点击监听事件
 document.addEventListener("click",function(e){console.log(readXPath(e))})
-```
+{% highlightend %}
