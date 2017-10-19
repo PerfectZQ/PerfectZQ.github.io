@@ -1905,17 +1905,18 @@ body {
     font-size: 1rem;
     color: #3a4651;
     text-align: left;
-    background-color: #F0F3F6;
+    background-color: #F3F3F3;
     background-clip: padding-box;
+    border: 1.5px solid rgba(126, 142, 159, 0.1);
     border-radius: 3px;
     display: none;
 }
 
 .header .top-right-menu #dropdown-menu .dropdown-item {
-    padding: 10px 25px;
+    padding: 6px 20px 6px 30px;
     display: block;
-    height: 25px;
-    line-height: 25px;
+    height: 20px;
+    line-height: 20px;
 }
 
 .header .top-right-menu #dropdown-menu .dropdown-item:hover {
