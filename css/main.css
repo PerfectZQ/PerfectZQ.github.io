@@ -1893,7 +1893,7 @@ body {
     border-left: 0.3em solid transparent;
 }
 
-.header .top-right-menu .top-right-info .dropdown-menu {
+.header .top-right-menu .dropdown-menu {
     /* 上下 左右 */
     padding: 0px 10px;
     z-index: 1000;
@@ -1907,7 +1907,7 @@ body {
     border-radius: 0.25rem;
 }
 
-.header .top-right-menu .top-right-info .dropdown-menu .dropdown-item{
+.header .top-right-menu .dropdown-menu .dropdown-item{
 
 }
 
