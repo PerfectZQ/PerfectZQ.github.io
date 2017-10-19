@@ -1868,7 +1868,22 @@ body {
     font-size: 16px;
 }
 
-.header .top-right-menu .top-right-info::after {
+.header .top-right-menu .top-right-info .left-avatar {
+    width: auto;
+    height: 30px;
+    margin-right: 10px;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-image: url(/images/right-avatar.jpg);
+}
+
+.header .top-right-menu .top-right-info .left-avatar .name {
+    margin-left: 30px;
+    margin-right: 9px;
+    font-weight: bold;
+}
+
+.header .top-right-menu .top-right-info .left-avatar::after {
     display: inline-block;
     width: 0;
     height: 0;
@@ -1878,21 +1893,6 @@ body {
     border-top: 0.3em solid;
     border-right: 0.3em solid transparent;
     border-left: 0.3em solid transparent;
-}
-
-.header .top-right-menu .top-right-info .left-avatar {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
-    background-size: 100% auto;
-    background-repeat: no-repeat;
-    background-image: url(/images/right-avatar.jpg);
-}
-
-.header .top-right-menu .top-right-info .name {
-    display: inline-block;
-    margin-right: 9px;
-    font-weight: bold;
 }
 
 .header .top-right-menu .top-right-info .dropdown-menu {
