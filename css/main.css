@@ -180,9 +180,7 @@ h5 {
 }
 
 p {
-    margin-bottom: 10px;
-    margin-top: 5px;
-    line-height: 1.7em;
+    line-height: 2.0em;
     padding-left: 20px;
 }
 
@@ -215,8 +213,7 @@ ol, ul {
 }
 
 ol li, ul li {
-    margin: 0 0 .2em 0;
-    line-height: 1.6em;
+    line-height: 2.0em;
 }
 
 ol ol, ol ul, ul ol, ul ul {
