@@ -10,7 +10,7 @@ header: 根据快速导航到相应的文章
         {% for post in site.posts %}
         <li style="width: 100%">
             <div class="post-list__post-title post-title" style="padding:6px 6px 6px 6px">
-                <a href="{{ post.url }}" title="访问 {{ post.title }}">{{ post.title }}</a>
+                <a href="{{ post.url }}" title="访问 {{ post.title }}" target="content-wrapper">{{ post.title }}</a>
             </div>
             <p class="excerpt">{{ post.content | strip_html | strip_newlines | truncate: 250 }}&hellip;</p>
             <div style="display: block;margin: .7em 0 0 0;font-size: .9em;color: #c7c7c7;">
