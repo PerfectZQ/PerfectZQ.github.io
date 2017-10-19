@@ -123,7 +123,7 @@ h1 {
     margin-top: 5px;
     background: #B9D3EE;
     box-shadow: 0px 5px 5px #9FB6CD;
-    border-left: 3px solid #1874CD;
+    border-left: 5px solid #1874CD;
     position: relative;
 }
 
@@ -138,7 +138,7 @@ h2 {
     margin-top: 5px;
     background: #B9D3EE;
     box-shadow: 0px 5px 5px #9FB6CD;
-    border-left: 6px solid #1874CD;
+    border-left: 5px solid #1874CD;
     position: relative;
 }
 
@@ -154,7 +154,7 @@ h3 {
     background: #B9D3EE;
     /*0px right, 5px botton, 5px fuzzy*/
     box-shadow: 0px 5px 5px #9FB6CD;
-    border-left: 9px solid #1874CD;
+    border-left: 5px solid #1874CD;
     position: relative;
 }
 
@@ -169,7 +169,7 @@ h4 {
     margin-top: 5px;
     background: #B9D3EE;
     box-shadow: 0px 5px 5px #9FB6CD;
-    border-left: 12px solid #1874CD;
+    border-left: 5px solid #1874CD;
     position: relative;
 }
 
