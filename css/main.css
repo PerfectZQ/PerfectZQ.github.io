@@ -113,7 +113,7 @@ h3,
 h4,
 h5,
 h1 {
-    font-size: 18px;
+    font-size: 30px;
     font-weight: lighter;
     text-indent: 4px;
     border-radius: 4px;
@@ -121,9 +121,6 @@ h1 {
     line-height: 100%;
     margin-bottom: 20px;
     margin-top: 5px;
-    background: #B9D3EE;
-    box-shadow: 0px 5px 5px #9FB6CD;
-    border-left: 5px solid #1874CD;
     position: relative;
 }
 
