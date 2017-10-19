@@ -113,7 +113,8 @@ h3,
 h4,
 h5,
 h1 {
-    font-size: 1.4em;
+    font-size: 18px;
+    font-weight: lighter;
     text-indent: 4px;
     border-radius: 4px;
     padding: 10px 15px;
@@ -122,12 +123,13 @@ h1 {
     margin-top: 5px;
     background: #B9D3EE;
     box-shadow: 0px 5px 5px #9FB6CD;
-    border-left: 6px solid #1874CD;
+    border-left: 3px solid #1874CD;
     position: relative;
 }
 
 h2 {
-    font-size: 1.3em;
+    font-size: 18px;
+    font-weight: lighter;
     text-indent: 4px;
     border-radius: 4px;
     padding: 10px 15px;
@@ -141,7 +143,8 @@ h2 {
 }
 
 h3 {
-    font-size: 1.2em;
+    font-size: 18px;
+    font-weight: lighter;
     text-indent: 4px;
     border-radius: 4px;
     padding: 10px 15px;
@@ -151,12 +154,13 @@ h3 {
     background: #B9D3EE;
     /*0px right, 5px botton, 5px fuzzy*/
     box-shadow: 0px 5px 5px #9FB6CD;
-    border-left: 6px solid #1874CD;
+    border-left: 9px solid #1874CD;
     position: relative;
 }
 
 h4 {
-    font-size: 1.1em;
+    font-size: 18px;
+    font-weight: lighter;
     text-indent: 4px;
     border-radius: 4px;
     padding: 10px 15px;
@@ -165,15 +169,15 @@ h4 {
     margin-top: 5px;
     background: #B9D3EE;
     box-shadow: 0px 5px 5px #9FB6CD;
-    border-left: 6px solid #1874CD;
+    border-left: 12px solid #1874CD;
     position: relative;
 }
 
 h5 {
-    margin-top: 1.0em;
+    margin-top: 18px;
     margin-bottom: .5em;
-    font-family: "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
     font-size: 1em;
+    font-weight: lighter;
     color: #333333;
     -webkit-font-smoothing: antialiased;
 }
