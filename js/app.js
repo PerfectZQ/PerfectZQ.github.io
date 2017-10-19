@@ -22,15 +22,7 @@ $(function () {
      * header 头像点击事件
      */
     $("div.left-avatar").click(function () {
-        $("#dropdown-menu").slideToggle('slow');
-    });
-
-    $("div.top-right-menu").on("mouseover",function(){
-        $("#dropdown-menu").slideDown('normal');
-    });
-
-    $("div.#dropdown-menu").on("mouseout",function(){
-        $("#dropdown-menu").slideUp('normal');
+        $("#dropdown-menu").slideToggle('normal');
     });
 
 });
