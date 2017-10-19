@@ -1,16 +1,18 @@
 $(function () {
 
-    // $("body").niceScroll({
-    //     cursorcolor: "#B9D3EE",
-    //     enablescrollonselection: true
-    // });
+    $("body").niceScroll({
+        cursorcolor: "#B9D3EE",
+        enablescrollonselection: true,
+        nativeparentscrolling: true
+    });
 
-    // $("pre").niceScroll({
-    //     cursorcolor: "#B9D3EE",
-    //     // 当只有水平滚动时可以用鼠标滚轮来滚动，如果设为false则不支持水平滚动，如果设为auto支持双轴滚动
-    //     oneaxismousemode: "auto",
-    //     enablescrollonselection: true
-    // });
+    $("pre").niceScroll({
+        cursorcolor: "#B9D3EE",
+        // 当只有水平滚动时可以用鼠标滚轮来滚动，如果设为false则不支持水平滚动，如果设为auto支持双轴滚动
+        oneaxismousemode: "auto",
+        enablescrollonselection: true,
+        nativeparentscrolling: true
+    });
 
     /**
      * 侧页一级目录点击事件
