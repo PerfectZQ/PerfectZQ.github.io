@@ -1908,9 +1908,10 @@ body {
     background-color: #F3F3F3;
     background-clip: padding-box;
     border: 1px solid rgba(126, 142, 159, 0.1);
-    border-radius: 3px;
+    border-radius: 5px;
     display: none;
     padding-top: 10px;
+    margin-left: 12px;
 }
 
 .header .top-right-menu #dropdown-menu .dropdown-item {
