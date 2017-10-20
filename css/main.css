@@ -1789,7 +1789,7 @@ body {
 
 /*定义滚动条*/
 ::-webkit-scrollbar {
-    width: 3px;
+    width: 5px;
     height: 7px;
 }
 
@@ -1803,8 +1803,17 @@ body {
     background: transparent;
 }
 
-/*定义滑块 内阴影+圆角 鼠标放在上面时触发*/
-::-webkit-scrollbar-thumb:hover {
+body::-webkit-scrollbar-thumb {
+    transition-property: background;
+    transition-duration: 1s;
+    transition-delay: 1s;
+    border-radius: 10px;
+    background: transparent;
+    background: #B9D3EE;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
     transition-property: background;
     transition-duration: 1s;
     transition-delay: 1s;
@@ -1813,6 +1822,17 @@ body {
     background: #424242;
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
+
+/*定义滑块 内阴影+圆角 鼠标放在上面时触发*/
+/*::-webkit-scrollbar-thumb:hover {*/
+    /*transition-property: background;*/
+    /*transition-duration: 1s;*/
+    /*transition-delay: 1s;*/
+    /*border-radius: 10px;*/
+    /*background: transparent;*/
+    /*background: #424242;*/
+    /*-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);*/
+/*}*/
 
 /*::-webkit-scrollbar-thumb:window-inactive {*/
 /*background: #3A4651;*/
