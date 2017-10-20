@@ -1810,7 +1810,8 @@ body {
 
 body::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: #e8f2fb;
+    background: #B9D3EE;
+    opacity: 0.8;
 }
 
 /*定义滑块 内阴影+圆角 鼠标放在上面时触发*/
