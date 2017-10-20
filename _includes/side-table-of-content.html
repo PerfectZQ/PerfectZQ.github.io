@@ -8,14 +8,14 @@
         <nav class="menu" style="width: 100%">
             <ul class="nav metismenu" id="sidebar-menu">
 
-                {% assign all_categories = site.pages | map: "title" %}
 
-                {% for item in all_categories %}
-                {{ item }}
+                {% assign category_names = '' %}
+
+                {% for category in site.categories %}
+                    {% if category.first != 'articles' %}
+                        {% assign category_names = category_names | append: category.first%}
+                    {% endif %}
                 {% endfor %}
-
-
-                {% assign category_names = site.categories | map: "first" %}
 
                 {{ category_names | sort | join: ", " }}
 
