@@ -1791,6 +1791,10 @@ body {
     z-index: 15;
 }
 
+/**
+    webkit内核
+ */
+
 /*定义滚动条*/
 ::-webkit-scrollbar {
     width: 6px;
@@ -1818,20 +1822,49 @@ body::-webkit-scrollbar-thumb {
     opacity: 0.8;
 }
 
-/*定义滑块 内阴影+圆角 鼠标放在上面时触发*/
-/*::-webkit-scrollbar-thumb:hover {*/
-/*transition-property: background;*/
-/*transition-duration: 1s;*/
-/*transition-delay: 1s;*/
-/*border-radius: 10px;*/
-/*background: transparent;*/
-/*background: #424242;*/
-/*-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);*/
-/*}*/
+/**
+    o 内核
+ */
+.sidebar-container .-o-scrollbar{
+    -moz-appearance: none !important;
+    background: rgba(0,255,0,0) !important;
+}
+.sidebar-container::-o-scrollbar-button    {
+    background-color:rgba(0,0,0,0);
+}
+.sidebar-container::-o-scrollbar-track     {
+    background-color:rgba(0,0,0,0);
+}
+.sidebar-container::-o-scrollbar-track-piece {
+    background-color:rgba(0,0,0,0);
+}
+.sidebar-container::-o-scrollbar-thumb{
+    background-color:rgba(0,0,0,0);
+}
+.sidebar-container::-o-scrollbar-corner {
+    background-color:rgba(0,0,0,0);
+}
+.sidebar-container::-o-scrollbar-resizer  {
+    background-color:rgba(0,0,0,0);
+}
 
-/*::-webkit-scrollbar-thumb:window-inactive {*/
-/*background: #3A4651;*/
-/*}*/
+/**
+ IE 10+
+ */
+
+.sidebar-container{
+    -ms-scroll-chaining: chained;
+    -ms-overflow-style: none;
+    -ms-content-zooming: zoom;
+    -ms-scroll-rails: none;
+    -ms-content-zoom-limit-min: 100%;
+    -ms-content-zoom-limit-max: 500%;
+    -ms-scroll-snap-type: proximity;
+    -ms-scroll-snap-points-x: snapList(100%, 200%, 300%, 400%, 500%);
+    -ms-overflow-style: none;
+    overflow: auto;
+}
+
 
 /* 侧页目录 --end */
 
