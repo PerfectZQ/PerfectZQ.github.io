@@ -9,15 +9,9 @@
             <ul class="nav metismenu" id="sidebar-menu">
 
 
-                {% assign category_names = '' %}
 
-                {% for category in site.categories %}
-                    {% if category.first != 'articles' %}
-                        {% assign category_names = category_names | append: category.first%}
-                    {% endif %}
-                {% endfor %}
 
-                {{ category_names | sort | join: ", " }}
+                {{ site.categories | sort_natural  | join: ", " }}
 
 
                 {% for category in site.categories %}
