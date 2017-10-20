@@ -14,7 +14,7 @@ Windows版本文件下载清单以及配置步骤：
 * 添加文件 `tnsnames.ora`
 * 配置环境变量 
 
-```
+```aconf
 TNS_ADMIN=D:\Oracle\instantclient_11_2
 NLS_LANG=SIMPLIFIED CHINESE_CHINA.ZHS16GBK #设置oracle的语言
 ```
@@ -27,7 +27,7 @@ Mac版本文件下载清单以及配置步骤：
 * 添加文件 `tnsnames.ora`到`/opt/oracle/instantclient_12_1/network/admin`下
 * 配置环境变量
 
-```
+```shell
 vim ~/.bash_profile
 
 # Setting PATH for oracle_instant_12_1
@@ -45,7 +45,7 @@ source ~.bash_profile
 
 * Add links to $HOME/lib or /usr/local/lib to enable applications to find the libraries. For example, OCI based applications could do:
 
-```
+```shell
 $ cd /opt/oracle/instantclient_12_1
 $ ln -s libclntsh.dylib.12.1 libclntsh.dylib
 # OCCI programs will additionally need:
@@ -55,12 +55,12 @@ $ ln -s ~/instantclient_12_1/libclntsh.dylib ~/lib/
 ```
 * 验证是否安装成功
 
-```
+```shell
 sqlplus username/password@localhost:1521/orcl
 ```
 
 ### 下载 cx_Oracle
-```
+```shell
 $ pip install cx_Oracle
 ```
 或者 [安装文件的下载地址](https://sourceforge.net/projects/cx-oracle/?source=directory)
@@ -75,13 +75,13 @@ $ pip install cx_Oracle
 Note: Custom OCI applications, such as those that bundle Instant Client, may want to link with -rpath set to the directory containing Instant Client 12.1 instead of relying on libraries being in ~/lib.
 
 在MAC系统下出现下面的问题时
-```
+```console
 ImportError: dlopen(/Library/Python/2.7/site-packages/cx_Oracle.so, 2): Library not loaded: @rpath/libclntsh.dylib.12.1
       Referenced from: /Library/Python/2.7/site-packages/cx_Oracle.so
       Reason: image not found
 ```
 手动将@rpath对应的LC_RPATH添加到cx_Oracle.so中，[出现上面的问题的详细解释](http://blog.csdn.net/u013613428/article/details/77045360)
-```
+```shell
 $ install_name_tool -add_rpath /opt/oracle/instantclient_12_1/ /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/cx_Oracle.so 
 ```
 ### cx_Oracle 的使用

@@ -6,7 +6,7 @@ tag: Oracle
 
 ### 文件校验
 　　为了避免导入时候出现问题，先校验下文件是否在传输过程中出现问题，如果源文件和传输后的文件md5码是相同的可以确认文件在传输中没有出现问题
-```
+```shell
 [oracle@dbhost impbak]$ md5sum GDI_SI_EPG_HIS_T.dmp
 c30715d195627b07693ccf5e0a6249dd  GDI_SI_EPG_HIS_T.dmp
 ```
@@ -17,7 +17,7 @@ c30715d195627b07693ccf5e0a6249dd  GDI_SI_EPG_HIS_T.dmp
 　　导入dmp文件，首先确认dmp文件导出的方式，是导出的整个数据库还是只导出一张表。然后需要知道表空间的名称，导出的用户名和密码。
 
 1. 创建表空间
-```
+```sql
 --表空间名称
 create tablespace TS_SI_GATHER_SAFEDATA
 --文件存放地址 --size表空间的初始大小
@@ -33,26 +33,26 @@ segment space management auto;
 select * from dba_data_files
 ```
 2. 创建用户
-```
+```sql
 --创建用户
 create user DTSS_DB_USER identified by "DTSS_DB_USER"
 default tablespace "TS_SI_GATHER_SAFEDATA"
 temporary tablespace "TEMP"
 ```
 3. 为用户分配权限
-```
+```sql
 grant  connect,resource,dba to DTSS_DB_USER ;
 commit;
 ```
 4. 导入dmp文件
-```
+```sql
 # username/password@servicename， commit=y即便出了问题之后，之前成功的数据都会写到数据库中
 imp DTSS_DB_USER/DTSS_DB_USER@lhytbill  fromuser=DTSS_DB_USER touser=DTSS_DB_USER file=/home/oracle/impbak/GDI_SI_EPG_HIS_T.dmp buffer=40960000 commit=y
 ```
 
 ### imp命令详解
 
-```
+```shell
 # 查看imp命令的关键词（属性）
 imp -help
 

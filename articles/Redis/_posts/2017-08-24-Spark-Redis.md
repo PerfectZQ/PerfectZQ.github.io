@@ -12,24 +12,24 @@ spark-redis 是为了让spark更简单的操作redis的各种集合
 [github地址](https://github.com/RedisLabs/spark-redis)
 ### 下载并安装 Maven
 解压
-```
+```shell
 sudo mv -rf apache-maven-3.5.0-bin.tar.gz /usr/local/
 sudo tar -zxvf apache-maven-3.5.0-bin.tar.gz 
 rm apache-maven-3.5.0-bin.tar.gz
 ```
 配置maven环境变量
-```
+```shell
 MAVEN_HOME=/usr/local/apache-maven-3.5.0
 export MAVEN_HOME
 export PATH=${PATH}:${MAVEN_HOME}/bin
 source ~/.bash_profile
 ```
 验证maven是否安装成功
-```
+```shell
 mvn -v
 ```
 显示如下
-```
+```console
 Apache Maven 3.5.0 (ff8f5e7444045639af65f6095c62210b5713f426; 2017-04-04T03:39:06+08:00)
 Maven home: /usr/local/apache-maven-3.5.0
 Java version: 1.8.0_144, vendor: Oracle Corporation
@@ -41,11 +41,11 @@ OS name: "mac os x", version: "10.12.6", arch: "x86_64", family: "mac"
 [https://github.com/RedisLabs/spark-redis](https://github.com/RedisLabs/spark-redis)
 
 或者
-```
+```shell
 git clone https://github.com/RedisLabs/spark-redis.git
 ```
 ### 用Maven将源码编译打包
-```
+```shell
 cd spark-redis
 mvn clean package -DskipTests
 ```

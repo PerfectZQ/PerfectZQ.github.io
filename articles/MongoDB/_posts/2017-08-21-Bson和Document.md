@@ -9,14 +9,14 @@ Java Driver 中有这么几个类和接口来表示Bson Document
 虽然对于用户来说，一般使用驱动的高阶API，不使用这个类，但是BsonDocument类对于驱动程序在内部管理文档至关重要。BsonDocument类可以表示任何具有安全类型的复杂的动态结构化文档。
 
 例1：
-```
+```javascript
 { 
   "a" : "MongoDB", 
   "b" : [ 1, 2 ] 
 }
 ```
 可以用BsonDocument表示为：
-```
+```java
 new BsonDocument().append("a", new BsonString("MongoDB"))
                   .append("b", new BsonArray(Arrays.asList(new BsonInt32(1), new BsonInt32(2))));
 ```
@@ -26,7 +26,7 @@ BsonDocument实现了类型安全的Map<String,BsonValue>接口，所以即便�
 大多数的应用程序会用Document类来替代BsonDocument类，Document类和BsonDocument类相似，也可以表示任何复杂的动态结构化文档，但是对于类型要求不像BsonDocument那么严格。Document实现的是Map<String,Object>接口，所以的对类型的要求更宽泛。
 
 例1可以表示为：
-```
+```java
 new Document().append("a", "MongoDB")
               .append("b", Arrays.asList(1, 2));
 ```
@@ -60,7 +60,7 @@ new Document().append("a", "MongoDB")
 为了将上面这些全部结合在一起，驱动中有一个小而强大的接口Bson。任何代表BSON文档的类，不管是driver中包含的（例如上面的所说的Document等三种），还是第三方的包，都要实现Bson这个接口，这样就可以在高阶API中任何需要 BSON Document 的地方使用，因此可以根据给定的需要互换使用。
 
 例如：
-```
+```java
 // 下面代表的是一个意思
 collection.find(new BsonDocument("x", new BsonInt32(1)));
 collection.find(new Document("x", 1));

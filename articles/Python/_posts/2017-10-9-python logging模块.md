@@ -14,7 +14,7 @@ logging.error('error message')
 logging.critical('critical message')  
 ```
 　　输出结果
-```
+```console
 WARNING:root:warning message
 ERROR:root:error message
 CRITICAL:root:critical message
@@ -127,7 +127,7 @@ logger4.info('logger4 info message')
 
 ```
 　　输出结果
-```
+```console
 logger1 debug message
 logger2 critical message
 logger2 critical message
@@ -170,7 +170,7 @@ logger1.info('message...')
 logger2.info('message...')
 ```
 　　输出结果格式: `%(asctime)s - %(name)s - %(levelname)s - %(message)s`
-```
+```console
 2017-10-09 14:33:21,621 - myLogger - INFO - message...
 2017-10-09 14:33:21,621 - myLogger - INFO - message...
 ```
@@ -223,7 +223,7 @@ logger.addFilter(filter)
 
 ### 除了在程序中直接设置logger属性，还可以在配置文件中配置
 例如logging.conf
-```
+```properties
 [loggers]  
 keys=root,simpleExample  
   

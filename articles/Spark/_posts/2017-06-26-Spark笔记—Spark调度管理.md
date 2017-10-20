@@ -74,7 +74,7 @@ tag: Spark
 　　Spark调度还支持以轮询的方式让不同的Job共享集群资源，此种方式称为公平调度。这种方式下，所有Job获得一个大约相当的集群资源。
 
 　　启用公平调度器的方式：
-```
+```scala
 val conf = new SparkConf()
 conf.set("spark.scheduler.mode","FAIR")
 ```
@@ -82,7 +82,7 @@ conf.set("spark.scheduler.mode","FAIR")
 　　Spark的公平调度器参考Hadoop的公平调度器，支持Job分组进入调度池，每个调度池可以设置不同的调度参数，同一分组内部按照用户均等分配资源，而不是按照Job平均共享资源。
 
 　　新提交的任务通过下面的方式配置调度池
-```
+```scala
 val sc = new SparkContext()
 sc.setLocalProperty("spark.scheduler.pool","poolname")
 ```
@@ -91,7 +91,7 @@ sc.setLocalProperty("spark.scheduler.pool","poolname")
 　　设置调度池的属性之后，该线程中，被提交的全部Jobs(RDDs的save、collect、count等)都使用该Pool的名称。这样使得一个线程运行同一个用户的多个Jobs变得容易。
 
 　　清除一个线程关联的池，调用
-```
+```scala
 sc.setLocalProperty("spark.scheduler.pool",null)
 ```
 #### 配置公平调度池属性
@@ -105,7 +105,7 @@ sc.setLocalProperty("spark.scheduler.pool",null)
 这些属性通过xml文件配置，默认文件类似于conf/fairscheduler.xml.template。要修改默认文件使用`conf.set("spark.scheduler.allocation.file","path/fileName")`。
 
 XML文件格式如下：
-```
+```xml
 <allocations>
   <pool name="production">
     <schedulingMode>FAIR</schedulingMode>

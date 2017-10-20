@@ -5,14 +5,14 @@ tag: Spark-Mongo-Connector
 ---
 
 ### sbt 地址
-```
+```sbt
 libraryDependencies += "org.mongodb.spark" % "mongo-spark-connector_2.11" % "2.0.0"
 ```
 ### 写配置
 
 　　在SparkConf或者$SPARK_HOME/conf/spark-default.conf 文件中将uri、database、collection必选的配置项配置好，如下
 
-```
+```scala
 package com.neusoft.apps
 
 import com.mongodb.spark.{MongoConnector, MongoSpark}
@@ -30,7 +30,7 @@ val conf = new SparkConf()
 val sparkSession = SparkSession.builder().config(conf).appName("learn something").getOrCreate()
 ```
 　　当后面要读写别的collection时使用WriteConfig覆盖即可
-```
+```scala
 val writeVectorMap = new HashMap[String, String]
 writeVectorMap += ("collection" -> CollectionDict.VISIT_VECTOR)
 writeVectorMap += ("writeConcern.w" -> "majority")
@@ -40,7 +40,7 @@ val writeVectorConfig = WriteConfig(writeVectorMap, Some(WriteConfig(sparkSessio
 MongoSpark.save(similarityDocRDD, writeVectorConfig)
 ```
 ### 读配置
-```
+```scala
 package com.neusoft.apps
 
 import com.mongodb.spark.{MongoConnector, MongoSpark}
@@ -58,7 +58,7 @@ val conf = new SparkConf()
 val sparkSession = SparkSession.builder().config(conf).appName("learn something").getOrCreate()
 ```
 　　当后面要读写别的collection时使用ReadConfig覆盖即可
-```
+```scala
  val readVectorMap = new HashMap[String, String]
  readVectorMap += ("collection" -> CollectionDict.VISIT_REAL_DATA)
  readVectorMap += ("readPreference.name" -> "secondaryPreferred")
