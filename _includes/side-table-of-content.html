@@ -10,7 +10,7 @@
 
                 {{ site.categories | sort }}
 
-                {% for category in categories %}
+                {% for category in site.categories %}
                 {% if category.first != 'articles' %}
                 <li class="first_content">
                     <a href="javascript:void(0);">
