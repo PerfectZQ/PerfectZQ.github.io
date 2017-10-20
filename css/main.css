@@ -1914,11 +1914,11 @@ body::-webkit-scrollbar-thumb {
     width: 150px;
     z-index: 1000;
     font-size: 1rem;
-    color: #3a4651;
+    color: #333333;
     text-align: left;
-    background-color: #F3F3F3;
+    background-color: #F6F6F6;
     background-clip: padding-box;
-    border: 1px solid rgba(126, 142, 159, 0.1);
+    border: 1px solid #DDDDDD;
     border-radius: 5px;
     display: none;
     padding-top: 10px;
@@ -1933,7 +1933,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .header .top-right-menu #dropdown-menu .dropdown-item:hover {
-    color: #2d363f;
+    color: #B9D3EE;
 }
 
 /* header头 --end */
