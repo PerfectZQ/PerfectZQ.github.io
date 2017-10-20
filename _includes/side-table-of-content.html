@@ -8,27 +8,27 @@
         <nav class="menu" style="width: 100%">
             <ul class="nav metismenu" id="sidebar-menu">
 
-                {{ site.categories | sort }}
+                {{ site.categories | sort: 'first' }}
 
                 {% for category in site.categories %}
-                {% if category.first != 'articles' %}
-                <li class="first_content">
-                    <a href="javascript:void(0);">
-                        <i class="fa fa-pencil-square-o"></i>
-                        {{ category.first }}
-                        <!--<i class="fa arrow"></i>-->
-                    </a>
-                    <ul class="disappear">
-                        {% for post in category.last %}
-                        <li class="second_content">
-                            <a href="{{ site.baseurl}}{{ post.url }}">
-                                {{ post.title }}
-                            </a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </li>
-                {% endif %}
+                    {% if category.first != 'articles' %}
+                    <li class="first_content">
+                        <a href="javascript:void(0);">
+                            <i class="fa fa-pencil-square-o"></i>
+                            {{ category.first }}
+                            <!--<i class="fa arrow"></i>-->
+                        </a>
+                        <ul class="disappear">
+                            {% for post in category.last %}
+                            <li class="second_content">
+                                <a href="{{ site.baseurl}}{{ post.url }}">
+                                    {{ post.title }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </nav>
