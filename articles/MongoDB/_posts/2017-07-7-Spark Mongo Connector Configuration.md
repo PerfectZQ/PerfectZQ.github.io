@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Spark-Mongo-Connector Configuration
+title: Spark-Mongo-Connector
 tag: Spark-Mongo-Connector
 ---
 

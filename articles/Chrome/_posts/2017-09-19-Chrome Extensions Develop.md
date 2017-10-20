@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Chrome Extensions Develop
-tag: JavaScript
+tag: Chrome
 ---
 
 ### 需求

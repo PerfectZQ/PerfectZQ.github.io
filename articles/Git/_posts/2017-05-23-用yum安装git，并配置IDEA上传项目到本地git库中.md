@@ -7,28 +7,28 @@ tag: Git
 ## 用yum安装git，并配置IDEA上传项目到本地git库中
 	
 ### 1）升级yum系统(当时未升级)
-```
+```shell
 yum update
 ```
 ### 2) 卸载旧版本git（如果有的话）
-```
+```shell
 yum remove git -y	
 ```
 ### 3)安装相关的依赖包
-```
+```shell
 yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel gcc perl-ExtUtils-MakeMaker
 # -bash: wget: command not found 解决方法
 yum -y install wget
 ```
 
 ### 4)下载Git源码并解压
-```
+```shell
 # git各版本源码下载地址：https://www.kernel.org/pub/software/scm/git
 wget https://www.kernel.org/pub/software/scm/git/git-2.11.1.tar.gz -P /usr/zhangqiang/git
 cd /usr/zhangqiang/git && tar -zxvf git-2.11.1.tar.gz && cd git-2.11.1
 ```
 ### 5)编译安装
-``` 
+```shell
 # prefix的作用是指定安装目录，用了—prefix选项的另一个好处是卸载软件或移植软件。
 # 当某个安装的软件不再需要时，只须简单的删除该安装目录，就可以把软件卸载得干干净净；
 # 移植软件只需拷贝整个目录到另外一个机器即可（相同的操作系统）。
@@ -36,7 +36,7 @@ cd /usr/zhangqiang/git && tar -zxvf git-2.11.1.tar.gz && cd git-2.11.1
 make prefix=/usr/git all && make prefix=/usr/git install
 ```
 ###	6)配置git环境变量 
-```
+```shell
 echo "export PATH=$PATH:/usr/git/bin" >> /etc/bashrc && source /etc/bashrc
 # 或者	
 vim /etc/bashrc
@@ -45,11 +45,11 @@ export PATH=/usr/git/bin:$PATH
 source /etc/bashrc 
 ```
 ### 7)验证是否安装成功 
-```		
+```shell	
 git --version(提示版本号说明安装成功)
 ```
 ###	8)基本配置 
-```
+```shell
 git config --global user.name 'zhangqiang' 
 git config --global user.email 'intelli_zq@163.com'
 # 不配置下面的选项可能会出现下面的警告
@@ -60,21 +60,21 @@ git config --global user.email 'intelli_zq@163.com'
 git config --global core.autocrlf false
 ```
 ###	9)新建git用户
-```
+```shell
 useradd git
 ```
 ###	10)给新建的用户赋予sudo权限
-```	
+```shell
 visudo || vi /etc/sudoers
 # 添加下面的代码，保存退出
 git     ALL=(ALL)       NOPASSWD: ALL
 ```
 ### 11)在git用户下生成.ssh文件夹
-```
+```shell
 ssh-keygen -t rsa
 ```
 ###	12)创建git远程库并初始化
-```
+```shell
 mkdir sample.git
 cd sample.git
 # 在初始化远程仓库时最好使用 git --bare init   而不要使用：git init
@@ -84,29 +84,29 @@ cd sample.git
 git --bare init 
 ```
 ### 13)在客户端(windows)安装git下载地址 
-```
+```shell
 https://git-scm.com/download/win
 ```
 ###	14)运行windows git bash
-```	
+```shell
 ssh-keygen -t rsa -C "zhang_qiang_neu@neusoft.com"
 ```
 ### 15)将生成的密钥放在linux服务器上的 /home/git/.ssh/authorized_keys
-```		
+```shell		
 sudo cat /usr/zhangqiang/id_rsa.pub >> /home/git/.ssh/authorized_keys
 或者 scp id_rsa.pub git@10.4.120.83:.ssh/authorized_keys
 # 注：.ssh文件夹的权限应该是700, authorized_keys文件的权限应该是644
 ```
 ### 16)验证ssh
-```
+```shell
 ssh git@10.4.120.83
 ```
 ### 17)在IDEA上配置Git
-```
+```shell
 Settings(Ctrl+Alt+S) -> Version Control -> Git -> 设置Path to Git executable为git.exe所在的路径 
 ```
 ### 18)在windows上使用git bash提交变更到远程库	
-```
+```shell
 # 初始化git本地库
 git init
 # 是将当前文件夹下的所有文件添加到git的跟踪中，意思就是交给git经管，提交到本地库	
@@ -141,11 +141,11 @@ Settings -> Version Control -> Git -> SSH Executable 把 Built-in 改成 Native
 git status
 ```
 ###	19)右键idea项目中的src(之前add到git库的文件夹)，此时会有Git选项，可以通过此选项进行相关的操作
-```
+```shell
 如果没有Git选项，确认上面的操作无误后，idea菜单栏，VCS -> Enable Version Control Integration... -> 下拉框选 Git
 ```
 ###	20)禁止git用户的shell登陆
-```
+```shell
 vi /etc/passwd 
 将 git:x:501:501::/home/git:/bin/bash 修改为 git:x:501:501::/home/git:/usr/git/bin/git-shell
 ```

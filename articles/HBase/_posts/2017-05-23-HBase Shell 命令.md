@@ -6,7 +6,7 @@ tag: HBase
 
 ### 基本命令
 
-{% highlight vim %}
+{% highlight shell %}
 # 安装完后可以在浏览器中输入下面的URL来测试安装是否成功：
 http://localhost:60010
 
@@ -22,7 +22,7 @@ hbase(main)> whoami
 
 ### 表管理
 
-{% highlight vim %}
+{% highlight shell %}
 # 1）查看有哪些表
 
     hbase(main)> list
@@ -61,7 +61,7 @@ hbase(main)> whoami
 
 ### 权限管理
 
-{% highlight vim %}
+{% highlight shell %}
 # 1）分配权限
 
     # 语法 : grant <user> <permissions> <table> <column family> <column qualifier> 参数后面用逗号分隔
@@ -89,7 +89,7 @@ hbase(main)> whoami
 
 ### 表数据的增删改查
 
-{% highlight vim %}
+{% highlight shell %}
 # 1）添加数据
 	
 	# 语法：put <table>,<rowkey>,<family:column>,<value>,<timestamp>
@@ -158,7 +158,7 @@ hbase(main)> whoami
 
 ### Region管理
 
-{% highlight vim %}
+{% highlight shell %}
 # 1）移动region
 	
 	# 语法：move 'encodeRegionName', 'ServerName'
@@ -196,7 +196,7 @@ hbase(main)> whoami
 
 ### 配置管理及节点重启
 
-{% highlight vim %}
+{% highlight shell %}
 # 1）修改hdfs配置
 	
 	# hdfs配置位置：/etc/hadoop/conf
