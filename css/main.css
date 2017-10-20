@@ -1789,7 +1789,7 @@ body {
 
 /*定义滚动条*/
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 6px;
     height: 7px;
 }
 
@@ -1810,8 +1810,7 @@ body {
 
 body::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: #B9D3EE;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    background: #e8f2fb;
 }
 
 /*定义滑块 内阴影+圆角 鼠标放在上面时触发*/
