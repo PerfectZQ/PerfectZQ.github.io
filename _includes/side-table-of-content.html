@@ -8,7 +8,9 @@
         <nav class="menu" style="width: 100%">
             <ul class="nav metismenu" id="sidebar-menu">
 
-                { { site.pages | sort: 'title', 'last' } }
+                {% assign my_array = "zebra, octopus, giraffe, Sally Snake" | split: ", " %}
+
+                {{ my_array | sort | join: ", " }}
 
                 {% for category in site.categories %}
                     {% if category.first != 'articles' %}
