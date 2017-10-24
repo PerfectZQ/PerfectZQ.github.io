@@ -1,6 +1,6 @@
 ---
 layout: post
-title: maven settings.xml详解
+title: Maven settings.xml详解
 tag: Maven
 ---
 
