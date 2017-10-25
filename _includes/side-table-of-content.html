@@ -8,8 +8,8 @@
         <nav class="menu" style="width: 100%">
             <ul class="nav metismenu" id="sidebar-menu">
 
-                {% assign categories = site.categories | reverse %}
-                {% for category in categories %}
+                {% assign cates = site.categories | reverse %}
+                {% for category in cates %}
                     {% if category.first != 'articles' %}
                     <li class="first_content">
                         <a href="javascript:void(0);">
