@@ -301,7 +301,7 @@ tbody td {
 }
 
 /* 第一列内容不换行 */
-tbody td:first-child {
+tbody td:first-child, tbody th:first-child {
     white-space: nowrap;
 }
 
@@ -1798,7 +1798,7 @@ html {
     background: transparent;
 }
 
- ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: #B9D3EE;
     opacity: 0.8;
