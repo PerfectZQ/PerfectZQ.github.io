@@ -47,12 +47,6 @@ q:before, q:after {
     content: none;
 }
 
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    vertical-align: middle;
-}
-
 body {
     width: 100%;
     *zoom: 1;
@@ -102,10 +96,6 @@ p a {
     margin-left: 4px;
     margin-right: 4px;
     text-decoration: underline;
-}
-
-li p{
-    padding-left: 0px;
 }
 
 a:hover {
@@ -193,6 +183,15 @@ p {
     padding-right: 20px;
 }
 
+li p{
+    padding-left: 0px;
+}
+
+li p.excerpt{
+    padding-left: 20px;
+}
+
+
 strong {
     font-weight: bold;
 }
@@ -279,6 +278,9 @@ pre code {
 }
 
 table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    vertical-align: middle;
     color: #333333;
     font-size: 1.0em;
     text-align: center;
@@ -301,9 +303,6 @@ th {
     padding: 0 15px 0 15px;
 }
 
-table thead tr th {
-    text-align: center;
-}
 
 /*
 th:first-child, td:first-child {
