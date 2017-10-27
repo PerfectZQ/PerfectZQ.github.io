@@ -301,23 +301,16 @@ th {
     padding: 0 15px 0 15px;
 }
 
-/*
-th:first-child, td:first-child {
-    padding: 0 15px 0 20px;
-}
-*/
-
 tbody td {
     font-size: 0.95em;
     border: 1px solid #363636;
     padding: 0 15px 0 15px;
 }
 
-/*
-td:last-child {
-    padding-right: 10px;
+tbody td:first-child{
+    white-space: nowrap;
 }
-*/
+
 /*pager start----------------*/
 .post-container
 .pager li {
