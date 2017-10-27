@@ -282,10 +282,6 @@ table {
     margin: 20px 0px 20px 0px;
 }
 
-thead, tbody {
-    vertical-align: middle;
-}
-
 thead tr:first-child {
     background-color: #E0EEEE;
     color: #363636;
