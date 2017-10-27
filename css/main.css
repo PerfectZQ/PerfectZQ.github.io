@@ -103,6 +103,10 @@ p a {
     text-decoration: underline;
 }
 
+li p{
+    padding-left: 0px;
+}
+
 a:hover {
     color: #0000CD;
     -o-transition: .5s;
@@ -185,6 +189,7 @@ h5 {
 p {
     line-height: 2.0em;
     padding-left: 20px;
+    padding-right: 20px;
 }
 
 strong {
@@ -1398,7 +1403,6 @@ body {
     color: #bbb;
     padding: 0px 0px 0px 0px;
     font-style: italic;
-    padding-left: 0px;
     font-size: 10px;
 }
 
