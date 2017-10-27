@@ -307,6 +307,7 @@ tbody td {
     padding: 0 15px 0 15px;
 }
 
+/* 第一列内容不换行 */
 tbody td:first-child{
     white-space: nowrap;
 }
