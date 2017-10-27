@@ -29,7 +29,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 body {
+    width: 100%;
+    *zoom: 1;
     line-height: 1;
+    font-family: "Microsoft YaHei", "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Hiragino Sans GB", "Hiragino Sans GB W3", "WenQuanYi Micro Hei", sans-serif;
+    font-size: 16px;
+    color: #333;
+    -webkit-font-smoothing: antialiased;
 }
 
 blockquote, q {
@@ -45,11 +51,6 @@ blockquote:before, blockquote:after {
 q:before, q:after {
     content: '';
     content: none;
-}
-
-body {
-    width: 100%;
-    *zoom: 1;
 }
 
 body:before, body:after {
@@ -68,13 +69,6 @@ html, body {
 html {
     height: 100%;
     max-height: 100%;
-}
-
-body {
-    font-family: "Microsoft YaHei", "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Hiragino Sans GB", "Hiragino Sans GB W3", "WenQuanYi Micro Hei", sans-serif;
-    font-size: 16px;
-    color: #333;
-    -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
@@ -1340,13 +1334,8 @@ input[type="tel"]:-ms-input-placeholder {
 /*头像效果-start*/
 
 html {
-    font-family: sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%
-}
-
-body {
-    margin: 0
 }
 
 .ih-item.circle.effect {
@@ -1809,7 +1798,7 @@ body {
     background: transparent;
 }
 
-body::-webkit-scrollbar-thumb {
+ ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: #B9D3EE;
     opacity: 0.8;
