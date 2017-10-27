@@ -287,7 +287,7 @@ table {
     line-height: 28px;
     border: 1px solid #363636;
     width: 90%;
-    margin: 20px 0px 20px 0px;
+    margin: 20px auto;
 }
 
 thead tr:first-child {
