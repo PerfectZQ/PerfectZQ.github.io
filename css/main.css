@@ -9,9 +9,9 @@
     font-family: 'DeliciousMocha';
     src: url('/font/DeliciousMocha.eot');
     src: url('/font/DeliciousMocha.eot') format('embedded-opentype'),
-         url('/font/DeliciousMocha.ttf') format('truetype'),
-         url('/font/DeliciousMocha.woff') format('woff'),
-         url('/font/DeliciousMocha.svg') format('svg');
+    url('/font/DeliciousMocha.ttf') format('truetype'),
+    url('/font/DeliciousMocha.woff') format('woff'),
+    url('/font/DeliciousMocha.svg') format('svg');
 }
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, output, ruby, section, summary, time, mark, audio, video {
@@ -276,10 +276,14 @@ table {
     color: #333333;
     font-size: 1.0em;
     text-align: center;
-    line-height: 40px;
+    line-height: 28px;
     border: 1px solid #363636;
     width: 90%;
-    margin: 20px auto;
+    margin: 20px 0px 20px 0px;
+}
+
+thead, tbody {
+    vertical-align: middle;
 }
 
 thead tr:first-child {
@@ -1824,34 +1828,40 @@ body::-webkit-scrollbar-thumb {
 /**
     o 内核
  */
-.sidebar-container .-o-scrollbar{
+.sidebar-container .-o-scrollbar {
     -moz-appearance: none !important;
-    background: rgba(0,255,0,0) !important;
+    background: rgba(0, 255, 0, 0) !important;
 }
-.sidebar-container::-o-scrollbar-button    {
-    background-color:rgba(0,0,0,0);
+
+.sidebar-container::-o-scrollbar-button {
+    background-color: rgba(0, 0, 0, 0);
 }
-.sidebar-container::-o-scrollbar-track     {
-    background-color:rgba(0,0,0,0);
+
+.sidebar-container::-o-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
 }
+
 .sidebar-container::-o-scrollbar-track-piece {
-    background-color:rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
 }
-.sidebar-container::-o-scrollbar-thumb{
-    background-color:rgba(0,0,0,0);
+
+.sidebar-container::-o-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0);
 }
+
 .sidebar-container::-o-scrollbar-corner {
-    background-color:rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
 }
-.sidebar-container::-o-scrollbar-resizer  {
-    background-color:rgba(0,0,0,0);
+
+.sidebar-container::-o-scrollbar-resizer {
+    background-color: rgba(0, 0, 0, 0);
 }
 
 /**
  IE 10+
  */
 
-.sidebar-container{
+.sidebar-container {
     -ms-scroll-chaining: chained;
     -ms-overflow-style: none;
     -ms-content-zooming: zoom;
@@ -1862,7 +1872,6 @@ body::-webkit-scrollbar-thumb {
     -ms-scroll-snap-points-x: snapList(100%, 200%, 300%, 400%, 500%);
     overflow: auto;
 }
-
 
 /* 侧页目录 --end */
 
