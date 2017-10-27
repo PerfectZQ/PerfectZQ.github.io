@@ -71,7 +71,7 @@ html {
 }
 
 body {
-    font-family: "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    font-family: "Microsoft YaHei", "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Hiragino Sans GB", "Hiragino Sans GB W3", "WenQuanYi Micro Hei", sans-serif;
     font-size: 16px;
     color: #333;
     -webkit-font-smoothing: antialiased;
@@ -249,7 +249,7 @@ code {
     background: #e8f2fb;
     border: 1px solid #c9e1f6;
     border-radius: 3px;
-    font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+    font-family: Consolas, Microsoft YaHei, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
     font-size: 1.0em;
     vertical-align: bottom;
     word-wrap: break-word;
@@ -261,7 +261,6 @@ pre {
     background: #f6f6f6;
     border: 1px solid #dddddd;
     border-radius: 3px;
-    font-family: Consolas, Microsoft YaHei, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
     font-size: .9em;
     font-weight: normal;
     line-height: 1.3em;
@@ -308,7 +307,7 @@ tbody td {
 }
 
 /* 第一列内容不换行 */
-tbody td:first-child{
+tbody td:first-child {
     white-space: nowrap;
 }
 
