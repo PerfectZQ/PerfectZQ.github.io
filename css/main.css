@@ -88,6 +88,10 @@ p a {
     color: #808080;
 }
 
+.content-play p a{
+    font-style: normal;
+}
+
 a:hover {
     color: #CCCCCC;
     -o-transition: .5s;
