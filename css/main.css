@@ -88,7 +88,7 @@ p a {
     color: #808080;
 }
 
-.content-play p a{
+.content-play p a {
     font-style: normal;
 }
 
@@ -98,6 +98,10 @@ a:hover {
     -ms-transition: .5s;
     -moz-transition: .5s;
     -webkit-transition: .5s;
+}
+
+.content-play p a:hover {
+    color: #FFFFFF;
 }
 
 h1,
