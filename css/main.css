@@ -1613,6 +1613,7 @@ html {
 /* 侧页目录--begin */
 
 .sidebar-header {
+    margin-top: 15px;
     height: 50px;
     padding: 15px 20px 15px 50px;
     color: #FFFFFF;
@@ -1688,7 +1689,7 @@ html {
 
 .sidebar .sidebar-container {
     position: absolute;
-    top: 80px;
+    top: 95px;
     bottom: 40px;
     width: 100%;
     left: 0;
