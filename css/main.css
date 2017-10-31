@@ -80,6 +80,10 @@ html {
     background: #f39ca4;
 }
 
+a {
+    text-decoration: none;
+}
+
 p a {
     margin-left: 4px;
     margin-right: 4px;
