@@ -7,7 +7,7 @@ tag: MongoDB
 　　MongoDB中是以Bson数据格式进行存储的，Json字符串没有办法直接写入MongoDB 可以将Json字符串转换成DBObject或者Document，然后写入MongoDB
 
 ### 1、将Json字符转换成com.mongodb.DBObject（准确的说是BasicDBObject）
-　　Scala版本:
+　　Scala版本：
 {% highlight scala %}
 import com.mongodb.DBObject
 import com.mongodb.casbah.{MongoClient, MongoCollection}
@@ -29,7 +29,7 @@ val bson: DBObject = JSON.parse(json).asInstanceOf[DBObject]
 collection.insert(bson) // mongodb casbah的写法
 {% endhighlight %}
 
-　　Java版本:
+　　Java版本：
 {% highlight java %}
 import com.mongodb.MongoClient;
 import com.mongodb.DBObject;
@@ -57,8 +57,7 @@ DBObject bson = (DBObject)JSON.parse(json);
 collection.insertOne(bson);
 {% endhighlight %}
 ### 2、将字符串转换成org.bson.Document
-#### Scala版本
-
+　　Scala版本：
 {% highlight Scala %}
 import org.bson.Document
 import com.mongodb.casbah.{MongoClient, MongoCollection}
@@ -88,8 +87,8 @@ val collection: MongoCollection = MongoClient("10.4.120.83")("dbName")("collecti
 
 collection.insert(document)
 {% endhighlight %}
-#### Java版本
 
+　　Java版本：
 {% highlight java %}
 import org.bson.Document;
 import com.mongodb.MongoClient;
