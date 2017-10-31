@@ -26,7 +26,8 @@ val collection: MongoCollection = MongoClient("10.4.120.83")("dbName")("collecti
            
 val bson: DBObject = JSON.parse(json).asInstanceOf[DBObject]
 
-collection.insert(bson) // mongodb casbah的写法
+// mongodb casbah的写法
+collection.insert(bson) 
 {% endhighlight %}
 
 　　Java版本：
