@@ -25,7 +25,7 @@ avatarTitle: Despacito
 avatarDesc: It's dark inside
 
 
-permalink: /:year/:month/:title/
+permalink: none
 # Format
 highlighter: rouge
 
