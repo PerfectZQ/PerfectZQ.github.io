@@ -141,7 +141,7 @@ h2 {
 
 h3 {
     font-size: 18px;
-    font-weight: lighter;
+    font-weight: bold;
     text-indent: 4px;
     padding: 10px 15px;
     line-height: 100%;
@@ -152,7 +152,7 @@ h3 {
 
 h4 {
     font-size: 16px;
-    font-weight: lighter;
+    font-weight: bold;
     text-indent: 4px;
     padding: 10px 15px;
     line-height: 100%;
