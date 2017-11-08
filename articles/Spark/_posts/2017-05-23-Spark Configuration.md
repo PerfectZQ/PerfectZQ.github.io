@@ -4,7 +4,7 @@ title: Configuration
 tag: Spark
 ---
 
-### Spark Configuration
+## Spark Configuration
 ```shell
 # Number of cores to use for the driver process, only in cluster mode.
 spark.driver.cores	1	
