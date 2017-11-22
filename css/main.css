@@ -92,6 +92,12 @@ p a {
     color: #808080;
 }
 
+li a {
+    margin-left: 4px;
+    margin-right: 4px;
+    color: #808080;
+}
+
 .content-play p a {
     font-style: normal;
 }
