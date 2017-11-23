@@ -98,6 +98,13 @@ li a {
     color: #808080;
 }
 
+/* post-list 标签 超链接*/
+li div a {
+    margin-left: 0;
+    margin-right: 0;
+    color: #808080;
+}
+
 .content-play p a {
     font-style: normal;
 }
