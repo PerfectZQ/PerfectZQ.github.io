@@ -3,6 +3,22 @@ layout: post
 title: 导入dmp文件
 tag: Oracle
 ---
+### Windows下配置Oracle instant client(独立客户端)，并配置PL/SQL
+　　下载地址：[http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html](http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html)
+
+　　最基本的是`instantclient-basic-windows.x64-12.2.0.1.0`，还包含其他组件`instantclient-tools-windows.x64-12.2.0.1.0`中包含导出/入数据相关的组件，exp/imp，`instantclient-sqlplus-win-x86-64-10.2.0.3.0.zip`，包含sqlplus，等等……
+
+　　配置环境变量:
+* NLS_LANG=AMERICAN_AMERICA.ZHS16GBK
+* ORACLE_HOME=D:\oracle\instantclient_12_2
+* TNS_ADMIND=D:\oracle\instantclient_12_2，如果这个不配置，PL/SQL会出TNS解析出错的问题
+* path中添加`%ORACLE_HOME%`
+
+　　在解压目录中添加tnsnames.ora、listener.ora两个文件
+
+　　在PL/SQL客户端中选首选项（Preferences），配置
+* Oracle Home 为 `D:\oracle\instantclient_11_2`
+* OCI library 为 `D:\oracle\instantclient_11_2\oci.dll`
 
 ### 文件校验
 　　为了避免导入时候出现问题，先校验下文件是否在传输过程中出现问题，如果源文件和传输后的文件md5码是相同的可以确认文件在传输中没有出现问题
@@ -84,19 +100,3 @@ DATA_ONLY              import only data (N)
 VOLSIZE                number of bytes in file on each volume of a file on tape
 ```
 
-### Windows下配置Oracle instant client(独立客户端)，并配置PL/SQL
-　　下载地址：[http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html](http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html)
-
-　　最基本的是`instantclient-basic-windows.x64-12.2.0.1.0`，还包含其他组件`instantclient-tools-windows.x64-12.2.0.1.0`中包含导出/入数据相关的组件，exp/imp，`instantclient-sqlplus-win-x86-64-10.2.0.3.0.zip`，包含sqlplus，等等……
-
-　　配置环境变量:
-* NLS_LANG=AMERICAN_AMERICA.ZHS16GBK
-* ORACLE_HOME=D:\oracle\instantclient_12_2
-* TNS_ADMIND=D:\oracle\instantclient_12_2，如果这个不配置，PL/SQL会出TNS解析出错的问题
-* path中添加`%ORACLE_HOME%`
-
-　　在解压目录中添加tnsnames.ora、listener.ora两个文件
-
-　　在PL/SQL客户端中选首选项（Preferences），配置
-* Oracle Home 为 `D:\oracle\instantclient_11_2`
-* OCI library 为 `D:\oracle\instantclient_11_2\oci.dll`
