@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 导入dmp文件
+title: 配置oracle并导入dmp文件
 tag: Oracle
 ---
 ### Windows下配置Oracle instant client(独立客户端)，并配置PL/SQL
