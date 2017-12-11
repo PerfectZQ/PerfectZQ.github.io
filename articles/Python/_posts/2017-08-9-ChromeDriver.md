@@ -4,7 +4,7 @@ title: ChromeDriver
 tag: Python
 ---
 ## 版本对应信息
-chromedriver版本	支持的Chrome版本
+chrome driver 版本支持的Chrome版本
 
 | 代码 | 说明 |
 | :--------: | :--------: |
