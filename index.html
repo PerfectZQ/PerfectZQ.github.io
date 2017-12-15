@@ -80,7 +80,7 @@ permalink: /index.html
 
 <!-- 内容首页 -->
 <div class="content_index">
-
+    <!-- 头部菜单栏 -->
     <header class="header">
         <div class="side-change-container">
             <button class="menu-btn">
@@ -108,15 +108,17 @@ permalink: /index.html
         </div>
     </header>
 
+    <!-- 侧页目录 -->
     {% include side-table-of-content.html %}
 
-    <div class="content-wrapper">
+    <!-- 内容页 -->
+    <iframe class="content-wrapper">
         <div class="content-wrapper__inner">
             <!-- 当本文件为模版时，引用此模版的页面的代码填充在这里 -->
             {{ content }}
             {% include footer.html %}
         </div>
-    </div>
+    </iframe>
 
 </div>
 
