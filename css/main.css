@@ -319,6 +319,14 @@ tbody td:first-child, tbody th:first-child {
     white-space: nowrap;
 }
 
+/* ============= index start ============= */
+.content_index {
+    display: none;
+    /* display: block;*/
+}
+
+/* ============= index end ============= */
+
 /*pager start----------------*/
 .post-container
 .pager li {
@@ -620,7 +628,7 @@ hr {
     -webkit-font-smoothing: antialiased;
 }
 
-.panel-cover {
+.welcome_index {
     display: block;
     position: fixed;
     z-index: 900;
@@ -1259,13 +1267,13 @@ input[type="tel"]:-ms-input-placeholder {
         display: none;
     }
 
-    .panel-cover {
+    .welcome_index {
         width: 100%;
         height: 100%;
         background-position: center center;
     }
 
-    .panel-cover.panel-cover--collapsed {
+    .welcome_index.panel-cover--collapsed {
         display: block;
         position: relative;
         height: auto;
@@ -1273,21 +1281,21 @@ input[type="tel"]:-ms-input-placeholder {
         background-position: center center;
     }
 
-    .panel-cover.panel-cover--collapsed .panel-main__inner {
+    .welcome_index.panel-cover--collapsed .panel-main__inner {
         display: block;
         padding: 70px 0 30px 0;
     }
 
-    .panel-cover.panel-cover--collapsed .panel-cover__logo {
+    .welcome_index.panel-cover--collapsed .panel-cover__logo {
         width: 60px;
         border-width: 2px;
     }
 
-    .panel-cover.panel-cover--collapsed .panel-cover__description {
+    .welcome_index.panel-cover--collapsed .panel-cover__description {
         display: none;
     }
 
-    .panel-cover.panel-cover--collapsed .panel-cover__divider {
+    .welcome_index.panel-cover--collapsed .panel-cover__divider {
         display: none;
         margin: 1em auto;
     }
