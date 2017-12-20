@@ -16,9 +16,10 @@ $(function () {
     });
 
     // 从其他页面跳转刷新页面执行。
-    // if (location.hash && location.hash == "#blog") {
-    //     toBlog();
-    // }
+    // if(location.href == '')
+    if (location.hash && location.hash == "#blog") {
+        toBlog();
+    }
 
 
 });
@@ -29,6 +30,7 @@ $(function () {
 function toBlog() {
     // if (location.hash && location.hash == "#blog") return;
     alert(location.hash)
+    alert(location.href)
     var welcome_index = $(".welcome_index");
     var content_index = $(".content_index");
     if (welcome_index.hasClass("disappear")) return;
