@@ -24,12 +24,6 @@ $(function () {
         content_index.removeClass("disappear");
     }
 
-    $("a.blog-button").click(function () {
-        // 如果目前已经在 #blog 直接返回
-        // if (location.hash && location.hash == "#blog") return;
-        window.location.href = "http://arch-long.cn/#blog";
-    });
-
 });
 
 /**
