@@ -25,6 +25,7 @@ $(function () {
  * 隐藏欢迎也，显示博客主页。
  */
 function toBlog() {
+    if(location.hash && location.hash == '#blog') return;
     var welcome_index = $(".welcome_index");
     var content_index = $(".content_index");
     if (welcome_index.hasClass("disappear")) return;
