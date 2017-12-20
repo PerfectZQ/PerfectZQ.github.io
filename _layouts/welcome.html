@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+{% include head.html %}
+
+<body>
+
+<!-- 首页 Welcome -->
+<div class="welcome_index">
+
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <!-- 头像效果-start -->
+                <div class="ih-item circle effect right_to_left">
+                    <a href="javascript:toPostContentIndex();" title="前往 {{ site.title }} 的主页">
+                        <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
+                        <div class="info">
+                            <div class="info-back">
+                                <!-- 头像里面的标题 -->
+                                <div class="back-title">
+                                    {% if site.avatarTitle %}
+                                    {{site.avatarTitle}}
+                                    {% endif %}
+                                </div>
+                                <!-- 头像里面的描述 -->
+                                <p>
+                                    {% if site.avatarDesc %}
+                                    {{site.avatarDesc}}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- 头像效果-end -->
+                <div class="panel-cover__title panel-title"><a href="javascript:toPostContentIndex();"
+                                                               title="link to homepage for {{ site.title }}"
+                >{{ site.title }}</a></div>
+                {% if site.subtitle %}
+                <span class="panel-cover__subtitle panel-subtitle">{{site.subtitle}}</span>
+                {% endif %}
+                <hr class="panel-cover__divider"/>
+                <p class="panel-cover__description">{{ site.description }}</p>
+                <hr class="panel-cover__divider panel-cover__divider--secondary"/>
+
+                {% if site.welcome_message %}
+                <p class="panel-cover__description">{{ site.welcome_message }}</p>
+                {% endif %}
+
+
+                <div class="navigation-wrapper">
+                    <div>
+                        <nav class="cover-navigation cover-navigation--primary">
+                            <ul class="navigation">
+                                <li class="navigation__item"><a href="javascript:toPostContentIndex();"
+                                                                title="{{site.blog_button.description}}"
+                                >{{site.blog_button.title}}</a>
+                                </li>
+                                {% for item in site.nav %}
+                                <li class="navigation__item"><a href="{{item.url}}"
+                                                                title="{{item.description}}">{{item.title}}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if site.cover_color %}
+    <div class="panel-cover--overlay cover-{{site.cover_color}}"></div>
+    {% else %}
+    <div class="panel-cover--overlay cover-disabled"></div>
+    {% endif %}
+</div>
+
+<!-- 内容首页 -->
+<div class="content_index">
+
+    <header class="header">
+        <div class="side-change-container">
+            <button class="menu-btn">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        <div class="top-right-menu">
+            <a class="top-right-info" href="#">
+                <div class="left-avatar">
+                    <span class="name">Zhang Qiang</span>
+                </div>
+            </a>
+            <div id="dropdown-menu" class="appear">
+                <a href="/post_list" title="{{site.blog_button.description}}" class="dropdown-item">
+                    <i class="fa fa-home" style="margin-right: 15px;font-size: 18px;color: #b9d3ee"></i>
+                    {{site.blog_button.title}}
+                </a>
+                {% for item in site.nav %}
+                <a href="{{item.url}}" title="{{item.description}}" class="dropdown-item">
+                    <i class="{{item.style}}" style="margin-right: 15px;font-size: 18px;color: #b9d3ee"></i>
+                    {{item.title}}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </header>
+
+    {% include side-table-of-content.html %}
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <!-- 当本文件为模版时，引用此模版的页面的代码填充在这里 -->
+            {{ content }}
+            {% include footer.html %}
+        </div>
+    </div>
+
+</div>
+
+
+{% include external.html %}
+
+</body>
+
+</html>
