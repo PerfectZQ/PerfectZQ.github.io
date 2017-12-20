@@ -3,6 +3,8 @@ $(function () {
     if (location.href == 'http://arch-long.cn/') {
         $(".welcome_index").css("display", "block");
         $(".content_index").css("display", "none");
+    } else {
+        $(".content_index").css("display", "block");
     }
 
     /**
