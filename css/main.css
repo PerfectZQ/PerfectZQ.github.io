@@ -242,7 +242,7 @@ ul {
 }
 
 nav.menu a {
-    line-height: normal;
+    line-height: 20px;
 }
 
 nav.menu ul, nav.menu li {
@@ -1685,7 +1685,7 @@ html {
 }
 
 .sidebar .nav {
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .sidebar .nav li a {
@@ -1754,7 +1754,7 @@ html {
 
 .sidebar .nav > li > a i {
     margin-right: 6px;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .sidebar .nav > li > a i.arrow {
@@ -1772,7 +1772,7 @@ html {
 .sidebar .nav > li > ul > li a {
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 50px;
+    padding-left: 45px;
     background-color: #333e48;
 }
 
