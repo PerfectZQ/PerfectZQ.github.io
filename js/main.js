@@ -16,10 +16,7 @@ $(function () {
     });
 
     // 从其他页面跳转刷新页面执行。
-    // if(location.href == '')
-    if (location.hash && location.hash == "#blog") {
-        toBlog();
-    }
+    if (location.href == 'http://arch-long.cn/' && location.hash && location.hash == "#blog") toBlog();
 
 
 });
@@ -28,9 +25,7 @@ $(function () {
  * 隐藏欢迎也，显示博客主页。
  */
 function toBlog() {
-    // if (location.hash && location.hash == "#blog") return;
-    alert(location.hash)
-    alert(location.href)
+    if (location.hash && location.hash == "#blog") return;
     var welcome_index = $(".welcome_index");
     var content_index = $(".content_index");
     if (welcome_index.hasClass("disappear")) return;
