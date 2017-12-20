@@ -1733,7 +1733,7 @@ html {
 .sidebar .nav > li > a {
     padding-top: 15px;
     padding-bottom: 15px;
-    padding-left: 25px;
+    padding-left: 35px;
     padding-right: 10px;
 }
 
@@ -1772,7 +1772,7 @@ html {
 .sidebar .nav > li > ul > li a {
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 45px;
+    padding-left: 35px;
     background-color: #333e48;
 }
 
