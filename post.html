@@ -1,0 +1,75 @@
+---
+permalink: /post.html
+---
+<!DOCTYPE html>
+<html>
+{% include head.html %}
+<body>
+<div class="main-post-list">
+
+    <ol class="post-list">
+        {% for post in site.posts %}
+        <li style="width: 100%">
+            <div class="post-list__post-title post-title" style="padding:6px 6px 6px 6px">
+                <a href="{{ post.url }}" title="访问 {{ post.title }}" target="content-wrapper">{{ post.title }}</a>
+            </div>
+            <p class="excerpt">{{ post.content | strip_html | strip_newlines | truncate: 250 }}&hellip;</p>
+            <div style="display: block;margin: .7em 0 0 0;font-size: .9em;color: #c7c7c7;">
+                <div style="display: block;height: 20px">
+                    <img src="/images/calendar.png"
+                         style="width: 20px;margin-left: 10px;margin-right: 5px;float: left;"/>
+                    <div style="height: 20px;line-height: 20px;padding-top: 0px;padding-bottom: 0px;">
+                        {{ post.date | date: "%F"}}
+                    </div>
+                </div>
+                <div style="display: block;height: 20px;margin-top: 5px">
+                    <img src="/images/tag-icon.svg"
+                         style="width: 20px;margin-left: 10px;margin-right: 5px;float: left;"/>
+                    <a href="/tags">
+                        <div style="height: 20px;line-height: 20px;padding-top: 0px;padding-bottom: 0px;color: #8A97A1;">
+                            {{ post.tags }}
+                        </div>
+                    </a>
+                </div>
+                <!--<hr class="post-list__divider"/>-->
+                <div style="height: 30px;background-size: 100% 100%;margin-top: 3px;color: #4F4F4F;display: block;">
+                    <a style="float: right;font-size: 1.0em;height: 30px;margin-right: 20px;color: #458B74;" href={{
+                       post.url }}>
+                        阅读全文 » </a>
+                </div>
+            </div>
+
+        </li>
+        {% endfor %}
+    </ol>
+
+    <hr class="post-list__divider "/>
+
+    <nav class="pagination" role="navigation">
+
+        <!-- 百度搜索 -->
+        <script type="text/javascript">(function () {
+            document.write(unescape('%3Cdiv id="bdcs"%3E%3C/div%3E'));
+            var bdcs = document.createElement('script');
+            bdcs.type = 'text/javascript';
+            bdcs.async = true;
+            bdcs.src = 'http://znsv.baidu.com/customer_search/api/js?sid=12441349038163667913' + '&plate_url=' + encodeURIComponent(window.location.href) + '&t=' + Math.ceil(new Date() / 3600000);
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(bdcs, s);
+        })();
+        </script>
+
+        {% if paginator.previous_page %}
+        <a class="newer-posts pagination__newer btn btn-small btn-tertiary"
+           href="{{ paginator.previous_page_path }}#blog">&larr; 最近</a>
+        {% endif %}
+        <span class="pagination__page-number">{{ paginator.page }} / {{ paginator.total_pages }}</span>
+        {% if paginator.next_page %}
+        <a class="older-posts pagination__older btn btn-small btn-tertiary" href="{{ paginator.next_page_path }}#blog">更早
+            &rarr;</a>
+        {% endif %}
+    </nav>
+
+</div>
+</body>
+</html>
