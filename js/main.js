@@ -29,9 +29,6 @@ $(function () {
  * 隐藏欢迎也，显示博客主页。
  */
 function toBlog() {
-    var welcome_index = $(".welcome_index");
-    var content_index = $(".content_index");
-    if (welcome_index.hasClass("disappear")) return;
-    welcome_index.addClass("disappear");
-    content_index.removeClass("disappear");
+    $(".welcome_index").css("display", "none");
+    $(".content_index").css("display", "block");
 }
