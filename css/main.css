@@ -320,8 +320,7 @@ tbody td:first-child, tbody th:first-child {
 
 /* ============= index start ============= */
 .content_index {
-    display: none;
-    /* display: block;*/
+    display: block;
 }
 
 /* ============= index end ============= */
