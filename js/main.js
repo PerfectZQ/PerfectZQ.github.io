@@ -16,9 +16,12 @@ $(function () {
     });
 
     // 从其他页面跳转刷新页面执行。
-    var pattern = /http:\/\/arch-long.cn\/page\/\d\/#blog/;
-    if (location.href == 'http://arch-long.cn/#blog' || pattern.test(location.href)) toBlog();
-
+    // var pattern = /http:\/\/arch-long.cn\/page\/\d\/#blog/;
+    // if (location.href == 'http://arch-long.cn/#blog' || pattern.test(location.href)) toBlog();
+    if (location.href == 'http://arch-long.cn/') {
+        $(".welcome_index").css("display", "block");
+        $(".content_index").css("display", "none");
+    }
 
 });
 
