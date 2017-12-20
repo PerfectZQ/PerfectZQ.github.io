@@ -15,13 +15,23 @@ $(function () {
         $("#dropdown-menu").slideToggle('normal');
     });
 
+    $("a.blog-button").click(function () {
+        if (location.hash && location.hash == "#blog") return;
+        var welcome_index = $(".welcome_index");
+        var content_inde = $(".content_index");
+        if (welcome_index.hasClass("disappear")) return;
+        welcome_index.addClass("disappear");
+        content_inde.removeClass("disappear");
+
+    });
+
 });
 
 /**
  * 隐藏首页
  */
 function toPostContentIndex() {
-    $(".welcome_index").css("display","none");
-    $(".content_index").css("display","block");
+    $(".welcome_index").css("display", "none");
+    $(".content_index").css("display", "block");
 
 }
