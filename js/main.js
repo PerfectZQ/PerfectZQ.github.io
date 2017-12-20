@@ -16,7 +16,7 @@ $(function () {
     });
 
     // 从其他页面跳转刷新页面执行。
-    if (location.href == 'http://arch-long.cn/' && location.hash && location.hash == "#blog") toBlog();
+    if (location.href == 'http://arch-long.cn/#blog') toBlog();
 
 
 });
