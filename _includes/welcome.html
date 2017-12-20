@@ -6,7 +6,8 @@
             <div class="panel-main__content">
                 <!-- 头像效果-start -->
                 <div class="ih-item circle effect right_to_left">
-                    <a href="javascript:toPostContentIndex();" title="前往 {{ site.title }} 的主页">
+                    <!-- /#blog 相当于去首页的blog锚点，锚点配置在main.js中 -->
+                    <a href="/#blog" class="blog-button" title="前往 {{ site.title }} 的主页">
                         <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
                         <div class="info">
                             <div class="info-back">
@@ -27,9 +28,11 @@
                     </a>
                 </div>
                 <!-- 头像效果-end -->
-                <div class="panel-cover__title panel-title"><a href="javascript:toPostContentIndex();"
-                                                               title="link to homepage for {{ site.title }}"
-                >{{ site.title }}</a></div>
+                <div class="panel-cover__title panel-title">
+                    <a href="/#blog" class="blog-button" title="link to homepage for {{ site.title }}">
+                        {{ site.title }}
+                    </a>
+                </div>
                 {% if site.subtitle %}
                 <span class="panel-cover__subtitle panel-subtitle">{{site.subtitle}}</span>
                 {% endif %}
@@ -46,13 +49,16 @@
                     <div>
                         <nav class="cover-navigation cover-navigation--primary">
                             <ul class="navigation">
-                                <li class="navigation__item"><a href="javascript:toPostContentIndex();"
-                                                                title="{{site.blog_button.description}}"
-                                >{{site.blog_button.title}}</a>
+                                <li class="navigation__item">
+                                    <a href="/#blog" class="blog-button" title="{{site.blog_button.description}}">
+                                        {{site.blog_button.title}}
+                                    </a>
                                 </li>
                                 {% for item in site.nav %}
-                                <li class="navigation__item"><a href="{{item.url}}"
-                                                                title="{{item.description}}">{{item.title}}</a>
+                                <li class="navigation__item">
+                                    <a href="{{item.url}}" title="{{item.description}}">
+                                        {{item.title}}
+                                    </a>
                                 </li>
                                 {% endfor %}
                             </ul>
