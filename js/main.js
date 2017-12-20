@@ -4,6 +4,7 @@ $(function () {
         $(".welcome_index").css("display", "block");
         $(".content_index").css("display", "none");
     } else {
+        $(".welcome_index").css("display", "none");
         $(".content_index").css("display", "block");
     }
 
