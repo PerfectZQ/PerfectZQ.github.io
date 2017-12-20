@@ -17,21 +17,18 @@ $(function () {
 
     // 从其他页面跳转刷新页面执行。
     if (location.hash && location.hash == "#blog") {
-        var welcome_index = $(".welcome_index");
-        var content_index = $(".content_index");
-        if (welcome_index.hasClass("disappear")) return;
-        welcome_index.addClass("disappear");
-        content_index.removeClass("disappear");
+        toBlog();
     }
 
 
 });
 
 /**
- * 隐藏首页
+ * 隐藏欢迎也，显示博客主页。
  */
 function toBlog() {
-    if (location.hash && location.hash == "#blog") return;
+    // if (location.hash && location.hash == "#blog") return;
+    alert(location.hash)
     var welcome_index = $(".welcome_index");
     var content_index = $(".content_index");
     if (welcome_index.hasClass("disappear")) return;
