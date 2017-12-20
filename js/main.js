@@ -20,7 +20,8 @@ $(function () {
 /**
  * 隐藏首页
  */
-function toContentIndex() {
+function toPostContentIndex() {
     $(".welcome_index").css("display","none");
     $(".content_index").css("display","block");
+
 }
