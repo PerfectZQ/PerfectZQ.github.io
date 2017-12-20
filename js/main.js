@@ -15,6 +15,7 @@ $(function () {
         $("#dropdown-menu").slideToggle('normal');
     });
 
+    // 从其他页面跳转刷新页面执行。
     if (location.hash && location.hash == "#blog") {
         var welcome_index = $(".welcome_index");
         var content_index = $(".content_index");
