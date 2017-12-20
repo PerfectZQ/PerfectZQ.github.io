@@ -16,9 +16,9 @@ $(function () {
     });
 
     // 从其他页面跳转刷新页面执行。
-    if (location.hash && location.hash == "#blog") {
-        toBlog();
-    }
+    // if (location.hash && location.hash == "#blog") {
+    //     toBlog();
+    // }
 
 
 });
