@@ -35,7 +35,6 @@ $(function () {
                 if (currentH2) {
 
                     var html = currentH2.html() + "<li><a>" + node.text() + "</a></li>";
-                    alert(html)
                     currentH2.html(html);
                 }
             }
