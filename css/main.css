@@ -487,8 +487,8 @@ img::-moz-selection {
 
 .content-wrapper {
     top: 84px;
-    left: 305px;
-    right: 50px;
+    left: 310px;
+    right: 300px;
     position: absolute;
 }
 
@@ -1683,9 +1683,9 @@ html {
 .sidebar_right {
     width: 220px;
     top: 80px;
-    right: 0px;
     bottom: 30px;
     z-index: 20;
+    right: 35px;
     position: fixed;
     background: #F6F6F6;
     border-radius: 8px;
@@ -1919,7 +1919,6 @@ html {
     line-height: 40px;
     border-radius: 0;
     outline: none;
-    padding: 0;
     padding-left: 10px;
     padding-right: 10px;
     vertical-align: initial;
@@ -1927,6 +1926,7 @@ html {
 
 .header .top-right-menu {
     float: right;
+    margin-right: 25px;
 }
 
 .header .top-right-menu .top-right-info {
