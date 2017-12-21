@@ -1839,7 +1839,12 @@ html {
 }
 
 .sidebar-container::-webkit-scrollbar {
-    width: 0px;
+    width: 0;
+    height: 7px;
+}
+
+.sidebar_right::-webkit-scrollbar {
+    width: 0;
     height: 7px;
 }
 
@@ -1855,7 +1860,6 @@ html {
 }
 
 .sidebar_right::-webkit-scrollbar-thumb {
-    border-radius: 0px;
     background: transparent;
 }
 
