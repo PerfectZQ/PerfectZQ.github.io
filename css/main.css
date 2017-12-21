@@ -1823,12 +1823,6 @@ html {
     left: 0px;
 }
 
-.sidebar_right::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background: #666666;
-    opacity: 0.8;
-}
-
 .sidebar_right ol {
 
 }
@@ -1856,13 +1850,13 @@ html {
 
 ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-    border-radius: 10px;
     background: #B9D3EE;
     opacity: 0.8;
+}
+
+.sidebar_right::-webkit-scrollbar-thumb {
+    border-radius: 0px;
+    background: transparent;
 }
 
 /**
