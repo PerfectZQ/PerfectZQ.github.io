@@ -1666,6 +1666,7 @@ html {
     text-align: center;
 }
 
+/* 左侧栏 */
 .sidebar {
     background-color: #3a4651;
     width: 255px;
@@ -1676,6 +1677,16 @@ html {
     -webkit-transition: left 0.3s ease;
     transition: left 0.3s ease;
     z-index: 20;
+}
+/* 右侧栏 */
+.sidebar_right {
+    width: 220px;
+    top: 80px;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    float: right;
+    position: fixed;
 }
 
 .nav {
