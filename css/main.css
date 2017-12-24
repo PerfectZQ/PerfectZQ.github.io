@@ -280,6 +280,7 @@ pre code {
     background: none;
     border: none;
     word-wrap: normal;
+    margin-left: 0;
 }
 
 table {
