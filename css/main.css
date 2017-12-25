@@ -1823,8 +1823,9 @@ html {
     left: 0px;
 }
 
-.sidebar_right ol {
-
+.sidebar_right ol li {
+    line-height: 1.2em;
+    font-size: 14px;
 }
 
 /* 右侧栏结束 */
