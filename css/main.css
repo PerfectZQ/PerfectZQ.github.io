@@ -1841,6 +1841,10 @@ html {
     margin-right: 16px;
 }
 
+.sidebar_right ol li ol li {
+    margin-right: 0px;
+}
+
 .sidebar_right ol ol {
     margin: .1em 0 .2em 12px;
 }
