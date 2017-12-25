@@ -57,17 +57,16 @@ $(function () {
                 var id = childNode.attr("id");
                 html = html +
                     "<li id='content" + (i + 1) + "_" + (j + 1) + "' name='" + (i + 1) + "_" + (j + 1) + "'>" +
-                    "   <a href='javascript:void(0);' onclick='scrollToView(\"" + id + "\")'>" + (i + 1) + "." + (j + 1) + ".&nbsp;" + childNode.text() +
+                    "   <a href='javascript:void(0);' onclick=scrollToView('" + id + "')>" + (i + 1) + "." + (j + 1) + ".&nbsp;" + childNode.text() +
                     "   </a>" +
                     "</li>"
             }
 
             var id = node.attr("id");
-            alert(id)
             $(".sidebar_right ol").html(
                 $(".sidebar_right ol").html() +
                 "<li id='content" + (i + 1) + "' name='" + (i + 1) + "'>" +
-                '   <a href="javascript:void(0);" onclick="scrollToView("' + id + '")">' + (i + 1) + ".&nbsp;" + node.text() +
+                "   <a href='javascript:void(0);' onclick=scrollToView('" + id + "')>" + (i + 1) + ".&nbsp;" + node.text() +
                 "   </a>" +
                 "   <ol>" +
                 html +
@@ -109,7 +108,6 @@ function isDisplayBlog(flag) {
 }
 
 function scrollToView(id) {
-    alert(id)
     $("html, body").animate({
         scrollTop: $("'#" + id + "'").offset().top
     }, {duration: 500, easing: "swing"});
