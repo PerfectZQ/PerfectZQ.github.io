@@ -1824,6 +1824,8 @@ html {
 }
 
 .sidebar_right div.div_content div {
+    width: 100%;
+    height: 100%;
     overflow-y: scroll;
     top: 15px;
     bottom: 15px;
