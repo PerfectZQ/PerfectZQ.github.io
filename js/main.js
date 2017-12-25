@@ -48,7 +48,7 @@ $(function () {
                     parentNodeIndex++;
                 } else { // 子节点
                     if (content[parentNodeIndex - 1]) {
-                        content[parentNodeIndex].childNodes[childNodeIndex] = node;
+                        content[parentNodeIndex - 1].childNodes[childNodeIndex] = node;
                         childNodeIndex++;
                         // var html = currentNode.html() + "<li><a>" + node.text() + "</a></li>";
                         // currentNode.html(html);
