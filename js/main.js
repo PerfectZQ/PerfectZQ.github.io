@@ -54,17 +54,19 @@ $(function () {
             var html = "";
             for (var j = 0; j < childNodes.length; j++) {
                 var childNode = childNodes[j];
+                var id = childNode.attr("id");
                 html = html +
-                    "<li id='" + (i + 1) + "_" + (j + 1) + "' name='" + (i + 1) + "_" + (j + 1) + "'>" +
-                    "   <a href='javascript:void(0);' onclick='scrollToView()'>" + (i + 1) + "." + (j + 1) + ".&nbsp;" + childNode.text() +
+                    "<li id='content" + (i + 1) + "_" + (j + 1) + "' name='" + (i + 1) + "_" + (j + 1) + "'>" +
+                    "   <a href='javascript:void(0);' onclick='scrollToView(" + id + ")'>" + (i + 1) + "." + (j + 1) + ".&nbsp;" + childNode.text() +
                     "   </a>" +
                     "</li>"
             }
 
+            var id = node.attr("id");
             $(".sidebar_right ol").html(
                 $(".sidebar_right ol").html() +
-                "<li id='" + (i + 1) + "' name='" + (i + 1) + "'>" +
-                "   <a href='javascript:void(0);' onclick='scrollToView()'>" + (i + 1) + ".&nbsp;" + node.text() +
+                "<li id='content" + (i + 1) + "' name='" + (i + 1) + "'>" +
+                "   <a href='javascript:void(0);' onclick='scrollToView(" + id + ")'>" + (i + 1) + ".&nbsp;" + node.text() +
                 "   </a>" +
                 "   <ol>" +
                 html +
@@ -105,10 +107,10 @@ function isDisplayBlog(flag) {
     }
 }
 
-function scrollToView() {
+function scrollToView(id) {
     $(this).click(function () {
         $("html, body").animate({
-            scrollTop: $(this).offset().top
+            scrollTop: $("." + id).offset().top
         }, {duration: 500, easing: "swing"});
         return false;
     });
