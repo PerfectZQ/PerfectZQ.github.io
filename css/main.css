@@ -1866,7 +1866,7 @@ html {
 }
 
 .sidebar_right div::-webkit-scrollbar {
-    width: 0;
+    width: 5px;
     height: 7px;
 }
 
@@ -1882,7 +1882,10 @@ html {
 }
 
 .sidebar_right div::-webkit-scrollbar-thumb {
-    background: transparent;
+    /* background: transparent; */
+    border-radius: 10px;
+    background: #666666;
+    opacity: 0.6;
 }
 
 /**
