@@ -13,9 +13,11 @@ $(function () {
         /**
          * 加载文章目录结构
          */
-        var headArr = new Array(); // 存储所有标题节点
+
         var index = 0;
-        var content = new Array(); // 按结构存储所有标题节点
+        var headArr = []; // 存储所有标题节点
+        var content = []; // 按结构存储所有标题节点
+
         $("section.post").children().each(function () {
             var node = $(this);
             if ('H2' == node[0].tagName || 'H3' == node[0].tagName) {

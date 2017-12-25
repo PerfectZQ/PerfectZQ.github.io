@@ -234,7 +234,8 @@ ol ol, ol ul, ul ol, ul ul {
 }
 
 ol {
-    list-style-type: decimal;
+    /* list-style-type: decimal; */
+    list-style-type: none;
 }
 
 ul {
