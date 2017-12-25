@@ -1838,7 +1838,7 @@ html {
 .sidebar_right ol li {
     line-height: 1.5em;
     font-size: 14px;
-    margin-right: 16px;
+    margin-right: 8px;
 }
 
 .sidebar_right ol li ol li {
@@ -1888,7 +1888,7 @@ html {
 .sidebar_right div::-webkit-scrollbar-thumb {
     /* background: transparent; */
     border-radius: 10px;
-    background: #666666;
+    background: #888888;
     opacity: 0.6;
 }
 
