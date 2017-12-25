@@ -1813,7 +1813,6 @@ html {
 .sidebar_right div.div_content {
     width: 100%;
     height: 50%;
-    position: absolute;
     top: 0px;
     right: 20px;
     left: 0px;
@@ -1825,7 +1824,7 @@ html {
 
 .sidebar_right div.div_content div {
     width: 100%;
-    height: 100%;
+    position: absolute;
     overflow-y: scroll;
     top: 15px;
     bottom: 15px;
