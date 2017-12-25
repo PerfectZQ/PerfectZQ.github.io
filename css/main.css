@@ -1812,17 +1812,21 @@ html {
 
 .sidebar_right div.div_content {
     width: 100%;
-    overflow-y: scroll;
+    height: 50%;
     position: absolute;
     top: 0px;
     right: 20px;
     left: 0px;
-    padding-top: 15px;
-    padding-bottom: 15px;
     background: #F6F6F6;
     border-radius: 4px;
     border: 1px solid #dddddd;
     box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.25);
+}
+
+.sidebar_right div.div_content div {
+    overflow-y: scroll;
+    top: 15px;
+    bottom: 15px;
 }
 
 .sidebar_right ol {
