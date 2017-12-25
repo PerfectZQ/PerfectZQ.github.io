@@ -57,7 +57,7 @@ $(function () {
                 var id = childNode.attr("id");
                 html = html +
                     "<li id='content" + (i + 1) + "_" + (j + 1) + "' name='" + (i + 1) + "_" + (j + 1) + "'>" +
-                    "   <a href='javascript:void(0);' onclick='scrollToView(" + id + ")'>" + (i + 1) + "." + (j + 1) + ".&nbsp;" + childNode.text() +
+                    "   <a href='javascript:void(0);' onclick='scrollToView(\"" + id + "\")'>" + (i + 1) + "." + (j + 1) + ".&nbsp;" + childNode.text() +
                     "   </a>" +
                     "</li>"
             }
@@ -67,7 +67,7 @@ $(function () {
             $(".sidebar_right ol").html(
                 $(".sidebar_right ol").html() +
                 "<li id='content" + (i + 1) + "' name='" + (i + 1) + "'>" +
-                '   <a href="javascript:void(0);" onclick="scrollToView(' + id + ')">' + (i + 1) + ".&nbsp;" + node.text() +
+                '   <a href="javascript:void(0);" onclick="scrollToView("' + id + '")">' + (i + 1) + ".&nbsp;" + node.text() +
                 "   </a>" +
                 "   <ol>" +
                 html +
