@@ -56,7 +56,7 @@ $(function () {
                 var childNode = childNodes[j];
                 html = html +
                     "<li id='" + (i + 1) + "_" + (j + 1) + "' name='" + (i + 1) + "_" + (j + 1) + "'>" +
-                    "   <a href='#" + (i + 1) + "_" + (j + 1) + "'>" + (i + 1) + "." + (j + 1) + ".&nbsp;" + childNode.text() +
+                    "   <a href='javascript:void(0);' onclick='scrollToView()'>" + (i + 1) + "." + (j + 1) + ".&nbsp;" + childNode.text() +
                     "   </a>" +
                     "</li>"
             }
@@ -64,7 +64,7 @@ $(function () {
             $(".sidebar_right ol").html(
                 $(".sidebar_right ol").html() +
                 "<li id='" + (i + 1) + "' name='" + (i + 1) + "'>" +
-                "   <a href='#" + (i + 1) + "'>" + (i + 1) + ".&nbsp;" + node.text() +
+                "   <a href='javascript:void(0);' onclick='scrollToView()'>" + (i + 1) + ".&nbsp;" + node.text() +
                 "   </a>" +
                 "   <ol>" +
                 html +
@@ -104,3 +104,13 @@ function isDisplayBlog(flag) {
         $(".content_index").css("display", "none");
     }
 }
+
+function scrollToView() {
+    $(this).click(function () {
+        $("html, body").animate({
+            scrollTop: $(this).offset().top
+        }, {duration: 500, easing: "swing"});
+        return false;
+    });
+}
+
