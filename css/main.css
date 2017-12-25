@@ -1824,13 +1824,22 @@ html {
     left: 0px;
 }
 
+.sidebar_right ol {
+    margin: 0 0 12px 18px;
+}
+
 .sidebar_right ol li {
     line-height: 1.2em;
     font-size: 14px;
+    margin-right: 16px;
 }
 
 .sidebar_right ol ol {
     margin: .1em 0 .2em 12px;
+}
+
+.sidebar_right a {
+    margin: 0;
 }
 
 /* 右侧栏结束 */
