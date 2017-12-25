@@ -35,14 +35,6 @@ $(function () {
             for (var i = 0; i < headArr.length; i++) {
                 var node = headArr[i];
                 if (node[0].tagName == 'H2') {
-                    // var html = $(".sidebar_right ol").html() +
-                    //     "<li id='" + i + "'>" +
-                    //     "   <a>" + node.text() +
-                    //     "   </a>" +
-                    //     "   <ol>" +
-                    //     "   </ol>" +
-                    //     "</li>";
-                    // $(".sidebar_right ol").html(html);
                     childNodeIndex = 0;
                     content[parentNodeIndex] = {'node': node, "childNodes": []};
                     parentNodeIndex++;
@@ -50,8 +42,6 @@ $(function () {
                     if (content[parentNodeIndex - 1]) {
                         content[parentNodeIndex - 1].childNodes[childNodeIndex] = node;
                         childNodeIndex++;
-                        // var html = currentNode.html() + "<li><a>" + node.text() + "</a></li>";
-                        // currentNode.html(html);
                     }
                 }
             }
@@ -66,7 +56,7 @@ $(function () {
                 var childNode = childNodes[j];
                 html = html +
                     "<li id='" + (i + 1) + "_" + (j + 1) + "'>" +
-                    "   <a>" + (i + 1) + "." + (j + 1) + ".&nbsp;" + childNode.text() +
+                    "   <a href='#" + (i + 1) + "_" + (j + 1) + "'>" + (i + 1) + "." + (j + 1) + ".&nbsp;" + childNode.text() +
                     "   </a>" +
                     "</li>"
             }
@@ -74,7 +64,7 @@ $(function () {
             $(".sidebar_right ol").html(
                 $(".sidebar_right ol").html() +
                 "<li id='" + (i + 1) + "'>" +
-                "   <a>" + (i + 1) + ".&nbsp;" + node.text() +
+                "   <a href='#" + (i + 1) + "'>" + (i + 1) + ".&nbsp;" + node.text() +
                 "   </a>" +
                 "   <ol>" +
                 html +
