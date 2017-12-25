@@ -70,9 +70,6 @@ $(function () {
                     "   </a>" +
                     "</li>"
             }
-            if (html != "") {
-                alert(html)
-            }
 
             $(".sidebar_right ol").html(
                 $(".sidebar_right ol").html() +
