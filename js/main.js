@@ -108,11 +108,8 @@ function isDisplayBlog(flag) {
 }
 
 function scrollToView(id) {
-    $(this).click(function () {
-        $("html, body").animate({
-            scrollTop: $("." + id).offset().top
-        }, {duration: 500, easing: "swing"});
-        return false;
-    });
+    $("html, body").animate({
+        scrollTop: $("#" + id).offset().top
+    }, {duration: 500, easing: "swing"});
 }
 
