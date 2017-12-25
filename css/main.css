@@ -1829,6 +1829,10 @@ html {
     font-size: 14px;
 }
 
+.sidebar_right ol ol {
+    margin: .1em 0 .2em 12px;
+}
+
 /* 右侧栏结束 */
 
 /**
