@@ -4,11 +4,11 @@ title: Spark-Mongo-Connector
 tag: Spark-Mongo-Connector
 ---
 
-### sbt 地址
+## sbt 地址
 ```sbt
 libraryDependencies += "org.mongodb.spark" % "mongo-spark-connector_2.11" % "2.0.0"
 ```
-### 写配置
+## 写配置
 
 　　在SparkConf或者$SPARK_HOME/conf/spark-default.conf 文件中将uri、database、collection必选的配置项配置好，如下
 
@@ -39,7 +39,7 @@ val writeVectorConfig = WriteConfig(writeVectorMap, Some(WriteConfig(sparkSessio
 
 MongoSpark.save(similarityDocRDD, writeVectorConfig)
 ```
-### 读配置
+## 读配置
 ```scala
 package com.neusoft.apps
 

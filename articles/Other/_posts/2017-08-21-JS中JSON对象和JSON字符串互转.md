@@ -4,7 +4,7 @@ title: Json和Json字符串的相互转换
 tag: JavaScript
 ---
 
-### JS对象转换成JSON字符串
+## JS对象转换成JSON字符串
 ```javascript
 // 声明一个 js 对象
 var jsonObj = {};  
@@ -25,7 +25,7 @@ person.eyecolor="blue";
 jsonStr = JSON.stringify(person);
 alert(jsonStr);  
 ```
-### 将JSON字符串转换成JSON对象
+## 将JSON字符串转换成JSON对象
 ```javascript
 // 声明一个 json 字符串
 var jsonStr = `{"testArray":[1,2,3,4,5],"name":"jsonObj"}`; 

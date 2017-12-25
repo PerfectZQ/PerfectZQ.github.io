@@ -4,12 +4,12 @@ title: Chrome Extensions Develop
 tag: Chrome
 ---
 
-### 需求
+## 需求
 浏览器点击页面元素返回页面元素的xpath表达式
 
-### Chrome Extensions 开发文档（360翻译）
+## Chrome Extensions 开发文档（360翻译）
 [中文开发文档地址](http://open.chrome.360.cn/extension_dev/overview.html)
-### 代码实现
+## 代码实现
 
 {% highlight javascript %}
 // 获取xpath表达式

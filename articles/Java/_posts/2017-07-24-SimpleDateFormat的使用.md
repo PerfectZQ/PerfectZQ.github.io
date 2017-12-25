@@ -4,7 +4,7 @@ title: SimpleDateFormat的使用
 tag: Java
 ---
 
-### 常用的两个方法
+## 常用的两个方法
 将字符串转换成时间类型:parse()
 * G 年代标志符
 * y 年

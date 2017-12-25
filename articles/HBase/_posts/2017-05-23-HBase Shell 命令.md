@@ -4,7 +4,7 @@ title: HBase Shell 命令
 tag: HBase
 ---
 
-### 基本命令
+## 基本命令
 
 {% highlight shell %}
 # 安装完后可以在浏览器中输入下面的URL来测试安装是否成功：
@@ -20,7 +20,7 @@ $HBASE_HOME/bin/hbase shell
 hbase(main)> whoami
 {% endhighlight %}
 
-### 表管理
+## 表管理
 
 {% highlight shell %}
 # 1）查看有哪些表
@@ -59,7 +59,7 @@ hbase(main)> whoami
     hbase(main)> enable 'test1'
 {% endhighlight %}
 
-### 权限管理
+## 权限管理
 
 {% highlight shell %}
 # 1）分配权限
@@ -87,7 +87,7 @@ hbase(main)> whoami
     hbase(main)> revoke 'test','t1'
 {% endhighlight %}
 
-### 表数据的增删改查
+## 表数据的增删改查
 
 {% highlight shell %}
 # 1）添加数据
@@ -156,7 +156,7 @@ hbase(main)> whoami
 		hbase(main)> truncate 't1'
 {% endhighlight %}
 
-### Region管理
+## Region管理
 
 {% highlight shell %}
 # 1）移动region
@@ -194,7 +194,7 @@ hbase(main)> whoami
 	hbase> major_compact 't1', 'c1'
 {% endhighlight %}
 
-### 配置管理及节点重启
+## 配置管理及节点重启
 
 {% highlight shell %}
 # 1）修改hdfs配置

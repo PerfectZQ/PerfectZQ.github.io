@@ -3,7 +3,7 @@ layout: post
 title: 配置oracle并导入dmp文件
 tag: Oracle
 ---
-### Windows下配置Oracle instant client(独立客户端)，并配置PL/SQL
+## Windows下配置Oracle instant client(独立客户端)，并配置PL/SQL
 　　下载地址：[http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html](http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html)
 
 　　最基本的是`instantclient-basic-windows.x64-12.2.0.1.0`，还包含其他组件`instantclient-tools-windows.x64-12.2.0.1.0`中包含导出/入数据相关的组件，exp/imp，`instantclient-sqlplus-win-x86-64-10.2.0.3.0.zip`，包含sqlplus，等等……
@@ -20,14 +20,14 @@ tag: Oracle
 * Oracle Home 为 `D:\oracle\instantclient_11_2`
 * OCI library 为 `D:\oracle\instantclient_11_2\oci.dll`
 
-### 文件校验
+## 文件校验
 　　为了避免导入时候出现问题，先校验下文件是否在传输过程中出现问题，如果源文件和传输后的文件md5码是相同的可以确认文件在传输中没有出现问题
 ```shell
 [oracle@dbhost impbak]$ md5sum GDI_SI_EPG_HIS_T.dmp
 c30715d195627b07693ccf5e0a6249dd  GDI_SI_EPG_HIS_T.dmp
 ```
 
-### 导入dmp文件:imp
+## 导入dmp文件:imp
 　　在Windows中，imp命令依赖oracle客户端bin文件夹中的命令，如果本地安装的不是完整的oracle（包含service），而是独立的客户端(instant client)，会出现`'imp' 不是内部或外部命令，也不是可运行的程序或批处理文件。`的问题，需要下载Package Tools相关的组件，[http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html](http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html)，下载`instantclient-tools-windows.x64-12.2.0.1.0`，解压到`D:\oracle\instantclient_11_2`文件夹中
 
 　　导入dmp文件，首先确认dmp文件导出的方式，是导出的整个数据库还是只导出一张表。然后需要知道表空间的名称，导出的用户名和密码。
@@ -66,7 +66,7 @@ commit;
 imp DTSS_DB_USER/DTSS_DB_USER@lhytbill  fromuser=DTSS_DB_USER touser=DTSS_DB_USER file=/home/oracle/impbak/GDI_SI_EPG_HIS_T.dmp buffer=40960000 commit=y
 ```
 
-### imp命令详解
+## imp命令详解
 
 ```shell
 # 查看imp命令的关键词（属性）

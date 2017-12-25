@@ -4,13 +4,13 @@ title: Spark-redis整合
 tag: Spark
 ---
 
-### 简介
+## 简介
 spark-redis 是为了让spark更简单的操作redis的各种集合
 
 [spark-redis使用入门](https://redislabs.com/solutions/use-cases/spark-and-redis/)
 
 [github地址](https://github.com/RedisLabs/spark-redis)
-### 下载并安装 Maven
+## 下载并安装 Maven
 解压
 ```shell
 sudo mv -rf apache-maven-3.5.0-bin.tar.gz /usr/local/
@@ -37,14 +37,14 @@ Java home: /Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre
 Default locale: zh_CN, platform encoding: UTF-8
 OS name: "mac os x", version: "10.12.6", arch: "x86_64", family: "mac"
 ```
-### 下载spark-redis源码
+## 下载spark-redis源码
 [https://github.com/RedisLabs/spark-redis](https://github.com/RedisLabs/spark-redis)
 
 或者
 ```shell
 git clone https://github.com/RedisLabs/spark-redis.git
 ```
-### 用Maven将源码编译打包
+## 用Maven将源码编译打包
 ```shell
 cd spark-redis
 mvn clean package -DskipTests
