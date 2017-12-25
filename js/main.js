@@ -63,7 +63,7 @@ $(function () {
             for (var j = 0; j < childNodes.length; j++) {
                 var childNode = childNodes[j];
                 html = html +
-                    "<li id='" + (i + 1) + "." + (j + 1) + "'>" +
+                    "<li id='" + (i + 1) + "_" + (j + 1) + "'>" +
                     "   <a>" + childNode.text() +
                     "   </a>" +
                     "</li>"
