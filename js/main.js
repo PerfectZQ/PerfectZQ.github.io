@@ -108,6 +108,7 @@ function isDisplayBlog(flag) {
 }
 
 function scrollToView(id) {
+    alert(id)
     $("html, body").animate({
         scrollTop: $("'#" + id + "'").offset().top
     }, {duration: 500, easing: "swing"});
