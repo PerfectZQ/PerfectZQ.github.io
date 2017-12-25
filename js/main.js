@@ -63,6 +63,7 @@ $(function () {
             }
 
             var id = node.attr("id");
+            alert(id)
             $(".sidebar_right ol").html(
                 $(".sidebar_right ol").html() +
                 "<li id='content" + (i + 1) + "' name='" + (i + 1) + "'>" +
