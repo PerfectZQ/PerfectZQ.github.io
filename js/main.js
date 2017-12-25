@@ -55,7 +55,7 @@ $(function () {
             for (var j = 0; j < childNodes.length; j++) {
                 var childNode = childNodes[j];
                 html = html +
-                    "<li id='" + (i + 1) + "_" + (j + 1) + "'>" +
+                    "<li id='" + (i + 1) + "_" + (j + 1) + "' name='" + (i + 1) + "_" + (j + 1) + "'>" +
                     "   <a href='#" + (i + 1) + "_" + (j + 1) + "'>" + (i + 1) + "." + (j + 1) + ".&nbsp;" + childNode.text() +
                     "   </a>" +
                     "</li>"
@@ -63,7 +63,7 @@ $(function () {
 
             $(".sidebar_right ol").html(
                 $(".sidebar_right ol").html() +
-                "<li id='" + (i + 1) + "'>" +
+                "<li id='" + (i + 1) + "' name='" + (i + 1) + "'>" +
                 "   <a href='#" + (i + 1) + "'>" + (i + 1) + ".&nbsp;" + node.text() +
                 "   </a>" +
                 "   <ol>" +
