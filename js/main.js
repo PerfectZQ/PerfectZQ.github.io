@@ -68,6 +68,7 @@ $(function () {
                     "   </a>" +
                     "</li>"
             }
+
             $(".sidebar_right ol").html(
                 $(".sidebar_right ol").html() +
                 "<li id='" + (i + 1) + "'>" +
@@ -78,7 +79,6 @@ $(function () {
                 "   </ol>" +
                 "</li>"
             );
-
         }
 
     }
