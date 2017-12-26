@@ -961,7 +961,8 @@ i {
     padding: 0;
     list-style-type: none;
     text-align: left;
-    display: inline-block;
+    /*display: inline-block; 内容超出父容器 */
+    display: block;
 }
 
 .post-list li {
@@ -1966,14 +1967,14 @@ html {
         padding: 15px 0px 0px 0px;
     }
 
-    /*.content-wrapper {*/
-        /*width: 90%;*/
-        /*position: relative;*/
-        /*margin: 0px auto;*/
-        /*top: 64px;*/
-        /*right: 0px;*/
-        /*left: 0px;*/
-    /*}*/
+    .content-wrapper {
+        width: 90%;
+        position: relative;
+        margin: 0px auto;
+        top: 64px;
+        right: 0px;
+        left: 0px;
+    }
 
 }
 
