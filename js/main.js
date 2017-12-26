@@ -137,8 +137,7 @@ function isDisplayLeftContent(flag) {
             function () {
                 $(".sidebar-header").css("display", "block");
                 $(".sidebar-container").css("display", "block");
-            }
-        );
+            });
         $(".header").animate(
             {left: "255px"},
             {duration: 300, easing: "swing"}
