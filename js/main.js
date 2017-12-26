@@ -90,9 +90,9 @@ $(function () {
     /**
      * header 头像点击事件
      */
-    $("div.left-avatar").click(function () {
-        $("#dropdown-menu").slideToggle('normal');
-    });
+    // $("div.left-avatar").click(function () {
+    //     $("#dropdown-menu").slideToggle('normal');
+    // });
 
     $(".header button.menu-btn i").click(function () {
         var width = $(".sidebar").width();
