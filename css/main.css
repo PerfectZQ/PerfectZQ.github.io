@@ -1966,14 +1966,14 @@ html {
         padding: 15px 0px 0px 0px;
     }
 
-    .content-wrapper {
-        width: 90%;
-        position: relative;
-        margin: 0px auto;
-        top: 64px;
-        right: 0px;
-        left: 0px;
-    }
+    /*.content-wrapper {*/
+        /*width: 90%;*/
+        /*position: relative;*/
+        /*margin: 0px auto;*/
+        /*top: 64px;*/
+        /*right: 0px;*/
+        /*left: 0px;*/
+    /*}*/
 
 }
 
