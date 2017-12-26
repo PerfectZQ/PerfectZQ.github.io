@@ -1963,8 +1963,9 @@ html {
     }
 
     .content-wrapper {
-        left: 20px;
+        top: 64px;
         right: 10px;
+        left: 20px;
     }
 
     .content-wrapper .content-wrapper__inner .main-post-list ol li {
