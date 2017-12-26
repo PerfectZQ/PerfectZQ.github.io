@@ -150,7 +150,7 @@ function isDisplayLeftContent(flag) {
     } else {
         $(".sidebar").animate(
             {width: "0px"},
-            {duration: 300, easing: "swing", callback:}
+            {duration: 300, easing: "swing"}
         );
         $(".header").animate(
             {left: "0px"},
