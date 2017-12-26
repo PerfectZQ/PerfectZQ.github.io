@@ -131,6 +131,10 @@ function scrollToView(id) {
  */
 function isDisplayLeftContent(flag) {
     if (flag) {
+        $(".header").animate(
+            {left: "255px"},
+            {duration: 300, easing: "swing"}
+        );
         $(".sidebar").animate(
             {width: "255px"},
             {
@@ -141,21 +145,17 @@ function isDisplayLeftContent(flag) {
                 }
             }
         );
-        $(".header").animate(
-            {left: "255px"},
-            {duration: 300, easing: "swing"}
-        );
         $(".content-wrapper").animate(
             {left: "310px"},
             {duration: 300, easing: "swing"}
         );
     } else {
-        $(".sidebar").animate(
-            {width: "0px"},
-            {duration: 300, easing: "swing"}
-        );
         $(".header").animate(
             {left: "0px"},
+            {duration: 300, easing: "swing"}
+        );
+        $(".sidebar").animate(
+            {width: "0px"},
             {duration: 300, easing: "swing"}
         );
         $(".content-wrapper").animate(
