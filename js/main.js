@@ -133,7 +133,11 @@ function isDisplayLeftContent(flag) {
     if (flag) {
         $(".sidebar").animate(
             {width: "255px"},
-            {duration: 300, easing: "swing"}
+            {duration: 300, easing: "swing"},
+            function () {
+                $(".sidebar-header").css("display", "block");
+                $(".sidebar-container").css("display", "block");
+            }
         );
         $(".header").animate(
             {left: "255px"},
@@ -143,12 +147,10 @@ function isDisplayLeftContent(flag) {
             {left: "310px"},
             {duration: 300, easing: "swing"}
         );
-        $(".sidebar-header").css("display", "block");
-        $(".sidebar-container").css("display", "block");
     } else {
         $(".sidebar").animate(
             {width: "0px"},
-            {duration: 300, easing: "swing"}
+            {duration: 300, easing: "swing", callback:}
         );
         $(".header").animate(
             {left: "0px"},
