@@ -136,11 +136,19 @@ function isDisplayLeftContent(flag) {
             {duration: 500, easing: "swing"}
         );
         $(".sidebar-header").css("display","block");
+        $(".sidebar-container").animate(
+            {display: "block"},
+            {duration: 500, easing: "swing"}
+        );
     } else {
         $(".sidebar").animate(
             {width: "0px"},
             {duration: 500, easing: "swing"}
         );
         $(".sidebar-header").css("display","none");
+        $(".sidebar-container").animate(
+            {display: "none"},
+            {duration: 500, easing: "swing"}
+        );
     }
 }
