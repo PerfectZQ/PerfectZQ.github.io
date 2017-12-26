@@ -1967,18 +1967,10 @@ html {
         padding: 15px 0px 0px 0px;
     }
 
-    /*.content-wrapper {*/
-        /*width: 90%;*/
-        /*position: relative;*/
-        /*margin: 0px auto;*/
-        /*top: 64px;*/
-        /*right: 0px;*/
-        /*left: 0px;*/
-    /*}*/
     .content-wrapper {
         top: 64px;
-        right: 20px;
-        left: 20px;
+        right: 0px;
+        left: 30px;
     }
 }
 
@@ -1986,17 +1978,9 @@ html {
 @media all and (max-width: 500px) {
     .content-wrapper {
         top: 64px;
-        right: 20px;
-        left: 20px;
+        right: 0px;
+        left: 30px;
     }
-    /*.content-wrapper {*/
-    /*width: 80%;*/
-    /*position: relative;*/
-    /*margin: 0px auto;*/
-    /*top: 64px;*/
-    /*right: 0px;*/
-    /*left: 0px;*/
-    /*}*/
 }
 
 /* 屏幕自适应 --end */
