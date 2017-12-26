@@ -1977,8 +1977,8 @@ html {
 
 }
 
-/* 屏幕宽度小于420px */
-@media all and (max-width: 420px) {
+/* 屏幕宽度小于500px */
+@media all and (max-width: 500px) {
     .content-wrapper {
         width: 80%;
         position: relative;
