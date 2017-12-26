@@ -135,10 +135,12 @@ function isDisplayLeftContent(flag) {
             {width: "255px"},
             {duration: 500, easing: "swing"}
         );
+        $(".sidebar-header").css("display","block");
     } else {
         $(".sidebar").animate(
             {width: "0px"},
             {duration: 500, easing: "swing"}
         );
+        $(".sidebar-header").css("display","none");
     }
 }
