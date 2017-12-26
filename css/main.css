@@ -1964,6 +1964,10 @@ html {
     .content-wrapper {
         left: 35px;
     }
+
+    .content-wrapper .content-wrapper__inner .main-post-list ol li {
+        width: auto;
+    }
 }
 
 /* 屏幕宽度小于420px */
