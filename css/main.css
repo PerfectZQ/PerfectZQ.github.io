@@ -1321,24 +1321,24 @@ input[type="tel"]:-ms-input-placeholder {
 }
 
 @media all and (max-width: 420px) {
-    .panel-main__inner {
-        padding: 0 5%;
-    }
+    /*.panel-main__inner {*/
+        /*padding: 0 5%;*/
+    /*}*/
 
-    h1 {
-        margin-top: 0;
-        font-size: 1.6em;
-        line-height: 1.0em;
-        letter-spacing: 0;
-    }
+    /*h1 {*/
+        /*margin-top: 0;*/
+        /*font-size: 1.6em;*/
+        /*line-height: 1.0em;*/
+        /*letter-spacing: 0;*/
+    /*}*/
 
-    .panel-title {
-        margin-bottom: .1em;
-    }
+    /*.panel-title {*/
+        /*margin-bottom: .1em;*/
+    /*}*/
 
-    .panel-subtitle {
-        font-size: .6em;
-    }
+    /*.panel-subtitle {*/
+        /*font-size: .6em;*/
+    /*}*/
 }
 
 /*头像效果-start*/
