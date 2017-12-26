@@ -1218,129 +1218,6 @@ input[type="tel"]:-ms-input-placeholder {
     text-align: center;
 }
 
-@media all and (max-width: 1300px) {
-    .panel-cover__logo {
-        width: 70px;
-    }
-
-    .panel-title {
-        font-size: 1em;
-    }
-
-    .panel-subtitle {
-        font-size: 0.6em;
-    }
-
-    .panel-cover__description {
-        margin: 0 10px;
-        font-size: .9em;
-    }
-}
-
-/* 移动端导航栏响应式控制 */
-@media all and (max-width: 1100px) {
-    /*.btn-mobile-menu {*/
-        /*display: block;*/
-    /*}*/
-
-    /*.panel-main {*/
-        /*display: table;*/
-        /*position: relative;*/
-    /*}*/
-
-    /*.panel-cover--collapsed {*/
-        /*width: 100%;*/
-        /*max-width: none;*/
-    /*}*/
-
-    /*.panel-main__inner {*/
-        /*display: table-cell;*/
-        /*padding: 60px 10%;*/
-    /*}*/
-
-    /*.panel-cover__description {*/
-        /*display: block;*/
-        /*max-width: 600px;*/
-        /*margin: 0 auto;*/
-    /*}*/
-
-    /*.panel-cover__divider--secondary {*/
-        /*display: none;*/
-    /*}*/
-
-    /*.welcome_index {*/
-        /*width: 100%;*/
-        /*height: 100%;*/
-        /*background-position: center center;*/
-    /*}*/
-
-    /*.welcome_index.panel-cover--collapsed {*/
-        /*display: block;*/
-        /*position: relative;*/
-        /*height: auto;*/
-        /*padding: 0;*/
-        /*background-position: center center;*/
-    /*}*/
-
-    /*.welcome_index.panel-cover--collapsed .panel-main__inner {*/
-        /*display: block;*/
-        /*padding: 70px 0 30px 0;*/
-    /*}*/
-
-    /*.welcome_index.panel-cover--collapsed .panel-cover__logo {*/
-        /*width: 60px;*/
-        /*border-width: 2px;*/
-    /*}*/
-
-    /*.welcome_index.panel-cover--collapsed .panel-cover__description {*/
-        /*display: none;*/
-    /*}*/
-
-    /*.welcome_index.panel-cover--collapsed .panel-cover__divider {*/
-        /*display: none;*/
-        /*margin: 1em auto;*/
-    /*}*/
-
-    /*.navigation-wrapper {*/
-        /*display: none;*/
-        /*position: fixed;*/
-        /*top: 20px;*/
-        /*left: 0;*/
-        /*float: left;*/
-        /*width: 300px;*/
-        /*padding: 20px 0;*/
-        /*background: rgba(51, 51, 51, 0.98);*/
-        /*border-bottom: 1px solid rgba(255, 255, 255, 0.15);*/
-    /*}*/
-
-    /*.navigation-wrapper.visible {*/
-        /*display: block;*/
-    /*}*/
-
-
-}
-
-@media all and (max-width: 420px) {
-    /*.panel-main__inner {*/
-        /*padding: 0 5%;*/
-    /*}*/
-
-    /*h1 {*/
-        /*margin-top: 0;*/
-        /*font-size: 1.6em;*/
-        /*line-height: 1.0em;*/
-        /*letter-spacing: 0;*/
-    /*}*/
-
-    /*.panel-title {*/
-        /*margin-bottom: .1em;*/
-    /*}*/
-
-    /*.panel-subtitle {*/
-        /*font-size: .6em;*/
-    /*}*/
-}
-
 /*头像效果-start*/
 
 html {
@@ -2034,3 +1911,64 @@ html {
 }
 
 /* header头 --end */
+
+/* 屏幕自适应 --begin 注意CSS顺序应该从大到小 */
+
+/* 屏幕宽度小于1300px */
+@media screen and (max-width: 1300px) {
+    .panel-cover__logo {
+        width: 70px;
+    }
+
+    .panel-title {
+        font-size: 1em;
+    }
+
+    .panel-subtitle {
+        font-size: 0.6em;
+    }
+
+    .panel-cover__description {
+        margin: 0 10px;
+        font-size: .9em;
+    }
+}
+
+/* 屏幕宽度小于1100px 移动端 */
+@media all and (max-width: 1100px) {
+    /* 隐藏左边栏 */
+    .sidebar {
+        width: 0;
+    }
+
+    .sidebar-header {
+        display: none;
+    }
+
+    .sidebar-container {
+        display: none;
+    }
+
+    .header {
+        left: 0;
+    }
+
+    .header .top-right-menu {
+        margin-right: 5px;
+    }
+
+    .header .top-right-menu .top-right-info {
+        padding: 15px 0px 0px 0px;
+    }
+
+    .content-wrapper {
+        left: 35px;
+    }
+}
+
+/* 屏幕宽度小于420px */
+@media all and (max-width: 420px) {
+
+}
+
+/* 屏幕自适应 --end */
