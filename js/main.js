@@ -8,7 +8,7 @@ $(function () {
         isDisplayBlog(true);
 
     // blog 页面
-    if (/http:\/\/arch-long.cn\/articles\/.*/.test(href)) {
+    if (/http[s]?:\/\/arch-long.cn\/articles\/.*/.test(href)) {
 
         /**
          * 加载文章目录结构
@@ -179,7 +179,7 @@ function isDisplayLeftContent(flag) {
                 {duration: 300, easing: "swing"}
             );
         }
-        else{
+        else {
             $(".content-wrapper").animate(
                 {left: "20px"},
                 {duration: 300, easing: "swing"}
