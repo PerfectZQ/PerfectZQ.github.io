@@ -1976,6 +1976,11 @@ html {
     .sidebar_right {
         display: none;
     }
+
+    p {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
 }
 
 /* 屏幕宽度小于500px */
