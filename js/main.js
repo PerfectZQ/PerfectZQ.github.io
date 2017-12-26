@@ -154,10 +154,7 @@ function isDisplayLeftContent(flag) {
         }
         if (windowWidth < 1100) {
             $(".header .top-right-menu").css("display", "none");
-            $(".content-wrapper").animate(
-                {left: "275px"},
-                {duration: 300, easing: "swing"}
-            );
+            $(".content-wrapper").css("display", "none");
         }
     } else {
         $(".header").animate(
@@ -171,6 +168,7 @@ function isDisplayLeftContent(flag) {
                 function () {
                     if (windowWidth < 1100) {
                         $(".header .top-right-menu").css("display", "block");
+                        $(".content-wrapper").css("display", "block");
                     }
                 }
             }
