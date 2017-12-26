@@ -47,7 +47,10 @@ $(function () {
             }
         }
 
-        // 生成目录
+        /**
+         *  生成目录
+         */
+
         for (var i = 0; i < content.length; i++) {
             var node = content[i].node;
             var childNodes = content[i].childNodes;
@@ -74,7 +77,6 @@ $(function () {
                 "</li>"
             );
         }
-
     }
 
     /**
@@ -92,10 +94,16 @@ $(function () {
         $("#dropdown-menu").slideToggle('normal');
     });
 
+    $(".header button.menu-btn i").click(function () {
+        var width = $(".sidebar").width();
+        isDisplayLeftContent(width == 0);
+    });
+
 });
 
 /**
- * 隐藏欢迎也，显示博客主页。
+ * 隐藏欢迎页面，显示博客主页。
+ * @param flag 是否显示博客主页
  */
 function isDisplayBlog(flag) {
     if (flag) {
@@ -107,9 +115,30 @@ function isDisplayBlog(flag) {
     }
 }
 
+/**
+ * 目录定位
+ * @param id 要滚动到的元素的id
+ */
 function scrollToView(id) {
-    $("html, body").animate({
-        scrollTop: $("#" + id).offset().top - 80
-    }, {duration: 500, easing: "swing"});
+    $("html, body").animate(
+        {scrollTop: $("#" + id).offset().top - 80},
+        {duration: 500, easing: "swing"}
+    );
 }
 
+/**
+ * @param flag 是否显示左侧目录
+ */
+function isDisplayLeftContent(flag) {
+    if (flag) {
+        $(".sidebar").animate(
+            {width: "255px"},
+            {duration: 500, easing: "swing"}
+        );
+    } else {
+        $(".sidebar").animate(
+            {width: "0px"},
+            {duration: 500, easing: "swing"}
+        );
+    }
+}
