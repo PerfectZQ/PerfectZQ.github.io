@@ -130,6 +130,7 @@ function scrollToView(id) {
  * @param flag 是否显示左侧目录
  */
 function isDisplayLeftContent(flag) {
+    var windowWidth = $(window).width();
     if (flag) {
         $(".header").animate(
             {left: "255px"},
@@ -149,6 +150,9 @@ function isDisplayLeftContent(flag) {
             {left: "310px"},
             {duration: 300, easing: "swing"}
         );
+        if (windowWidth < 1100) {
+            $(".header .top-right-menu").css("display", "none");
+        }
     } else {
         $(".header").animate(
             {left: "0px"},
@@ -164,5 +168,8 @@ function isDisplayLeftContent(flag) {
         );
         $(".sidebar-header").css("display", "none");
         $(".sidebar-container").css("display", "none");
+        if (windowWidth < 1100) {
+            $(".header .top-right-menu").css("display", "block");
+        }
     }
 }
