@@ -133,13 +133,12 @@ function isDisplayLeftContent(flag) {
     if (flag) {
         $(".sidebar").animate(
             {width: "255px"},
-            {duration: 300, easing: "swing"},
             {
-                callback:
-                    function () {
-                        $(".sidebar-header").css("display", "block");
-                        $(".sidebar-container").css("display", "block");
-                    }
+                duration: 300, easing: "swing", complete:
+                function () {
+                    $(".sidebar-header").css("display", "block");
+                    $(".sidebar-container").css("display", "block");
+                }
             }
         );
         $(".header").animate(
