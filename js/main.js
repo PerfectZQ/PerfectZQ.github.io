@@ -135,11 +135,27 @@ function isDisplayLeftContent(flag) {
             {width: "255px"},
             {duration: 500, easing: "swing"}
         );
+        $(".header").animate(
+            {left: "255px"},
+            {duration: 500, easing: "swing"}
+        );
+        $(".content-wrapper").animate(
+            {left: "310px"},
+            {duration: 500, easing: "swing"}
+        );
         $(".sidebar-header").css("display", "block");
         $(".sidebar-container").css("display", "block");
     } else {
         $(".sidebar").animate(
             {width: "0px"},
+            {duration: 500, easing: "swing"}
+        );
+        $(".header").animate(
+            {left: "0px"},
+            {duration: 500, easing: "swing"}
+        );
+        $(".content-wrapper").animate(
+            {left: "55px"},
             {duration: 500, easing: "swing"}
         );
         $(".sidebar-header").css("display", "none");
