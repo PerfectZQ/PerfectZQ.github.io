@@ -1239,93 +1239,85 @@ input[type="tel"]:-ms-input-placeholder {
 
 /* 移动端导航栏响应式控制 */
 @media all and (max-width: 1100px) {
-    .btn-mobile-menu {
-        display: block;
-    }
-
-    .panel-main {
-        display: table;
-        position: relative;
-    }
-
-    .panel-cover--collapsed {
-        width: 100%;
-        max-width: none;
-    }
-
-    .panel-main__inner {
-        display: table-cell;
-        padding: 60px 10%;
-    }
-
-    .panel-cover__description {
-        display: block;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    .panel-cover__divider--secondary {
-        display: none;
-    }
-
-    .welcome_index {
-        width: 100%;
-        height: 100%;
-        background-position: center center;
-    }
-
-    .welcome_index.panel-cover--collapsed {
-        display: block;
-        position: relative;
-        height: auto;
-        padding: 0;
-        background-position: center center;
-    }
-
-    .welcome_index.panel-cover--collapsed .panel-main__inner {
-        display: block;
-        padding: 70px 0 30px 0;
-    }
-
-    .welcome_index.panel-cover--collapsed .panel-cover__logo {
-        width: 60px;
-        border-width: 2px;
-    }
-
-    .welcome_index.panel-cover--collapsed .panel-cover__description {
-        display: none;
-    }
-
-    .welcome_index.panel-cover--collapsed .panel-cover__divider {
-        display: none;
-        margin: 1em auto;
-    }
-
-    .navigation-wrapper {
-        display: none;
-        position: fixed;
-        top: 20px;
-        left: 0;
-        float: left;
-        width: 300px;
-        padding: 20px 0;
-        background: rgba(51, 51, 51, 0.98);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .navigation-wrapper.visible {
-        display: block;
-    }
-
-    /*.content-wrapper {*/
-    /*width: 80%;*/
-    /*max-width: none;*/
-    /*margin: 0 auto;*/
+    /*.btn-mobile-menu {*/
+        /*display: block;*/
     /*}*/
-    /*.content-wrapper__inner {*/
-    /*margin-right: 0;*/
-    /*margin-left: 0;*/
+
+    /*.panel-main {*/
+        /*display: table;*/
+        /*position: relative;*/
     /*}*/
+
+    /*.panel-cover--collapsed {*/
+        /*width: 100%;*/
+        /*max-width: none;*/
+    /*}*/
+
+    /*.panel-main__inner {*/
+        /*display: table-cell;*/
+        /*padding: 60px 10%;*/
+    /*}*/
+
+    /*.panel-cover__description {*/
+        /*display: block;*/
+        /*max-width: 600px;*/
+        /*margin: 0 auto;*/
+    /*}*/
+
+    /*.panel-cover__divider--secondary {*/
+        /*display: none;*/
+    /*}*/
+
+    /*.welcome_index {*/
+        /*width: 100%;*/
+        /*height: 100%;*/
+        /*background-position: center center;*/
+    /*}*/
+
+    /*.welcome_index.panel-cover--collapsed {*/
+        /*display: block;*/
+        /*position: relative;*/
+        /*height: auto;*/
+        /*padding: 0;*/
+        /*background-position: center center;*/
+    /*}*/
+
+    /*.welcome_index.panel-cover--collapsed .panel-main__inner {*/
+        /*display: block;*/
+        /*padding: 70px 0 30px 0;*/
+    /*}*/
+
+    /*.welcome_index.panel-cover--collapsed .panel-cover__logo {*/
+        /*width: 60px;*/
+        /*border-width: 2px;*/
+    /*}*/
+
+    /*.welcome_index.panel-cover--collapsed .panel-cover__description {*/
+        /*display: none;*/
+    /*}*/
+
+    /*.welcome_index.panel-cover--collapsed .panel-cover__divider {*/
+        /*display: none;*/
+        /*margin: 1em auto;*/
+    /*}*/
+
+    /*.navigation-wrapper {*/
+        /*display: none;*/
+        /*position: fixed;*/
+        /*top: 20px;*/
+        /*left: 0;*/
+        /*float: left;*/
+        /*width: 300px;*/
+        /*padding: 20px 0;*/
+        /*background: rgba(51, 51, 51, 0.98);*/
+        /*border-bottom: 1px solid rgba(255, 255, 255, 0.15);*/
+    /*}*/
+
+    /*.navigation-wrapper.visible {*/
+        /*display: block;*/
+    /*}*/
+
+
 }
 
 @media all and (max-width: 420px) {
@@ -1333,11 +1325,6 @@ input[type="tel"]:-ms-input-placeholder {
         padding: 0 5%;
     }
 
-    /*.content-wrapper {*/
-    /*width: 90%;*/
-    /*max-width: none;*/
-    /*margin: 0 auto;*/
-    /*}*/
     h1 {
         margin-top: 0;
         font-size: 1.6em;
