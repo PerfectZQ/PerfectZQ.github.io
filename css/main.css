@@ -1975,7 +1975,11 @@ html {
         right: 0px;
         left: 0px;
     }
-
+    /*.content-wrapper {*/
+        /*top: 64px;*/
+        /*right: 20px;*/
+        /*left: 20px;*/
+    /*}*/
 }
 
 /* 屏幕宽度小于500px */
