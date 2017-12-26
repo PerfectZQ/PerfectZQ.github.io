@@ -179,6 +179,12 @@ function isDisplayLeftContent(flag) {
                 {duration: 300, easing: "swing"}
             );
         }
+        else{
+            $(".content-wrapper").animate(
+                {left: "20px"},
+                {duration: 300, easing: "swing"}
+            );
+        }
         $(".sidebar-header").css("display", "none");
         $(".sidebar-container").css("display", "none");
     }

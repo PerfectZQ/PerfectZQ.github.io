@@ -1969,8 +1969,12 @@ html {
 
     .content-wrapper {
         top: 64px;
-        right: 0px;
-        left: 30px;
+        right: 10px;
+        left: 20px;
+    }
+
+    .sidebar_right {
+        display: none;
     }
 }
 
