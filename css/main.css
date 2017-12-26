@@ -121,11 +121,6 @@ a:hover {
     color: #FFFFFF;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
 h1 {
     font-size: 30px;
     font-weight: lighter;
@@ -142,13 +137,13 @@ h2 {
     font-weight: lighter;
     text-indent: 4px;
     border-radius: 4px;
-    padding: 10px 15px;
+    padding: 8px 15px;
     line-height: 100%;
     margin-bottom: 15px;
     margin-top: 10px;
     background: #B9D3EE;
     box-shadow: 0px 5px 5px #9FB6CD;
-    border-left: 5px solid #1874CD;
+    border-left: 5px solid #1874CDAA;
     position: relative;
 }
 
