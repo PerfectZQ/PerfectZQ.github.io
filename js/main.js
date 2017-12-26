@@ -160,7 +160,14 @@ function isDisplayLeftContent(flag) {
         );
         $(".sidebar").animate(
             {width: "0px"},
-            {duration: 300, easing: "swing"}
+            {
+                duration: 300, easing: "swing", complete:
+                function () {
+                    if (windowWidth < 1100) {
+                        $(".header .top-right-menu").css("display", "block");
+                    }
+                }
+            }
         );
         $(".content-wrapper").animate(
             {left: "55px"},
@@ -168,8 +175,5 @@ function isDisplayLeftContent(flag) {
         );
         $(".sidebar-header").css("display", "none");
         $(".sidebar-container").css("display", "none");
-        if (windowWidth < 1100) {
-            $(".header .top-right-menu").css("display", "block");
-        }
     }
 }
