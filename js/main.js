@@ -2,7 +2,7 @@ $(function () {
 
     var href = location.href;
 
-    if (href == 'http://arch-long.cn/')
+    if (href == 'http://arch-long.cn/' || href == 'https://arch-long.cn/')
         isDisplayBlog(false);
     else
         isDisplayBlog(true);
