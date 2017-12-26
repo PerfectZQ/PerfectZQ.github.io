@@ -1976,11 +1976,7 @@ html {
 
 /* 屏幕宽度小于500px */
 @media all and (max-width: 500px) {
-    .content-wrapper {
-        top: 64px;
-        right: 0px;
-        left: 30px;
-    }
+
 }
 
 /* 屏幕自适应 --end */
