@@ -1967,12 +1967,12 @@ html {
     }
 
     .content-wrapper {
-        width: 80%;
-        display: block;
-        margin: 64px auto 0px;
-        /*top: 64px;*/
-        /*right: 10px;*/
-        /*left: 20px;*/
+        width: 90%;
+        position: relative;
+        margin: 0px auto;
+        top: 64px;
+        right: 0px;
+        left: 0px;
     }
 
 }
