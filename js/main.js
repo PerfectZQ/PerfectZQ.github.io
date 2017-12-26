@@ -133,7 +133,7 @@ function isDisplayLeftContent(flag) {
     if (flag) {
         $(".header").animate(
             {left: "255px"},
-            {duration: 300, easing: "swing"}
+            {duration: 150, easing: "swing"}
         );
         $(".sidebar").animate(
             {width: "255px"},
@@ -152,7 +152,7 @@ function isDisplayLeftContent(flag) {
     } else {
         $(".header").animate(
             {left: "0px"},
-            {duration: 300, easing: "swing"}
+            {duration: 150, easing: "swing"}
         );
         $(".sidebar").animate(
             {width: "0px"},
