@@ -489,14 +489,14 @@ img::-moz-selection {
 }
 
 .content-wrapper {
+    position: absolute;
     top: 84px;
     left: 310px;
     right: 300px;
-    position: absolute;
 }
 
 .content-wrapper .content-wrapper__inner .main-post-list ol li {
-    width: auto;
+    width: 100%;
 }
 
 .content-wrapper__inner {
@@ -1938,12 +1938,6 @@ html {
     }
 }
 
-@media screen and (min-width: 1100px) {
-    .content-wrapper .content-wrapper__inner .main-post-list ol li {
-        width: 100%;
-    }
-}
-
 /* 屏幕宽度小于1100px 移动端 */
 @media all and (max-width: 1100px) {
     /* 隐藏左边栏 */
@@ -1973,14 +1967,14 @@ html {
     }
 
     .content-wrapper {
-        top: 64px;
-        right: 10px;
-        left: 20px;
+        width: 80%;
+        display: block;
+        margin: 64px auto 0px;
+        /*top: 64px;*/
+        /*right: 10px;*/
+        /*left: 20px;*/
     }
 
-    .content-wrapper .content-wrapper__inner .main-post-list ol li {
-        width: auto;
-    }
 }
 
 /* 屏幕宽度小于420px */
