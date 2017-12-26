@@ -146,12 +146,18 @@ function isDisplayLeftContent(flag) {
                 }
             }
         );
-        $(".content-wrapper").animate(
-            {left: "310px"},
-            {duration: 300, easing: "swing"}
-        );
+        if (windowWidth >= 1100) {
+            $(".content-wrapper").animate(
+                {left: "310px"},
+                {duration: 300, easing: "swing"}
+            );
+        }
         if (windowWidth < 1100) {
             $(".header .top-right-menu").css("display", "none");
+            $(".content-wrapper").animate(
+                {left: "275px"},
+                {duration: 300, easing: "swing"}
+            );
         }
     } else {
         $(".header").animate(
@@ -169,10 +175,18 @@ function isDisplayLeftContent(flag) {
                 }
             }
         );
-        $(".content-wrapper").animate(
-            {left: "55px"},
-            {duration: 300, easing: "swing"}
-        );
+        if (windowWidth >= 1100) {
+            $(".content-wrapper").animate(
+                {left: "55px"},
+                {duration: 300, easing: "swing"}
+            );
+        }
+        if (windowWidth < 1100) {
+            $(".content-wrapper").animate(
+                {left: "20px"},
+                {duration: 300, easing: "swing"}
+            );
+        }
         $(".sidebar-header").css("display", "none");
         $(".sidebar-container").css("display", "none");
     }
