@@ -63,7 +63,7 @@ basedir=/usr/local/mysql/
 # 数据存储目录
 datadir=/usr/local/mysql/data/
 ```
-## 启动 mysql
+## 启动 mysql 服务
 linux
 ```shell
 # 查看命令
@@ -76,6 +76,13 @@ service mysql start
 ```shell
 # root用户登录 -h 指定 hostname，默认localhost
 mysql -u root -p
+# 第一次登录必须修改生成的初始密码
+# === 方式1 ===
+bin/mysqladmin -u root -p password 新密码
+# === 方式2 ===
+mysql> SET PASSWORD = PASSWORD('your new password');
+mysql> ALTER USER 'root'@'localhost' PASSWORD EXPIRE NEVER;
+mysql> flush privileges;
 # 创建一个新数据库实例，在mysql shell中';'是必须的
 mysql> create database testDB;
 # 创建一个新用户test，并将testDB的所有权限赋给它。localhost指只有本机可以登录访问
