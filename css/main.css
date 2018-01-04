@@ -229,8 +229,8 @@ ol ol, ol ul, ul ol, ul ul {
 }
 
 ol {
-    /* list-style-type: decimal; */
-    list-style-type: none;
+    list-style-type: decimal;
+    /*list-style-type: none;*/
 }
 
 ul {
@@ -1696,6 +1696,7 @@ html {
 }
 
 .sidebar_right ol {
+    list-style-type: none;
     margin: 0 0 12px 18px;
 }
 
