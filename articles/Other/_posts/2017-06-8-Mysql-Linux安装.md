@@ -48,8 +48,10 @@ cd mysql
 bin/mysql_install_db
 # 新版本用 mysqld --initialize (super user with random passwd in log) 
 # 或者 mysqld --initialize-insecure (no passwd) 
+# mysql 启动脚本
 cp support-files/mysql.server /etc/init.d/mysqld
 chmod 755 /etc/init.d/mysqld
+# mysql 配置文件
 cp support-files/my-default.cnf /etc/my.cnf
 # 修改启动脚本
 vim /etc/init.d/mysqld
@@ -67,7 +69,8 @@ service mysql start
 #测试连接
 ./mysql/bin/mysql -uroot
 #加入环境变量，编辑 /etc/profile，这样可以在任何地方用mysql命令了
-export PATH=$PATH:/usr/local/mysql//bin<br>source /etc/profile
+export PATH=$PATH:/usr/local/mysql/bin
+source /etc/profile
 ```
 
 ## 创建用户与分配权限
