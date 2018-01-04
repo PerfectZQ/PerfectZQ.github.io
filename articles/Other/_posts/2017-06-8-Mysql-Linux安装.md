@@ -40,20 +40,23 @@ rm -rf /usr/my.cnf
 ## 安装 mysql
 ```shell
 wget http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz
-tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz -C /usr/local/mysql
-cd /usr/local/mysql/
-mkdir data/mysql
-chown -R mysql:mysql ./
-./scripts/mysql_install_db --user=mysql --datadir=/usr/local/mysql/data/mysql
+tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz -C /usr/local/
+cd /usr/local/
+mv mysql-5.6.33-linux-glibc2.5-x86_64 mysql
+cd mysql
+# deprecated in 5.7 
+bin/mysql_install_db
+# 新版本用 mysqld --initialize (super user with random passwd in log) 
+# 或者 mysqld --initialize-insecure (no passwd) 
 cp support-files/mysql.server /etc/init.d/mysqld
 chmod 755 /etc/init.d/mysqld
 cp support-files/my-default.cnf /etc/my.cnf
-#修改启动脚本
-vi /etc/init.d/mysqld
-#修改项：
+# 如果不安装目录不是/usr/local/mysql 需要修改启动脚本
+vim /etc/init.d/mysqld
+# mysql 安装目录
 basedir=/usr/local/mysql/
-datadir=/usr/local/mysql/data/mysql
-
+# 数据存储目录
+datadir=/usr/local/mysql/data/
 ```
 ## 启动 mysql
 ```shell
