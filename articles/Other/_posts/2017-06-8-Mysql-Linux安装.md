@@ -45,8 +45,8 @@ rm -rf /usr/my.cnf
 wget http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz
 tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz -C /usr/local/
 cd /usr/local/
-mv mysql-5.6.33-linux-glibc2.5-x86_64 mysql
-cd mysql
+ln -s /usr/local/mysql-5.6.33-linux-glibc2.5-x86_64 mysql
+cd mysql-5.6.33-linux-glibc2.5-x86_64
 # deprecated in 5.7 
 scripts/mysql_install_db --user=despacito
 # 新版本用 bin/mysqld --initialize --user=despacito (super user with random passwd in log) 
