@@ -37,13 +37,34 @@ rm -rf /usr/include/mysql
 rm -rf /usr/share/mysql
 rm -rf /usr/my.cnf
 ```
+## 安装 mysql
+```shell
+wget http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz
+tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz -C /usr/local/mysql
+cd /usr/local/mysql/
+mkdir data/mysql
+chown -R mysql:mysql ./
+./scripts/mysql_install_db --user=mysql --datadir=/usr/local/mysql/data/mysql
+cp support-files/mysql.server /etc/init.d/mysqld
+chmod 755 /etc/init.d/mysqld
+cp support-files/my-default.cnf /etc/my.cnf
+#修改启动脚本
+vi /etc/init.d/mysqld
+#修改项：
+basedir=/usr/local/mysql/
+datadir=/usr/local/mysql/data/mysql
 
-## 启动mysql
+```
+## 启动 mysql
 ```shell
 # 查看命令
 service mysql | service mysqld
 # 启动
 service mysql start
+#测试连接
+./mysql/bin/mysql -uroot
+#加入环境变量，编辑 /etc/profile，这样可以在任何地方用mysql命令了
+export PATH=$PATH:/usr/local/mysql//bin<br>source /etc/profile
 ```
 
 ## 创建用户与分配权限
