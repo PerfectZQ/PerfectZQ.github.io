@@ -51,7 +51,7 @@ bin/mysql_install_db
 cp support-files/mysql.server /etc/init.d/mysqld
 chmod 755 /etc/init.d/mysqld
 cp support-files/my-default.cnf /etc/my.cnf
-# 如果不安装目录不是/usr/local/mysql 需要修改启动脚本
+# 修改启动脚本
 vim /etc/init.d/mysqld
 # mysql 安装目录
 basedir=/usr/local/mysql/
