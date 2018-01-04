@@ -49,9 +49,9 @@ mv mysql-5.6.33-linux-glibc2.5-x86_64 mysql
 cd mysql
 # deprecated in 5.7 
 bin/mysql_install_db
-# 新版本用 bin/mysqld --initialize (super user with random passwd in log) 
-# 或者 bin/mysqld --initialize-insecure (no passwd) 
-# mysql 启动脚本，这样就可以使用 service 命令了
+# 新版本用 bin/mysqld --initialize --user despacito (super user with random passwd in log) 
+# 或者 bin/mysqld --initialize-insecure --user despacito (no passwd) 
+# 将启动脚本 mysql.server 放到 /etc/init.d 目录下，这样就可以使用 service 命令了
 cp support-files/mysql.server /etc/init.d/mysqld
 chmod 755 /etc/init.d/mysqld
 # mysql 配置文件
@@ -64,17 +64,19 @@ basedir=/usr/local/mysql/
 datadir=/usr/local/mysql/data/
 ```
 ## 启动 mysql
+linux
 ```shell
 # 查看命令
 service mysql | service mysqld
-# 启动
+# 启动服务，实际上执行的是 ./support-files/mysql.server start
 service mysql start
-#测试连接
+# 测试连接
 ./mysql/bin/mysql -uroot
 #加入环境变量，编辑 /etc/profile，这样可以在任何地方用mysql命令了
 export PATH=$PATH:/usr/local/mysql/bin
 source /etc/profile
 ```
+
 
 ## 创建用户与分配权限
 ```shell
