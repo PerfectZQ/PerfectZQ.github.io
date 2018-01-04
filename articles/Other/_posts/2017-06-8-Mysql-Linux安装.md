@@ -51,7 +51,7 @@ cd mysql
 bin/mysql_install_db
 # 新版本用 bin/mysqld --initialize (super user with random passwd in log) 
 # 或者 bin/mysqld --initialize-insecure (no passwd) 
-# mysql 启动脚本
+# mysql 启动脚本，这样就可以使用 service 命令了
 cp support-files/mysql.server /etc/init.d/mysqld
 chmod 755 /etc/init.d/mysqld
 # mysql 配置文件
