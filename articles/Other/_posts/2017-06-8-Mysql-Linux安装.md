@@ -38,6 +38,9 @@ rm -rf /usr/share/mysql
 rm -rf /usr/my.cnf
 ```
 ## 安装 mysql
+### rpm包安装
+建议安装 rpm 包，省时省力，只需要指定root密码，不需要额外配置什么东西就可以启动了。
+### 压缩包安装方式
 ```shell
 wget http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz
 tar -zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz -C /usr/local/
@@ -46,8 +49,8 @@ mv mysql-5.6.33-linux-glibc2.5-x86_64 mysql
 cd mysql
 # deprecated in 5.7 
 bin/mysql_install_db
-# 新版本用 mysqld --initialize (super user with random passwd in log) 
-# 或者 mysqld --initialize-insecure (no passwd) 
+# 新版本用 bin/mysqld --initialize (super user with random passwd in log) 
+# 或者 bin/mysqld --initialize-insecure (no passwd) 
 # mysql 启动脚本
 cp support-files/mysql.server /etc/init.d/mysqld
 chmod 755 /etc/init.d/mysqld
