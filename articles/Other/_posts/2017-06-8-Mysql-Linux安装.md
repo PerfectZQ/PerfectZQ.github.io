@@ -48,8 +48,8 @@ cd /usr/local/
 mv mysql-5.6.33-linux-glibc2.5-x86_64 mysql
 cd mysql
 # deprecated in 5.7 
-bin/mysql_install_db
-# 新版本用 bin/mysqld --initialize --user despacito (super user with random passwd in log) 
+scripts/mysql_install_db --user=despacito
+# 新版本用 bin/mysqld --initialize --user=despacito (super user with random passwd in log) 
 # 或者 bin/mysqld --initialize-insecure --user despacito (no passwd) 
 # 将启动脚本 mysql.server 放到 /etc/init.d 目录下，这样就可以使用 service 命令了
 cp support-files/mysql.server /etc/init.d/mysqld
