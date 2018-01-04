@@ -70,13 +70,7 @@ linux
 service mysql | service mysqld
 # 启动服务，实际上执行的是 ./support-files/mysql.server start
 service mysql start
-# 测试连接
-./mysql/bin/mysql -uroot
-#加入环境变量，编辑 /etc/profile，这样可以在任何地方用mysql命令了
-export PATH=$PATH:/usr/local/mysql/bin
-source /etc/profile
 ```
-
 
 ## 创建用户与分配权限
 ```shell
