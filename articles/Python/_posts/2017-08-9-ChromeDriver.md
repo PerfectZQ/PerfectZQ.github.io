@@ -38,6 +38,7 @@ chrome driver 版本支持的Chrome版本
 | v2.6 | v29-32 |
 | v2.5 | v29-32 |
 | v2.4 | v29-32 |
+
 ## 下载地址
 [下载地址1](http://chromedriver.storage.googleapis.com/index.html)
 
