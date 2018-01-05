@@ -5,7 +5,7 @@ tag: Python
 ---
 
 ## 编译、安装过程  
-　　首先去官网下载python包，地址：http://www.python.org/download/，然后将tgz格式包解压进入解压目录下，执行以下操作
+　　首先去官网下载python包，地址：http://www.python.org/download/，然后将tgz格式包解压进入解压目录下，执行以下操作:
 ```shell
 # 配置并且检查，然后生成编译安装所需要的文件，如：
 ./configure --prefix /usr/local/python2.7
