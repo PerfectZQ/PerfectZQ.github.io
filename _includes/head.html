@@ -26,20 +26,16 @@
 
     <!-- pygments代码高亮，需要在main.css前面，这样才可以使后面的代码样式生效 -->
     <link rel="stylesheet" href="/css/pygments.css">
-    <!--<link rel="stylesheet" href="/css/app.css">-->
     <link rel="stylesheet" href='{{ "/css/main.css" | prepend: site.baseurl }}'>
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
     <link rel="alternate" type="application/rss+xml" title="{{ site.title }}"
           href='{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}'>
 
-    <link href="/css/font-awesome.min.css" rel="stylesheet">
-
     <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw"/>
     <!--添加LaTex支持-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-            type="text/javascript"></script>
+    <script src="/js/MathJax.js" type="text/javascript"></script>
 
     <!-- 站点统计 -->
     <script
