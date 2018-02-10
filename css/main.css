@@ -878,7 +878,7 @@ nav {
     width: 100%;
     border-color: #666;
     color: #fff;
-    /*opacity: .8; */
+    opacity: .8;
 }
 
 .navigation__item a:hover {
