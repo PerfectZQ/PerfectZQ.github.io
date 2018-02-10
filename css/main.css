@@ -876,9 +876,7 @@ nav {
     display: inline-block;
     position: relative;
     width: 100%;
-    border-color: #666;
-    color: #fff;
-    opacity: .8;
+    color: #ddd;
 }
 
 .navigation__item a:hover {
