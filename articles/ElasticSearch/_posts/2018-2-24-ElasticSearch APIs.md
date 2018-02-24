@@ -5,8 +5,12 @@ tag: ElasticSearch
 ---
 
 ## ES API 简介
+　　和ElasticSearch交互的方式取决于是否用Java，如果使用Java，可以使用ES的Java Client，否则使用RESTful API with JSON over HTTP
+
+　　ES 支持的所有语言的 client 的说明文档可以在这里找到:[Elasticsearch Clients](https://www.elastic.co/guide/en/elasticsearch/client/index.html)
+
 ### Java API
-　　和ElasticSearch交互的方式取决于是否用Java，如果使用Java，可以使用ES的Java Client，主要分为两种：
+　　Java Client，主要分为两种：
 
 * 节点客户端（Node client）：节点客户端会作为一个非数据节点加入到集群中。
 * 传输客户端（Transport client）：传输客户端是轻量级的，他本身不会作为节点加入到集群中，他会将请求转发到集群中的某个节点上。
@@ -15,7 +19,7 @@ tag: ElasticSearch
 
 ### RESTful API with JSON over HTTP
 
-　　所有其他的语言则可以通过 RESTful API 通过端口`9200`和ES通信。你可以通过web客户端发送http请求ES，甚至直接使用curl。ES 支持的所有语言的 client 可以在这里找到:[Elasticsearch Clients](https://www.elastic.co/guide/en/elasticsearch/client/index.html)
+　　所有其他的语言则可以通过 RESTful API 通过端口`9200`和ES通信。你可以通过web客户端发送http请求ES，甚至直接使用curl。
 
 　　一个ElasticSearch的请求长这样子
 
@@ -36,7 +40,8 @@ curl -X<VERB> '<PROTOCOL>://<HOST>:<PORT>/<PATH>?<QUERY_STRING>' -d '<BODY>'
 
 　　方便理解在这里举几个例子：
 
-#### 添加几条数据
+## 搜索(search) API
+　　方便演示，首先添加几条数据
 
 ```
 # 其中1是特定雇员的ID，ES中的每个文档有默认属性_id，这里是使_id=1
@@ -65,7 +70,7 @@ PUT /megacorp/employee/3
     "interests":  [ "forestry" ]
 }
 ```
-#### 检索文档 GET
+　　简单查询
 
 ```
 # 查找_id=1的雇员信息
@@ -89,7 +94,7 @@ GET /megacorp/employee/1
   }
 }
 ```
-#### 轻量检索 _search
+　　使用 Search API 查询
 
 ```
 GET /megacorp/employee/_search
@@ -148,8 +153,12 @@ GET /megacorp/employee/_search
    }
 }
 ```
-#### 使用高亮搜索，添加查询字符串参数
+　　Search API 分为两种：
 
+* 更轻量的查询字符串(query-string)
+* 使用DSL(领域特定语言)，指定使用一个JSON请求体作为参数进行搜索
+
+### 使用查询字符串参数搜索
 ```
 # 搜索姓氏为 Smith 的雇员
 GET /megacorp/employee/_search?q=last_name:Smith
@@ -185,6 +194,21 @@ GET /megacorp/employee/_search?q=last_name:Smith
          }
       ]
    }
+}
+```
+　　使用`?q=`查询字符串参数，通过命令进行临时性的即席搜索非常方便，但是还是有局限性，比如查询参数会被URL编码(%编码)，可读性差、更加难懂，不利于调试，而且还有可能暴露隐私信息。因此不推荐直接向用户暴露此功能(有点像get请求)。因此生产环境更推荐request body(post请求)。
+
+### 构造JSON作为参数搜索
+
+　　使用DSL(领域特定语言)，指定使用一个JSON请求体作为参数，替代query-string。这种方式支持构建更复杂和健壮的查询。
+```
+GET /megacorp/employee/_search
+{
+    "query" : {
+        "match" : { // match 查询，查询类型之一
+            "last_name" : "Smith"
+        }
+    }
 }
 ```
 
