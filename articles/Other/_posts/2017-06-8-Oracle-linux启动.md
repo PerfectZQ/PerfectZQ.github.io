@@ -50,3 +50,11 @@ Connected to an idle instance.
 SQL> startup
 ORACLE instance started.
 ```
+
+## 关闭实例
+```shell
+SQL> shutdown
+Database closed.
+Database dismounted.
+ORACLE instance shut down.
+```
