@@ -32,9 +32,7 @@ new BsonDocument().append("a", new BsonString("MongoDB"))
 new Document().append("a", "MongoDB")
               .append("b", Arrays.asList(1, 2));
 ```
-　　这样的写法代码写的更少，但是如果你不经意间使用了不支持的值类型时，可能会出现运行时错误。
-
-　　常用的值类型如下：
+　　这样的写法代码写的更少，但是如果你不经意间使用了不支持的值类型时，可能会出现运行时错误。常用的值类型如下：
 
 | BSON type | Java type |
 | :-------- | :-------- |
