@@ -69,6 +69,7 @@ val ssc = new StreamingContext(conf, Seconds(1))
 
 * 基本输入源：能够直接应用于StreamingContext API的输入源。例如，文件系统、套接字连接、AKKA Actor。
 * 高级输入源：需要额外导入一些jar包，应用于特定工具类的输入源。例如，Kafka、Flume、Kinesis、Twitter等。
+
 ### 基本输入源
 #### 文件流
 　　文件流用于兼容从HDFS中读取的文件数据，示例如下：
