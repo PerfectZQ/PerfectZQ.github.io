@@ -600,6 +600,10 @@ hr {
     border-top: 1px solid #DDDDDD;
 }
 
+.post ul {
+    margin: 0 0 1.3em 3.0em
+}
+
 .panel {
     display: table;
     width: 100%;
