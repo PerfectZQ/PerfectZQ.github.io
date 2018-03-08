@@ -154,7 +154,28 @@ libraryDependencies += "org.apache.spark" %% "spark-streaming-kafka-0-10" % "2.3
 * ReceiverDStream: 需要接收器，kafka 0.8.x 版本才有，0.10.x 版本没有
 
 ```scala
-import org.apache.spark.streaming.kafka._
+import org.apache.kafka.clients.consumer.ConsumerRecord
+import org.apache.kafka.common.serialization.StringDeserializer
+import org.apache.spark.streaming.kafka010._
+import org.apache.spark.streaming.kafka010.LocationStrategies.PreferConsistent
+import org.apache.spark.streaming.kafka010.ConsumerStrategies.Subscribe
 
-val kafkaDirectDStream = KafkaUtils.
+val kafkaParams = Map[String, Object](
+  "bootstrap.servers" -> "localhost:9092,anotherhost:9092",
+  "key.deserializer" -> classOf[StringDeserializer],
+  "value.deserializer" -> classOf[StringDeserializer],
+  "group.id" -> "use_a_separate_group_id_for_each_stream",
+  "auto.offset.reset" -> "latest",
+  "enable.auto.commit" -> (false: java.lang.Boolean)
+)
+
+val topics = Array("topicA", "topicB")
+
+val kafkaDirectDStream = KafkaUtils.createDirectStream[String, String](
+                           streamingContext,
+                           PreferConsistent,
+                           Subscribe[String, String](topics, kafkaParams)
+                         )
+
+kafkaDirectDStream.map(record => (record.key, record.value))
 ```
