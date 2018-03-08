@@ -148,7 +148,7 @@ libraryDependencies += "org.apache.spark" %% "spark-streaming-kafka-0-10" % "2.3
 | Offset Commit Api | No | Yes |
 | Dynamic Topic Subscription | No | Yes |
 
-#### DirectDStream 和 ReceiverDStream
+### DirectDStream 和 ReceiverDStream
 　　Kafka 提供两种 InputDStream：
 * DirectDStream: 不需要接收器
 * ReceiverDStream: 需要接收器，kafka 0.8.x 版本才有，0.10.x 版本没有
@@ -177,5 +177,20 @@ val kafkaDirectDStream = KafkaUtils.createDirectStream[String, String](
                            Subscribe[String, String](topics, kafkaParams)
                          )
 
-kafkaDirectDStream.map(record => (record.key, record.value))
+kafkaDirectDStream.map(record => (record.key, record.value)).print()
+
+streamingContext.start()
+streamingContext.awaitTermination()
 ```
+
+## DStream 状态操作
+　　状态操作是数据的**多批次**操作之一(作用于多个批次)，包括基于`Window`的操作和`update-StateByKey`操作。
+### window 计算
+　　Streaming程序提供了基于window的计算，允许通过滑动窗口对数据进行转换。任何窗口操作都需要指定两个重要参数：
+* 窗口长度(window length)，窗口的持续时间
+* 滑动窗口时间间隔(slide interval)，多长时间滑动一次窗口
+
+　　**这两个参数都必须是DStream批处理间隔的倍数**
+
+　　举个例子，如果想每隔2个小时就统计网站最近3个小时的PV量，可以设置窗口长度为3小时，窗口间隔时间为2小时。注意，攒满一个窗口的大小，才开始计算滑动间隔时间。第一个窗口在第3小时填满，第一次计算窗口中的数据，等到了第5小时，窗口进行第一次滑动，落在第3小时和第5小时的区间，开始计算第二个窗口中的数据。图示如下：
+![有帮助的截图]({{ site.url }}/assets/streaming-dstream-window.png)
