@@ -137,7 +137,7 @@ libraryDependencies += "org.apache.spark" %% "spark-streaming-kafka-0-10" % "2.3
 
 　　在 kafka 版本选择上可以参考对应Spark版本的官方文档 0.8 版本和 0.10 版本的对比说明 [Spark Streaming + Kafka Integration Guide](http://spark.apache.org/docs/latest/streaming-kafka-integration.html)
 　　
-| spark-streaming-kafka-0-8 | spark-streaming-kafka-0-10 |
+|   | [spark-streaming-kafka-0-8](http://spark.apache.org/docs/latest/streaming-kafka-0-8-integration.html) | [spark-streaming-kafka-0-10](http://spark.apache.org/docs/latest/streaming-kafka-0-10-integration.html) |
 | :--------: | :--------: | :--------: |
 | Broker Version | 0.8.2.1 or higher | 0.10.0 or higher |
 | Api Stability | Stable | Experimental |
@@ -149,4 +149,12 @@ libraryDependencies += "org.apache.spark" %% "spark-streaming-kafka-0-10" % "2.3
 | Dynamic Topic Subscription | No | Yes |
 
 #### DirectDStream 和 ReceiverDStream
-　　DirectDStream 不需要接收器，而 ReceiverDStream 需要接收器
+　　Kafka 提供两种 InputDStream：
+* DirectDStream: 不需要接收器
+* ReceiverDStream: 需要接收器，kafka 0.8.x 版本才有，0.10.x 版本没有
+
+```scala
+import org.apache.spark.streaming.kafka._
+
+val kafkaDirectDStream = KafkaUtils.
+```
