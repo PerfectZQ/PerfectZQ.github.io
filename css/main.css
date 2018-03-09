@@ -171,7 +171,7 @@ h5 {
 
 p {
     line-height: 1.6em;
-    padding: 5px 0px 6px 0px;
+    padding: 5px 0px 5px 0px;
 }
 
 li p {
@@ -212,7 +212,7 @@ ol, ul {
 }
 
 ol li, ul li {
-    line-height: 2.0em;
+    line-height: 1.6em;
 }
 
 ol ol, ol ul, ul ol, ul ul {
