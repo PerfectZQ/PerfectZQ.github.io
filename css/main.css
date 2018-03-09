@@ -171,7 +171,7 @@ h5 {
 
 p {
     line-height: 1.8em;
-    padding: 5px;
+    padding: 10px 0px 10px 0px;
 }
 
 li p {
@@ -1974,5 +1974,6 @@ html {
 
 /* 屏幕自适应 --end */
 .highlighter-rouge {
-    line-height: 2.0em;
+    font-size: 0.9em;
+    padding: 0.05em .4em;
 }
