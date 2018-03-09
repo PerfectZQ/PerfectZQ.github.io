@@ -276,11 +276,11 @@ table {
     vertical-align: middle;
     color: #333333;
     font-size: 1.0em;
-    text-align: center;
+    text-align: left;
     line-height: 28px;
     border: 1px solid #363636;
     width: 90%;
-    margin: 20px auto;
+    margin: 20px 0;
 }
 
 thead tr:first-child {
@@ -573,9 +573,9 @@ hr {
 
 .post img {
     max-width: 100%;
-    margin: 0 auto;
+    margin: 0;
     border-radius: 3px;
-    text-align: center;
+    text-align: left;
     display: block;
 }
 
