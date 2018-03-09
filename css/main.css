@@ -145,20 +145,18 @@ h2 {
 h3 {
     font-size: 18px;
     font-weight: bold;
+    font-family: 'Microsoft YaHei';
     padding: 10px 0px 10px 5px;
-    line-height: 100%;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    line-height: 1.4em;
     position: relative;
 }
 
 h4 {
     font-size: 16px;
     font-weight: bold;
+    font-family: 'Microsoft YaHei';
     padding: 10px 0px 10px 5px;
-    line-height: 100%;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    line-height: 1.2em;
     position: relative;
 }
 
@@ -186,6 +184,8 @@ li p.excerpt {
 
 strong {
     font-weight: bold;
+    font-family: 'Microsoft YaHei';
+    font-size: 15px;
 }
 
 em {
@@ -197,7 +197,6 @@ blockquote {
     padding-bottom: 1px;
     padding-left: 10px;
     margin-left: 20px;
-
     font-family: "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
     font-weight: lighter;
     font-size: 1em;
