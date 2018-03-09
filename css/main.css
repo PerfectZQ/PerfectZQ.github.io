@@ -92,12 +92,6 @@ p a {
     color: #808080;
 }
 
-li a {
-    margin-left: 4px;
-    margin-right: 4px;
-    color: #808080;
-}
-
 /* post-list 标签 超链接*/
 li div a {
     margin-left: 0;
@@ -1557,8 +1551,10 @@ html {
 }
 
 .sidebar .nav li a {
-    color: rgba(255, 255, 255, 0.5);
-    text-decoration: none;
+    /*color: rgba(255, 255, 255, 0.5);*/
+    /*text-decoration: none;*/
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 [class^='nav'] li > a,
@@ -1711,6 +1707,7 @@ html {
 
 .sidebar_right a {
     margin: 0;
+    color: #808080;
 }
 
 /* 右侧栏结束 */
