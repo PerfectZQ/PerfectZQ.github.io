@@ -1552,7 +1552,7 @@ html {
 
 .sidebar .nav li a {
     color: rgba(255, 255, 255, 0.5);
-    text-decoration: none;
+    padding: 15px 10px 15px 35px;
     margin-left: 4px;
     margin-right: 4px;
 }
@@ -1587,13 +1587,6 @@ html {
 .sidebar .nav li.open a:hover {
     color: #ffffff;
     background-color: #2d363f;
-}
-
-.sidebar .nav > li > a {
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 35px;
-    padding-right: 10px;
 }
 
 .sidebar .nav > li.active > a,
