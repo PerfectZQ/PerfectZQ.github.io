@@ -1702,6 +1702,10 @@ html {
     color: #808080;
 }
 
+.sidebar_right a:hover {
+    color: #80808080;
+}
+
 /* 右侧栏结束 */
 
 /**
