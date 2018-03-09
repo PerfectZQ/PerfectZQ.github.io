@@ -1551,7 +1551,7 @@ html {
 }
 
 .sidebar .nav li a {
-    color: rgba(255, 255, 255, 0.5);
+    color: #808080;
     padding: 15px 10px 15px 35px;
     margin-left: 4px;
     margin-right: 4px;
