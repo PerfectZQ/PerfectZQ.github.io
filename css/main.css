@@ -1547,10 +1547,6 @@ html {
     list-style: none;
 }
 
-.sidebar .nav {
-    font-size: 13px;
-}
-
 .sidebar .nav li a {
     color: #ffffff80;
     padding: 15px 10px 15px 35px;
