@@ -1551,8 +1551,8 @@ html {
 }
 
 .sidebar .nav li a {
-    /*color: rgba(255, 255, 255, 0.5);*/
-    /*text-decoration: none;*/
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: blink;
     margin-left: 4px;
     margin-right: 4px;
 }
