@@ -1586,11 +1586,6 @@ html {
     height: auto;
 }
 
-.sidebar .nav li a {
-    color: rgba(255, 255, 255, 0.5);
-    text-decoration: none;
-}
-
 .sidebar .nav li a:hover,
 .sidebar .nav li.open > a,
 .sidebar .nav li.open a:hover {
