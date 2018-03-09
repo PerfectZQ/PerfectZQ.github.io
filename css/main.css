@@ -116,6 +116,7 @@ a:hover {
 }
 
 h1 {
+    font-family: 'Microsoft YaHei';
     font-size: 30px;
     font-weight: lighter;
     border-radius: 4px;
@@ -1793,7 +1794,6 @@ html {
 
 /* header头 --begin */
 .header {
-    /*background-color: #d7dde4;*/
     background-color: #ffffff;
     height: 80px;
     position: fixed;
@@ -1803,6 +1803,7 @@ html {
     transition: left 0.3s ease;
     z-index: 10;
     justify-content: space-between;
+    font-family: 'Microsoft YaHei';
 }
 
 .header .side-change-container {
