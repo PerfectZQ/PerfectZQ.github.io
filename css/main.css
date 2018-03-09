@@ -184,8 +184,8 @@ li p.excerpt {
 
 strong {
     font-weight: bold;
-    font-family: 'Microsoft YaHei';
-    font-size: 15px;
+    padding-left: 4px;
+    padding-right: 4px;
 }
 
 em {
