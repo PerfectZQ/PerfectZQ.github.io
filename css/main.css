@@ -1549,7 +1549,7 @@ html {
 
 .sidebar .nav li a {
     color: #ffffff80;
-    padding: 15px 10px 15px 35px;
+    padding: 8px 10px 10px 35px;
     margin-left: 4px;
     margin-right: 4px;
 }
@@ -1618,11 +1618,13 @@ html {
     content: "\f105" !important;
 }
 
-.sidebar .nav > li > ul > li a {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 35px;
+.sidebar .nav > li > ul {
     background-color: #333e48;
+}
+
+.sidebar .nav > li > ul > li a {
+    padding: 5px 0px 5px 35px;
+    font-size: 0.9em;
 }
 
 .sidebar .nav > li > ul > li.active a {
