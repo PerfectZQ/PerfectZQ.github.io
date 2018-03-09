@@ -172,9 +172,8 @@ h5 {
 }
 
 p {
-    line-height: 2.0em;
-    padding-left: 5px;
-    padding-right: 5px;
+    line-height: 1.8em;
+    padding: 5px;
 }
 
 li p {
