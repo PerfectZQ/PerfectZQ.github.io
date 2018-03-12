@@ -33,8 +33,13 @@ kitten   ( <- g)
 3. `if(n > 0 && m > 0) edit(n,m) = Math.min(edit(n-1,j)+1, edit(n,m-1)+1, edit(n-1,m-1)+f(n,m) )`，其中`f(n,m)`的值取决于`str1`的第`n`个字符是否等于`str2`的第`m`个字符，如果相等，则为`0`，反之为`1`。
 
 　　图解：首先初始化一个`(n+1)*(m+1)`的矩阵，以`str1="sitting"`和`str2="kitten"`为例，构造一个`8*7`的矩阵如下。
+
 ![有帮助的截图]({{ site.url }}/assets/levenshtein1.PNG)
+
 　　根据蓝色部分，`edit(1,1) = Math.min(edit(0,1)+1, edit(1,0)+1, edit(0,0)+f(1,1)) = 1`。
+
 ![有帮助的截图]({{ site.url }}/assets/levenshtein2.PNG)
+
 　　依此类推，直到计算到`edit(n,m)`。
+
 ![有帮助的截图]({{ site.url }}/assets/levenshtein3.PNG)
