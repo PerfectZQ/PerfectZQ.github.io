@@ -67,7 +67,7 @@ def getLevenshteinSimilarity(str1: String, str2: String): Double = {
 
           matrix(i)(j) = Math.min(matrix(i - 1)(j - 1) + f, Math.min(matrix(i - 1)(j) + 1, matrix(i)(j - 1) + 1))
         }
-        print(s"${matrix(i)(j)} ")
+        print(s"[${matrix(i)(j)}] ")
       }
       println
     }
