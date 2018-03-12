@@ -8,10 +8,10 @@ tag:  Algorithm
 　　Levenshtein 距离，又叫编辑距离(Edit Distance)，指从一个字符串转成另一个字符串所需要最少编辑次数。编辑距离越大，说明两个字符串越不相似。编辑操作包括插入、删除、替换字符。
 
 　　举个例子：sitting -> kitten
-```console
+```sbtshell
 kitting  (s -> k)
 kitteng  (i -> e)
-kitten   ( <- g)
+kitten   (  <- g)
 ```
 
 　　相似度计算公式为`1 - editDistance / Math.max(str1.length, str2.length)`
@@ -43,3 +43,51 @@ kitten   ( <- g)
 　　依此类推，直到计算到`edit(n,m)`。
 
 ![有帮助的截图]({{ site.url }}/assets/levenshtein3.PNG)
+
+## 代码实现
+```scala
+def getLevenshteinSimilarity(str1: String, str2: String): Double = {
+
+    val n = str1.length
+    val m = str2.length
+    val matrix: Array[Array[Int]] = Array.ofDim(n + 1, m + 1)
+
+    for (i <- 0 to n) {
+      for (j <- 0 to m) {
+
+        if (i == 0) matrix(i)(j) = j
+        else if (j == 0) matrix(i)(j) = i
+        else {
+
+          var f: Int = 0
+          val char_i = str1.charAt(i - 1)
+          val char_j = str2.charAt(j - 1)
+
+          if (char_i != char_j) f = 1
+
+          matrix(i)(j) = Math.min(matrix(i - 1)(j - 1) + f, Math.min(matrix(i - 1)(j) + 1, matrix(i)(j - 1) + 1))
+        }
+        print(s"${matrix(i)(j)} ")
+      }
+      println
+    }
+
+    1 - matrix(n)(m).asInstanceOf[Double] / Math.max(n, m)
+
+}
+def main(args: Array[String]): Unit = {
+    println(s"similarity is ${getLevenshteinSimilarity("kitten", "sitting")}")
+}
+```
+
+　　运行结果如下:
+```console
+[0] [1] [2] [3] [4] [5] [6] [7] 
+[1] [1] [2] [3] [4] [5] [6] [7] 
+[2] [2] [1] [2] [3] [4] [5] [6] 
+[3] [3] [2] [1] [2] [3] [4] [5] 
+[4] [4] [3] [2] [1] [2] [3] [4] 
+[5] [5] [4] [3] [2] [2] [3] [4] 
+[6] [6] [5] [4] [3] [3] [2] [3] 
+similarity is 0.5714285714285714
+```
