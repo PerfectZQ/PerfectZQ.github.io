@@ -9,7 +9,7 @@
             <ul class="nav metismenu" id="sidebar-menu">
                 {% for category in site.categories %}
                     {% if category.first != 'articles' %}
-                    <li class="first_content" id="{{ category.first }}">
+                    <li class="first_content" id='{{ category.first | replace: " ", "_"}}'>
                         <a href="javascript:void(0);">
                             <i class="fa fa-pencil-square-o"></i>
                             {{ category.first }}
