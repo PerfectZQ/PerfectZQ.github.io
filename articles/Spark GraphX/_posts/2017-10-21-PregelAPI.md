@@ -64,19 +64,9 @@ def pregel[A: ClassTag](
       initialMsg: A,
       maxIterations: Int = Int.MaxValue,
       activeDirection: EdgeDirection = EdgeDirection.Either)(
-      /**
-       * VertexId :  顶点id
-       * VD :        顶点属性值
-       * A :         顶点接收到的消息 Message
-       * return :    新的顶点值
-       */
+      // (接收到消息的顶点id, 顶点属性值, 接收到的消息) => 新的顶点值
       vprog: (VertexId, VD, A) => VD,
-      /**
-      * EdgeTriplet[VD, ED]
-      * 包含源顶点和目标顶点属性值的三元组边
-      * Iterator[(VertexId, A)]
-      * (要接收的消息的目标顶点ID,消息)
-      */
+      // 接收到消息的顶点的出度 => (要接收的消息的目标顶点ID, 消息)
       sendMsg: EdgeTriplet[VD, ED] => Iterator[(VertexId, A)],
       mergeMsg: (A, A) => A)
     : Graph[VD, ED] = {
