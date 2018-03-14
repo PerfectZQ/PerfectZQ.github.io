@@ -11,9 +11,25 @@ $(function () {
     if (/http[s]?:\/\/arch-long.cn\/articles\/.*/.test(href)) {
 
         /**
+         * 对博客目录进行重新排序
+         */
+        var blogList = $(".sidebar-container .first_content");
+        var blogIDs = [];
+        blogList.each(function () {
+            blogIDs.push($(this).attr("id"));
+        });
+        blogIDs.sort();
+        var newBlogListHtml = "";
+        for (var i = 0; i < blogIDs.length; i++) {
+            newBlogListHtml += "<li class='first_content' id='" + blogIDs[i] + "'>"
+                + $("#" + blogIDs[i]).html()
+                + "</li>";
+        }
+        $(".sidebar-container ul#sidebar-menu").html(newBlogListHtml);
+
+        /**
          * 加载文章目录结构
          */
-
         var index = 0;
         var headArr = []; // 存储所有标题节点
         var content = []; // 按结构存储所有标题节点
@@ -48,7 +64,7 @@ $(function () {
         }
 
         /**
-         *  生成目录
+         *  生成文章目录
          */
 
         for (var i = 0; i < content.length; i++) {
