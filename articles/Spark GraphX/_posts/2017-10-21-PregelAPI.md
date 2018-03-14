@@ -109,10 +109,10 @@ object PregelAPI {
         * newDist :   顶点接收到的消息 Message
         * return :    新的顶点值
         */
-      (id, dist, newDist) => {
+      (id, dist, newDist) => { // Vertex Program
         println(s"$id dist = $dist, new Dist = $newDist")
         math.min(dist, newDist)
-      }, // Vertex Program
+      }, 
       triplet => { // Send Message
         if (triplet.srcAttr + triplet.attr < triplet.dstAttr) {
           Iterator((triplet.dstId, triplet.srcAttr + triplet.attr))
