@@ -7,25 +7,42 @@ $(function () {
     else
         isDisplayBlog(true);
 
+    /**
+     * 对博客目录进行重新排序
+     */
+    var blogList = $(".sidebar-container .first_content");
+    var blogIDs = [];
+    blogList.each(function () {
+        blogIDs.push($(this).attr("id"));
+    });
+    blogIDs.sort();
+    var newBlogListHtml = "";
+    for (var i = 0; i < blogIDs.length; i++) {
+        newBlogListHtml += "<li class='first_content' id='" + blogIDs[i] + "'>"
+            + $("#" + blogIDs[i]).html()
+            + "</li>";
+    }
+    $(".sidebar-container ul#sidebar-menu").html(newBlogListHtml);
+
+    /**
+     * 博客目录一级目录点击事件
+     */
+    $("li.first_content").click(function () {
+        var ul = $(this).children('ul');
+        ul.slideToggle('normal');
+    });
+
+    /**
+     * 博客目录开关点击事件
+     */
+    $(".header button.menu-btn i").click(function () {
+        var width = $(".sidebar").width();
+        isDisplayLeftContent(width == 0);
+    });
+
+
     // blog 页面
     if (/http[s]?:\/\/arch-long.cn\/articles\/.*/.test(href)) {
-
-        /**
-         * 对博客目录进行重新排序
-         */
-        var blogList = $(".sidebar-container .first_content");
-        var blogIDs = [];
-        blogList.each(function () {
-            blogIDs.push($(this).attr("id"));
-        });
-        blogIDs.sort();
-        var newBlogListHtml = "";
-        for (var i = 0; i < blogIDs.length; i++) {
-            newBlogListHtml += "<li class='first_content' id='" + blogIDs[i] + "'>"
-                + $("#" + blogIDs[i]).html()
-                + "</li>";
-        }
-        $(".sidebar-container ul#sidebar-menu").html(newBlogListHtml);
 
         /**
          * 加载文章目录结构
@@ -94,26 +111,6 @@ $(function () {
             );
         }
     }
-
-    /**
-     * 侧页一级目录点击事件
-     */
-    $("li.first_content").click(function () {
-        var ul = $(this).children('ul');
-        ul.slideToggle('normal');
-    });
-
-    /**
-     * header 头像点击事件
-     */
-    // $("div.left-avatar").click(function () {
-    //     $("#dropdown-menu").slideToggle('normal');
-    // });
-
-    $(".header button.menu-btn i").click(function () {
-        var width = $(".sidebar").width();
-        isDisplayLeftContent(width == 0);
-    });
 
 });
 
