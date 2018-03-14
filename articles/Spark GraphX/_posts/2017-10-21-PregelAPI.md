@@ -21,7 +21,8 @@ tag: Spark GraphX
    * `mergeMsg`: 一个交换关联函数，用于合并注定到同一个顶点的消息。
    *
    * 本方法会一直迭代运行，直到没有剩余的消息或者迭代了`maxIterations`次。
-   * 一次迭代过程：向目的节点发送消息，目的节点接收消息。
+   * 
+   * 一次迭代过程：向接收到消息的节点的出度发送消息，目的节点接收消息。
    * 
    * 在第一次迭代中，所有顶点都会接收到`initialMsg`，并且在后续迭代中，如果
    * 一个顶点没有收到消息，则不会再对该顶点调用`vprog`。
@@ -64,7 +65,12 @@ def pregel[A: ClassTag](
       initialMsg: A,
       maxIterations: Int = Int.MaxValue,
       activeDirection: EdgeDirection = EdgeDirection.Either)(
-      
+      /**
+       * VertexId :  顶点id
+       * VD :        顶点属性值
+       * A :         顶点接收到的消息 Message
+       * return :    新的顶点值
+       */
       vprog: (VertexId, VD, A) => VD,
       /**
       * EdgeTriplet[VD, ED]
@@ -109,9 +115,9 @@ object PregelAPI {
 
     val sssp = initalGraph.pregel(Double.PositiveInfinity)(
       /**
-        * VertexId :  顶点id
-        * VD :        顶点属性值
-        * A :         顶点接收到的消息 Message
+        * id :        接收消息的顶点id
+        * dist :      顶点属性值
+        * newDist :   顶点接收到的消息 Message
         * return :    新的顶点值
         */
       (id, dist, newDist) => {
