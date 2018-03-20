@@ -105,7 +105,7 @@ mysql> Delete FROM mysql.user Where User='test' and Host='localhost';
 mysql> update mysql.user set password=password('新密码') where User="test" and Host="localhost";
 mysql> flush privileges;
 # 列出所有数据库
-mysql> show database;
+mysql> show databases;
 # 切换数据库
 mysql> use '数据库名';
 # 列出所有表
