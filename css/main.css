@@ -85,6 +85,10 @@ a {
     color: #222222;
 }
 
+section a {
+    color: #808080;
+}
+
 p a {
     margin-left: 4px;
     margin-right: 4px;
