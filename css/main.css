@@ -87,6 +87,7 @@ a {
 
 section a {
     color: #808080;
+    text-decoration: underline;
 }
 
 p a {
