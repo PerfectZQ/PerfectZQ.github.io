@@ -9,10 +9,10 @@ tag: Machine Learning
 　　数据有两种状态：**测试集数据**和**预测结果数据**。
 
 　　对一批测试数据进行预测，结果可以分成四种。
-* **TP(True Positive):** 原本是正类，预测结果为正类。(正确预测)
-* **FP(False Positive):** 原本是负类，预测结果为正类。(错误预测)
-* **TN(True Negative):** 原本是负类，预测结果为负类。(正确预测)
-* **FN(False Negative):** 原本是正类，预测结果为负类。(错误预测)
+* **TP(True Positive):** 原本是正类，预测结果为正类。(正确预测为正类)
+* **FP(False Positive):** 原本是负类，预测结果为正类。(错误预测为正类)
+* **TN(True Negative):** 原本是负类，预测结果为负类。(正确预测为负类)
+* **FN(False Negative):** 原本是正类，预测结果为负类。(错误预测为负类)
 ## 准确率(Accuracy)
 　　对于给定的测试数据集，分类器正确分类的样本数与样本总数之比，就称为准确率，即`(TP+TN)/(TP+TN+FP+FN)`
 ## 精确率(Precision)
