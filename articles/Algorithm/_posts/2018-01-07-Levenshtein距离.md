@@ -30,7 +30,7 @@ kitten   (  <- g)
 　　通过动态规划将问题分解为3个部分。
 1. `if(n == 0) edit(n,m) = m`
 2. `if(m == 0) edit(n,m) = n`
-3. `if(n > 0 && m > 0) edit(n,m) = Math.min(edit(n-1,j)+1, edit(n,m-1)+1, edit(n-1,m-1)+f(n,m) )`，其中`f(n,m)`的值取决于`str1`的第`n`个字符是否等于`str2`的第`m`个字符，如果相等，则为`0`，反之为`1`。
+3. `if(n > 0 && m > 0) edit(n,m) = Math.min(edit(n-1,m)+1, edit(n,m-1)+1, edit(n-1,m-1)+f(n,m) )`，其中`f(n,m)`的值取决于`str1`的第`n`个字符是否等于`str2`的第`m`个字符，如果相等，则为`0`，反之为`1`。
 
 　　图解：首先初始化一个`(n+1)*(m+1)`的矩阵，以`str1="sitting"`和`str2="kitten"`为例，构造一个`8*7`的矩阵如下。
 
