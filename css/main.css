@@ -600,6 +600,10 @@ hr {
     margin: 0 0 0 2.0em;
 }
 
+.post ol {
+    margin: 0 0 0 2.5em;
+}
+
 .panel {
     display: table;
     width: 100%;
