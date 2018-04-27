@@ -195,7 +195,7 @@ object Spark_HBase_Read {
     val sc = spark.sparkContext
 
     // HBaseConfiguration 永远是 read in
-    val tableName = "t_person"
+    val tableName = "test_table"
     val hConf = HBaseConfiguration.create()
     hConf.set("hbase.zookeeper.quorum", "server202,server203,server204")
     hConf.set(TableInputFormat.INPUT_TABLE, tableName)
