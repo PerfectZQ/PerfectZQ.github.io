@@ -36,17 +36,24 @@ object HBaseUtil {
     conf.set("hbase.zookeeper.quorum", "server202,server203,server204")
     // 指定 zookeeper 端口号
     conf.set("hbase.zookeeper.property.clientPort", "2181")
-    // HDP's HBase 需要额外指定 zookeeper.znode.parent，Cloudera's HBase 不需要
+    /**
+     * HDP's HBase 需要额外指定 zookeeper.znode.parent
+     * Cloudera's HBase 不需要
+     * 因为我用的 Cloudera，所以在这里注释掉了 ^_^
+     */
     // conf.set("zookeeper.znode.parent", "/hbase-unsecure")
     
     // 根据配置文件创建连接
     val connection: Connection = ConnectionFactory.createConnection(conf)
-    // 通过连接获取管理对象
-    // Note:
-    // 1、这是一个轻量级的操作，不会保证返回的Admin对象是线程安全的
-    // 在多线程的情况下，应该为每个线程创建一个新实例。
-    // 2、不建议把返回的 Admin 对象池化或缓存
-    // 3、记得调用 admin.close()
+    
+    /**
+      * 通过连接获取管理对象
+      * Note:
+      * 1、这是一个轻量级的操作，不会保证返回的Admin对象是线程安全的
+      * 在多线程的情况下，应该为每个线程创建一个新实例。
+      * 2、不建议把返回的 Admin 对象池化或缓存
+      * 3、记得调用 admin.close()
+      */
     val admin: Admin = connection.getAdmin
 
     // 如果表存在，删了重建
