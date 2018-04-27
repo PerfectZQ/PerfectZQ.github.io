@@ -18,7 +18,7 @@ tag: HBase
 libraryDependencies += "org.apache.hbase" % "hbase-client" % "1.3.1"
 ```
 ## 基本 API
-这里是Scala写法，Java写法，自行领悟。
+这里是Scala写法，Java写法，自行领悟，-_-。
 
 ```scala
 package com.zq.hbase.learn
@@ -74,17 +74,17 @@ object HBaseUtil {
 
 
     // let's insert some data in 'mytable' and get the row
-    val table = connection.getTable(TableName.valueOf("test_table"))
+    val table: Table = connection.getTable(TableName.valueOf("test_table"))
 
     // rowkey
-    val put = new Put(Bytes.toBytes("2018/4/27-rowkey"))
+    val put: Put = new Put(Bytes.toBytes("2018/4/27-rowkey"))
     // column family, column qualifier, value
     put.addColumn(Bytes.toBytes("column_family"), Bytes.toBytes("column_qualifier"), Bytes.toBytes("value"))
     // add to HBase table
     table.put(put)
 
     // rowkey
-    val get = new Get(Bytes.toBytes("2018/4/27-rowkey"))
+    val get: Get = new Get(Bytes.toBytes("2018/4/27-rowkey"))
     val result: Result = table.get(get)
     val value: Array[Byte] = result.value()
     println(Bytes.toString(value))
