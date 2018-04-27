@@ -18,7 +18,7 @@ tag: HBase
 libraryDependencies += "org.apache.hbase" % "hbase-client" % "1.3.1"
 ```
 ## 基本 API
-Java 写法自行领悟
+这里是Scala写法，Java写法，自行领悟。
 
 ```scala
 package com.zq.hbase.learn
