@@ -135,9 +135,10 @@ import org.apache.spark.sql.SparkSession
 
 
 object Spark_HBase_Write {
+
   def main(args: Array[String]): Unit = {
-    val conf = new SparkConf()
-    val spark = SparkSession.builder().master("local").appName("spark sql").config(conf).getOrCreate()
+  
+    val spark = SparkSession.builder().master("local").appName("Spark HBase Write Demo").getOrCreate()
     val sc = spark.sparkContext
 
     // HBaseConfiguration 永远是 read in
