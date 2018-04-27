@@ -119,6 +119,8 @@ libraryDependencies += "org.apache.hbase" % "hbase-server" % "1.3.1"
 ```
 ### APIs
 #### Write
+　　将 RDD 写入 HBase 表
+
 ```scala
 package com.zq.hbase.learn
 
@@ -171,6 +173,8 @@ object Spark_HBase_Write {
 }
 ```
 #### Read
+　　将 HBase 表读到 Spark RDD
+
 ```scala
 package com.zq.hbase.learn
 
