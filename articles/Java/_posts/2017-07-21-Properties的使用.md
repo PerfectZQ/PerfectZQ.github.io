@@ -7,9 +7,9 @@ tag: Java
 ## getResource：获取 classpath 
 ```scala
 // 获取classpath的根目录：file:/D:/IdeaProjects/javalearn/target/classes/
-println(getClass.getClassLoader.getResource(""))
+println(this.getClass.getClassLoader.getResource(""))
 // 获取classpath根目录+当前类包路径：file:/D:/IdeaProjects/javalearn/target/classes/com/zq/
-println(getClass.getResource(""))
+println(this.getClass.getResource(""))
 ```
 
 ## 获取resources文件夹中的properties文件
@@ -18,7 +18,7 @@ java项目中的`resources`等资源文件夹中的文件在编译后，会添�
 import java.util.Properties
 
 val props: Properties = new Properties()
-props.load(getClass.getClassLoader.getResourceAsStream("mongodb.properties"))
+props.load(this.getClass.getClassLoader.getResourceAsStream("mongodb.properties"))
 props.get("ip").toString
 ```
 ## 获取其他文件夹中的properties文件
