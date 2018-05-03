@@ -49,7 +49,7 @@ hbase(main)> whoami
     # 例如：查看表t1的结构
     hbase(main)> describe 't1'
 
-# 5）修改表结构，修改表结构必须先disable
+# 5）修改表结构，修改表结构必须先 disable
 
     # 语法：alter 't1', {NAME => 'f1'}, {NAME => 'f2', METHOD => 'delete'}
     
@@ -57,6 +57,11 @@ hbase(main)> whoami
     hbase(main)> disable 'test1'
     hbase(main)> alter 'test1',{NAME=>'body',TTL=>'15552000'},{NAME=>'meta', TTL=>'15552000'}
     hbase(main)> enable 'test1'
+
+# 6）查看表是否处于 enable 或者 disable 状态
+
+    # 语法：is_enable 't1' | is_disable 't1'
+
 {% endhighlight %}
 
 ## 权限管理
