@@ -117,6 +117,17 @@ object HBaseUtil {
 libraryDependencies += "org.apache.hbase" % "hbase-client" % "1.3.1"
 libraryDependencies += "org.apache.hbase" % "hbase-server" % "1.3.1"
 ```
+
+### Spark 集群需要下面的jar包
+```console
+hbase-client-1.3.1.jar
+hbase-server-1.3.1.jar
+hbase-common-1.3.1.jar
+hbase-protocol-1.3.1.jar
+hbase-hadoop2-compat-1.3.1.jar
+htrace-core-3.1.0-incubating.jar
+metrics-core-2.2.0.jar(com.yammer.metrics.metrics-core)
+```
 ### APIs
 #### Write
 　　将 RDD 写入 HBase 表
