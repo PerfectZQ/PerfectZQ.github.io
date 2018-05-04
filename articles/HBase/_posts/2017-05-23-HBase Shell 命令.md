@@ -61,7 +61,17 @@ hbase(main)> whoami
 # 6）查看表是否处于 enable 或者 disable 状态
 
     # 语法：is_enable 't1' | is_disable 't1'
+    
+# 7）统计表记录数
 
+    # 语法：count 't1', INTERVAL => 10, CACHE => 1000 
+    # INTERVAL: 是每统计10行显示一次
+    # CACHE: 一次加载1000条数据
+    # 如果表很大，统计会很慢，不建议使用。
+    # <1> 可以调用 hbase.jar 自带的统计行数的 MapReduce 工具类
+    $HBASE_HOME/bin/hbase   org.apache.hadoop.hbase.mapreduce.RowCounter 'tablename'
+    # <2> 也可以用Hive关联HBase表，用SQL查询
+    
 {% endhighlight %}
 
 ## 权限管理
@@ -75,7 +85,7 @@ hbase(main)> whoami
     
     # READ('R'), WRITE('W'), EXEC('X'), CREATE('C'), ADMIN('A')
     
-    # 例如，给用户‘test'分配对表t1有读写的权限，
+    # 例如，给用户test分配对表t1有读写的权限，
     hbase(main)> grant 'test','RW','t1'
 
 # 2）查看权限
