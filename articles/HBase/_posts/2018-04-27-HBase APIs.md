@@ -154,18 +154,14 @@ object Spark_HBase_Write {
     val spark = SparkSession.builder().master("local").appName("Spark HBase Write Demo").getOrCreate()
     val sc = spark.sparkContext
 
-    // HBaseConfiguration 永远是 read in
     val tableName = "test_table"
-    val hbaseConf = HBaseConfiguration.create()
-    hbaseConf.set("hbase.zookeeper.quorum", "server202,server203,server204")
-    // Note: TableInputFormat 是 mapreduce 包下的
-    hbaseConf.set(TableInputFormat.INPUT_TABLE, tableName)
 
     // JobConf 是 write out
     val jobConf = new JobConf(hbaseConf, this.getClass)
     jobConf.setOutputFormat(classOf[TableOutputFormat])
     // Note: TableOutputFormat 是 mapred 包下的
     jobConf.set(TableOutputFormat.OUTPUT_TABLE, tableName)
+    jobConf.set("hbase.zookeeper.quorum", "server202,server203,server204")
 
     // (rowkey, value)
     val pairs = sc.parallelize(Seq("2018/4/27-rowkey" -> "value"))
@@ -209,6 +205,7 @@ object Spark_HBase_Read {
     val tableName = "test_table"
     val hConf = HBaseConfiguration.create()
     hConf.set("hbase.zookeeper.quorum", "server202,server203,server204")
+    // Note: TableInputFormat 是 mapreduce 包下的
     hConf.set(TableInputFormat.INPUT_TABLE, tableName)
 
     // 将整张表读入 Spark 并转换成 RDD
