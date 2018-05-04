@@ -31,8 +31,8 @@ val reader:DataFrameReader = sparkSession.read.format("jdbc")
                                    .option("dbtable", "(SELECT a.*, rownum as rn FROM tablename a) b")
                                    .option("user", "user")
                                    .option("password", "password")
-                                   // 
                                    .option("fetchsize", 500)
+                                   // 分配分区数(task)尽量是cores的倍数
                                    .option("numPartitions", 32)
                                    // 指定数字类型的列
                                    .option("partitionColumn", "rn")
