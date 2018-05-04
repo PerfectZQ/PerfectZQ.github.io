@@ -10,11 +10,11 @@ tag: Spark
 　　首先从官网粘几个重要的参数项：
 
 | Property Name | Meaning |
-| :--------: | :--------: |
+| :-------- | :-------- |
 | url | The JDBC URL to connect to. The source-specific connection properties may be specified in the URL. e.g., jdbc:postgresql://localhost/test?user=fred&password=secret |
 | dbtable | The JDBC table that should be read. Note that anything that is valid in a FROM clause of a SQL query can be used. For example, instead of a full table you could also use a subquery in parentheses. |
 | driver | The class name of the JDBC driver to use to connect to this URL |
-| partitionColumn, lowerBound, upperBound | These options must all be specified if any of them is specified. In addition, numPartitions must be specified. They describe how to partition the table when reading in parallel from multiple workers. partitionColumn must be a numeric column from the table in question. Notice that lowerBound and upperBound are just used to decide the partition stride, not for filtering the rows in table. So all rows in the table will be partitioned and returned. This option applies only to reading. |
+| partitionColumn<br/> lowerBound<br/> upperBound | These options must all be specified if any of them is specified. In addition, numPartitions must be specified. They describe how to partition the table when reading in parallel from multiple workers. partitionColumn must be a numeric column from the table in question. Notice that lowerBound and upperBound are just used to decide the partition stride, not for filtering the rows in table. So all rows in the table will be partitioned and returned. This option applies only to reading. |
 | numPartitions | The maximum number of partitions that can be used for parallelism in table reading and writing. This also determines the maximum number of concurrent JDBC connections. If the number of partitions to write exceeds this limit, we decrease it to this limit by calling coalesce(numPartitions) before writing. |
 
 　　还有很多重要的参数，这里暂时没用就不粘了。 [http://spark.apache.org/docs/latest/sql-programming-guide.html#jdbc-to-other-databases]
