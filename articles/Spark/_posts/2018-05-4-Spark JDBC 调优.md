@@ -145,5 +145,24 @@ private[sql] object JDBCRelation extends Logging {
 　　如果不用`numPartitions`，`partitionColumn, lowerBound, upperBound`，就不能提高`task`并发量了吗？其实不然。我们可以通过`dbtable`构造自己的子查询，并行执行多个查询得到多个结果RDD，最后通过`reduce`合并成一个RDD，这样查询的速度也是很快的。大概思路如下：
 
 ```scala
+// 为了不丢失数据，向上取整
+val stride = Math.ceil(1384288 / 32)
 
+val tableName = "FIN_OPR_REGISTER"
+
+// 门诊挂号表
+val registerDF = Range(0, 20)
+  .map {
+    index =>
+      sparkSession
+        .read
+        .format("jdbc")
+        .option("url", jdbcProps.getProperty("url"))
+        .option("dbtable", s"(SELECT * FROM (SELECT a.*, rownum as rn FROM $tableName a) b WHERE b.rn > ${stride * index} AND b.rn <= ${stride * (index + 1)})")
+        .option("user", jdbcProps.getProperty("user"))
+        .option("password", jdbcProps.getProperty("password"))
+        .option("fetchsize", 500)
+        .load()
+  }
+  .reduce((resultDF1, resultDF2) => resultDF1.union(resultDF2))
 ```
