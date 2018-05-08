@@ -28,7 +28,7 @@ val sparkSession = SparkSession.builder.appName("jdbc learn").getOrCreate()
 val reader:DataFrameReader = sparkSession.read.format("jdbc")
                                    .option("url", "jdbc:oracle:thin:@<host>:<port>:<SID> ")
                                    // oracle 表自带整数列 rownum
-                                   .option("dbtable", "(SELECT a.*, rownum as rn FROM tablename a) b")
+                                   .option("dbtable", "(SELECT a.*, rownum as rn FROM tablename a)")
                                    .option("user", "user")
                                    .option("password", "password")
                                    .option("fetchsize", 500)
@@ -145,13 +145,13 @@ private[sql] object JDBCRelation extends Logging {
 　　如果不用`numPartitions`，`partitionColumn, lowerBound, upperBound`，就不能提高`task`并发量了吗？其实不然。我们可以通过`dbtable`构造自己的子查询，并行执行多个查询得到多个结果RDD，最后通过`reduce`合并成一个RDD，这样查询的速度也是很快的。大概思路如下：
 
 ```scala
-// 为了不丢失数据，向上取整
+// 为了不丢失数据，向上取整，将数据分成32份
 val stride = Math.ceil(1384288 / 32)
 
-val tableName = "FIN_OPR_REGISTER"
+val tableName = "TABLE"
 
-// 门诊挂号表
-val registerDF = Range(0, 20)
+// 创建32个task
+val registerDF = Range(0, 32)
   .map {
     index =>
       sparkSession
