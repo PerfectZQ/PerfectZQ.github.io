@@ -309,7 +309,7 @@ GET /_search
 }
 ```
 
-　　**上下文的使用原则**：将影响文档匹配程度的查询子句放在`query context`中，其他的查语句放在`filter context`中。
+　　**上下文的使用原则**：将影响文档匹配程度的查询子句放在`query context`中，其他的查询子句放在`filter context`中。
 
 　　按照文档内容(各字段的值)，是否需要分词(analyse)，可以将查询子句分成两种`Full text queries`和`Term level queries`。
 ### Full text queries
