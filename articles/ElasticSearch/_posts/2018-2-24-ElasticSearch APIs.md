@@ -281,27 +281,27 @@ GET /megacorp/employee/_search
 ## Query DSL
 　　ElasticSearch 的 Query DSL 是基于 JSON 的，可以将 Query DSL 看作查询的 AST(Abstract Syntax Tree)，它由两类查询子句构成：
 
-1. *Leaf query clauses*：叶子查询语句，用于查找某特定字段为特定值的文档，例如查找`name = zhangqiang`的文档，`match`、`term`或者`range`查询都属于叶子查询语句，并且他们可以单独使用。
-2. *Compound query clauses*：复合查询语句，复合查询语句包含叶子查询语句或者复合查询语句，他用逻辑操作(例如`bool`或`dis_max`)将多个查询语句进行组合，或者修改他们的行为(例如`constant_score`查询)。
+1. *Leaf query clauses*：叶子查询子句，用于查找某特定字段为特定值的文档，例如查找`name = zhangqiang`的文档，`match`、`term`或者`range`查询都属于叶子查询子句，并且他们可以单独使用。
+2. *Compound query clauses*：复合查询子句，复合查询子句包含叶子查询子句或者复合查询子句，他用逻辑操作(例如`bool`或`dis_max`)将多个查询子句进行组合，或者修改他们的行为(例如`constant_score`查询)。
 
-　　在`query context`和`filter context`使用查询语句的行为是不同的。
+　　在`query context`和`filter context`使用查询子句的行为是不同的。
 
-1. `query context`中使用的查询语句，返回的结果是"这个文档与此查询语句有多么匹配"，除了决定文档是否匹配外，它还会计算一个得分`_score`，表示文档和查询语句的匹配程度。
-2. `filter context`中使用的查询语句，返回的结果是"这个文档和此查询语句是否匹配"，是就是，不是就不是。
+1. `query context`中使用的查询子句，返回的结果是"这个文档与此查询子句有多么匹配"，除了决定文档是否匹配外，它还会计算一个得分`_score`，表示文档和查询子句的匹配程度。
+2. `filter context`中使用的查询子句，返回的结果是"这个文档和此查询子句是否匹配"，是就是，不是就不是。
 
 　　炒个官方的栗子：
 
 ```javascript
 GET /_search
 {
-  "query": { // 用关键字 query 指明下面的查询语句用于 query context
-    "bool": { // bool 和下面的两个 match 语句都属于 query context，用于说明文档有多匹配
+  "query": { // 用关键字 query 指明下面的查询子句用于 query context
+    "bool": { // bool 和下面的两个 match 子句都属于 query context，用于说明文档有多匹配
       "must": [
         { "match": { "title":   "Search"        }}, 
         { "match": { "content": "Elasticsearch" }}  
       ],
-      "filter": [ // 用关键字 filter 指明下面的查询语句用于 filter context
-        { "term":  { "status": "published" }}, // term 和 range 语句属于 filter context
+      "filter": [ // 用关键字 filter 指明下面的查询子句用于 filter context
+        { "term":  { "status": "published" }}, // term 和 range 子句属于 filter context
         { "range": { "publish_date": { "gte": "2015-01-01" }}} // 他们会将不匹配的文档过滤掉
       ]
     }
@@ -309,9 +309,9 @@ GET /_search
 }
 ```
 
-　　**上下文的使用原则**：将影响文档匹配程度的查询语句放在`query context`中，其他的查语句放在`filter context`中。
+　　**上下文的使用原则**：将影响文档匹配程度的查询子句放在`query context`中，其他的查语句放在`filter context`中。
 
-　　按照文档内容(各字段的值)，是否需要分词(analyse)，可以将查询分成两种`Full text queries`和`Term level queries`。
+　　按照文档内容(各字段的值)，是否需要分词(analyse)，可以将查询子句分成两种`Full text queries`和`Term level queries`。
 ### Full text queries
 
 ### Term level queries
