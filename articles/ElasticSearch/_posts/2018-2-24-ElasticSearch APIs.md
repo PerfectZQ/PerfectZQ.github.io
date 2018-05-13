@@ -279,15 +279,15 @@ GET /megacorp/employee/_search
 ## Cluster APIs
 
 ## Query DSL
-　　ElasticSearch 的 Query DSL 是基于 JSON 的，可以将 Query DSL 看作查询的 AST(Abstract Syntax Tree)，它由两类字句构成：
+　　ElasticSearch 的 Query DSL 是基于 JSON 的，可以将 Query DSL 看作查询的 AST(Abstract Syntax Tree)，它由两类查询子句构成：
 
-* *Leaf query clauses*：叶子查询语句，用于查找某特定字段为特定值的文档，例如查找`name = zhangqiang`的文档，`match`、`term`或者`range`查询都属于叶子查询语句，并且他们可以单独使用。
-* *Compound query clauses*：复合查询语句，复合查询语句包含叶子查询语句或者复合查询语句，他用逻辑操作(例如`bool`或`dis_max`)将多个查询语句进行组合，或者修改他们的行为(例如`constant_score`查询)。
+1. *Leaf query clauses*：叶子查询语句，用于查找某特定字段为特定值的文档，例如查找`name = zhangqiang`的文档，`match`、`term`或者`range`查询都属于叶子查询语句，并且他们可以单独使用。
+2. *Compound query clauses*：复合查询语句，复合查询语句包含叶子查询语句或者复合查询语句，他用逻辑操作(例如`bool`或`dis_max`)将多个查询语句进行组合，或者修改他们的行为(例如`constant_score`查询)。
 
 　　在`query context`和`filter context`使用查询语句的行为是不同的。
 
-* `query context`中使用的查询语句，返回的结果是"这个文档与此查询语句有多么匹配"，除了决定文档是否匹配外，它还会计算一个得分`_score`，表示文档和查询语句的匹配程度。
-* `filter context`中使用的查询语句，返回的结果是"这个文档和此查询语句是否匹配"，是就是，不是就不是。
+1. `query context`中使用的查询语句，返回的结果是"这个文档与此查询语句有多么匹配"，除了决定文档是否匹配外，它还会计算一个得分`_score`，表示文档和查询语句的匹配程度。
+2. `filter context`中使用的查询语句，返回的结果是"这个文档和此查询语句是否匹配"，是就是，不是就不是。
 
 　　炒个官方的栗子：
 
