@@ -100,8 +100,8 @@ curl -X<VERB> '<PROTOCOL>://<HOST>:<PORT>/<PATH>?<QUERY_STRING>' -d '<BODY>'
 ## Search APIs
 ### 搜索前的准备
 　　方便演示，首先添加几条数据
-```console
-# 其中1是特定雇员的ID，ElasticSearch中的每个文档有默认属性_id，这里是使_id=1
+```javascript
+// 其中1是特定雇员的ID，ElasticSearch中的每个文档有默认属性_id，这里是使_id=1
 PUT /megacorp/employee/1
 {
     "first_name" : "John",
@@ -135,7 +135,7 @@ GET /megacorp/employee/1
 ```
 　　返回结果如下：
 
-```console
+```javascript
 {
   "_index" :   "megacorp", // 索引名称 
   "_type" :    "employee", // 索引类型
@@ -159,7 +159,7 @@ GET /megacorp/employee/_search
 ```
 
 　　返回结果如下：
-```console
+```javascript
 {
    "took":      6,     // 花费时间，单位毫秒
    "timed_out": false,
@@ -223,7 +223,7 @@ GET /megacorp/employee/_search?q=last_name:Smith
 ```
 　　返回结果如下：
 
-```console
+```javascript
 {
    ...
    "hits": {
