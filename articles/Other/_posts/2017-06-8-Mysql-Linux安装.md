@@ -95,7 +95,7 @@ mysql> grant all privileges on testDB.* to test@"%" identified by '1234';
 mysql> select,insert,update,delete,create,drop on *.* to test@localhost identified by '1234';
 # 刷新系统权限表
 mysql> flush privileges; 
-# 创建用户也可以直接操作系统表
+# 创建用户也可以直接操作系统用户表 mysql.user
 mysql> insert into mysql.user(Host,User,Password) values("localhost","test",password("1234"));
 ```
 
@@ -125,6 +125,9 @@ mysql> drop table 数据表名;
 bin/mysqld stop
 # 安全模式启动MySQL
 bin/mysqld_safe --skip-grant-tables &
-# 进入MySQL Command Line 后，就可以修改密码了
+# 进入MySQL Command Line
 bin/mysql
+# 进来之后，就可以修改密码了
+mysql> flush privileges;
+mysql> SET PASSWORD FOR 'roor'@'localhost' = PASSWORD('newpass');
 ```
