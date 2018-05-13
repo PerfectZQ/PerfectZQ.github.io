@@ -92,7 +92,7 @@ curl -X<VERB> '<PROTOCOL>://<HOST>:<PORT>/<PATH>?<QUERY_STRING>' -d '<BODY>'
 ## Search APIs
 ### 搜索前的准备
 　　方便演示，首先添加几条数据
-```
+```console
 # 其中1是特定雇员的ID，ElasticSearch中的每个文档有默认属性_id，这里是使_id=1
 PUT /megacorp/employee/1
 {
@@ -121,13 +121,13 @@ PUT /megacorp/employee/3
 ```
 　　简单查询
 
-```
+```console
 # 查找_id=1的雇员信息
 GET /megacorp/employee/1
 ```
 　　返回结果如下：
 
-``` json
+```console
 {
   "_index" :   "megacorp", // 索引名称 
   "_type" :    "employee", // 索引类型
@@ -146,12 +146,12 @@ GET /megacorp/employee/1
 
 ### Search APIs 简介
 　　SearchAPIs 使用关键字`_search`进行搜索，例如查询`index = megacorp`，`type = employee`的所有文档，具体语法如下：
-```
+```console
 GET /megacorp/employee/_search
 ```
 
 　　返回结果如下：
-```json
+```console
 {
    "took":      6,     // 花费时间，单位毫秒
    "timed_out": false,
@@ -170,7 +170,7 @@ GET /megacorp/employee/_search
                "last_name":   "Fir",
                "age":         35,
                "about":       "I like to build cabinets",
-               "interElasticSearchts": [ "forElasticSearchtry" ]
+               "interests": [ "forElasticSearchtry" ]
             }
          },
          {
@@ -183,7 +183,7 @@ GET /megacorp/employee/_search
                "last_name":   "Smith",
                "age":         25,
                "about":       "I love to go rock climbing",
-               "interElasticSearchts": [ "sports", "music" ]
+               "interests": [ "sports", "music" ]
             }
          },
          {
@@ -196,7 +196,7 @@ GET /megacorp/employee/_search
                "last_name":   "Smith",
                "age":         32,
                "about":       "I like to collect rock albums",
-               "interElasticSearchts": [ "music" ]
+               "interests": [ "music" ]
             }
          }
       ]
@@ -209,13 +209,13 @@ GET /megacorp/employee/_search
 * 使用领域特定语言(DSL, Domain Specific Language)，使用一个JSON请求体作为参数进行搜索
 
 ### Search APIs 条件搜索：查询字符串(Query-String)
-```
+```console
 # 搜索姓氏为 Smith 的雇员
 GET /megacorp/employee/_search?q=last_name:Smith
 ```
 　　返回结果如下：
 
-```json
+```console
 {
    ...
    "hits": {
@@ -229,7 +229,7 @@ GET /megacorp/employee/_search?q=last_name:Smith
                "last_name":   "Smith",
                "age":         25,
                "about":       "I love to go rock climbing",
-               "interElasticSearchts": [ "sports", "music" ]
+               "interests": [ "sports", "music" ]
             }
          },
          {
@@ -239,7 +239,7 @@ GET /megacorp/employee/_search?q=last_name:Smith
                "last_name":   "Smith",
                "age":         32,
                "about":       "I like to collect rock albums",
-               "interElasticSearchts": [ "music" ]
+               "interests": [ "music" ]
             }
          }
       ]
@@ -251,7 +251,7 @@ GET /megacorp/employee/_search?q=last_name:Smith
 ### Search APIs 条件搜索：领域特定语言(DSL)
 
 　　使用DSL，需指定使用一个JSON请求体作为参数，替代query-string。这种方式支持构建更复杂和健壮的查询。
-```
+```console
 GET /megacorp/employee/_search
 {
     "query" : {
@@ -261,11 +261,49 @@ GET /megacorp/employee/_search
     }
 }
 ```
-　　详细的QueryDSL语法可以查看[10.Query DSL](#query-dsl)章节。
+　　详细的QueryDSL语法可以查看[Query DSL](#query-dsl)章节。
 ## Aggregations
+
 ## Indices APIs
+
 ## cat APIs
+
 ## Cluster APIs
+
 ## Query DSL
+　　ElasticSearch 的 Query DSL 是基于 JSON 的，可以将 Query DSL 看作查询的 AST(Abstract Syntax Tree)，它由两类字句构成：
 
+* *Leaf query clauses*：叶子查询语句，用于查找某特定字段为特定值的文档，例如查找`name = zhangqiang`的文档，`match`、`term`或者`range`查询都属于叶子查询语句，并且他们可以单独使用。
+* *Compound query clauses*：复合查询语句，复合查询语句包含叶子查询语句或者复合查询语句，他用逻辑操作(例如`bool`或`dis_max`)将多个查询语句进行组合，或者修改他们的行为(例如`constant_score`查询)。
 
+　　在`query context`和`filter context`使用查询语句的行为是不同的。
+
+* `query context`中使用的查询语句，返回的结果是"这个文档与此查询语句有多么匹配"，除了决定文档是否匹配外，它还会计算一个得分`_score`，表示文档和查询语句的匹配程度。
+* `filter context`中使用的查询语句，返回的结果是"这个文档和此查询语句是否匹配"，是就是，不是就不是。
+
+　　炒个官方的栗子：
+
+```console 
+GET /_search
+{
+  "query": { // 用关键字 query 指明下面的查询语句用于 query context
+    "bool": { // bool 和下面的两个 match 语句都属于 query context，用于说明文档有多匹配
+      "must": [
+        { "match": { "title":   "Search"        }}, 
+        { "match": { "content": "Elasticsearch" }}  
+      ],
+      "filter": [ // 用关键字 filter 指明下面的查询语句用于 filter context
+        { "term":  { "status": "published" }}, // term 和 range 语句属于 filter context
+        { "range": { "publish_date": { "gte": "2015-01-01" }}} // 他们会将不匹配的文档过滤掉
+      ]
+    }
+  }
+}
+```
+
+**上下文的使用原则**：将影响文档匹配程度的查询语句放在`query context`中，其他的查语句放在`filter context`中。
+
+　　按照文档内容(各字段的值)，是否需要分词(analyse)，可以将查询分成两种`Full text queries`和`Term level queries`。
+### Full text queries
+
+### Term level queries
