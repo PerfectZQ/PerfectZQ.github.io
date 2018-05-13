@@ -259,7 +259,7 @@ GET /megacorp/employee/_search?q=last_name:Smith
 ### Search APIs 条件搜索：领域特定语言(DSL)
 
 　　使用DSL，需指定使用一个JSON请求体作为参数，替代query-string。这种方式支持构建更复杂和健壮的查询。
-```console
+```javascript
 GET /megacorp/employee/_search
 {
     "query" : {
@@ -291,7 +291,7 @@ GET /megacorp/employee/_search
 
 　　炒个官方的栗子：
 
-```sbtshell 
+```javascript
 GET /_search
 {
   "query": { // 用关键字 query 指明下面的查询语句用于 query context
