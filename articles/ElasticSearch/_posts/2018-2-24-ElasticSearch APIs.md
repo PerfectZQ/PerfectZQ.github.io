@@ -291,7 +291,7 @@ GET /megacorp/employee/_search
 
 　　炒个官方的栗子：
 
-```console 
+```sbtshell 
 GET /_search
 {
   "query": { // 用关键字 query 指明下面的查询语句用于 query context
