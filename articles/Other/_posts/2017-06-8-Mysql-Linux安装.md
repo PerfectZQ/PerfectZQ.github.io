@@ -63,12 +63,14 @@ basedir=/usr/local/mysql/
 # 数据存储目录
 datadir=/usr/local/mysql/data/
 ```
-## 启动 mysql 服务
+## 启动/关闭 mysql 服务
 linux
 ```shell
 # 查看命令
 service mysql | service mysqld
-# 启动服务，实际上执行的是 ./support-files/mysql.server start
+# 支持下面的操作
+{start|stop|restart|reload|force-reload|status}
+# 例如启动服务，实际上执行的是 ./support-files/mysql.server start
 service mysql start
 ```
 
@@ -93,7 +95,7 @@ mysql> grant all privileges on testDB.* to test@"%" identified by '1234';
 mysql> select,insert,update,delete,create,drop on *.* to test@localhost identified by '1234';
 # 刷新系统权限表
 mysql> flush privileges; 
-# 创建用户也可以直接操作系统表
+# 创建用户也可以直接操作系统用户表 mysql.user
 mysql> insert into mysql.user(Host,User,Password) values("localhost","test",password("1234"));
 ```
 
@@ -115,4 +117,17 @@ mysql> describe 表名;
 # 删除数据库和表
 mysql> drop database 数据库名;
 mysql> drop table 数据表名;
+```
+
+## 忘记MySQL用户名密码
+```shell
+# 首先关闭MySQL实例
+bin/mysqld stop
+# 安全模式启动MySQL
+bin/mysqld_safe --skip-grant-tables &
+# 进入MySQL Command Line
+bin/mysql
+# 进来之后，就可以修改密码了
+mysql> flush privileges;
+mysql> SET PASSWORD FOR 'roor'@'localhost' = PASSWORD('newpass');
 ```
