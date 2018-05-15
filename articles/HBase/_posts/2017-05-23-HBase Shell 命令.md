@@ -236,3 +236,6 @@ hbase(main)> whoami
 	cd ~/hbase
 	bin/graceful_stop.sh --restart --reload --debug inspurXXX.xxx.xxx.org
 {% endhighlight %}
+
+# 数据导入和导出 
+`./hbase org.apache.hadoop.hbase.mapreduce.Driver import/export 表名 文件路径(默认hdfs,加前缀file:///为本地数据)`
