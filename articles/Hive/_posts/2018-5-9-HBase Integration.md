@@ -3,6 +3,8 @@ layout: post
 title: HBase Integration
 tag: Hive
 ---
+## 参考
+　　[官方手册](https://cwiki.apache.org/confluence/display/Hive/HBaseIntegration)
 ## StorageHandlers
 　　StorageHandlers 是 Hive 的一个独立的模块，以模块化，可扩展的方式访问由其他系统(HBase、Kafka、JDBC...)存储和管理的数据。
 ## Terminology
