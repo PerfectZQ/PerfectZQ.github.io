@@ -1,24 +1,63 @@
 ---
 layout: post
-title: 配置oracle并导入dmp文件
-tag: Oracle
+title: Oracle-Linux 命令
+tag: Mysql
 ---
-## Windows下配置Oracle instant client(独立客户端)，并配置PL/SQL
-　　下载地址：[http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html](http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html)
+## 启动Oracle实例
+1. 启动`lsnrctl`监听
+2. 启动数据库实例
 
-　　最基本的是`instantclient-basic-windows.x64-12.2.0.1.0`，还包含其他组件`instantclient-tools-windows.x64-12.2.0.1.0`中包含导出/入数据相关的组件，exp/imp，`instantclient-sqlplus-win-x86-64-10.2.0.3.0.zip`，包含sqlplus，等等……
+### 启动监听
+```shell
+su - oracle
+# 查看启动状态
+lsnrctl status
+```
 
-　　配置环境变量:
-* NLS_LANG=AMERICAN_AMERICA.ZHS16GBK
-* ORACLE_HOME=D:\oracle\instantclient_12_2
-* TNS_ADMIND=D:\oracle\instantclient_12_2，如果这个不配置，PL/SQL会出TNS解析出错的问题
-* path中添加`%ORACLE_HOME%`
+　　下面是未启动监听的状态
 
-　　在解压目录中添加tnsnames.ora、listener.ora两个文件
+```console
+LSNRCTL for Linux: Version 12.1.0.2.0 - Production on 28-FEB-2018 15:53:05
 
-　　在PL/SQL客户端中选首选项（Preferences），配置
-* Oracle Home 为 `D:\oracle\instantclient_11_2`
-* OCI library 为 `D:\oracle\instantclient_11_2\oci.dll`
+Copyright (c) 1991, 2014, Oracle.  All rights reserved.
+
+Connecting to (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=s12179)(PORT=1521)))
+TNS-12541: TNS:no listener
+ TNS-12560: TNS:protocol adapter error
+  TNS-00511: No listener
+   Linux Error: 111: Connection refused
+Connecting to (DESCRIPTION=(ADDRESS=(PROTOCOL=IPC)(KEY=EXTPROC1521)))
+TNS-12541: TNS:no listener
+ TNS-12560: TNS:protocol adapter error
+  TNS-00511: No listener
+   Linux Error: 111: Connection refused
+```
+
+　　启动监听
+```shell
+lsnrctl start
+```
+
+### 启动实例
+```shell
+[oracle@s12179 ~]$ sqlplus /nolog
+
+SQL> conn as sysdba
+Enter user-name: system
+Enter password: 
+Connected to an idle instance.
+
+SQL> startup
+ORACLE instance started.
+```
+
+### 关闭实例
+```shell
+SQL> shutdown
+Database closed.
+Database dismounted.
+ORACLE instance shut down.
+```
 
 ## 文件校验
 　　为了避免导入时候出现问题，先校验下文件是否在传输过程中出现问题，如果源文件和传输后的文件md5码是相同的可以确认文件在传输中没有出现问题
@@ -99,4 +138,3 @@ STREAMS_INSTANTIATION  import streams instantiation metadata (N)
 DATA_ONLY              import only data (N)
 VOLSIZE                number of bytes in file on each volume of a file on tape
 ```
-
