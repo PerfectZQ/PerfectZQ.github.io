@@ -45,8 +45,8 @@ CREATE [EXTERNAL] TABLE [IF NOT EXISTS] table_name
 ## HBase Integration
 　　对于 HBase 中已经存在的表，对于 Hive 来说，既不属于 Hive(external)，也无法用 Hive 的语法去访问 HBase 中的表(non-native)，所以要创建一个 Hive 表与 HBase 表进行关联，写法如下。
 ```
-CREATE EXTERNAL TABLE hive_table_from_hbase
-  (ROWKEY string, CARD_NO string, DIAGNOSE string, OPER_DATE date)
+CREATE EXTERNAL TABLE hsyk_his_custom_disease_test
+  (rowkey string, card_no string, diagnose string, oper_date date)
   STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
     WITH SERDEPROPERTIES (
     "hbase.columns.mapping" = ":key,INFO:CARD_NO,INFO:DIAGNOSE,INFO:OPER_DATE",
@@ -54,4 +54,4 @@ CREATE EXTERNAL TABLE hive_table_from_hbase
     );
 ```
 
-　　其中`:key`代表 HBase 表的`rowkey`，`INFO`是列簇，`CARD_NO,DIAGNOSE,OPER_DATE`是列修饰符，分别对应 Hive 表的`ROWKEY,CARD_NO,DIAGNOSE,OPER_DATE`字段。
+　　其中`:key`代表 HBase 表的`rowkey`(注意 HBase 和 Hive不同，列簇和列修饰符都是区分大小写的！)，`INFO`是列簇，`CARD_NO,DIAGNOSE,OPER_DATE`是列修饰符，分别对应 Hive 表的`rowkey,card_no,diagnose,oper_date`字段。
