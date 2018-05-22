@@ -34,10 +34,24 @@ CREATE [EXTERNAL] TABLE [IF NOT EXISTS] table_name
   [CLUSTERED BY (col_name, col_name, ...) [SORTED BY (col_name, ...)] INTO num_buckets BUCKETS]
   [
     ROW FORMAT row_format [STORED AS file_format] 
-    | STORED BY 'storage.handler.class.name' []
+    | STORED BY 'storage.handler.class.name' [WITH SERDEPROPERTIES (...)]
   ]
   [LOCATION hdfs_path]
   [AS select_statement]
 ```
 
-　　注意当使用`STORED BY`子句时，就不能指定`row_format(DELIMITED|SERDE)`和`STORED AS`了。可选的`WITH SERDEPROPERTIES (...)`是`STORED BY`子句的一部分，用于指定 StorageHandlers 程序的 serde 的属性。
+　　注意当使用`STORED BY`子句时，就不能指定`row_format(DELIMITED|SERDE)`和`STORED AS`了。而可选的`WITH SERDEPROPERTIES (...)`是`STORED BY`子句的一部分，用于指定 StorageHandlers 程序的 serde 的属性。
+
+## HBase Integration
+　　对于 HBase 中已经存在的表，对于 Hive 来说，既不属于 Hive(external)，也无法用 Hive 的语法去访问 HBase 中的表(non-native)，所以要创建一个 Hive 表与 HBase 表进行关联，写法如下。
+```
+CREATE EXTERNAL TABLE hive_table_from_hbase
+  (ROWKEY string, CARD_NO string, DIAGNOSE string, OPER_DATE date)
+  STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
+    WITH SERDEPROPERTIES (
+    "hbase.columns.mapping" = ":key,INFO:CARD_NO,INFO:DIAGNOSE,INFO:OPER_DATE",
+    "hbase.table.name" = "hsyk_his_custom_disease_test"
+    );
+```
+
+　　其中`:key`代表 HBase 表的`rowkey`，`INFO`是列簇，`CARD_NO,DIAGNOSE,OPER_DATE`是列修饰符，分别对应 Hive 表的`ROWKEY,CARD_NO,DIAGNOSE,OPER_DATE`字段。
