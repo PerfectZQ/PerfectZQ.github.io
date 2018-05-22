@@ -49,8 +49,8 @@ CREATE EXTERNAL TABLE hsyk_his_custom_disease_test
   (rowkey string, card_no string, diagnose string, oper_date date)
   STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
     WITH SERDEPROPERTIES (
-    "hbase.columns.mapping" = ":key,INFO:CARD_NO,INFO:DIAGNOSE,INFO:OPER_DATE",
-    "hbase.table.name" = "hsyk_his_custom_disease_test"
+      "hbase.columns.mapping" = ":key,INFO:CARD_NO,INFO:DIAGNOSE,INFO:OPER_DATE",
+      "hbase.table.name" = "hsyk_his_custom_disease_test"
     );
 ```
 
