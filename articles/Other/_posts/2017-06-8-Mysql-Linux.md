@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Mysql-Linux安装与卸载
+title: Mysql-Linux
 tag: Mysql
 ---
 ## 卸载 MySQL
