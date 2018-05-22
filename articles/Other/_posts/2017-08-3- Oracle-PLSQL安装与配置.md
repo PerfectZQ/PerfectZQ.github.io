@@ -1,9 +1,9 @@
 ---
 layout: post
-title: Oracle 与 PLSQL 配置
+title: Oracle-PLSQL安装与配置
 tag: Oracle
 ---
-## Windows Oracle instant client configure
+## Windows instant client configure
 　　下载地址：[http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html](http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html)
 
 ### 下载清单
@@ -23,7 +23,7 @@ tag: Oracle
 ### 添加相关文件
 　　在解压目录中添加tnsnames.ora、listener.ora两个文件
 
-## Mac Oracle instant client configure
+## Mac instant client configure
 
 ### 下载清单
 * 下载 `instantclient-basic-macos.x64-12.1.0.2.0.zip`
