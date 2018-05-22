@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Oracle-PLSQL安装与配置
+title: Oracle-PLSQL 安装与配置
 tag: Oracle
 ---
 ## Windows instant client configure
