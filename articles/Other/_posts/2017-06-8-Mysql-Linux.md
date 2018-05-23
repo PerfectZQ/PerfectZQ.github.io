@@ -95,8 +95,11 @@ service mysql start
 
 ## 创建用户与分配权限
 ```shell
+# 查看 mysql 详细用法
+bin/mysql --help 
+
 # root用户登录 
-# 可以使用 -h 指定远程Mysql服务器的 hostname，默认localhost
+# 使用 -h 指定远程Mysql服务器的 hostname，默认localhost
 mysql -u root -p
 
 # 第一次登录必须修改生成的初始密码
@@ -154,7 +157,7 @@ mysql> drop table 数据表名;
 ## 忘记MySQL用户名密码
 ```shell
 # 首先关闭MySQL实例
-bin/mysqld stop
+bin/mysqld stop | service mysqld stop
 
 # 安全模式启动MySQL
 bin/mysqld_safe --skip-grant-tables &
@@ -167,13 +170,26 @@ mysql> SET PASSWORD FOR 'roor'@'localhost' = PASSWORD('newpass');
 mysql> flush privileges;
 ```
 
-## 数据库数据导出/导入
+## 数据导出/导入
 
-### 所有数据库导出
+### 数据导出
 ```shell
+# 查看基本使用方法
+mysqldump
+
+# 查看详细的使用方法
+mysqldump --help 
+
+# 导出表
+mysqldump -uroot -p dbname table1 table2 > /root/data.sql
+
+# 导出指定数据库
+mysqldump -uroot -p --databases dbname1 dbname2 dbname3 > /root/data.sql
+
+# 导出所有数据库
 mysqldump -uroot -p --all-databases > /root/all_databases_data.sql
 ```
-### 所有数据库导入
+### 数据导入
 ```shell
 mysql -uroot -p
 
