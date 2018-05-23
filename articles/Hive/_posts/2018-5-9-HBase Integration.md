@@ -50,8 +50,9 @@ CREATE EXTERNAL TABLE hsyk_his_custom_disease_test
   STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
     WITH SERDEPROPERTIES (
       "hbase.columns.mapping" = ":key,INFO:CARD_NO,INFO:DIAGNOSE,INFO:OPER_DATE",
-      "hbase.table.name" = "hsyk_his_custom_disease_test"
+      "hbase.table.name" = "hsyk_his_custom_disease_test",
+      "hbase.mapred.output.outputtable" = "hsyk_his_custom_disease_test"
     );
 ```
 
-　　其中`:key`代表 HBase 表的`rowkey`(注意 HBase 和 Hive不同，列簇和列修饰符都是区分大小写的！)，`INFO`是列簇，`CARD_NO,DIAGNOSE,OPER_DATE`是列修饰符，分别对应 Hive 表的`rowkey,card_no,diagnose,oper_date`字段。
+　　其中`:key`代表 HBase 表的`rowkey`(注意 HBase 和 Hive不同，列簇和列修饰符都是区分大小写的！)，`INFO`是列簇，`CARD_NO,DIAGNOSE,OPER_DATE`是列修饰符，分别对应 Hive 表的`rowkey,card_no,diagnose,oper_date`字段。`hbase.table.name`属性是可选的，如果不额外指定，那么 Hive 和 HBase 表名相同。`hbase.mapred.output.outputtable`属性也是可选的，如果想通过 Hive 把数据插入 HBase 表，就需要指定它，它将被`hbase.mapreduce.TableOutputFormat`所使用。 
