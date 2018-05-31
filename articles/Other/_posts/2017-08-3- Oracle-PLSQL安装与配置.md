@@ -45,7 +45,7 @@ export NLS_LANG=AMERICAN_AMERICA.UTF8
 export NLS_DATE_FORMAT="yyyy-mm-dd HH24:MI:SS"
 export PATH=$ORACLE_HOME:$PATH
 
-source ~.bash_profile
+source ~/.bash_profile
 ```
   
   Add links to $HOME/lib or /usr/local/lib to enable applications to find the libraries. For example, OCI based applications could do:
