@@ -15,7 +15,7 @@ tag: Oracle
 
 　　最基本的是`instantclient-basic*`，组件`instantclient-tools*`中包含导出/入数据相关的组件，如`exp/imp`，`instantclient-sqlplus-*`，包含sqlplus，等等……
 ### 配置环境变量
-
+* ORACLE_HOME=D:\oracle\instantclient_11_2
 * NLS_LANG=AMERICAN_AMERICA.ZHS16GBK 或 SIMPLIFIED CHINESE_CHINA.ZHS16GBK
 * TNS_ADMIN=D:\oracle\instantclient_11_2，如果这个不配置，PL/SQL会出TNS解析出错的问题
 * Path中添加`%ORACLE_HOME%`
