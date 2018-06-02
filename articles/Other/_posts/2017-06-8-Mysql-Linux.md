@@ -48,6 +48,7 @@ rm -rf /usr/my.cnf
   
   对于 Mysql5.7+ 的版本，为了加强安全性，为自动为 root 用户随机生成了一个密码，对于 RPM 安装的 Mysql，默认是/var/log/mysqld.log。并且只有在第一次启动 Mysql 才可以在日志中查看临时密码!
 
+  如果很不幸你忘记了密码，可以在`/etc/my.cnf`中添加`skip-grant-tables`，然后重启 Mysql，直接进入 Mysql 控制台，然后修改密码就可以了。
 ### 压缩包安装方式
 ```shell
 wget http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz
