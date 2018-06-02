@@ -46,7 +46,7 @@ rm -rf /usr/my.cnf
 ### rpm 包安装
   建议安装 rpm 包，省时省力，只需要指定root密码，不需要额外配置什么东西就可以启动了。
   
-  对于 Mysql5.7+ 的版本，为了加强安全性，为自动为 root 用户随机生成了一个密码，对于 RPM 安装的 Mysql，默认是/var/log/mysqld.log。并且只有启动过一次 Mysql 才可以查看临时密码!
+  对于 Mysql5.7+ 的版本，为了加强安全性，为自动为 root 用户随机生成了一个密码，对于 RPM 安装的 Mysql，默认是/var/log/mysqld.log。并且只有在第一次启动 Mysql 才可以在日志中查看临时密码!
 
 ### 压缩包安装方式
 ```shell
