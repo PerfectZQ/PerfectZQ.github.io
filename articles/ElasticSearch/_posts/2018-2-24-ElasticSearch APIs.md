@@ -270,6 +270,76 @@ GET /megacorp/employee/_search
 }
 ```
 　　详细的QueryDSL语法可以查看[Query DSL](#query-dsl)章节。
+
+### 组合查询：bool
+`minimum_should_match`指明最少满足几个`should`条件才匹配，如果一个`bool`操作中只有`should`操作，那么`minimum_should_match`默认为`1`，如果除了`should`还有`must`、`filter`等其他操作，`minimum_should_match`默认为`0`
+```javascript
+GET hsyk_diseases_info/_search
+{
+  "query": {
+    "bool":{
+      "must": [
+        { "term":{ "PROVINCE.keyword": "辽宁省" } }
+      ], 
+      "should": [
+        { "term":{ "CITY.keyword": "大连市" } },
+        { "term":{ "CITY.keyword": "沈阳市" } }
+      ],
+      "filter": [
+        
+      ],
+      "minimum_should_match" : 1
+    }
+  },
+  "aggs" : {
+      "group_by_district" : {
+          "terms" : {
+              "field":"DISTRICT.keyword"
+          }
+      }
+    }
+}
+```
+
+### 组合查询:bool嵌套
+```javascript
+GET hsyk_diseases_info/_search
+{
+  "query": {
+    "bool": {
+      "filter": [
+        {
+          "bool": {
+            "should": [
+              { "term":
+                {"PROVINCE.keyword": "辽宁省"}
+              }
+            ]
+          }
+        },
+        {
+          "bool": {
+            "should": [
+              { "terms":
+                { "CITY.keyword": ["沈阳市", "大连市"]}
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "aggs": {
+      "group_by_district": {
+          "terms": {
+              "field": "DISTRICT.keyword"
+          }
+      }
+    }
+}
+```
+
+
 ## Aggregations
 
 ## Indices APIs
