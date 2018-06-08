@@ -115,19 +115,13 @@ tail -f /home/nexus/sonatype-work/nexus3/log/nexus.log
 ## 上传本地项目到 Nexus hosted repository
 
 ### 修改 Maven settings.xml 配置
-　　指定库的登陆信息，`id`对应`repository name`。
+　　指定`server`的登陆信息，`server`中的`id`可以随便起，但是在项目使用的时候要注意，`repository`的`id`一定要和它匹配。
 
 ```xml
 <servers>
 
     <server>
-      <id>maven-releases</id>
-      <username>admin</username>
-      <password>admin123</password>
-    </server>
-
-    <server>
-      <id>maven-snapshots</id>
+      <id>nexus</id>
       <username>admin</username>
       <password>admin123</password>
     </server>
@@ -139,15 +133,44 @@ tail -f /home/nexus/sonatype-work/nexus3/log/nexus.log
 　　在 Maven 项目中的 pom.xml 中添加如下代码。
 
 ```xml
+<!-- 指定 repositories 信息，配置后会优先下载私服库中的依赖。 -->
+<repositories>
+    <repository>
+        <id>nexus</id>
+        <url>http://10.4.121.202:8081/repository/maven-public/</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
+</repositories>      
+
+<!-- 指定 pluginRepositories 信息 -->
+<pluginRepositories>
+    <pluginRepository>
+        <id>nexus</id>
+        <url>http://10.4.121.202:8081/repository/maven-public/</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+       </snapshots>
+    </pluginRepository>
+</pluginRepositories>
+
+<!-- 指定用于发布(deploy)项目的 repository 信息 -->
 <distributionManagement>
 
     <repository>
-        <id>maven-releases</id>
+        <id>nexus</id>
         <url>http://10.4.121.202:8081/repository/maven-releases/</url>
     </repository>
 
     <snapshotRepository>
-        <id>maven-snapshots</id>
+        <id>nexus</id>
         <url>http://10.4.121.202:8081/repository/maven-snapshots/</url>
     </snapshotRepository>
 
