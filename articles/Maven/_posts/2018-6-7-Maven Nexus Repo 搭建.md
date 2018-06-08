@@ -91,6 +91,16 @@ tail -f /home/nexus/sonatype-work/nexus3/log/nexus.log
 
 ![有帮助的截图]({{ site.url }}/assets/nexus2.PNG)
 
+　　在使用 proxy 的时候需要查找索引文件，由于索引文件比较大，建议离线下载然后上传到 nexus 服务器。
+
+　　首先去[http://repo.maven.apache.org/maven2/.index/](http://repo.maven.apache.org/maven2/.index/)，找到`nexus-maven-repository-index.gz`和`nexus-maven-repository-index.properties`，下载下来。
+
+　　创建 nexus blob，如下图：
+
+![有帮助的截图]({{ site.url }}/assets/nexus5.png)
+
+　　将下载好的`nexus-maven-repository-index.gz`和`nexus-maven-repository-index.properties`放入`/home/nexus/sonatype-work/nexus3/blobs/maven-central/.index`即可
+
 ### group
 　　指定一组 repositories，该地址(url)将作为统一访问的入口。
 
