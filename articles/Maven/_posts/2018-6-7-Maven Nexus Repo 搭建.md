@@ -196,7 +196,7 @@ mvn deploy:deploy-file \
 -Durl=<repository-url>
 ```
 
-　　举个栗子：
+　　举个栗子：把`ojdbc6.jar上`传到 maven repository
 ```shell
 mvn deploy:deploy-file -DgroupId=com.oracle -DartifactId=jdbc -Dversion=6.0 -Dfile=D:\Oracle\instantclient_11_2\ojdbc6.jar -DrepositoryId=nexus -Durl=http://10.4.121.202:8081/repository/maven-releases/ 
 ```
