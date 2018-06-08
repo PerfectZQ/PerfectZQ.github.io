@@ -181,3 +181,22 @@ tail -f /home/nexus/sonatype-work/nexus3/log/nexus.log
 ```shell
 mvn deploy
 ```
+
+### 将 jar 包上传到 Nexus Repository
+　　mvn 命令的语法
+
+```shell
+mvn deploy:deploy-file \
+-DgroupId=<group-id> \
+-DartifactId=<artifact-id> \
+-Dversion=<version> \
+-Dpackaging=<package-type> \
+-Dfile=<file-path> \
+-DrepositoryId=<server-id> \
+-Durl=<repository-url>
+```
+
+　　举个栗子：
+```shell
+mvn deploy:deploy-file -DgroupId=com.oracle -DartifactId=jdbc -Dversion=6.0 -Dfile=D:\Oracle\instantclient_11_2\ojdbc6.jar -DrepositoryId=nexus -Durl=http://10.4.121.202:8081/repository/maven-releases/ 
+```
