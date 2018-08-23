@@ -135,6 +135,7 @@ h1 {
 h2 {
     font-size: 18px;
     font-weight: lighter;
+    font-family: 'Microsoft YaHei';
     text-indent: 4px;
     border-radius: 4px;
     padding: 8px 15px;
@@ -151,7 +152,7 @@ h3 {
     font-size: 18px;
     font-weight: bold;
     font-family: 'Microsoft YaHei';
-    padding: 10px 0px 10px 5px;
+    padding: 10px 0px;
     line-height: 1.4em;
     position: relative;
 }
@@ -160,7 +161,7 @@ h4 {
     font-size: 16px;
     font-weight: bold;
     font-family: 'Microsoft YaHei';
-    padding: 10px 0px 10px 5px;
+    padding: 10px 0px;
     line-height: 1.2em;
     position: relative;
 }
