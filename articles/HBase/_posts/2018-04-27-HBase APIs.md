@@ -18,7 +18,7 @@ tag: HBase
 libraryDependencies += "org.apache.hbase" % "hbase-client" % "1.3.1"
 ```
 ### APIs
-　　这里是Scala写法，Java写法，自行领悟，-_-。
+这里是Scala写法，Java写法，自行领悟，-_-。
 
 ```scala
 package com.zq.hbase.learn
@@ -130,7 +130,7 @@ metrics-core-2.2.0.jar(com.yammer.metrics.metrics-core)
 ```
 ### APIs
 #### Write
-　　将 RDD 写入 HBase 表
+将 RDD 写入 HBase 表
 
 ```scala
 package com.zq.hbase.learn
@@ -180,7 +180,7 @@ object Spark_HBase_Write {
 }
 ```
 #### Read
-　　将 HBase 表读到 Spark RDD
+将 HBase 表读到 Spark RDD
 
 ```scala
 package com.zq.hbase.learn

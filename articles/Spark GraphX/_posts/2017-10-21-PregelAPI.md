@@ -4,14 +4,14 @@ title: Pregel API
 tag: Spark GraphX
 ---
 ## Pregel 介绍
-　　谷歌公司在2003年到2004年公布了GFS、MapReduce和BigTable，成为后来云计算和Hadoop项目的重要基石。谷歌在后Hadoop时代的新"三驾马车"——Caffeine(大规模网页索引构建，即爬虫)、Dremel(实时交互式查询，PB级数据2-3秒即可给出查询结果)和Pregel，再一次影响着圈子与大数据技术的发展潮流。
+谷歌公司在2003年到2004年公布了GFS、MapReduce和BigTable，成为后来云计算和Hadoop项目的重要基石。谷歌在后Hadoop时代的新"三驾马车"——Caffeine(大规模网页索引构建，即爬虫)、Dremel(实时交互式查询，PB级数据2-3秒即可给出查询结果)和Pregel，再一次影响着圈子与大数据技术的发展潮流。
 
-　　Pregel是一种基于BSP模型实现的并行图处理系统。为了解决大型图的分布式计算问题，Pregel搭建了一套可扩展的、有容错机制的平台，该平台提供了一套非常灵活的API，可以描述各种各样的图计算Pregel作为分布式图计算的计算框架，主要用于图遍历、最短路径、PageRank计算等等。
+Pregel是一种基于BSP模型实现的并行图处理系统。为了解决大型图的分布式计算问题，Pregel搭建了一套可扩展的、有容错机制的平台，该平台提供了一套非常灵活的API，可以描述各种各样的图计算Pregel作为分布式图计算的计算框架，主要用于图遍历、最短路径、PageRank计算等等。
 
-　　本文主要讲解 Spark GraphX 对于 Pregel API 的实现。
+本文主要讲解 Spark GraphX 对于 Pregel API 的实现。
 
 ## Pregel API
-　　下面讲解 Spark GraphX 对 Pregel API 实现的源码
+下面讲解 Spark GraphX 对 Pregel API 实现的源码
 ```scala
 /**
    * 本方法是执行类似 Pregel 并行迭代顶点的抽象
@@ -74,9 +74,9 @@ def pregel[A: ClassTag](
 }
 ```
 ## 单源最短路径问题
-　　给定一个带权有向图`G=(V,E)`，其中每条边的权是一个实数。另外，还给定V中的一个顶点，称为源。计算从源到其他所有顶点的最短路径长度。长度就是路径上各边权的和。这个问题就是单源最短路径问题。
+给定一个带权有向图`G=(V,E)`，其中每条边的权是一个实数。另外，还给定V中的一个顶点，称为源。计算从源到其他所有顶点的最短路径长度。长度就是路径上各边权的和。这个问题就是单源最短路径问题。
 
-　　下面通过 Spark GraphX 的 Pregel API 解决这个问题
+下面通过 Spark GraphX 的 Pregel API 解决这个问题
 ```scala
 object PregelAPI {
 

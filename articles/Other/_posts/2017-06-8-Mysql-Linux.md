@@ -44,7 +44,7 @@ rm -rf /usr/my.cnf
 ## 安装 MySQL
 
 ### rpm 包安装
-　　建议安装 rpm 包，省时省力，只需要指定root密码，不需要额外配置什么东西就可以启动了。
+建议安装 rpm 包，省时省力，只需要指定root密码，不需要额外配置什么东西就可以启动了。
 ```shell
 rpm -ivh mysql-community-client-5.7.22-1.el7.x86_64.rpm \
          mysql-community-common-5.7.22-1.el7.x86_64.rpm \
@@ -52,17 +52,17 @@ rpm -ivh mysql-community-client-5.7.22-1.el7.x86_64.rpm \
          mysql-community-server-5.7.22-1.el7.x86_64.rpm
 ```
   
-　　对于 Mysql5.7+ 的版本，为了加强安全性，为自动为 root 用户随机生成了一个密码，对于 RPM 安装的 Mysql，默认是/var/log/mysqld.log。并且只有在第一次启动 Mysql 才可以在日志中查看临时密码!
+对于 Mysql5.7+ 的版本，为了加强安全性，为自动为 root 用户随机生成了一个密码，对于 RPM 安装的 Mysql，默认是/var/log/mysqld.log。并且只有在第一次启动 Mysql 才可以在日志中查看临时密码!
 
-　　如果很不幸你忘记了密码，可以在`/etc/my.cnf`中添加`skip-grant-tables`，然后重启 Mysql，直接进入 Mysql 控制台，然后修改密码就可以了。
+如果很不幸你忘记了密码，可以在`/etc/my.cnf`中添加`skip-grant-tables`，然后重启 Mysql，直接进入 Mysql 控制台，然后修改密码就可以了。
 
 ```shell
 mysql> update mysql.user set authentication_string=password('123456') where user='root' and host='localhost';
 ```
 
-　　然后注释掉`/etc/my.cnf`中的`skip-grant-tables`，重启就可以了。
+然后注释掉`/etc/my.cnf`中的`skip-grant-tables`，重启就可以了。
 
-　　如果修改密码的时候出现`Your password does not satisfy the current policy requirements`，说明你设置的密码不符合安全性规范，如果你就是想设置的简单一些，可以修改两个参数。
+如果修改密码的时候出现`Your password does not satisfy the current policy requirements`，说明你设置的密码不符合安全性规范，如果你就是想设置的简单一些，可以修改两个参数。
 
 ```shell
 # validate_password_policy 的取值以及含义：

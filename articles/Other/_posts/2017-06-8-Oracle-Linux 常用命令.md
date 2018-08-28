@@ -14,7 +14,7 @@ su - oracle
 lsnrctl status
 ```
 
-　　下面是未启动监听的状态
+下面是未启动监听的状态
 
 ```console
 LSNRCTL for Linux: Version 12.1.0.2.0 - Production on 28-FEB-2018 15:53:05
@@ -33,7 +33,7 @@ TNS-12541: TNS:no listener
    Linux Error: 111: Connection refused
 ```
 
-　　启动监听
+启动监听
 ```shell
 lsnrctl start
 ```
@@ -60,16 +60,16 @@ ORACLE instance shut down.
 ```
 
 ## 文件校验
-　　为了避免导入时候出现问题，先校验下文件是否在传输过程中出现问题，如果源文件和传输后的文件md5码是相同的可以确认文件在传输中没有出现问题
+为了避免导入时候出现问题，先校验下文件是否在传输过程中出现问题，如果源文件和传输后的文件md5码是相同的可以确认文件在传输中没有出现问题
 ```shell
 [oracle@dbhost impbak]$ md5sum GDI_SI_EPG_HIS_T.dmp
 c30715d195627b07693ccf5e0a6249dd  GDI_SI_EPG_HIS_T.dmp
 ```
 
 ## 导入dmp文件:imp
-　　在Windows中，imp命令依赖oracle客户端bin文件夹中的命令，如果本地安装的不是完整的oracle（包含service），而是独立的客户端(instant client)，会出现`'imp' 不是内部或外部命令，也不是可运行的程序或批处理文件。`的问题，需要下载Package Tools相关的组件，[http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html](http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html)，下载`instantclient-tools-windows.x64-12.2.0.1.0`，解压到`D:\oracle\instantclient_11_2`文件夹中
+在Windows中，imp命令依赖oracle客户端bin文件夹中的命令，如果本地安装的不是完整的oracle（包含service），而是独立的客户端(instant client)，会出现`'imp' 不是内部或外部命令，也不是可运行的程序或批处理文件。`的问题，需要下载Package Tools相关的组件，[http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html](http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html)，下载`instantclient-tools-windows.x64-12.2.0.1.0`，解压到`D:\oracle\instantclient_11_2`文件夹中
 
-　　导入dmp文件，首先确认dmp文件导出的方式，是导出的整个数据库还是只导出一张表。然后需要知道表空间的名称，导出的用户名和密码。
+导入dmp文件，首先确认dmp文件导出的方式，是导出的整个数据库还是只导出一张表。然后需要知道表空间的名称，导出的用户名和密码。
 
 1. 创建表空间
 ```sql

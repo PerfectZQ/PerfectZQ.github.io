@@ -5,9 +5,9 @@ tag: Spark
 ---
 
 ## JDBC 调优
-　　Spark 通过 JDBC 读取关系型数据库，默认查全表，只有一个`task`去执行查询操作，效率可想而知。
+Spark 通过 JDBC 读取关系型数据库，默认查全表，只有一个`task`去执行查询操作，效率可想而知。
 
-　　首先从官网粘几个重要的参数项：
+首先从官网粘几个重要的参数项：
 
 | Property Name | Meaning |
 | :-------- | :-------- |
@@ -17,7 +17,7 @@ tag: Spark
 | partitionColumn<br/> lowerBound<br/> upperBound | These options must all be specified if any of them is specified. In addition, numPartitions must be specified. They describe how to partition the table when reading in parallel from multiple workers. partitionColumn must be a numeric column from the table in question. Notice that lowerBound and upperBound are just used to decide the partition stride, not for filtering the rows in table. So all rows in the table will be partitioned and returned. This option applies only to reading. |
 | numPartitions | The maximum number of partitions that can be used for parallelism in table reading and writing. This also determines the maximum number of concurrent JDBC connections. If the number of partitions to write exceeds this limit, we decrease it to this limit by calling coalesce(numPartitions) before writing. |
 
-　　还有很多重要的参数，这里暂时没用就不粘了。 [http://spark.apache.org/docs/latest/sql-programming-guide.html#jdbc-to-other-databases]
+还有很多重要的参数，这里暂时没用就不粘了。 [http://spark.apache.org/docs/latest/sql-programming-guide.html#jdbc-to-other-databases]
 
 1. `dbtable`：写表名，就是查全表(全字段)。不想查全表，可以在括号里面写子查询。说白了，只要 SQL 语句里，`FROM`后面能跟的，都合法，因为他就是拼了个 SQL 语句，`dbtable`会填在`FROM`后面。
 2. `numPartitions`：读、写的**最大**分区数，也决定了开启数据库连接的数目。注意**最大**两个字，也就是说你指定了32个分区，它也不一定就真的分32个分区了。比如：在读的时候，即便指定了`numPartitions`为任何大于1的值，如果没有指定分区规则，就只有一个`task`去执行查询。
@@ -42,9 +42,9 @@ val reader:DataFrameReader = sparkSession.read.format("jdbc")
 ```
 
 ## Spark 源码解读
-　　Spark 版本：`spark-sql_2.11-2.2.1`
+Spark 版本：`spark-sql_2.11-2.2.1`
 
-　　对于参数`partitionColumn`，`lowerBound`，`upperBound`怎么设置，看官方说明迷迷糊糊的，而且设置了之后，有的`task`记录数直接为0，`task`分配极不均衡，因此扒了扒源码，想看看它到底咋分的。
+对于参数`partitionColumn`，`lowerBound`，`upperBound`怎么设置，看官方说明迷迷糊糊的，而且设置了之后，有的`task`记录数直接为0，`task`分配极不均衡，因此扒了扒源码，想看看它到底咋分的。
 ```scala
 package org.apache.spark.sql.execution.datasources.jdbc
 
@@ -140,9 +140,9 @@ private[sql] object JDBCRelation extends Logging {
 }
 ```
 
-　　这下清楚了，如果你指定的`partitionColumn`不是连续的数(分布不均匀)，那么每个`task`中的数据量就会分配不均匀。
+这下清楚了，如果你指定的`partitionColumn`不是连续的数(分布不均匀)，那么每个`task`中的数据量就会分配不均匀。
 
-　　如果不用`numPartitions`，`partitionColumn, lowerBound, upperBound`，就不能提高`task`并发量了吗？其实不然。我们可以通过`dbtable`构造自己的子查询，并行执行多个查询得到多个结果RDD，最后通过`reduce`合并成一个RDD，这样查询的速度也是很快的。大概思路如下：
+如果不用`numPartitions`，`partitionColumn, lowerBound, upperBound`，就不能提高`task`并发量了吗？其实不然。我们可以通过`dbtable`构造自己的子查询，并行执行多个查询得到多个结果RDD，最后通过`reduce`合并成一个RDD，这样查询的速度也是很快的。大概思路如下：
 
 ```scala
 // 为了不丢失数据，向上取整，将数据分成32份

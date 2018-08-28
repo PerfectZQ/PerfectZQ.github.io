@@ -4,7 +4,7 @@ title: Oracle-PLSQL 安装与配置
 tag: Oracle
 ---
 ## Windows instant client configure
-　　下载地址：[http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html](http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html)
+下载地址：[http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html](http://www.oracle.com/technetwork/cn/database/features/instant-client/index.html)
 
 ### 下载清单
 
@@ -13,7 +13,7 @@ tag: Oracle
 * 下载 `instantclient-tools-nt-11.2.0.4.0.zip`
 * 下载 `instantinstantclient-jdbc-nt-11.2.0.4.0.zip`
 
-　　最基本的是`instantclient-basic*`，组件`instantclient-tools*`中包含导出/入数据相关的组件，如`exp/imp`，`instantclient-sqlplus-*`，包含sqlplus，等等……
+最基本的是`instantclient-basic*`，组件`instantclient-tools*`中包含导出/入数据相关的组件，如`exp/imp`，`instantclient-sqlplus-*`，包含sqlplus，等等……
 ### 配置环境变量
 * ORACLE_HOME=D:\oracle\instantclient_11_2
 * NLS_LANG=AMERICAN_AMERICA.ZHS16GBK 或 SIMPLIFIED CHINESE_CHINA.ZHS16GBK
@@ -21,7 +21,7 @@ tag: Oracle
 * Path中添加`%ORACLE_HOME%`
 
 ### 添加相关文件
-　　在解压目录中添加tnsnames.ora、listener.ora两个文件
+在解压目录中添加tnsnames.ora、listener.ora两个文件
 
 ## Mac instant client configure
 
@@ -64,7 +64,7 @@ sqlplus username/password@localhost:1521/orcl
 ```
 
 ## 配置 PLSQL
-　　在PL/SQL客户端中选首选项（Preferences），配置
+在PL/SQL客户端中选首选项（Preferences），配置
 * Oracle Home 为 `D:\oracle\instantclient_11_2`
 * OCI library 为 `D:\oracle\instantclient_11_2\oci.dll`
 

@@ -5,7 +5,7 @@ tag: Python
 ---
 
 ## 编译、安装过程  
-　　首先去官网下载python包，地址：http://www.python.org/download/，然后将tgz格式包解压进入解压目录下，执行以下操作
+首先去官网下载python包，地址：http://www.python.org/download/，然后将tgz格式包解压进入解压目录下，执行以下操作
 ```shell
 # 配置并且检查，然后生成编译安装所需要的文件，如：
 ./configure --prefix /usr/local/python2.7
@@ -38,7 +38,7 @@ make install
 ```
 
 ## 更换Python版本
-　　完成上述安装后，执行 `python -V` 命令，如果发现系统上的python版本仍然是自带的旧版本。执行 `which python` 查看，旧的python安装在`/usr/local/bin/python`下，其实这是一个软连接。其实新的python也在`/usr/local/bin`下，`/usr/local/bin/python2.7`。可以直接通过更改软连接指向的python更换版本
+完成上述安装后，执行 `python -V` 命令，如果发现系统上的python版本仍然是自带的旧版本。执行 `which python` 查看，旧的python安装在`/usr/local/bin/python`下，其实这是一个软连接。其实新的python也在`/usr/local/bin`下，`/usr/local/bin/python2.7`。可以直接通过更改软连接指向的python更换版本
 ```shell
 # 如果前面没有指定 --prefix 可以忽略这一步
 ln -s /usr/local/python2.7 /usr/local/bin/
