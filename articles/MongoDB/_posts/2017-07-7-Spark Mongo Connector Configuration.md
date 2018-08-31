@@ -3,6 +3,8 @@ layout: post
 title: Spark-Mongo-Connector
 tag: Spark-Mongo-Connector
 ---
+## 官方文档
+[https://docs.mongodb.com/spark-connector/current/](https://docs.mongodb.com/spark-connector/current/)
 
 ## sbt 地址
 ```sbt
