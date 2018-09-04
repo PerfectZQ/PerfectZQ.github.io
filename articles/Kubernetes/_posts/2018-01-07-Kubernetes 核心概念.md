@@ -68,6 +68,7 @@ apiserver 通过 http 连接与 nodes, pods and services 交互
 * Kube-proxy：网络代理，反射了每个节点上的 network services。
 
 ## Kubernetes Objects
+[]
 基本的 Kubernetes Objects 包括：[Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/)、[Service](https://kubernetes.io/docs/concepts/services-networking/service/)、[Volume](https://kubernetes.io/docs/concepts/storage/volumes/)、[Namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)
 
 ### Pod
