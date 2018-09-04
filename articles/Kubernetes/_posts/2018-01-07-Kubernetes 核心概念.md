@@ -73,17 +73,57 @@ apiserver 通过 http 连接与 nodes, pods and services 交互
 kubernetes object 可以理解为`record of intent`，即一旦你创建了一个 object，那么 kubernetes 就会持续保证有这么一个 object 存在。并不是说这个 object 不会出问题，而是就算出问题了，kubernetes 也会新创建一个新 object，来满足你的`record of intent`。详细的可以参考[understanding kubernetes objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/#understanding-kubernetes-objects)
 
 想要操作 kubernetes object，比如创建、修改或者删除，就需要 [Kubernetes API](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)，可以使用 command line，通过`kubectl`调用 API，也可以造程序里使用[Client Libraries](https://kubernetes.io/docs/reference/using-api/client-libraries/)调用 API。
-                                                                                                                                                                   
-基本的 Kubernetes Objects 包括：[Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/)、[Service](https://kubernetes.io/docs/concepts/services-networking/service/)、[Volume](https://kubernetes.io/docs/concepts/storage/volumes/)、[Namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)
+
+每个 kubernetes object 都包含两个嵌套对象字段，用于控制对象的配置：对象规范和对象状态。您必须提供描述了对象所需状态的规范 - 对象具有的特征。状态描述对象的实际状态，由 Kubernetes 系统提供和更新。在任何给定时间，Kubernetes 控制平面都会主动管理对象的实际状态，以匹配您提供的所需状态。
+
+例如，Kubernetes Deployment 是一个表示在群集上运行的应用程序的对象。创建 Deployment 时设置 Deployment 规范，希望该应用程序运行三个副本。 Kubernetes 系统读取 Deployment 规范并启动所需应用程序的三个实例 - 更新状态以符合 Deployment 规范。如果这些实例中的任何一个失败（状态改变），Kubernetes 系统通过进行校正来响应规范和状态之间的差异 - 在这种情况下，启动替换实例。
+
+一般通过 API 操作 object，需要在 request body 中提供一个 JSON 用于描述你的 object spec(规范)，但大多数情况下是指定一个`.yaml`文件，`kubectl`会在请求的时候将它转换成 JSON。一个`.yaml`例子：
+
+```yaml
+# 其中 apiVersion、kind、metadata、spec 是必须的字段
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.7.9
+        ports:
+        - containerPort: 80
+```       
+
+每种类型 object 的规范在定义上是有区别的，比如有些 object 会包含特有的字段，所有 object 的规范格式都可以在这里找到[Kubernetes API Reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/)
+
+可以通过下面的命令来将`.yaml`作为参数传递
+```shell
+$ kubectl create -f https://k8s.io/examples/application/deployment.yaml --record
+```
+                                                                                                                                                 
+基本的 kubernetes objects 包括：[Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/)、[Service](https://kubernetes.io/docs/concepts/services-networking/service/)、[Volume](https://kubernetes.io/docs/concepts/storage/volumes/)、[Namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)，下面分别简单介绍下。
 
 ### Pod
-Pod（上图绿色方框）安装在节点上，包含一组**容器**和**卷**。同一个 Pod 里的容器共享同一个网络命名空间(Namespace)，可以使用 localhost 互相通信。Pod 是短暂的，不是持续性实体。
+Pod 是 kubernetes 最基本的构建块 - 你在 kubernetes object model 中能够创建或者发布的最小、最简单的单元。它是一个在你的集群上运行的一个进程。
+
+Pod 封装了单个 container 或者多个紧密耦合的 containers、存储资源(a set of shared storage volumes)、一个唯一的 IP 地址和一些控制 containers 应该怎么运行的 options。启动一个 Pod，可以将其理解为：为一个给定的 Application 启动一个实例。同一个 Pod 里的多个 container 共享存储资源、共享同一个 Network Namespace，可以使用 localhost 互相通信。很少会直接在 kubernetes 中创建 Pod 实例，因为 Pod 被设计为相对短暂的一次性实体。当Pod（由您直接创建或由Controller间接创建）时，它将被安排在群集中的 Node 上运行。 Pod 保留在该节点上，除非进程终止，Pod 对象被删除，Pod 因资源不足而被驱逐，或者 Node 挂掉。
+
+Pod 本身不会自我修复，尽管可以直接使用 Pod，但在 kubernetes 中使用 Controller 是更常见的方式，它是更高级别的抽象，用来处理和管理相对一次性的 Pod 实例。
 
 * 如果 Pod 是短暂的，那么我怎么才能持久化容器数据使其能够跨重启而存在呢？Kubernetes 支持卷(Volume)的概念，因此可以使用持久化的卷类型。
 * 是否手动创建 Pod，如果想要创建同一个容器的多份拷贝，需要一个个分别创建出来么？可以手动创建单个 Pod，但是也可以使用 Replication Controller 的 Pod 模板创建出多份拷贝，下文会详细介绍。
 * 如果 Pod 是短暂的，那么重启时IP地址可能会改变，那么怎么才能从前端容器正确可靠地指向后台容器呢？这时可以使用 Service，下文会详细介绍。
 
-### Service 
+### Service
 假设我们创建了一组 Pod 的副本，那么在这些副本上如何进行负载均衡？答案就是 Service
 
 如果 Pods 是短暂的，那么重启时 IP 地址可能会改变，怎么才能从前端容器正确可靠地指向后台容器呢？答案同样是 Service
