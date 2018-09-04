@@ -4,12 +4,14 @@ title: Kubernetes 核心概念
 tag:  Kubernetes
 ---
 
-## 参考链接
+## 参考来源
 [http://www.dockone.io/article/932](http://www.dockone.io/article/932)
 
-[https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/)
+[https://kubernetes.io/docs/](https://kubernetes.io/docs/)
 
 ## 什么是 kubernetes
+[what is kubernetes?](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/)
+
 Kubernetes（k8s）是自动化容器操作的开源平台，包括部署、调度和集群扩展。如果你曾经用过 Docker 容器技术部署容器，那么可以将 Docker 看成 Kubernetes 内部使用的低级别组件。Kubernetes 不仅仅支持 Docker，还支持 Rocket，这是另一种容器技术。
 
 Kubernetes可以：
@@ -68,13 +70,16 @@ apiserver 通过 http 连接与 nodes, pods and services 交互
 * Kube-proxy：网络代理，反射了每个节点上的 network services。
 
 ## Kubernetes Objects
-[]
+kubernetes object 可以理解为`record of intent`，即一旦你创建了一个 object，那么 kubernetes 就会持续保证有这么一个 object 存在。并不是说这个 object 不会出问题，而是就算出问题了，kubernetes 也会新创建一个新 object，来满足你的`record of intent`。详细的可以参考[understanding kubernetes objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/#understanding-kubernetes-objects)
+
+想要操作 kubernetes object，比如创建、修改或者删除，就需要 [Kubernetes API](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)，可以使用 command line，通过`kubectl`调用 API，也可以造程序里使用[Client Libraries](https://kubernetes.io/docs/reference/using-api/client-libraries/)调用 API。
+                                                                                                                                                                   
 基本的 Kubernetes Objects 包括：[Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/)、[Service](https://kubernetes.io/docs/concepts/services-networking/service/)、[Volume](https://kubernetes.io/docs/concepts/storage/volumes/)、[Namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)
 
 ### Pod
-Pod（上图绿色方框）安装在节点上，包含一组**容器**和**卷**。同一个 Pod 里的容器共享同一个网络命名空间，可以使用 localhost 互相通信。Pod 是短暂的，不是持续性实体。
+Pod（上图绿色方框）安装在节点上，包含一组**容器**和**卷**。同一个 Pod 里的容器共享同一个网络命名空间(Namespace)，可以使用 localhost 互相通信。Pod 是短暂的，不是持续性实体。
 
-* 如果 Pod 是短暂的，那么我怎么才能持久化容器数据使其能够跨重启而存在呢？ 是的，Kubernetes 支持卷的概念，因此可以使用持久化的卷类型。
+* 如果 Pod 是短暂的，那么我怎么才能持久化容器数据使其能够跨重启而存在呢？Kubernetes 支持卷(Volume)的概念，因此可以使用持久化的卷类型。
 * 是否手动创建 Pod，如果想要创建同一个容器的多份拷贝，需要一个个分别创建出来么？可以手动创建单个 Pod，但是也可以使用 Replication Controller 的 Pod 模板创建出多份拷贝，下文会详细介绍。
 * 如果 Pod 是短暂的，那么重启时IP地址可能会改变，那么怎么才能从前端容器正确可靠地指向后台容器呢？这时可以使用 Service，下文会详细介绍。
 
@@ -83,7 +88,7 @@ Pod（上图绿色方框）安装在节点上，包含一组**容器**和**卷**
 
 如果 Pods 是短暂的，那么重启时 IP 地址可能会改变，怎么才能从前端容器正确可靠地指向后台容器呢？答案同样是 Service
 
-Service 是定义一系列Pod以及访问这些Pod的策略的一层抽象。Service通过Label找到Pod组。因为Service是抽象的，所以在图表里通常看不到它们的存在，这也就让这一概念更难以理解。
+Service 是定义一系列 Pod 以及访问这些 Pod 的策略的一层抽象。Service 通过 Label 找到 Pod 组。因为 Service 是抽象的，所以在图表里通常看不到它们的存在，这也就让这一概念更难以理解。
 
 现在，假定有 2 个后台 Pod，并且定义后台 Service 的名称为`backend-service`，label 选择器为`(tier=backend, app=myapp)`。`backend-service`的 Service 会完成如下两件重要的事情：
 1. 为 Service 创建一个本地集群的 DNS 入口，因此前端 Pod 只需要 DNS 解析`backend-service`就能够得到前端应用程序可用的 IP 地址。
@@ -92,13 +97,9 @@ Service 是定义一系列Pod以及访问这些Pod的策略的一层抽象。Ser
 ![有帮助的截图]({{ site.url }}/assets/kubernetes-service.gif)
 
 ### Volume
+卷
 
 ### Namespace
-
-## Container
-
-### Label and Selectors
-Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性。比如，你可能创建了一个`tier`和`app`标签，通过Label（tier=frontend, app=myapp）来标记前端Pod容器，Label（tier=backend, app=myapp）标记后台Pod。然后可以使用 Selectors 选择带有特定 Label 的一组 Pods，并且将 Service 或者 Replication Controller 应用到匹配到的这组 Pods 上面。
 
 ### Controllers
 除此之外。kubernetes 还包含一些高级抽象，称为 Controllers。Controllers 基于基本对象构建，并提供一些便利的功能和特性如：
@@ -124,7 +125,11 @@ Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性
 1. Pod 模板：用来创建Pod副本的模板
 2. Label：Replication Controller 需要监控的 Pod 的标签。
 
-                                                                                                                     
+
+### Label and Selectors
+Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性。比如，你可能创建了一个`tier`和`app`标签，通过Label（tier=frontend, app=myapp）来标记前端Pod容器，Label（tier=backend, app=myapp）标记后台Pod。然后可以使用 Selectors 选择带有特定 Label 的一组 Pods，并且将 Service 或者 Replication Controller 应用到匹配到的这组 Pods 上面。
+
+## Container                                                                                                           
 
 ## kubectl
 ### 使用 kubectl 与kubernetes 集群交互
