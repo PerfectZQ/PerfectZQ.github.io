@@ -153,6 +153,8 @@ Service 是定义一系列 Pod 以及访问这些 Pod 的策略的一层抽象�
 * [Job-run to completion](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)
 * [CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/)
 
+#### ReplicaSet
+
 #### Replication Controller
 用于创建和复制 Pod，Replication Controller 确保任意时间都有指定数量的 Pod 副本在运行。如果为某个 Pod 创建了 Replication Controller 并且指定 3 个副本，它会创建3个Pod，并且持续监控它们。如果某个 Pod 不响应，那么 Replication Controller 会替换它，保持总数为 3 如下面的动画所示：
 
@@ -165,6 +167,23 @@ Service 是定义一系列 Pod 以及访问这些 Pod 的策略的一层抽象�
 1. Pod 模板：用来创建Pod副本的模板
 2. Label：Replication Controller 需要监控的 Pod 的标签。
 
+#### Deployment
+
+#### StatefulSet
+
+#### DaemonSet
+DaemonSet 确保所有(或某些指定的) Node 会运行 Pod 的副本，随着 Node 添加到集群中，他会将 Pod 添加到新的 Node 中，当 Node 从集群中删除时，他也会确保 Pod 会被垃圾收集。删除 DaemonSet 会清除它所创建的 Pod。
+
+DaemonSet 的应用场景：
+
+* 在每个节点上运行集群存储的守护进程，如`glusterd`、`ceph`
+* 在每个节点上运行日志收集守护进程，如`fluentd`、`logstash`、`filebeat`
+* 在每个节点上运行节点监视的守护进程，如`Prometheus Node Exporter`、`collectd`、`Dynatrace OneAgent`、`Datadog agent`、`New Relic agent`、`Ganglia gmond`
+#### Garbage Collection
+
+#### Job-run to completion
+
+#### CronJob
 
 ### Label and Selectors
 Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性。比如，你可能创建了一个`tier`和`app`标签，通过Label（tier=frontend, app=myapp）来标记前端Pod容器，Label（tier=backend, app=myapp）标记后台Pod。然后可以使用 Selectors 选择带有特定 Label 的一组 Pods，并且将 Service 或者 Replication Controller 应用到匹配到的这组 Pods 上面。
@@ -177,3 +196,60 @@ Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性
 
 ### kubectl-commands
 [official reference](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands)
+
+## kubernetes logging
+[kubernetes logging architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/#using-a-node-logging-agent)
+
+### logging at the node level
+#### container logs
+所有容器化应用程序写入`stderr`和`stdout`的所有内容都会被容器引擎处理并重定向到某个地方。例如: Docker 就会将这两个streams重定向到[logging-driver](https://docs.docker.com/config/containers/logging/configure/)，`logging-driver=json-file`将会把日志以 JSON 的格式写到`/var/lib/docker/containers`下。
+
+但是 docker json logging driver 会按行来区分每一条日志，如果你想处理多条日志，就需要在 logging agent 作处理了。
+
+另一个比较重要的考虑因素是实现日志轮换，以防止日志占用节点所有的存储资源。kubernetes 目前没有实现日志轮换的功能，但是 deployment tool 应该提供一个解决方案来解决这个问题。例如，`kube-up.sh`脚本部署时，有一个`logrotate`工具，可以配置为每小时运行一次；或者在运行 docker container 时指定`log-opt`。第一种方法可以用于任何其他环境，而后一种方法用于 GCP 的 COS 映像。这两种方法默认都会在日志文件超过10M的时候进行轮换。
+
+>Note: 如果某个外部系统已经执行了轮换，则只有最新的日志文件内容可以被`kubectl logs`获得。例如：有一个10M的文件，`logrotate`执行轮转后，就会生成两个文件，一个10M，一个为空，当执行`kubectl logs`时会返回一个空的响应。
+
+#### system component logs
+系统组件的日志有两种：运行在容器中的和非运行在容器中的。例如 kubernetes scheduler 和 kube-proxy 就运行在 container 中，而 kubelet 和 docker 就不运行在 container 中。
+
+在有`systemd`的机器上，kubelet 和 docker 会写到`journald`，如果`systemd`不可用就会写到`/var/log`目录下。在容器中的系统组件会把日志直接写在`/var/log`目录下。类似容器日志，在`/var/log`目录下的系统组件日志也会进行轮换，这些日志被`logrotate`配置为每天或者日志文件超过100M时进行轮换。
+
+### logging at cluster level
+然而 kubernetes 没有为 cluster-level logging 提供一个原生的解决方案，但是有一些通用的方法可以考虑，例如：
+
+* 在集群的每个节点上运行一个 node-level 的 logging-agent(专门用于将日志推送到后台的工具，如`fluentd`、`logstash`、`filebeat`)
+* 在 application pod 中包含一个专门用于日志收集的 sidecar container
+* 在应用程序直接将日志推送到后台日志服务器
+
+#### Using a node-level logging agent
+![有帮助的截图]({{ site.url }}/assets/kubernetes-logging-with-node-agent.png)
+
+#### Using a sidecar container with the logging agent
+![有帮助的截图]({{ site.url }}/assets/kubernetes-logging-with-streaming-sidecar.png)
+
+![有帮助的截图]({{ site.url }}/assets/kubernetes-logging-with-sidecar-agent.png)
+
+#### Exposing logs directly from the application
+![有帮助的截图]({{ site.url }}/assets/kubernetes-logging-from-application.png)
+
+
+### 日志文件路径
+kubernetes 的日志都写在`/var/log/containers`下：
+```shell
+ls -l /var/log/containers
+总用量 68
+lrwxrwxrwx 1 root root 90 9月   5 17:05 miami-group-understanding-test-67f55d4775-m4ct7_default_miami-group-understanding-test-7d57ebfab3b2590f06d2994e86e1254064e8d38c96c10d3007e4eddeb5c91178.log -> /var/log/pods/7f3ce883-acc8-11e8-b97b-00163e062f63/miami-group-understanding-test/1484.log
+lrwxrwxrwx 1 root root 65 8月   2 18:19 monitoring-influxdb-6c54fbb78-fg64f_kube-system_influxdb-7cf9d0d3dca87e79a6d52eb6584c773801177a9019f80924d19b15b300ef9019.log -> /var/log/pods/3443796f-9637-11e8-9628-00163e08aadb/influxdb/1.log
+lrwxrwxrwx 1 root root 65 8月   2 18:20 monitoring-influxdb-6c54fbb78-fg64f_kube-system_influxdb-a4b743d315325410e3b061c96b92c90d377831cfae89bd0126176fa882fdfd5a.log -> /var/log/pods/3443796f-9637-11e8-9628-00163e08aadb/influxdb/2.log
+...
+```
+
+可以看到这里面的日志都是一些软连接，实际指向`/var/log/pods`下：
+```shell
+ls -l /var/log/pods/7f3ce883-acc8-11e8-b97b-00163e062f63/miami-group-understanding-test/1484.log
+lrwxrwxrwx 1 root root 165 9月   5 17:05 /var/log/pods/7f3ce883-acc8-11e8-b97b-00163e062f63/miami-group-understanding-test/1484.log -> /var/lib/docker/containers/7d57ebfab3b2590f06d2994e86e1254064e8d38c96c10d3007e4eddeb5c91178/7d57ebfab3b2590f06d2994e86e1254064e8d38c96c10d3007e4eddeb5c91178-json.log
+```
+
+从上面可以看出最终实际的日志文件还是 docker container 中的日志文件。
+
