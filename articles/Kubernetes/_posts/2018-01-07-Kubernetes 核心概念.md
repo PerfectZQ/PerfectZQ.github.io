@@ -251,5 +251,5 @@ ls -l /var/log/pods/7f3ce883-acc8-11e8-b97b-00163e062f63/miami-group-understandi
 lrwxrwxrwx 1 root root 165 9月   5 17:05 /var/log/pods/7f3ce883-acc8-11e8-b97b-00163e062f63/miami-group-understanding-test/1484.log -> /var/lib/docker/containers/7d57ebfab3b2590f06d2994e86e1254064e8d38c96c10d3007e4eddeb5c91178/7d57ebfab3b2590f06d2994e86e1254064e8d38c96c10d3007e4eddeb5c91178-json.log
 ```
 
-从上面可以看出最终实际的日志文件还是 docker container 中的日志文件。啊啊啊
+从上面可以看出最终实际的日志文件还是 docker container 中的日志文件。
 
