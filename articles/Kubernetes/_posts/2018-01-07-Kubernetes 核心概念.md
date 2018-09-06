@@ -201,7 +201,6 @@ Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性
 [kubernetes logging architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/#using-a-node-logging-agent)
 
 ### logging at the node level
-#### container logs
 所有容器化应用程序写入`stderr`和`stdout`的所有内容都会被容器引擎处理并重定向到某个地方。例如: Docker 就会将这两个streams重定向到[logging-driver](https://docs.docker.com/config/containers/logging/configure/)，`logging-driver=json-file`将会把日志以 JSON 的格式写到`/var/lib/docker/containers`下。
 
 但是 docker json logging driver 会按行来区分每一条日志，如果你想处理多条日志，就需要在 logging agent 作处理了。
@@ -222,16 +221,183 @@ Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性
 * 在 application pod 中包含一个专门用于日志收集的 sidecar container
 * 在应用程序直接将日志推送到后台日志服务器
 
+下面分别来介绍一下这三种方法
+
 #### Using a node-level logging agent
 ![有帮助的截图]({{ site.url }}/assets/kubernetes-logging-with-node-agent.png)
 
+在每个节点上创建一个有日志目录访问权限的 logging-agent，常规的实现方式
+
+1. 使用 DamonSet Replica
+2. 使用 manifest pod
+3. 在节点上启动一个专门用于处理日志的原生进程。
+
+但是后两种非常不推荐使用。另外 node-level logging agent 只能处理`standard output`和`standard error`。
+
 #### Using a sidecar container with the logging agent
+首先解释一下什么叫 sidecar，sidecar 就是与应用程序一起运行的独立进程，为应用程序提供额外的功能。更多了解可以读一下这篇关于[Service Mesh](https://m.sohu.com/a/198655597_467759/?pvid=000115_3w_a&from=timeline&isappinstalled=0)的文章。
+
+有两种使用 sidecar container 的方式：
+
+* sidecar container 将应用程序日志传输到自己的 stdout/stderr，我们称他为 streaming sidecar container。然后通过 logging-agent-pod 将日志发送到 logging backend。
+
 ![有帮助的截图]({{ site.url }}/assets/kubernetes-logging-with-streaming-sidecar.png)
 
+这种方式可以将不同类型的日志进行分流，例如下面的 yaml 所示：
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: counter
+spec:
+  containers:
+  - name: count
+    image: busybox
+    args:
+    - /bin/sh
+    - -c
+    - >
+      i=0;
+      while true;
+      do
+        echo "$i: $(date)" >> /var/log/1.log;
+        echo "$(date) INFO $i" >> /var/log/2.log;
+        i=$((i+1));
+        sleep 1;
+      done
+    volumeMounts:
+    - name: varlog
+      mountPath: /var/log
+  - name: count-log-1
+    image: busybox
+    args: [/bin/sh, -c, 'tail -n+1 -f /var/log/1.log']
+    volumeMounts:
+    - name: varlog
+      mountPath: /var/log
+  - name: count-log-2
+    image: busybox
+    args: [/bin/sh, -c, 'tail -n+1 -f /var/log/2.log']
+    volumeMounts:
+    - name: varlog
+      mountPath: /var/log
+  volumes:
+  - name: varlog
+    emptyDir: {}
+```
+
+从上面的配置文件可以看到，application container 会输出两种类型的日志文件`/var/log/1.log`和`/var/log/2.log`。然后有两个 sidecar container 分别将两个日志文件分流到自己的 stdout 和 stderr。这样在运行这个 pod 的时候，就可以通过下面的方式单独获取某种类型的日志。
+
+```shell
+$ kubectl logs counter count-log-1
+0: Mon Jan  1 00:00:00 UTC 2001
+1: Mon Jan  1 00:00:01 UTC 2001
+2: Mon Jan  1 00:00:02 UTC 2001
+...
+```
+
+```shell
+$ kubectl logs counter count-log-1
+0: Mon Jan  1 00:00:00 UTC 2001
+1: Mon Jan  1 00:00:01 UTC 2001
+2: Mon Jan  1 00:00:02 UTC 2001
+...
+```
+
+而安装在每个节点的 logging-agent-pod 会自动搜集这些日志，甚至可以直接去读取解析源容器的日志文件，然后将日志发送到 logging backend。
+
+>需要注意的是，使用 streaming sidecar container 将日志流传输到 stdout 会使磁盘使用量增加一倍，如果只是单个的日志文件写入，最好还是直接写到`/dev/stdout`，而不是使用 streaming sidecar container。
+
+最后 sidecar container 还可用于旋转应用程序本身无法旋转的日志文件。 这种方法的一个例子是定期运行 logrotate 的小容器。 但是，建议直接使用 stdout 和 stderr，并将循环和保留策略保留给 kubelet。
+
+* sidecar container 运行日志记录的代理程序，该代理程序会从应用程序容器中读取日志，然后直接将日志发送到后端。
 ![有帮助的截图]({{ site.url }}/assets/kubernetes-logging-with-sidecar-agent.png)
+
+如果 node level logging-agent 不够灵活，可以创建一个带有单独日志记录功能的 sidecar container，他与主应用程序一起运行。
+
+>注意：在 sidecar container 中使用日志代理会导致大量的资源消耗，并且无法使用 kubectl logs 访问这些日志，因为他们不受 kubelet 控制。
+
+可以使用[Stack driver](https://kubernetes.io/docs/tasks/debug-application-cluster/logging-stackdriver/)，他使用 fluentd 作为 logging agent。可以通过下面的两个配置文件实现这个方法：
+
+第一个文件包含一个用来配置 fluentd 的[ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)，更多关于配置 fluentd 的信息可以参考[official fluentd documentation](http://docs.fluentd.org/)
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluentd-config
+data:
+  fluentd.conf: |
+    <source>
+      type tail
+      format none
+      path /var/log/1.log
+      pos_file /var/log/1.log.pos
+      tag count.format1
+    </source>
+
+    <source>
+      type tail
+      format none
+      path /var/log/2.log
+      pos_file /var/log/2.log.pos
+      tag count.format2
+    </source>
+
+    <match **>
+      type google_cloud
+    </match>
+```
+
+第二个文件描述了一个包含 fluentd 的 sidecar container，并且该 pod 安装了一个 fluentd 可以获取它配置数据的 volume。
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: counter
+spec:
+  containers:
+  - name: count
+    image: busybox
+    args:
+    - /bin/sh
+    - -c
+    - >
+      i=0;
+      while true;
+      do
+        echo "$i: $(date)" >> /var/log/1.log;
+        echo "$(date) INFO $i" >> /var/log/2.log;
+        i=$((i+1));
+        sleep 1;
+      done
+    volumeMounts:
+    - name: varlog
+      mountPath: /var/log
+  - name: count-agent
+    image: k8s.gcr.io/fluentd-gcp:1.30
+    env:
+    - name: FLUENTD_ARGS
+      value: -c /etc/fluentd-config/fluentd.conf
+    volumeMounts:
+    - name: varlog
+      mountPath: /var/log
+    - name: config-volume
+      mountPath: /etc/fluentd-config
+  volumes:
+  - name: varlog
+    emptyDir: {}
+  - name: config-volume
+    configMap:
+      name: fluentd-config
+```
+
+一段时间后，就可以在 stack driver 洁面中找到日志信息。这只是一个示例，实际上可以用任何 logging-agent 替代 fluentd，从应用程序 container 内的任何源读取日志。
 
 #### Exposing logs directly from the application
 ![有帮助的截图]({{ site.url }}/assets/kubernetes-logging-from-application.png)
+
+这种方式就是直接通过应用程序 container 将日志写到 logging backend，例如配置 log4j 到 kafka、redis、elasticsearch 等等。 但是这种日志机制就超出 kubernetes 的范畴了。
 
 
 ### 日志文件路径
