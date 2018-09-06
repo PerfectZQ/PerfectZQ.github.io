@@ -179,6 +179,53 @@ DaemonSet 的应用场景：
 * 在每个节点上运行集群存储的守护进程，如`glusterd`、`ceph`
 * 在每个节点上运行日志收集守护进程，如`fluentd`、`logstash`、`filebeat`
 * 在每个节点上运行节点监视的守护进程，如`Prometheus Node Exporter`、`collectd`、`Dynatrace OneAgent`、`Datadog agent`、`New Relic agent`、`Ganglia gmond`
+
+下面写一个 DaemonSet Spec，我们先创建一个`daemonset.yaml`运行 fluentd-elasticsearch Docker image。
+```yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluentd-elasticsearch
+  namespace: kube-system
+  labels:
+    k8s-app: fluentd-logging
+spec:
+  selector:
+    matchLabels:
+      name: fluentd-elasticsearch
+  template:
+    metadata:
+      labels:
+        name: fluentd-elasticsearch
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      containers:
+      - name: fluentd-elasticsearch
+        image: k8s.gcr.io/fluentd-elasticsearch:1.20
+        resources:
+          limits:
+            memory: 200Mi 
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        - name: varlibdockercontainers
+          mountPath: /var/lib/docker/containers
+          readOnly: true
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: varlog
+        hostPath:
+          path: /var/log
+      - name: varlibdockercontainers
+        hostPath:
+          path: /var/lib/docker/containers
+```
+
 #### Garbage Collection
 
 #### Job-run to completion
@@ -188,7 +235,7 @@ DaemonSet 的应用场景：
 ### Label and Selectors
 Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性。比如，你可能创建了一个`tier`和`app`标签，通过Label（tier=frontend, app=myapp）来标记前端Pod容器，Label（tier=backend, app=myapp）标记后台Pod。然后可以使用 Selectors 选择带有特定 Label 的一组 Pods，并且将 Service 或者 Replication Controller 应用到匹配到的这组 Pods 上面。
 
-## Container                                                                                                           
+## Container                                                                                  
 
 ## kubectl
 ### 使用 kubectl 与kubernetes 集群交互
