@@ -198,7 +198,7 @@ Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性
 [official reference](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands)
 
 ## kubernetes logging
-[kubernetes logging architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/#using-a-node-logging-agent)
+[kubernetes logging architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
 
 ### logging at the node level
 所有容器化应用程序写入`stderr`和`stdout`的所有内容都会被容器引擎处理并重定向到某个地方。例如: Docker 就会将这两个streams重定向到[logging-driver](https://docs.docker.com/config/containers/logging/configure/)，`logging-driver=json-file`将会把日志以 JSON 的格式写到`/var/lib/docker/containers`下。
@@ -417,5 +417,5 @@ ls -l /var/log/pods/7f3ce883-acc8-11e8-b97b-00163e062f63/miami-group-understandi
 lrwxrwxrwx 1 root root 165 9月   5 17:05 /var/log/pods/7f3ce883-acc8-11e8-b97b-00163e062f63/miami-group-understanding-test/1484.log -> /var/lib/docker/containers/7d57ebfab3b2590f06d2994e86e1254064e8d38c96c10d3007e4eddeb5c91178/7d57ebfab3b2590f06d2994e86e1254064e8d38c96c10d3007e4eddeb5c91178-json.log
 ```
 
-从上面可以看出最终实际的日志文件还是 docker container 中的日志文件。
+从上面可以看出最终实际的日志文件在`/var/lib/docker/containers`下面，实质还是 docker container 中的日志文件。
 
