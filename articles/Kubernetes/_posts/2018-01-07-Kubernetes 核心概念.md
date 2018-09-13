@@ -72,7 +72,7 @@ apiserver 通过 http 连接与 nodes, pods and services 交互
 ## Kubernetes Objects
 kubernetes object 可以理解为`record of intent`，即一旦你创建了一个 object，那么 kubernetes 就会持续保证有这么一个 object 存在。并不是说这个 object 不会出问题，而是就算出问题了，kubernetes 也会新创建一个新 object，来满足你的`record of intent`。详细的可以参考[understanding kubernetes objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/#understanding-kubernetes-objects)
 
-想要操作 kubernetes object，比如创建、修改或者删除，就需要 [Kubernetes API](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)，可以使用 command line，通过`kubectl`调用 API，也可以造程序里使用[Client Libraries](https://kubernetes.io/docs/reference/using-api/client-libraries/)调用 API。
+想要操作 kubernetes object，比如创建、修改或者删除，就需要 [Kubernetes API](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)，可以使用 command line，通过`kubectl`调用 API，也可以在应用程序程序中使用[Client Libraries](https://kubernetes.io/docs/reference/using-api/client-libraries/)调用 API。另外所有的 API 公约在[API conventions doc](https://git.k8s.io/community/contributors/devel/api-conventions.md)中有详细的描述。
 
 每个 kubernetes object 都包含两个嵌套对象字段，用于控制对象的配置：对象规范和对象状态。您必须提供描述了对象所需状态的规范 - 对象具有的特征。状态描述对象的实际状态，由 Kubernetes 系统提供和更新。在任何给定时间，Kubernetes 控制平面都会主动管理对象的实际状态，以匹配您提供的所需状态。
 
@@ -243,6 +243,9 @@ Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性
 
 ### kubectl-commands
 [official reference](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands)
+
+### kubectl yaml 配置项
+[deploying applications](https://kubernetes.io/docs/user-guide/deploying-applications/)、[configuring containers](https://kubernetes.io/docs/tasks/)、[object management using kubectl](https://kubernetes.io/docs/concepts/overview/object-management-kubectl/overview/)
 
 ## kubernetes logging
 [kubernetes logging architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
