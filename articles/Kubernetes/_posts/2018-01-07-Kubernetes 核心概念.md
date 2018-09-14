@@ -101,7 +101,7 @@ spec:
         image: nginx:1.7.9
         ports:
         - containerPort: 80
-```       
+```
 
 每种类型 object 的规范在定义上是有区别的，比如有些 object 会包含特有的字段，所有 object 的规范格式都可以在这里找到[Kubernetes API Reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/)
 
@@ -142,21 +142,21 @@ Service 是定义一系列 Pod 以及访问这些 Pod 的策略的一层抽象�
 ### Namespace
 
 ### Controllers
-除此之外。kubernetes 还包含一些高级抽象，称为 Controllers。Controllers 基于基本对象构建，并提供一些便利的功能和特性如：
-
-* [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/)
-* [ReplicationController](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/)
-* [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
-* [StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
-* [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)
-* [Garbage Collection](https://kubernetes.io/docs/concepts/workloads/controllers/garbage-collection/)
-* [Job-run to completion](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)
-* [CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/)
+除此之外。kubernetes 还包含一些高级抽象，称为 Controllers。Controllers 基于基本对象构建，并提供一些便利的功能和特性，下面简单介绍下，详细的可以用参考官方文档。
 
 #### ReplicaSet
+[ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/) 是下一代的 Replication Controller，大多数支持 Replication Controllers 的 kubectl 命令也支持 ReplicaSet。目前，他们唯一的区别就是 ReplicaSet 支持新的 set-based selector requirements，而 Replication Controller 仅支持 equality-based selector requirements。
+
+ReplicaSet 保证在任何时候都有指定数量的 pod 副本在运行。
+
+Deployment 是一个更高抽象的概念，它用来管理 ReplicaSet 并为 pod 提供声明式的更新以及很多其他有用的功能。因此，除非需要 custom update orchestration 或者根本不需要更新，更建议使用 Deployment 而不是直接使用 ReplicaSet。
+
+>这实际就意味着可能永远不需要直接操作 ReplicaSet object，而是使用 Deployment，并在 spec 部分定义应用程序。
+
+replicaSet 有这么几个替代方案，Deployment(推荐)、Bare Pods、Job、DaemonSet
 
 #### Replication Controller
-用于创建和复制 Pod，Replication Controller 确保任意时间都有指定数量的 Pod 副本在运行。如果为某个 Pod 创建了 Replication Controller 并且指定 3 个副本，它会创建3个Pod，并且持续监控它们。如果某个 Pod 不响应，那么 Replication Controller 会替换它，保持总数为 3 如下面的动画所示：
+[Replication Controller](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/)用于创建和复制 Pod，Replication Controller 确保任意时间都有指定数量的 Pod 副本在运行。如果为某个 Pod 创建了 Replication Controller 并且指定 3 个副本，它会创建3个Pod，并且持续监控它们。如果某个 Pod 不响应，那么 Replication Controller 会替换它，保持总数为 3 如下面的动画所示：
 
 ![有帮助的截图]({{ site.url }}/assets/kubernetes-replication-controller.gif)
 
@@ -168,11 +168,39 @@ Service 是定义一系列 Pod 以及访问这些 Pod 的策略的一层抽象�
 2. Label：Replication Controller 需要监控的 Pod 的标签。
 
 #### Deployment
+[Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) 为 Pod 和 ReplicaSet 提供声明性更新，在 Deployment object 描述一个期望的状态，然后 Deployment controller 就会将实际的状态按照 controller rate 转换成期望的状态。你可以定义 Deployments 来创建一个新的 ReplicaSets，或者删除已经存在的 Deployments 并且用新的 Deployments 更新资源状态。
+
+>应该操作 Deployment object 来涵盖所有的用例，而不是直接管理属于 Deployment 的 ReplicaSet
+
+典型的常用用例
+
+* 创建一个 deployment 来部署 replicaSet
+* 通过更新 deployment object 的 spec 来声明 pods 的新状态(更新)，然后按照 controlled rate 创建一个新的 replicaSet，最后将 pods 从旧的 replicaSet 移动到新的 replicaSet，每个新的 replicaSet 都会更新 deployment 的 revision。
+* 如果当前状态的 deployment 不稳定，可以回滚到之前的版本
+* 扩展 deployment 以增加负载
+* 暂停 deployment，将多个修改应用于 PodTemplateSpec，恢复并启动一个新的部署。
+* 使用 deployment 的状态作为部署卡住的标志
+* 清理不在需要的旧 replicaSet
 
 #### StatefulSet
+[StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)是 workload API object，用于管理有状态的应用程序。
+
+>StatefulSet 在 1.9 版本开始稳定(GA - General Availability，软件通用版本)
+
+statefulSet 管理一组 pods 的部署和扩展，并提供这些 pods 排序和唯一性的保证
+
+与 deployment 类似，statefulSet 管理基于相同容器 spec 的 pod。不同的是，statefulSet 为其管理的每个 pod 维护一个粘性标识。这些 pod 是根据相同的 spec 创建的，但是不可以互换：每个 pod 都会保留一个持久的标识符，它可以在重新调度的时候使用。
+
+典型的常用用例：
+* 需要稳定、唯一的网络标识符
+* 稳定、持久化的存储
+* 有序、优雅的部署、扩展、删除和终止
+* 有序的自动滚动更新
+
+在上文中，稳定是指可跨 pod 持久性的调度/重新调度。如果应用程序不需要任何稳定标识符或者有序部署、删除或扩展，则应该使用一组无状态的副本的控制器来部署应用程序，例如 Deployment 或 ReplicaSet。 
 
 #### DaemonSet
-DaemonSet 确保所有(或某些指定的) Node 会运行 Pod 的副本，随着 Node 添加到集群中，他会将 Pod 添加到新的 Node 中，当 Node 从集群中删除时，他也会确保 Pod 会被垃圾收集。删除 DaemonSet 会清除它所创建的 Pod。
+[DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) 确保所有(或某些指定的) Node 会运行 Pod 的副本，随着 Node 添加到集群中，他会将 Pod 添加到新的 Node 中，当 Node 从集群中删除时，他也会确保 Pod 会被垃圾收集。删除 DaemonSet 会清除它所创建的 Pod。
 
 DaemonSet 的应用场景：
 
@@ -227,10 +255,13 @@ spec:
 ```
 
 #### Garbage Collection
+[Garbage Collection](https://kubernetes.io/docs/concepts/workloads/controllers/garbage-collection/)
 
 #### Job-run to completion
+[Job-run to completion](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)
 
 #### CronJob
+[CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/)
 
 ### Label and Selectors
 Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性。比如，你可能创建了一个`tier`和`app`标签，通过Label（tier=frontend, app=myapp）来标记前端Pod容器，Label（tier=backend, app=myapp）标记后台Pod。然后可以使用 Selectors 选择带有特定 Label 的一组 Pods，并且将 Service 或者 Replication Controller 应用到匹配到的这组 Pods 上面。
