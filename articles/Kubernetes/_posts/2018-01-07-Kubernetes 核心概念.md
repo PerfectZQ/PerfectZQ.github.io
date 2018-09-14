@@ -112,6 +112,15 @@ $ kubectl create -f https://k8s.io/examples/application/deployment.yaml --record
                                                                                                                                                  
 基本的 kubernetes objects 包括：[Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/)、[Service](https://kubernetes.io/docs/concepts/services-networking/service/)、[Volume](https://kubernetes.io/docs/concepts/storage/volumes/)、[Namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)，下面分别简单介绍下。
 
+### Name
+kubernetes REST API 中的所有 object 都由一个 Name 和一个 UID 明确标识。如果用户需要为 object 指定非唯一性的属性，kubernetes API 使用 [labels](https://kubernetes.io/docs/user-guide/labels) 和 [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/)。
+
+#### Names
+name 用于饮用资源 URL 中的对对象，例如`/api/v1/pods/some-name`，只有指定 kind 的对象才可以有一个 name，如果删除了一个 object，你可以用这个 name 创建一个具有相同名称的新对象。kubernetes 资源名称的最大长度为253个字符，由小写字母、数字、`-`、`.`组成。
+
+#### UIDs
+kubernetes 系统生成的字符串，用于唯一标识 object。在 Kubernetes 集群的整个生命周期中创建的每个对象都具有不同的UID。它旨在区分类似实体的历史事件。
+
 ### Pod
 Pod 是 kubernetes 最基本的构建块 - 你在 kubernetes object model 中能够创建或者发布的最小、最简单的单元。它是一个在你的集群上运行的一个进程。
 
@@ -140,6 +149,7 @@ Service 是定义一系列 Pod 以及访问这些 Pod 的策略的一层抽象�
 卷
 
 ### Namespace
+
 
 ### Controllers
 除此之外。kubernetes 还包含一些高级抽象，称为 Controllers。Controllers 基于基本对象构建，并提供一些便利的功能和特性，下面简单介绍下，详细的可以用参考官方文档。
