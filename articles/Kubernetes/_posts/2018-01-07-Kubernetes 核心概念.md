@@ -132,6 +132,9 @@ Pod 本身不会自我修复，尽管可以直接使用 Pod，但在 kubernetes 
 * 是否手动创建 Pod，如果想要创建同一个容器的多份拷贝，需要一个个分别创建出来么？可以手动创建单个 Pod，但是也可以使用 Replication Controller 的 Pod 模板创建出多份拷贝，下文会详细介绍。
 * 如果 Pod 是短暂的，那么重启时IP地址可能会改变，那么怎么才能从前端容器正确可靠地指向后台容器呢？这时可以使用 Service，下文会详细介绍。
 
+### ConfigMaps
+[Configure a pod to use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)
+
 ### Service
 假设我们创建了一组 Pod 的副本，那么在这些副本上如何进行负载均衡？答案就是 Service
 
@@ -275,6 +278,7 @@ spec:
 
 ### Label and Selectors
 Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性。比如，你可能创建了一个`tier`和`app`标签，通过Label（tier=frontend, app=myapp）来标记前端Pod容器，Label（tier=backend, app=myapp）标记后台Pod。然后可以使用 Selectors 选择带有特定 Label 的一组 Pods，并且将 Service 或者 Replication Controller 应用到匹配到的这组 Pods 上面。
+
 
 ## Container                                                                                  
 
