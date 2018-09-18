@@ -118,7 +118,7 @@ log_bin_basename=/var/lib/mysql/mysql-bin
 # binlog的索引文件，用于管理所有binlog文件的目录
 log_bin_index=/var/lib/mysql/mysql-bin.index
 
-# 查看是否开启成功
+# 查看binlog是否开启成功
 mysql> show variables like '%log_bin%'
 +---------------------------------+---------------------------------+
 | Variable_name                   | Value                           |
