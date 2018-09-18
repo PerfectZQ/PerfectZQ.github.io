@@ -108,6 +108,30 @@ basedir=/usr/local/mysql/
 datadir=/usr/local/mysql/data/
 ```
 
+## 开启binlog日志
+```shell
+$ vim my.inf
+# 开启binlog
+log_bin=ON
+# binlog日志基本文件名
+log_bin_basename=/var/lib/mysql/mysql-bin
+# binlog的索引文件，用于管理所有binlog文件的目录
+log_bin_index=/var/lib/mysql/mysql-bin.index
+
+# 查看是否开启成功
+mysql> show variables like '%log_bin%'
++---------------------------------+---------------------------------+
+| Variable_name                   | Value                           |
++---------------------------------+---------------------------------+
+| log_bin                         | ON                              |
+| log_bin_basename                | /var/lib/mysql/mysql-bin        |
+| log_bin_index                   | /var/lib/mysql/mysql-bin.index  |
+| log_bin_trust_function_creators | OFF                             |
+| log_bin_use_v1_row_events       | OFF                             |
+| sql_log_bin                     | ON                              |
++---------------------------------+---------------------------------+
+```
+
 ## 启动/关闭 mysql 服务
 ```shell
 # 查看命令
