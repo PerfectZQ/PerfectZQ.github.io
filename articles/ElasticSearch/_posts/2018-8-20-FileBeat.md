@@ -1,14 +1,12 @@
 ---
 layout: post
-title: ELK整合
+title: FileBeat
 tag: ElasticSearch
 ---
-## FileBeat
-
-### 原理
+## 原理
 FileBeat 由两个重要的组件构成，`inputs`和`harvesters`，这两个组件从尾部读取数据，然后将数据发送到指定的`outputs`
 
-#### harvesters
+### harvesters
 `harvesters`负责逐行读取单个文件的内容，并将读取的数据发送到`output`。每个文件都会启动一个`harvesters`，并由`harvesters`负责打开和关闭文件。由于文件描述符在`harvesters`运行时会一直保持在打开状态，因此，如果文件在被收集时被删除或者重命名，FileBeat 仍然会读取该文件，即在`harvesters`被关闭之前，磁盘上的空间仍然被`harvesters`占用着。默认情况下，FileBeat 会保持文件处于打开状态，直到达到`close_inactive`。
 
 * 如果文件在被`harvesters`读取文件时删除，关闭文件处理程序才会释放底层资源。
@@ -17,7 +15,7 @@ FileBeat 由两个重要的组件构成，`inputs`和`harvesters`，这两个组
 
 使用`close_ *`配置选项控制`harvesters`何时关闭。
 
-#### inputs
+### inputs
 `input`负责管理`harvesters`并查找所有要读取的源。
 
 例如输入类型时`log`，则`input`会查找磁盘上所有能匹配上的文件，并为每个文件启动`harvester`。
@@ -36,11 +34,11 @@ FileBeat 保证事件将至少一次(At least once)传递到配置的`output`，
 
 [FileBeat input log input 相关配置项介绍](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html)
 
-### 配置文件格式说明
+## 配置文件格式说明
 [Config file format](https://www.elastic.co/guide/en/beats/libbeat/6.4/config-file-format.html)
 
 [YAML official doc](http://yaml.org/)
-### Manage Multiline Message
+## Manage Multiline Message
 FileBeat 默认是一行一行的处理日志的，但是对于类似 Java 异常栈这种多行的 message 怎么处理呢？这就需要配置`filebeat.yml`中的`multiline`去指出哪些行是属于同一事件。
 
 > Note: Logstash 中使用 Logstash multiline codec 实现多行事件处理可能会导致流和损坏数据的混合。因此尽量在事件数据发送到 Logstash 之前先处理多行事件。
@@ -86,7 +84,7 @@ multiline.negate: true
 multiline.match: before
 ```
 
-### Filebeat input - docker
+## Filebeat input - docker
 
 注意 Filebeat 6.3+ 才有这个插件，并且这个插件目前只是实验性的，未来可能会完全更改或者删除，酌情使用。[reference](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-docker.html#filebeat-input-docker)
 
@@ -122,7 +120,7 @@ filebeat.prospectors:
   - add_docker_metadata: ~
 ```
 
-### Filebeat output - logstash
+## Filebeat output - logstash
 如果要使用 Logstash 对 FileBeat 收集的数据执行其他处理，首先需要配置`filebeat.yml`中的`output.logstash`，并注释掉`output.elasticsearch`。
 ```shell
 vim /etc/FileBeat/filebeat.yml
@@ -187,12 +185,12 @@ FileBeat 发送给`output`的事件如下：
 ...
 ```
 
-### 安装
+## 安装
 注意安装换对应平台的 FileBeat，以防出现`can not exec bianary file`的异常
 
 [FileBeat目录结构](https://www.elastic.co/guide/en/beats/FileBeat/current/directory-layout.html)
 
-### 启动
+## 启动
 ```shell
 # 运行 FileBeats
 # -e 记录到stderr并禁用syslog/文件输出
@@ -210,7 +208,7 @@ sudo rm /var/lib/filebeat/registry
 tail -100f /var/log/filebeat/filebeat
 ```
 
-### Running Filebeat on Kubernetes
+## Running Filebeat on Kubernetes
 [official reference](https://www.elastic.co/guide/en/beats/filebeat/current/running-on-kubernetes.html)
 
 ```shell
@@ -382,17 +380,17 @@ metadata:
 ---
 ```
 
-### Auto discover
+## Auto discover
 当应用程序运行在容器中，对于监控系统来说，他们就变成了移动的目标。auto discover提供track功能，并在发生变化时调整设置。[official reference](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover.html#_providers)
 
 在`filebeat.yml`的`filebeat.autodiscover`部分定义一些`providers`来启用auto discover。当运行filebeat时，auto discover子系统就会开始监听服务。
 
-#### Providers
+### Providers
 auto discover providers会观察系统上的event，将这些事件转换为具有通用格式的内部auto discover event，配置provider的时候就可以使用event中的字段，当字段的值满足某种条件时就启用某些特定的配置。
 
 一开始，filebeat 会扫描所有现有容器并为他们启动合适的配置，然后它会观察新的开始/停止事件。
  
-#### Docker auto discover
+### Docker auto discover
 Docker auto discover provider 会监视 docker containers 的开始和结束事件，每个 event 的可用字段如下。
 
 * host
@@ -487,7 +485,7 @@ autodiscover.providers:
               - "/mnt/logs/${data.docker.container.id}/*.log"
 ```
 
-#### Kubernetes auto discover
+### Kubernetes auto discover
 Kubenetes auto discover provider 会监视 kubernetes pods 的开始、更新和结束事件，每个 event 的可用字段如下
 
 * host
@@ -564,204 +562,4 @@ filebeat.autodiscover:
                   type: docker
                   containers.ids:
                     - "${data.kubernetes.container.id}"
-```
-## Logstash
-
-[logstash 目录结构](https://www.elastic.co/guide/en/logstash/current/config-setting-files.html)
-
-### Logstash input plugin - kafka
-[kafka input plugin reference](https://www.elastic.co/guide/en/logstash/current/plugins-inputs-kafka.html)
-
-从 kafka topic 中读取 events，logstash 作为消费者进行 group 的管理，并使用 kafka 默认的 offset 管理策略。
-
-Logstash 实例默认使用一个逻辑组(`group_id => "logstash"`)来订阅 Kafka topic，使用者可以运行多个线程来提高读取吞吐量。或者，直接使用相同的`group_id`运行多个 Logstash 实例，以跨物理机分散负载。主题中的消息将分发到具有相同`group_id`的所有 Logstash 实例。
-
-理想情况下，线程数应该与分区数量一样多以实现完美平衡 - 线程多于分区意味着某些线程将处于空闲状态
-
-kafka 的 metadata：
-
-* \[@metadata]\[kafka]\[topic]: Original Kafka topic from where the message was consumed.
-* \[@metadata]\[kafka]\[consumer_group]: Consumer group
-* \[@metadata]\[kafka]\[partition]: Partition info for this message.
-* \[@metadata]\[kafka]\[offset]: Original record offset for this message.
-* \[@metadata]\[kafka]\[key]: Record key, if any.
-* \[@metadata]\[kafka]\[timestamp]: Timestamp when this message was received by the Kafka broker.
-
-配置 kafka input:
-
-```shell
-input {
-  kafka {
-    id => "kafka_inuput_logstash_person"
-    bootstrap_servers => "kafka:9999"
-    client_id => "test"
-    group_id => "test"
-    topics => ["logstash_person"]
-    auto_offset_reset => "latest"
-    consumer_threads => 5
-    decorate_events => true
-    type => "person"
-  }
-  kafka {
-    id => "kafka_inuput_logstash_cat"
-    bootstrap_servers => "kafka:9999"
-    client_id => "test"
-    group_id => "test"
-    topics => ["logstash_cat"]
-    auto_offset_reset => "latest"
-    consumer_threads => 5
-    decorate_events => true
-    type => "cat"
-  }
-}
-filter {
-  if [type] == "person" {
-    grok {
-      match => { "message" => "%{WORD:name} %{DATE:birthday} %{IP:ip}" }
-      remove_field => "message"
-    }
-  }
-  else if [type] == "cat" {
-    grok {
-      match => { "message" => "%{WORD:kind} %{WORD:master} %{NUMBER:age}" }
-    }
-    mutate {
-      add_field => { "read_timestamp" => "%{@timestamp}" }
-    }
-  }
-}
-output {
-  elasticsearch {
-    hosts => ["http://es_node:9200"]
-    index => "logstash-%{[type]}-%{+YYYY.MM.dd}"
-    manage_template => false
-  }
-} 
-```
-
-* id: input plugin 的唯一标识符
-* bootstrap_server: kafka 节点地址
-* client_id: 发出请求时传递给服务器的id字符串，这样包含逻辑的应用程序可以跟踪请求的来源。
-* group_id: 消费者 groupID
-* topics: kafka topic，数组类型
-* auto_offset_reset: 当 Kafka 中没有初始偏移量或偏移量超出范围时的策略。`earliest`: 从头开始消费；`latest`: 从最新的offset开始消费；`none`: 如果没有找到消费者组的先前偏移量，则向消费者抛出异常；`anything else`: 直接向消费者抛出异常。
-* consumer_threads: 消费者线程数
-* decorate_events: 此属性会将当前 topic、offset、group、partition 等信息也带到 message 中
-
-
-### Logstash filter plugin - grok
-grok 是一个可以将非结构化的日志解析成为结构化和可查询数据的 filter plugin。[grok filter plugin reference](https://www.elastic.co/guide/en/logstash/current/plugins-filters-grok.html)
-
-语法`%{SYNTAX:SEMANTIC}`，其中`SYNTAX`是匹配内容的格式，`SEMANTIC`是唯一标识符，可以理解为`key`。
-
-例如：
-
-```shell
-# 日志文件 http.log 格式如下
-55.3.244.1 GET /index.html 15824 0.043
-
-filter {
-  grok {
-      match => { "message" => "%{IP:client} %{WORD:method} %{URIPATHPARAM:request} %{NUMBER:bytes} %{NUMBER:duration}" }
-  }
-}
-
-# 解析后，event 将会添加一些额外的字段：
-client: 55.3.244.1
-method: GET
-request: /index.html
-bytes: 15824
-duration: 0.043
-```
-grok 已经支持的 pattern 可以参考[https://github.com/logstash-plugins/logstash-patterns-core/tree/master/patterns](https://github.com/logstash-plugins/logstash-patterns-core/tree/master/patterns)
-
-grok 是基于正则表达式的，因此任何正则表达式在 grok 当中也是有效的。使用的正则表达式库是 Oniguruma。可以去 [Oniguruma 官网](https://github.com/kkos/oniguruma/blob/master/doc/RE)查看所支持的正则表达式语法。
-
-有时候 logstash 没有满足要求的 pattern，可以自定自己的正则表达式，然后为匹配项定义一个字段。
-
-语法：`(?<field_name> pattern)`，注意不需要再加`%{}`了
-
-例如：
-```shell
-filter {
-  grok {
-    patterns_dir => ["./patterns"]
-    match => { "message" => "%{SYSLOGBASE} (?<id>[0-9A-F]{10,11}): %{GREEDYDATA:syslog_message}" }
-  }
-}
-```
-
-除此之外还可以定义一个 pattern 文件。
-```shell
-vim ./patterns/my_pattern
-ID [0-9A-F]{10,11}
-
-# 然后通过 patterns_dir 说明自定义的 pattern 文件所在文件夹路径
-filter {
-  grok {
-    patterns_dir => ["./patterns"]
-    match => { "message" => "%{SYSLOGBASE} %{ID:id}: %{GREEDYDATA:syslog_message}" }
-  }
-}
-```
-
-[测试 grok 语法正确性](http://grokdebug.herokuapp.com/)
-
-grok pattern 可以将 string 转换成数字类型，但是目前只支持 int 和 float，语法：`%{NUMBER:num:int}`
-
-### Logstash filter plugin - mutate
-mutate 用于重命名，删除，替换和修改事件中的字段。[mutate filter plugin reference](https://www.elastic.co/guide/en/logstash/current/plugins-filters-mutate.html)
-
-### 在 Logstash 的 config 文件中访问 metadata
-```shell
-input {
-  beats {
-    port => 5044
-  }
-}
-
-output {
-  elasticsearch {
-    hosts => ["http://localhost:9200"]
-    index => "%{[@metadata][beat]}-%{[@metadata][version]}-%{+YYYY.MM.dd}" 
-  }
-}
-```
-
-### 在 Logstash 的 config 文件中访问 fields
-
-```shell
-input {
-    beats {
-        port => "5044"
-    }
-}
-
-output {
-    stdout { codec => rubydebug }
-    kafka {
-        topic_id => "%{[fields][topic_id]}"
-        codec => plain {
-            format => "%{message}"
-            charset => "UTF-8"
-        }
-        bootstrap_servers => "kafka:9999"
-    }
-}
-```
-
-### 启动
-
-```shell
-# 测试配置文件
-bin/logstash -f pipeline1.conf --config.test_and_exit
-
-# 启动 logstash 
-# --config.reload.automatic 不需要重启就可以加载被修改的配置文件
-nohup bin/logstash -f pipeline1.conf --config.reload.automatic 2>&1 &
-
-# 查看 logstash 运行日志，日志路径和格式可以通过 config/log4j2.properties 控制
-tail -100f logs/logstash-plain.log
-
-# 注意如果想同时启动多个 logstash 实例，需要修改 config/logstash.yml 中的 path.data
 ```
