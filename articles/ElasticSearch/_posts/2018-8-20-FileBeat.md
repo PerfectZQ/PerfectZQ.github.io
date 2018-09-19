@@ -213,6 +213,11 @@ tail -100f /var/log/filebeat/filebeat
 
 ```shell
 $ curl -L -O https://raw.githubusercontent.com/elastic/beats/6.4/deploy/kubernetes/filebeat-kubernetes.yaml
+```
+
+内容如下
+```yaml
+#
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -378,6 +383,55 @@ metadata:
   labels:
     k8s-app: filebeat
 ---
+```
+
+### Add Kubernetes metadata
+[official reference](https://www.elastic.co/guide/en/beats/filebeat/current/add-kubernetes-metadata.html)
+
+`add_kubernetes_metadata`processor 根据 event 源自哪一个 kubernetes pod，使用相关 metadata 为每个 event 添加 annotations，包括：
+
+* Pod Name
+* Namespace
+* Labels
+
+`add_kubernetes_metadata`processor 有两个基本构建块。`Indexers`和`Matchers`。
+
+`Indexers` 接收pod元数据并根据pod元数据构建索引。例如：`ip_port`indexer可以使用kubernetes pod并根据所有`pod_ip:container_port`组合、索引元数据。
+
+`Matchers` 用于构造查询索引的查找键。例如：当字段匹配器将`["metricset.host"]`作为查找字段时，它将用字段`metricset.host`的值构造一个查找键。
+
+每个 Beat 都可以定义自己的默认`Indexers`和`Matchers`，新定义的`Indexers`和`Matchers`默认是开启的。例如启用`container`indexer，它会根据所有containerID索引pod元数据，以及`logs_path`matcher，它接收source filed，提取container ID，并使用它来检索元数据。
+
+让 filebeat 作为 Kubernetes 中的 pod运行：
+```yaml
+processors:
+- add_kubernetes_metadata:
+    in_cluster: true
+```
+
+让 filebeat 作为 Kubernetes Node 上的进程运行：
+```yaml
+processors:
+- add_kubernetes_metadata:
+    in_cluster: false
+    host: <hostname>
+    kube_config: ${HOME}/.kube/config
+```
+
+禁用默认的`Indexers`和`Matchers`，并启用感兴趣的`Indexers`和`Matchers`。
+```yaml
+processors:
+- add_kubernetes_metadata:
+    in_cluster: false
+    host: <hostname>
+    kube_config: ~/.kube/config
+    default_indexers.enabled: false
+    default_matchers.enabled: false
+    indexers:
+      - ip_port:
+    matchers:
+      - fields:
+          lookup_fields: ["metricset.host"]
 ```
 
 ## Auto discover
