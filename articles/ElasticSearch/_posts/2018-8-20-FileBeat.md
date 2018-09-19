@@ -513,7 +513,7 @@ filebeat.autodiscover:
                     - "${data.docker.container.id}"
 ```
 
->Note:在读取多个容器的日志的时候需要注意，例如想读取/mnt/logs/<container_id>/*.log，下面的写法就会出现问题，它会多次重复(每个nginx container一次)读取路径下的日志
+>Note:在读取多个容器的日志的时候需要注意，例如想读取/mnt/logs/\<container_id>/*.log，下面的写法就会出现问题，它会多次重复(每个nginx container一次)读取路径下的日志
 ```yaml
 autodiscover.providers:
   - type: docker
