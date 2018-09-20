@@ -49,19 +49,18 @@ $ kubectl create -f single-config-file.yaml
 ## Kubernetes Master
 Kubernetes Master 是在集群中的单个节点上运行的三个进程的集合，它被指定为主节点。 这些进程是：[kube-apiserver](https://kubernetes.io/docs/admin/kube-apiserver/)，[kube-controller-manager](https://kubernetes.io/docs/admin/kube-controller-manager/) 和 [kube-scheduler](https://kubernetes.io/docs/admin/kube-scheduler/)。
 
-### Master cluster
 主节点掌控集群的通信路径主要有两条。
 
 1. 从 API Server 到每个 Node 上都会运行的 Kubelet 进程。
 2. 通过 API Server 的代理功能连到集群的任何 Node、Pod、Service。
 
-#### apiserver to kubelet
+### apiserver to kubelet
 主要用于：
 * 获取 pods 的日志
 * attach(通过 kubectl) 到正在运行的 pods 上
 * 提供 kubelet 的端口转发功能
 
-#### apiserver to nodes, pods and services
+### apiserver to nodes, pods and services
 apiserver 通过 http 连接与 nodes, pods and services 交互
 
 ## Node
