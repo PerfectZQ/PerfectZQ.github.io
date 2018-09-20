@@ -38,6 +38,76 @@ FileBeat 保证事件将至少一次(At least once)传递到配置的`output`，
 [Config file format](https://www.elastic.co/guide/en/beats/libbeat/6.4/config-file-format.html)
 
 [YAML official doc](http://yaml.org/)
+
+
+## Filter and enhance the exported data
+由 filebeat 导出的数据，你可能希望过滤掉一些数据并增强一些数据(比如添加一些额外的 metadata)。filebeat提供了一系列的工具来做这些事。
+
+下面简单介绍一些方法，详细的可以参考[official reference](https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html)
+
+### Processors
+在将 event 发送到 output 之前，你可以在配置文件中定义 processors 去处理 event。processor 可以完成下面的任务：
+
+* 减少导出的字段
+* 添加其他的 metadata
+* 执行额外的处理和解码
+
+每个 processor 会接收一个 event，将一些定义好的行为应用到 event，然后返回 event，如果你在配置文件中定义了一系列 processors，那么他会按定义的顺序依次执行。
+
+具体如何定义 processor 可以参考[define processors](https://www.elastic.co/guide/en/beats/filebeat/current/defining-processors.html)
+
+### Add Kubernetes metadata
+除了自己定义 processor 之外，filebeat 还提供了一些定义好的 processor，例如 add_kubernetes_metadata processor
+
+add_kubernetes_metadata processor 根据 event 源自哪一个 kubernetes pod，使用相关 metadata 为每个 event 添加 annotations，包括：
+
+* Pod Name
+* Namespace
+* Labels
+
+`add_kubernetes_metadata`processor 有两个基本构建块。`Indexers`和`Matchers`。
+
+`Indexers` 接收pod元数据并根据pod元数据构建索引。例如：`ip_port`indexer可以使用kubernetes pod并根据所有`pod_ip:container_port`组合、索引元数据。
+
+`Matchers` 用于构造查询索引的查找键。例如：当字段匹配器将`["metricset.host"]`作为查找字段时，它将用字段`metricset.host`的值构造一个查找键。
+
+每个 Beat 都可以定义自己的默认`Indexers`和`Matchers`，新定义的`Indexers`和`Matchers`默认是开启的。例如启用`container`indexer，它会根据所有containerID索引pod元数据，以及`logs_path`matcher，它接收source filed，提取container ID，并使用它来检索元数据。
+
+让 filebeat 作为 Kubernetes 中的 pod运行：
+```yaml
+processors:
+- add_kubernetes_metadata:
+    in_cluster: true
+```
+
+让 filebeat 作为 Kubernetes Node 上的进程运行：
+```yaml
+processors:
+- add_kubernetes_metadata:
+    in_cluster: false
+    host: <hostname>
+    kube_config: ${HOME}/.kube/config
+```
+
+禁用默认的`Indexers`和`Matchers`，并启用感兴趣的`Indexers`和`Matchers`。
+```yaml
+processors:
+- add_kubernetes_metadata:
+    in_cluster: false
+    host: <hostname>
+    kube_config: ~/.kube/config
+    default_indexers.enabled: false
+    default_matchers.enabled: false
+    indexers:
+      - ip_port:
+    matchers:
+      - fields:
+          lookup_fields: ["metricset.host"]
+```
+
+更加详细的内容可以参考[official reference](https://www.elastic.co/guide/en/beats/filebeat/current/add-kubernetes-metadata.html)
+
+
 ## Manage Multiline Message
 FileBeat 默认是一行一行的处理日志的，但是对于类似 Java 异常栈这种多行的 message 怎么处理呢？这就需要配置`filebeat.yml`中的`multiline`去指出哪些行是属于同一事件。
 
@@ -431,55 +501,6 @@ metadata:
   labels:
     k8s-app: filebeat
 ---
-```
-
-### Add Kubernetes metadata
-[official reference](https://www.elastic.co/guide/en/beats/filebeat/current/add-kubernetes-metadata.html)
-
-`add_kubernetes_metadata`processor 根据 event 源自哪一个 kubernetes pod，使用相关 metadata 为每个 event 添加 annotations，包括：
-
-* Pod Name
-* Namespace
-* Labels
-
-`add_kubernetes_metadata`processor 有两个基本构建块。`Indexers`和`Matchers`。
-
-`Indexers` 接收pod元数据并根据pod元数据构建索引。例如：`ip_port`indexer可以使用kubernetes pod并根据所有`pod_ip:container_port`组合、索引元数据。
-
-`Matchers` 用于构造查询索引的查找键。例如：当字段匹配器将`["metricset.host"]`作为查找字段时，它将用字段`metricset.host`的值构造一个查找键。
-
-每个 Beat 都可以定义自己的默认`Indexers`和`Matchers`，新定义的`Indexers`和`Matchers`默认是开启的。例如启用`container`indexer，它会根据所有containerID索引pod元数据，以及`logs_path`matcher，它接收source filed，提取container ID，并使用它来检索元数据。
-
-让 filebeat 作为 Kubernetes 中的 pod运行：
-```yaml
-processors:
-- add_kubernetes_metadata:
-    in_cluster: true
-```
-
-让 filebeat 作为 Kubernetes Node 上的进程运行：
-```yaml
-processors:
-- add_kubernetes_metadata:
-    in_cluster: false
-    host: <hostname>
-    kube_config: ${HOME}/.kube/config
-```
-
-禁用默认的`Indexers`和`Matchers`，并启用感兴趣的`Indexers`和`Matchers`。
-```yaml
-processors:
-- add_kubernetes_metadata:
-    in_cluster: false
-    host: <hostname>
-    kube_config: ~/.kube/config
-    default_indexers.enabled: false
-    default_matchers.enabled: false
-    indexers:
-      - ip_port:
-    matchers:
-      - fields:
-          lookup_fields: ["metricset.host"]
 ```
 
 ## Auto discover
