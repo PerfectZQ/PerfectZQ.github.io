@@ -181,7 +181,7 @@ HBase 系统默认定义两个缺省的 namespace
 * hbase: 系统内建表，包括`namespace`和`meta`表。
 * default: 用户建表的时候如果没有指定`namespace`，那么表都会创建在这里面
 
->Note: 因为引入了 namespace 的概念，表命名空间被隔离，因此原来的 -ROOT- 表的功能由 hbase:meta 和 hbase:namespace 两张表完成
+>Note: 因为引入了 namespace 的概念，表命名空间被隔离，因此原来的 -ROOT- 表的功能由 hbase:namespace 和 hbase:meta 两张表完成
 
 ### shell 基本操作
 ```shell
@@ -234,41 +234,39 @@ hbase> revoke 'user' '@test_namespace'
 
 ## Region管理
 
-{% highlight shell %}
-# 1）移动region
-	
-	# 语法：move 'encodeRegionName', 'ServerName'
-	
-	# encodeRegionName指的regioName后面的编码，ServerName指的是master-status的Region Servers列表
-	
-	# 示例
-	hbase(main)>move '4343995a58be8e5bbc739af1e91cd72d', 'db-41.xxx.xxx.org,60020,1390274516739'
 
-# 2）开启/关闭region
-	
-	# 语法：balance_switch true|false
-	hbase(main)> balance_switch
+### 移动region
+```shell
+# 语法：move 'encodeRegionName', 'ServerName'
+# encodeRegionName 指的 regioName 后面的编码，ServerName 指的是 master-status的 Region Servers 列表
+hbase(main)>move '4343995a58be8e5bbc739af1e91cd72d', 'db-41.xxx.xxx.org,60020,1390274516739'
+```
 
-# 3）手动split
-	
-	# 语法：split 'regionName', 'splitKey'
+### 开启/关闭region
+```shell
+# 语法：balance_switch true|false
+hbase(main)> balance_switch
+```
 
-# 4）手动触发major compaction
-	
-	#语法：
-	
-	# Compact all regions in a table:
-	hbase> major_compact 't1'
-	
-	# Compact an entire region:
-	hbase> major_compact 'r1'
-	
-	# Compact a single column family within a region:
-	hbase> major_compact 'r1', 'c1'
-	
-	# Compact a single column family within a table:
-	hbase> major_compact 't1', 'c1'
-{% endhighlight %}
+### 手动split
+```shell
+hbase(main)> split 'regionName', 'splitKey'
+```
+
+### 手动触发major compaction
+```shell
+# Compact all regions in a table:
+hbase> major_compact 't1'
+
+# Compact an entire region:
+hbase> major_compact 'r1'
+
+# Compact a single column family within a region:
+hbase> major_compact 'r1', 'c1'
+
+# Compact a single column family within a table:
+hbase> major_compact 't1', 'c1'
+```
 
 ## 配置管理及节点重启
 
