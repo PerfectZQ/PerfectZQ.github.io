@@ -390,10 +390,12 @@ apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
   name: filebeat
+# 主题包含对该角色适用的对象的引用
 subjects:
 - kind: ServiceAccount
   name: filebeat
   namespace: kube-system
+# 只能引用全局 namespace 中的 clusterRole。如果无法解析 roleRef，则 Authorizer 一定会返回错误。
 roleRef:
   kind: ClusterRole
   name: filebeat
@@ -407,12 +409,15 @@ metadata:
     k8s-app: filebeat
 # 此 ClusterRole 的所有策略规则
 rules:
-# "" indicates the core API group
-# 
+  # 包含 resources 的 apiGroup 的名字，如果指定了多个 apiGroup，
+  # 那么对于任何一个 apiGroup 资源请求的任何操作都会允许
+  # "" indicates the core API group
 - apiGroups: [""]
+  # 此 rule 适用的资源列表，`ResourceAll`代表所有资源
   resources:
   - namespaces
   - pods
+  # 此 rule 适用的所有资源类型和属性限制的动词列表，`VerbAll`代表所有动词
   verbs:
   - get
   - watch
