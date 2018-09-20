@@ -233,14 +233,16 @@ hbase> revoke 'user' '@test_namespace'
 ```
 
 ## Region管理
-
-
 ### 移动region
 ```shell
-# 语法：move 'encodeRegionName', 'ServerName'
-# encodeRegionName 指的 regioName 后面的编码，ServerName 指的是 master-status的 Region Servers 列表
+# 语法：move 'encodeRegionName', 'serverName'
 hbase(main)>move '4343995a58be8e5bbc739af1e91cd72d', 'db-41.xxx.xxx.org,60020,1390274516739'
 ```
+`encodeRegionName`指的`http://ambari3:16030/rs-status`的`Region Name`后面的编码
+![有帮助的截图]({{ site.url }}/assets/hbase_regionserver2.png)
+
+`serverName`指的是`http://ambari3:16010/master-status`的`Region Servers`列表
+![有帮助的截图]({{ site.url }}/assets/hbase_regionserver1.png)
 
 ### 开启/关闭region
 ```shell
