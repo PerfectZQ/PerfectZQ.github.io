@@ -171,6 +171,62 @@ hbase(main)> whoami
 		hbase(main)> truncate 't1'
 {% endhighlight %}
 
+## Namespace
+
+### Namespace 简介
+namespace 是对一组表的逻辑分组，类似 RDBMS 的 database，方便表在业务上进行划分。从0.98.0+、0.95.2+ 开始支持 namespace 级别的授权操作，HBase 全局管理员可以创建、修改和回收 namespace 的授权。
+
+HBase 系统默认定义两个缺省的 namespace
+
+* hbase: 系统内建表，包括`namespace`和`meta`表
+* default: 用户建表的时候如果没有指定`namespace`，那么表都会创建在这里面
+
+### shell 基本操作
+```shell
+# 列出所有 namespace
+hbase> list_namespace
+
+# 创建 namespace
+hbase> create_namespace 'test_namespace'
+
+# 查看 namespace
+hbase> describe_namespace 'test_namespace'
+
+# 删除 namespace
+hbase> drop_namespace 'test_namespace'
+
+# 在 namespace 下创建表
+hbase> create 'test_namespace:test_table', 'column_family'
+
+# 查看某个 namespace 下面的所有表
+hbase> list_namespace_tables 'test_namespace'
+```
+
+### 授权
+在 HBase 中启用授权机制
+```xml
+<property>
+     <name>hbase.security.authorization</name>
+     <value>true</value>
+</property>
+<property>
+     <name>hbase.coprocessor.master.classes</name>
+     <value>org.apache.hadoop.hbase.security.access.AccessController</value>
+</property>
+<property>
+     <name>hbase.coprocessor.region.classes</name>
+     <value>org.apache.hadoop.hbase.security.token.TokenProvider,org.apache.hadoop.hbase.security.access.AccessController</value>
+</property>
+```
+
+```shell
+# 授权 user 用户对 test_namespace 的写权限
+hbase> grant 'user' 'w' '@test_namespace'
+
+# 回收对 test_namespace 的所有授权
+hbase> revoke 'user' '@test_namespace'
+```
+
 ## Region管理
 
 {% highlight shell %}
@@ -239,3 +295,5 @@ hbase(main)> whoami
 
 ## 数据导入和导出 
 `./hbase org.apache.hadoop.hbase.mapreduce.Driver import/export 表名 文件路径(默认hdfs,加前缀file:///为本地数据)`
+
+
