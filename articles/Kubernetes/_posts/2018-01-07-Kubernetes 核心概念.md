@@ -135,6 +135,113 @@ Pod 本身不会自我修复，尽管可以直接使用 Pod，但在 kubernetes 
 ### ConfigMaps
 [Configure a pod to use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)
 
+使用`kubectl cerate configmap`从[directories](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-directories)、[files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-files)、[literal values](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-literal-values)创建ConfigMap。
+
+```shell
+# <map-name>是分配给configmap的name
+# <data-source>是要提取数据的源，可以是目录、文件或文字值
+$ kubectl cerate configmap <map-name> <data-source>
+```
+
+#### Create ConfigMaps from directories
+* 从文件夹创建 configmap
+```shell
+$ mkdir -p configure-pod-container/configmap/kubectl/
+$ wget https://k8s.io/docs/tasks/configure-pod-container/configmap/kubectl/game.properties -O configure-pod-container/configmap/kubectl/game.properties
+$ wget https://k8s.io/docs/tasks/configure-pod-container/configmap/kubectl/ui.properties -O configure-pod-container/configmap/kubectl/ui.properties
+$ kubectl create configmap game-config --from-file=configure-pod-container/configmap/kubectl/
+configmap/game-config created
+```
+
+* 查看创建好的 configmap
+```shell
+$ kubectl describe configmaps game-config
+
+Name:         game-config
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+game.properties:
+----
+enemies=aliens
+lives=3
+enemies.cheat=true
+enemies.cheat.level=noGoodRotten
+secret.code.passphrase=UUDDLRLRBABAS
+secret.code.allowed=true
+secret.code.lives=30
+ui.properties:
+----
+color.good=purple
+color.bad=yellow
+allow.textmode=true
+how.nice.to.look=fairlyNice
+
+Events:  <none>
+```
+
+* 以 yaml 格式查看生成的 configmap
+```shell
+$ kubectl get configmaps game-config -o yaml
+
+apiVersion: v1
+data:
+  game.properties: |-
+    enemies=aliens
+    lives=3
+    enemies.cheat=true
+    enemies.cheat.level=noGoodRotten
+    secret.code.passphrase=UUDDLRLRBABAS
+    secret.code.allowed=true
+    secret.code.lives=30
+  ui.properties: |
+    color.good=purple
+    color.bad=yellow
+    allow.textmode=true
+    how.nice.to.look=fairlyNice
+kind: ConfigMap
+metadata:
+  creationTimestamp: 2018-09-18T11:55:00Z
+  name: game-config
+  namespace: default
+  resourceVersion: "9102572"
+  selfLink: /api/v1/namespaces/default/configmaps/game-config
+  uid: abc545c3-bb39-11e8-9edf-00163e08ecdb
+```
+
+* 删除 configmap
+```shell
+$ kubectl delete configmap game-config
+configmap "game-config" deleted
+```
+
+#### Create ConfigMaps from files
+```shell
+$ kubectl create configmap game-config --from-file=configure-pod-container/configmap/kubectl/game.properties
+# --from-file 可以使用多次以指定多个 data-source
+$ kubectl create configmap game-config --from-file=configure-pod-container/configmap/kubectl/game.properties \
+                                       --from-file=configure-pod-container/configmap/kubectl/ui.properties
+
+# 使用 --from-env-file 从一个环境变量文件创建 configmap，它会忽略掉其中的#注释和空行
+$ wget https://k8s.io/docs/tasks/configure-pod-container/configmap/kubectl/game-env-file.properties -O configure-pod-container/configmap/kubectl/game-env-file.properties
+$ cat configure-pod-container/configmap/kubectl/game-env-file.properties
+
+enemies=aliens
+lives=3
+allowed="true"
+
+# This comment and the empty line above it are ignored
+
+$ kubectl create configmap game-config-env-file \
+          --from-env-file=configure-pod-container/configmap/kubectl/game-env-file.properties
+```
+
+>Note:当使用多次 --from-env-file 指定多个 env 文件创建 configmap 时，只有最后一个 env 文件可以生效！
+
+
 ### Service
 假设我们创建了一组 Pod 的副本，那么在这些副本上如何进行负载均衡？答案就是 Service
 
@@ -152,7 +259,7 @@ Service 是定义一系列 Pod 以及访问这些 Pod 的策略的一层抽象�
 卷
 
 ### Namespace
-
+Kubernetes支持由统一物理集群支持的多个虚拟集群。这些虚拟集群就成为Namespace。
 
 ### Controllers
 除此之外。kubernetes 还包含一些高级抽象，称为 Controllers。Controllers 基于基本对象构建，并提供一些便利的功能和特性，下面简单介绍下，详细的可以用参考官方文档。
@@ -278,6 +385,7 @@ spec:
 
 ### Label and Selectors
 Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性。比如，你可能创建了一个`tier`和`app`标签，通过Label（tier=frontend, app=myapp）来标记前端Pod容器，Label（tier=backend, app=myapp）标记后台Pod。然后可以使用 Selectors 选择带有特定 Label 的一组 Pods，并且将 Service 或者 Replication Controller 应用到匹配到的这组 Pods 上面。
+
 
 
 ## Container                                                                                  
@@ -513,4 +621,10 @@ lrwxrwxrwx 1 root root 165 9月   5 17:05 /var/log/pods/7f3ce883-acc8-11e8-b97b-
 ```
 
 从上面可以看出最终实际的日志文件在`/var/lib/docker/containers`下面，实质还是 docker container 中的日志文件。
+
+
+### API Access authorization - RBAC
+RBAC - Role-based access control 是一种基于企业内个人用户的角色来管理对计算/网络资源访问的方法。[official reference](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+
+RBAC 使用`rbac.authorization.k8s.io API`组来推动授权决策，允许管理员通过Kubernetes API动态配置策略。要启用 RBAC 使用`--authorization-mode=RBAC`启动 apiserver。
 
