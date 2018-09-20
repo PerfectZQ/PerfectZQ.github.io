@@ -132,6 +132,7 @@ Pod 本身不会自我修复，尽管可以直接使用 Pod，但在 kubernetes 
 * 是否手动创建 Pod，如果想要创建同一个容器的多份拷贝，需要一个个分别创建出来么？可以手动创建单个 Pod，但是也可以使用 Replication Controller 的 Pod 模板创建出多份拷贝，下文会详细介绍。
 * 如果 Pod 是短暂的，那么重启时IP地址可能会改变，那么怎么才能从前端容器正确可靠地指向后台容器呢？这时可以使用 Service，下文会详细介绍。
 
+对于 pod 的一些配置可以参考：[configure-pod-container](https://kubernetes.io/docs/tasks/configure-pod-container/)
 #### Configure Service Accounts for Pods
 [configure-service-account](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
 
@@ -139,6 +140,38 @@ Pod 本身不会自我修复，尽管可以直接使用 Pod，但在 kubernetes 
 
 当你访问集群时(例如，使用`kubectl`)，apiserver 会授权你一个特定的 User Account(通常是`admin`，如果集群管理员没有自定义过的话)。pod 中容器内的进程也可以访问 apiserver，当他们这样做的时候，他们就会被认证为特定的 Service Account(例如`default`)。 
 
+当创建一个 pod 的时候，如果没有指定 Service Account，那么会在同一 namespace 中自动分配一个默认的 Service Account。可以通过`kubectl get pods/podname -o yaml`看到`spec.serviceAccountName`字段已经被自动设置。
+
+你可以使用 automatically mounted service account 从 pod 中访问 apiserver，像[Access the API from a pod](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/#accessing-the-api-from-a-pod)中描述的那样。service account 的权限取决于正在使用的授权插件和策略。
+
+在`1.6+`版本，可以通过在 service account 上进行如下设置，选择退出 service account 的自动挂载 api 凭据
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: build-robot
+automountServiceAccountToken: false
+...
+```
+
+或者指定某个 pod 退出 service account 的自动挂载 api 凭据，并且在 pod 指定的优先级更高，它会覆盖在 ServiceAccount 的指定。 
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  serviceAccountName: build-robot
+  automountServiceAccountToken: false
+  ...
+```
+
+每一个 namespace 都有一个默认的 service account resource`default`
+```shell
+$ kubectl get serviceAccounts
+NAME      SECRETS   AGE
+default   1         48d
+```
 ### ConfigMaps
 [Configure a pod to use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)
 
