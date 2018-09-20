@@ -222,6 +222,7 @@ $ curl -L -O https://raw.githubusercontent.com/elastic/beats/6.4/deploy/kubernet
 # 定义一个`name=filebeat-config`的configMap，用于指定 filebeat output
 apiVersion: v1
 kind: ConfigMap
+# 标准 object 的元数据
 metadata:
   name: filebeat-config
   namespace: kube-system
@@ -404,8 +405,11 @@ metadata:
   name: filebeat
   labels:
     k8s-app: filebeat
+# 此 ClusterRole 的所有策略规则
 rules:
-- apiGroups: [""] # "" indicates the core API group
+# "" indicates the core API group
+# 
+- apiGroups: [""]
   resources:
   - namespaces
   - pods
