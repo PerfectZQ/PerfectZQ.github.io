@@ -178,8 +178,10 @@ namespace 是对一组表的逻辑分组，类似 RDBMS 的 database，方便表
 
 HBase 系统默认定义两个缺省的 namespace
 
-* hbase: 系统内建表，包括`namespace`和`meta`表
+* hbase: 系统内建表，包括`namespace`和`meta`表。
 * default: 用户建表的时候如果没有指定`namespace`，那么表都会创建在这里面
+
+>Note: 因为引入了 namespace 的概念，表命名空间被隔离，因此原来的 -ROOT- 表的功能由 hbase:meta 和 hbase:namespace 两张表完成
 
 ### shell 基本操作
 ```shell
@@ -191,6 +193,9 @@ hbase> create_namespace 'test_namespace'
 
 # 查看 namespace
 hbase> describe_namespace 'test_namespace'
+
+# alter namespace
+hbase> alter_namespace 'test_namespace', {METHOD => 'set', 'PROPERTY_NAME' => 'PROPERTY_VALUE'}
 
 # 删除 namespace
 hbase> drop_namespace 'test_namespace'
