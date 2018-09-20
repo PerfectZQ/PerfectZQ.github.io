@@ -105,9 +105,76 @@ processors:
           lookup_fields: ["metricset.host"]
 ```
 
+举个栗子：
+```yaml
+- add_kubernetes_metadata:
+          in_cluster: true
+          include_labels:
+            - app
+            - k8s-app
+            - k8s-ns
+          include_annotations:
+            - k8s.cloud/controller-kind
+          matchers:
+            - logs_path:
+                logs_path: /var/log/containers
+```
+
+输出结果
+```json
+{
+        "@timestamp": "2018-07-23T07:18:59.712Z",
+        "@metadata": {
+            "beat": "filebeat",
+            "type": "doc",
+            "version": "6.3.0"
+        },
+        "source": "/var/log/containers/infra-wayne-7b6786958f-tcsxk_default_wayne-a5113b31cd75d50fc93ae48ecf7c790e100c91f5fbe12850e465dd2de3d2282c.log",
+        "offset": 74902,
+        "log": "\u001b[0m\n",
+        "stream": "stdout",
+        "type": "k8s-log",
+        "cluster": "shbt",
+        "hostname": "docker4081",
+        "prospector": {
+            "type": "log"
+        },
+        "input": {
+            "type": "log"
+        },
+        "kubernetes": {
+            "container": {
+                "name": "wayne"
+            },
+            "pod": {
+                "name": "infra-wayne-7b6786958f-tcsxk"
+            },
+            "node": {
+                "name": "docker4081"
+            },
+            "namespace": "default",
+            "labels": {
+                "k8s-app": "infra",
+                "k8s-ns": "infra",
+                "app": "infra-wayne"
+            },
+            "annotations": {
+                "k8s": {
+                    "cloud/controller-kind": "deployment"
+                }
+            }
+        },
+        "host": {
+            "name": "kube-filebeat-wn2w6"
+        },
+        "time": "2018-07-23T07:18:58.099250606Z"
+    }
+```
+其中`k8s.cloud/controller-kind`是在Pod Template 的 annotation中添加的。
+
+这样我们可以得到以下信息，PodName、ContainerName、AppName、Namespace和ControllerKind，以便于日志分析。
+
 更加详细的内容可以参考[official reference](https://www.elastic.co/guide/en/beats/filebeat/current/add-kubernetes-metadata.html)
-
-
 ## Manage Multiline Message
 FileBeat 默认是一行一行的处理日志的，但是对于类似 Java 异常栈这种多行的 message 怎么处理呢？这就需要配置`filebeat.yml`中的`multiline`去指出哪些行是属于同一事件。
 
