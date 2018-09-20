@@ -72,7 +72,16 @@ apiserver 通过 http 连接与 nodes, pods and services 交互
 ## Kubernetes Objects
 kubernetes object 可以理解为`record of intent`，即一旦你创建了一个 object，那么 kubernetes 就会持续保证有这么一个 object 存在。并不是说这个 object 不会出问题，而是就算出问题了，kubernetes 也会新创建一个新 object，来满足你的`record of intent`。详细的可以参考[understanding kubernetes objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/#understanding-kubernetes-objects)
 
-想要操作 kubernetes object，比如创建、修改或者删除，就需要 [Kubernetes API](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)，可以使用 command line，通过`kubectl`调用 API，也可以在应用程序程序中使用[Client Libraries](https://kubernetes.io/docs/reference/using-api/client-libraries/)调用 API。另外所有的 API 公约在[API conventions doc](https://git.k8s.io/community/contributors/devel/api-conventions.md)中有详细的描述。
+想要操作 kubernetes object，比如创建、修改或者删除，就需要 [Kubernetes API](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)，可以使用 command line，通过`kubectl`调用 API，也可以在应用程序程序中使用[Client Libraries](https://kubernetes.io/docs/reference/using-api/client-libraries/)调用 API。
+
+Kubernetes API is RESTful - 客户端通过标准 http 谓词(POST、PUT、DELETE、GET)创建、更新、删除或者检索对象的描述，这些 API 优先接收 JSON 并返回 JSON。kubernetes 还为其他非标准动词公开了额外的端点，并允许其他的内容类型。服务器接收或返回的 JSON 都有一个 Schema，由`kind`和`apiVersion`标识。另外所有的 API 公约在[API conventions doc](https://git.k8s.io/community/contributors/devel/api-conventions.md)中有详细的描述。例如：
+
+* Kind: kind 是表示特定对象的名称，例如`cat`和`dog`kind就会包含不同的字段属性，它又可以分为三种：
+1. Objects: object kind 是意图记录，一旦创建，系统将确保该资源会存在。一个 object 可能具有多个资源，client 可以使用这些资源执行增删改查的特定操作。
+2. Lists: list kind 是一种或更多种类资源的集合。List kind 的 name 必须以`List`结尾。所有 list 都需要`items`字段来包含它们返回的对象数组。任何具有`items`字段的类型必须是 list kind。
+3. Simple: simple kind 用于对象和非持久性实体的特定操作
+* Resource: 表示系统实体，可以通过 http 以 JSON 的方式从服务器检索。resources 可以表示为 collections - 一组相同类型的 resources，或者 element - 一个可以通过URL访问的单独的 resource。
+* API Group: 一组公开在一起的 resources，在`apiVersion`中显示为`GROUP/VERSION`，例如`policy.k8s.io/v1`
 
 每个 kubernetes object 都包含两个嵌套对象字段，用于控制对象的配置：对象规范和对象状态。您必须提供描述了对象所需状态的规范 - 对象具有的特征。状态描述对象的实际状态，由 Kubernetes 系统提供和更新。在任何给定时间，Kubernetes 控制平面都会主动管理对象的实际状态，以匹配您提供的所需状态。
 
