@@ -215,10 +215,11 @@ tail -100f /var/log/filebeat/filebeat
 $ curl -L -O https://raw.githubusercontent.com/elastic/beats/6.4/deploy/kubernetes/filebeat-kubernetes.yaml
 ```
 
-内容如下
+内容如下:
 ```yaml
-#
+# 有些注释是我额外添加的，原始文件是没有的
 ---
+# 定义一个`name=filebeat-config`的configMap，用于指定 filebeat output
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -256,6 +257,7 @@ data:
       username: ${ELASTICSEARCH_USERNAME}
       password: ${ELASTICSEARCH_PASSWORD}
 ---
+# 定义一个`name=filebeat-inputs`的configMap，用于指定 filebeat input
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -269,9 +271,12 @@ data:
       containers.ids:
       - "*"
       processors:
+        # 为每个 event 添加来自哪个 pod 的注解
         - add_kubernetes_metadata:
+            # true: filebeat 将运行在 pod 中，否则以进程方式运行在节点上
             in_cluster: true
 ---
+# 将 filebeat 配置为 DaemonSet
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
@@ -279,21 +284,30 @@ metadata:
   namespace: kube-system
   labels:
     k8s-app: filebeat
+# DaemonSetSpec
 spec:
   template:
     metadata:
       labels:
         k8s-app: filebeat
+    # PodSpec
     spec:
+      # 指定运行在当前 pod 的 Service Account
       serviceAccountName: filebeat
+      # 优雅的终止pod所需要的时间，单位秒(0表示立即删除，nil表示使用默认宽限期)
+      # 宽限期是向pod中运行的进程发送终止信号到进程被终止的时间。
+      # 需要设置此值的时间大于你的进程的预期清理时间。默认为30秒
       terminationGracePeriodSeconds: 30
+      # 配置运行在pod中的container
       containers:
       - name: filebeat
         image: docker.elastic.co/beats/filebeat:6.4.0
+        # 向入口点传送的参数，如果没有设置则使用docker images 的 CMD
         args: [
           "-c", "/etc/filebeat.yml",
           "-e",
         ]
+        # 配置环境变量，在其他配置里面可以通过 ${VAR} 获取到
         env:
         - name: ELASTICSEARCH_HOST
           value: elasticsearch
@@ -307,18 +321,31 @@ spec:
           value:
         - name: ELASTIC_CLOUD_AUTH
           value:
+        # securityContext定义Pod或Container的权限和访问控制设置
         securityContext:
+          # UID 用于运行容器进程的入口点。
+          # 如果没有指定，默认为镜像指定的用户。如果`SecurityContext`和
+          # `PodSecurityContext`都指定了，以`SecurityContext`为准
           runAsUser: 0
+        # 分配容器所需的资源
         resources:
+          # 设置允许的最大资源
           limits:
+            # 内存: 可以使用的单位E、P、T、G、M、K，另外 Mi 和 M 的含义相同
             memory: 200Mi
+          # 设置所需的最小资源，如果省略该配置项则默认为 limits
           requests:
+            # 转换为 millicore 值并乘以100。
+            # 容器每100毫秒可以使用的cpu时间总量。
             cpu: 100m
             memory: 100Mi
+        # 把 volume mount 到 container 的 filesystem
         volumeMounts:
+        # 将 name=`config` 的 volume mount 到 container 的 /etc/filebeat.yml，并设为只读
         - name: config
           mountPath: /etc/filebeat.yml
           readOnly: true
+          # 应安装容器卷的卷内路径，默认为""(卷的根路径)
           subPath: filebeat.yml
         - name: inputs
           mountPath: /usr/share/filebeat/inputs.d
@@ -328,13 +355,21 @@ spec:
         - name: varlibdockercontainers
           mountPath: /var/lib/docker/containers
           readOnly: true
+      # 属于该 pod 的容器可以 mount 的 volume 列表
       volumes:
+      # 给 volume 取个名字
       - name: config
+        # 引用一个 configMap object 填充 volume
         configMap:
+          # 设置创建文件时默认的文件读写权限
+          # 必须是0～0777之间的值。默认为 0644
           defaultMode: 0600
+          # 要引用的 configMap object 的 name
           name: filebeat-config
       - name: varlibdockercontainers
+        # 宿主机直接暴露给 container 的预先存在的文件或目录。
         hostPath:
+          # 宿主机上的路径，如果是链接文件，它会找到真实的文件路径。
           path: /var/lib/docker/containers
       - name: inputs
         configMap:
@@ -344,6 +379,10 @@ spec:
       - name: data
         hostPath:
           path: /var/lib/filebeat-data
+          # 默认为""，在 mount hostPath volume 之前不会执行任何检查
+          # DirectoryOrCreate 代表如果给定路径中不存在，则会根据需要创建一个空目录(0755)，
+          # 并与 Kubelet 具有相同的组和所有权
+          # 其他的 type 参考：https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
           type: DirectoryOrCreate
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
