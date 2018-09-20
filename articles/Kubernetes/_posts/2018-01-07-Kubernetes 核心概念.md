@@ -132,6 +132,13 @@ Pod 本身不会自我修复，尽管可以直接使用 Pod，但在 kubernetes 
 * 是否手动创建 Pod，如果想要创建同一个容器的多份拷贝，需要一个个分别创建出来么？可以手动创建单个 Pod，但是也可以使用 Replication Controller 的 Pod 模板创建出多份拷贝，下文会详细介绍。
 * 如果 Pod 是短暂的，那么重启时IP地址可能会改变，那么怎么才能从前端容器正确可靠地指向后台容器呢？这时可以使用 Service，下文会详细介绍。
 
+#### Configure Service Accounts for Pods
+[configure-service-account](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
+
+一个 Service Account 为在 Pod 中运行的进程提供一个标识。
+
+当你访问集群时(例如，使用`kubectl`)，apiserver 会授权你一个特定的 User Account(通常是`admin`，如果集群管理员没有自定义过的话)。pod 中容器内的进程也可以访问 apiserver，当他们这样做的时候，他们就会被认证为特定的 Service Account(例如`default`)。 
+
 ### ConfigMaps
 [Configure a pod to use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)
 
