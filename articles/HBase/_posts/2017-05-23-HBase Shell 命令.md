@@ -236,7 +236,10 @@ hbase> revoke 'user' '@test_namespace'
 ### 移动region
 ```shell
 # 语法：move 'encodeRegionName', 'serverName'
-hbase(main)>move '4e369bcae7354a649d45f350aef98315', 'ambari1,16020,1536041525901'
+hbase(main)> move '4e369bcae7354a649d45f350aef98315', 'ambari1,16020,1536041525901'
+
+# 也可以在脚本中这样写
+$ echo "move '4e369bcae7354a649d45f350aef98315', 'ambari1,16020,1536041525901'" | hbase shell
 ```
 `encodeRegionName`指的`http://ambari3:16030/rs-status`的`Region Name`后面的编码
 ![有帮助的截图]({{ site.url }}/assets/hbase_regionserver2.png)
