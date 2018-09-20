@@ -119,19 +119,19 @@ spec:
 $ kubectl create -f https://k8s.io/examples/application/deployment.yaml --record
 ```
                                                                                                                                                  
-基本的 kubernetes objects 包括：[Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/)、[Service](https://kubernetes.io/docs/concepts/services-networking/service/)、[Volume](https://kubernetes.io/docs/concepts/storage/volumes/)、[Namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)，下面分别简单介绍下。
+下面来具体的讲解一下 kubernetes objects。
 
 ### Name
 kubernetes REST API 中的所有 object 都由一个 Name 和一个 UID 明确标识。如果用户需要为 object 指定非唯一性的属性，kubernetes API 使用 [labels](https://kubernetes.io/docs/user-guide/labels) 和 [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/)。
 
 #### Names
-name 用于饮用资源 URL 中的对对象，例如`/api/v1/pods/some-name`，只有指定 kind 的对象才可以有一个 name，如果删除了一个 object，你可以用这个 name 创建一个具有相同名称的新对象。kubernetes 资源名称的最大长度为253个字符，由小写字母、数字、`-`、`.`组成。
+name 用于引用资源 URL 中的对象，例如`/api/v1/pods/some-name`，只有指定 kind 的对象才可以有一个 name，如果删除了一个 object，你可以用这个 name 创建一个具有相同名称的新对象。kubernetes 资源名称的最大长度为253个字符，由小写字母、数字、`-`、`.`组成。
 
 #### UIDs
 kubernetes 系统生成的字符串，用于唯一标识 object。在 Kubernetes 集群的整个生命周期中创建的每个对象都具有不同的UID。它旨在区分类似实体的历史事件。
 
 ### Pod
-Pod 是 kubernetes 最基本的构建块 - 你在 kubernetes object model 中能够创建或者发布的最小、最简单的单元。它是一个在你的集群上运行的一个进程。
+[Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/) 是 kubernetes 最基本的构建块 - 你在 kubernetes object model 中能够创建或者发布的最小、最简单的单元。它是一个在你的集群上运行的一个进程。
 
 Pod 封装了单个 container 或者多个紧密耦合的 containers、存储资源(a set of shared storage volumes)、一个唯一的 IP 地址和一些控制 containers 应该怎么运行的 options。启动一个 Pod，可以将其理解为：为一个给定的 Application 启动一个实例。同一个 Pod 里的多个 container 共享存储资源、共享同一个 Network Namespace，可以使用 localhost 互相通信。很少会直接在 kubernetes 中创建 Pod 实例，因为 Pod 被设计为相对短暂的一次性实体。当Pod（由您直接创建或由Controller间接创建）时，它将被安排在群集中的 Node 上运行。 Pod 保留在该节点上，除非进程终止，Pod 对象被删除，Pod 因资源不足而被驱逐，或者 Node 挂掉。
 
@@ -142,6 +142,7 @@ Pod 本身不会自我修复，尽管可以直接使用 Pod，但在 kubernetes 
 * 如果 Pod 是短暂的，那么重启时IP地址可能会改变，那么怎么才能从前端容器正确可靠地指向后台容器呢？这时可以使用 Service，下文会详细介绍。
 
 对于 pod 的一些配置可以参考：[configure-pod-container](https://kubernetes.io/docs/tasks/configure-pod-container/)
+
 #### Configure Service Accounts for Pods
 [configure-service-account](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
 
@@ -296,7 +297,7 @@ $ kubectl create configmap game-config-env-file \
 
 
 ### Service
-假设我们创建了一组 Pod 的副本，那么在这些副本上如何进行负载均衡？答案就是 Service
+假设我们创建了一组 Pod 的副本，那么在这些副本上如何进行负载均衡？答案就是 [Service](https://kubernetes.io/docs/concepts/services-networking/service/)
 
 如果 Pods 是短暂的，那么重启时 IP 地址可能会改变，怎么才能从前端容器正确可靠地指向后台容器呢？答案同样是 Service
 
@@ -309,10 +310,12 @@ Service 是定义一系列 Pod 以及访问这些 Pod 的策略的一层抽象�
 ![有帮助的截图]({{ site.url }}/assets/kubernetes-service.gif)
 
 ### Volume
-卷
+container 中的文件是短暂的，当 container 崩溃后 kubelet 会重新启动它，但是文件会丢失。volume 用来持久化文件，并在 container 之间共享它们。
+
+kubernetes 支持很多类型的 volumes，如 configMap、hostPath、local、secret 等等。详细的说明可以参考[official reference](https://kubernetes.io/docs/concepts/storage/volumes/)
 
 ### Namespace
-Kubernetes支持由统一物理集群支持的多个虚拟集群。这些虚拟集群就成为Namespace。
+kubernetes 支持由统一物理集群支持的多个虚拟集群。这些虚拟集群就称为[Namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)。
 
 ### Controllers
 除此之外。kubernetes 还包含一些高级抽象，称为 Controllers。Controllers 基于基本对象构建，并提供一些便利的功能和特性，下面简单介绍下，详细的可以用参考官方文档。
