@@ -142,45 +142,6 @@ Pod 本身不会自我修复，尽管可以直接使用 Pod，但在 kubernetes 
 
 对于 pod 的一些配置可以参考：[configure-pod-container](https://kubernetes.io/docs/tasks/configure-pod-container/)
 
-#### Configure Service Accounts for Pods
-[configure-service-account](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
-
-一个 Service Account 为在 Pod 中运行的进程提供一个标识。
-
-当你访问集群时(例如，使用`kubectl`)，apiserver 会授权你一个特定的 User Account(通常是`admin`，如果集群管理员没有自定义过的话)。pod 中容器内的进程也可以访问 apiserver，当他们这样做的时候，他们就会被认证为特定的 Service Account(例如`default`)。 
-
-当创建一个 pod 的时候，如果没有指定 Service Account，那么会在同一 namespace 中自动分配一个默认的 Service Account。可以通过`kubectl get pods/podname -o yaml`看到`spec.serviceAccountName`字段已经被自动设置。
-
-你可以使用 automatically mounted service account 从 pod 中访问 apiserver，像[Access the API from a pod](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/#accessing-the-api-from-a-pod)中描述的那样。service account 的权限取决于正在使用的授权插件和策略。
-
-在`1.6+`版本，可以通过在 service account 上进行如下设置，选择退出 service account 的自动挂载 api 凭据
-```yaml
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: build-robot
-automountServiceAccountToken: false
-...
-```
-
-或者指定某个 pod 退出 service account 的自动挂载 api 凭据，并且在 pod 指定的优先级更高，它会覆盖在 ServiceAccount 的指定。 
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: my-pod
-spec:
-  serviceAccountName: build-robot
-  automountServiceAccountToken: false
-  ...
-```
-
-每一个 namespace 都有一个默认的 service account resource`default`
-```shell
-$ kubectl get serviceAccounts
-NAME      SECRETS   AGE
-default   1         48d
-```
 ### ConfigMaps
 [Configure a pod to use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)
 
@@ -442,10 +403,9 @@ spec:
 Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性。比如，你可能创建了一个`tier`和`app`标签，通过Label（tier=frontend, app=myapp）来标记前端Pod容器，Label（tier=backend, app=myapp）标记后台Pod。然后可以使用 Selectors 选择带有特定 Label 的一组 Pods，并且将 Service 或者 Replication Controller 应用到匹配到的这组 Pods 上面。
 
 
-
 ## Container                                                                                  
 
-## kubectl
+## Using kubectl
 ### 使用 kubectl 与kubernetes 集群交互
 [安装 kubectl client](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl)
 
@@ -455,7 +415,163 @@ Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性
 ### kubectl yaml 配置项
 [deploying applications](https://kubernetes.io/docs/user-guide/deploying-applications/)、[configuring containers](https://kubernetes.io/docs/tasks/)、[object management using kubectl](https://kubernetes.io/docs/concepts/overview/object-management-kubectl/overview/)
 
-## kubernetes logging
+## Accessing the kubernetes API (Authorization)
+### Controlling Access to the Kubernetes API
+[controlling access to the kubernetes API](https://kubernetes.io/docs/reference/access-authn-authz/controlling-access/)
+
+用户使用`kubectl`、`client library`、`REST requests`来访问 kubernetes API。用户可以理解为两种：`human user`和`kubernetes service(process run in pods)`。我们将这两种用户分别称为`user account`和`service account`。他们都可以获得 API 访问权限。
+
+当请求到达API时，会经历几个阶段，如下图所示：
+![有帮助的截图]({{ site.url }}/assets/kubernetes-access-control-overview.svg)
+
+在典型的 Kubernetes 集群中，API 在端口`443`上提供服务。API server 提供一个证书。此证书通常是自签名的，因此用户计算机上的`$USER/.kube/config`通常包含 API server 证书的根证书，该证书在指定时会代替系统默认的根证书。当使用`kube-up.sh`自己创建群集时，此证书通常会自动写入`$USER/.kube/config`。如果群集有多个用户，则创建者需要与其他用户共享证书。
+
+#### Authentication (认证)
+一旦 TLS 被建立，HTTP 请求就会进入 Authentication(认证)阶段，即上图中的`step1`。集群创建脚本或者集群管理员配置 API server 去运行一到多个身份认证模块，更多关于认证器的描述可以参考[Authenticator](https://kubernetes.io/docs/reference/access-authn-authz/authentication/)
+
+身份认证步骤的输入是整个HTTP请求，但是他通常只检查 headers/client certificate。
+
+身份认证模块包括 Client Certificates(客户端证书)、Password(密码)和 Plain Tokens(普通令牌)，对于 Bootstrap Tokens(引导令牌) 和 JWT Tokens(JWT令牌) 则用于 service accounts
+
+可以指定多个认证模块，每个认证模块按顺序尝试，直到其中一个成功。
+
+在 GCE 上，Client Certificates(客户端证书)、Password(密码)、Plain Tokens(普通令牌)和 JWT Tokens(JWT令牌)都已启用。
+
+如果请求无法通过身份认证，则会被拒绝访问并返回`401`。如果通过认证，会被认定为一个特定的`username`，该用户名用于后续的步骤的决策。某些身份认证器还提供用户的组成员身份。
+
+虽然 Kubernetes 使用`username`进行访问控制决策和请求日志记录，但他没有 user object，也没有在其对象库中存储用户名或者有关用户的其他信息。
+
+#### Authorization (授权)
+当 request 认证成功并指定`username`之后，request 就会进入授权阶段(上图`step2`)
+
+一个 request 必须包含请求者的用户名、请求的操作以及要操作的对象。如果现有的策略声明用户有权完成请求的操作，则对该请求进行授权。
+
+例如：如果 Bob 有下面的策略，那么他只能在 namespace projectCaribou 中读取 pod：
+```json
+{
+    "apiVersion": "abac.authorization.kubernetes.io/v1beta1",
+    "kind": "Policy",
+    "spec": {
+        "user": "bob",
+        "namespace": "projectCaribou",
+        "resource": "pods",
+        "readonly": true
+    }
+}
+```
+
+下面的读取操作是允许的，因为他在`namespace=projectCaribou`是有读取权限的
+```json
+{
+  "apiVersion": "authorization.k8s.io/v1beta1",
+  "kind": "SubjectAccessReview",
+  "spec": {
+    "resourceAttributes": {
+      "namespace": "projectCaribou",
+      "verb": "get",
+      "group": "unicorn.example.org",
+      "resource": "pods"
+    }
+  }
+}
+```
+
+如果他要向`namespace=projectCaribou`的对象进行写(create/update)操作，就会被拒绝。同样的如果他向其他`namespace`的对象执行读(get)操作也会被拒绝。
+
+Kubernetes 支持多种授权模块，例如`ABAC`模式，`RBAC`模式和`Webhook`模式。当管理员创建集群时，他们配置了应在 API server 中使用的授权模块。如果配置了多个授权模块，Kubernetes 将检查每个模块，如果任何一个模块对请求进行了授权，则请求就可以继续。如果所有模块拒绝该请求，则拒绝该请求并返回`403`。
+
+要了解有关Kubernetes授权的更多信息，包括使用支持的授权模块创建策略的详细信息，可以参阅[Authorization Overview](https://kubernetes.io/docs/reference/access-authn-authz/authorization/)。
+
+#### Admission Control
+准入控制模块是可以修改和拒绝请求的模块。除了授权模块可用的属性，准入模块还可以访问正在创建或更新的对象内容。他们对正在创建、删除、更新或连接(代理)的对象起作用，但对读取不起作用。
+
+可以配置多个准入控制器，按顺序调用，如上图的`step3`。
+
+与身份验证和授权模块不同，如果任何准入控制器模块拒绝，则会立即拒绝该请求。
+
+除了拒绝对象之外，准入控制器还可以为字段设置复杂的默认值。
+
+对于可用的准入控制模块的更多描述可以参考[Using Admission Controllers](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/)
+
+一旦请求通过所有的admission controllers，就会使用相应API对象的验证程序对其进行验证，然后将其写入对象库(object store)，如上图`step4`所示。
+
+#### API Server Ports and IPs
+上面提到的适用于发送到 API server`secure port`的请求。API server 实际上可以在两个端口上提供服务，默认为`Localhost Port`和`Secure Port`。
+
+* Localhost Port(本地端口)
+1. 主要用于测试和引导，以及主节点的其他组件(scheduler,container-manager)与API通信。
+2. no TLS
+3. 默认端口`8080`，可以用`--insecure-port`修改
+4. 默认IP是`localhost`，可以用`--insecure-bind-address`修改
+5. 请求会**绕过(bypass)** authentication 和 authorization 模块
+6. 请求由 admission control 模块处理
+7. 需要拥有主机的访问权限
+* Secure Port(安全端口)
+1. 尽可能使用安全端口。
+2. 使用 TLS。使用`--tls-cer-file`设置证书，使用`--tls-private-key-file`设置密钥。
+3. 默认端口`6443`，可以用`--secure-port`修改
+4. 默认IP是第一个非`localhost`网络接口，可以用`--bind-address`修改
+5. 请求由 authentication 和 authorization 模块处理
+6. 请求由 admission control 模块处理
+7. authentication and authorization modules run.
+
+当群集由`kube-up.sh`，Google Compute Engine（GCE）以及其他几个云提供商创建时，API server 在端口`443`上运行。在GCE上，在项目上配置防火墙规则以允许外部HTTPS访问API。其他群集设置方法各不相同
+
+### Managing Service Accounts
+[manage service account](https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/)
+
+#### Configure Service Accounts for Pods
+[configure service account for pods](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
+
+一个 Service Account 为在 Pod 中运行的进程提供一个标识。
+
+当你访问集群时(例如，使用`kubectl`)，apiserver 会授权你一个特定的 User Account(通常是`admin`，如果集群管理员没有自定义过的话)。pod 中容器内的进程也可以访问 apiserver，当他们这样做的时候，他们就会被认证为特定的 Service Account(例如`default`)。 
+
+当创建一个 pod 的时候，如果没有指定 Service Account，那么会在同一 namespace 中自动分配一个默认的 Service Account。可以通过`kubectl get pods/podname -o yaml`看到`spec.serviceAccountName`字段已经被自动设置。
+
+你可以使用 automatically mounted service account 从 pod 中访问 apiserver，像[Access the API from a pod](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/#accessing-the-api-from-a-pod)中描述的那样。service account 的权限取决于正在使用的授权插件和策略。
+
+在`1.6+`版本，可以通过在 service account 上进行如下设置，选择退出 service account 的自动挂载 api 凭据
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: build-robot
+automountServiceAccountToken: false
+...
+```
+
+或者指定某个 pod 退出 service account 的自动挂载 api 凭据，并且在 pod 指定的优先级更高，它会覆盖在 ServiceAccount 的指定。 
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  serviceAccountName: build-robot
+  automountServiceAccountToken: false
+  ...
+```
+
+每一个 namespace 都有一个默认的 service account resource`default`
+```shell
+$ kubectl get serviceAccounts
+NAME      SECRETS   AGE
+default   1         48d
+```
+
+### Authorization Overview
+[authorization overview](https://kubernetes.io/docs/reference/access-authn-authz/authorization/)
+
+### Using RBAC Authorization
+[using RBAC authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+
+RBAC - Role-based access control 是一种基于企业内个人用户的角色来管理对计算/网络资源访问的方法。[official reference](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+
+RBAC 使用`rbac.authorization.k8s.io API group`来推动授权决策，允许管理员通过Kubernetes API动态配置策略。要启用 RBAC 使用`--authorization-mode=RBAC`启动 apiserver。
+
+
+## Kubernetes logging architecture
 [kubernetes logging architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
 
 ### logging at the node level
@@ -676,10 +792,4 @@ lrwxrwxrwx 1 root root 165 9月   5 17:05 /var/log/pods/7f3ce883-acc8-11e8-b97b-
 ```
 
 从上面可以看出最终实际的日志文件在`/var/lib/docker/containers`下面，实质还是 docker container 中的日志文件。
-
-
-### API Access authorization - RBAC
-RBAC - Role-based access control 是一种基于企业内个人用户的角色来管理对计算/网络资源访问的方法。[official reference](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
-
-RBAC 使用`rbac.authorization.k8s.io API`组来推动授权决策，允许管理员通过Kubernetes API动态配置策略。要启用 RBAC 使用`--authorization-mode=RBAC`启动 apiserver。
 
