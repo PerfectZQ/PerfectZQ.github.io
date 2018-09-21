@@ -560,16 +560,163 @@ NAME      SECRETS   AGE
 default   1         48d
 ```
 
-### Authorization Overview
-[authorization overview](https://kubernetes.io/docs/reference/access-authn-authz/authorization/)
-
 ### Using RBAC Authorization
 [using RBAC authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+在 kubernetes 1.6之前，主要的授权策略是 ABAC(Attribute-Based Access Control)。对于ABAC，其实是比较难用的，而且需要 Mastser Node 的 ssh 和 root 文件系统的访问权限，当授权策略发生变化的时候还需要重启 API Server。
 
-RBAC - Role-based access control 是一种基于企业内个人用户的角色来管理对计算/网络资源访问的方法。[official reference](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+在 kubernetes 1.6+，RBAC(Role-based access control)进入 beta 阶段，RBAC 是一种基于用户角色来管理对计算/网络资源访问的方法。[official reference](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
 
-RBAC 使用`rbac.authorization.k8s.io API group`来推动授权决策，允许管理员通过Kubernetes API动态配置策略。要启用 RBAC 使用`--authorization-mode=RBAC`启动 apiserver。
+RBAC 使用`rbac.authorization.k8s.io API group`来控制授权决策，它允许管理员通过 Kubernetes API 直接为用户动态的配置访问策略，这样就不用操作 Master Node 了。要启用 RBAC 使用`--authorization-mode=RBAC`启动 API Server。使用`kubeadmin`初始化的1.6+版本会默认为 API Sever 开启 RBAC。
 
+可以查看 Master Node 上 API Server 的静态 Pod 定义文件来验证：
+```shell
+$ cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep RBAC
+    - --authorization-mode=Node,RBAC
+```
+
+也可以动态查看 api server pod 的 yaml 文件验证
+```shell
+$ kubectl get pods --namespace=kube-system | grep apiserver
+kube-apiserver-cn-beijing.i-2ze3ym7umglfdb8lqwun            1/1       Running   2          49d
+kube-apiserver-cn-beijing.i-2ze56bpwjuxguhc8xv9n            1/1       Running   2          49d
+kube-apiserver-cn-beijing.i-2zeb3eh8po9pdz819vvj            1/1       Running   2          49d
+
+$ kubectl get pod kube-apiserver-cn-beijing.i-2ze3ym7umglfdb8lqwun -o yaml --namespace=kube-system | grep RBAC
+    - --authorization-mode=Node,RBAC
+```
+
+RBAC API 定义了四个资源对象用于描述 RBAC 中 user 和 resource 之前的访问权限：
+* Role
+* ClusterRole
+* RoleBinding
+* ClusterRoleBinding
+
+#### Role 和 ClusterRole
+在 RBAC 中，role 定义一组权限规则。权限纯粹是附加的(没有`拒绝`规则)。可以在`namespace`中定义一个`Role`，或者在集群范围内定义`ClusterRole`。
+
+`Role`只能用于授予单个`namespace`内的资源访问权限，下面是`namespace=default`的一个示例，用于授予对 pod 的读取权限
+```yaml
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+```
+
+`ClusterRole`可以分配和`Role`相同的权限，但是由于他是`cluster-scoped`，所以它还能分配下面的权限
+* cluster-scoped resources(like `nodes`)
+* non-resource endpoints(like `/healthz`)
+* namespaced resources(like `pods`) across all namespaces(need to run`kubectl get pods --all-namespace`, for example)
+
+下面是一个`ClusterRole`的示例，可用于授予对任何特定 namespace 或所有 namespaces 中`secrets`的读取权限(取决于它的绑定方式)：
+```yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  # "namespace" omitted since ClusterRoles are not namespaced
+  name: secret-reader
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "watch", "list"]
+```
+
+#### RoleBinding 和 ClusterRoleBinding
+`RoleBinding`将`role`中定义的权限授予用户或一组用户。它包含一个`subjetcs`列表(user、group 或者 service accounts)，以及要授予给用户的角色引用。可以使用`RoleBinding`在某个`namespace`上为用户/用户组(`accounts`)授于`Role`，也可以使用`ClusterRoleBinding`在`cluster-scope`上为用户/用户组(`accounts`)授予权限。
+
+`RoleBinding`可以引用同一`namespace`中的`Role`，下面的`RoleBinding`将 Role`pod-reader`授予`namespace=default`中的用户`jane`。这样`jane`就可以读取`namespace=default`中的`pod`。
+```yaml
+# This role binding allows "jane" to read pods in the "default" namespace.
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: read-pods
+  namespace: default
+subjects:
+- kind: User
+  name: jane # Name is case sensitive (区分大小写)
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role # this must be Role or ClusterRole
+  name: pod-reader # this must match the name of the Role or ClusterRole you wish to bind to
+  apiGroup: rbac.authorization.k8s.io
+```
+
+`RoleBinding`还可以引用`ClusterRole`，以授予 ClusterRole 中定义的`namespaced resources`权限。 这允许管理员为整个集群定义一组公共角色，然后在多个`namespace`中重用它们。
+
+例如，即使以下`RoleBinding`引用`ClusterRole`，用户`dave`(subjects，区分大小写)也只能读取`development namespace`(RoleBinding 的 namespace)中的`secrets`。
+```yaml
+# This role binding allows "dave" to read secrets in the "development" namespace.
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: read-secrets
+  namespace: development # This only grants permissions within the "development" namespace.
+subjects:
+- kind: User
+  name: dave # Name is case sensitive
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: secret-reader
+  apiGroup: rbac.authorization.k8s.io
+```
+
+最后，`ClusterRoleBinding`可以分配`cluster level`和所有`namespace`的权限。下面的`ClusterRoleBinding`允许组`manager`中的任何用户读取任何`namespace`中的`secrets`。
+```yaml
+# This cluster role binding allows anyone in the "manager" group to read secrets in any namespace.
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: read-secrets-global
+subjects:
+- kind: Group
+  name: manager # Name is case sensitive
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: secret-reader
+  apiGroup: rbac.authorization.k8s.io
+```
+
+#### Referring to Resources
+大多数`resources`由一个字符串`name`表示。例如`pods`，就像它出现在相关 API endpoint 的 URL 中一样。但是，一些 Kubernetes API 涉及`subresource`像`pod`的`logs`，`pod logs endpoint`的 URL 就表示为：
+```shell
+GET /api/v1/namespaces/{namespace}/pods/{name}/log
+```
+
+这种情况下`pods`是 namespaced resource，而`log`是`pod`的子资源，要以 RBAC Role 表示的话，需要用斜杠`/`来分割 resource 和 subresource。要允许`subject`读取`pod`和`pod log`可以这么写：
+```yaml
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: pod-and-pod-logs-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods", "pods/log"]
+  verbs: ["get", "list"]
+```
+
+对于某些`resourceNames`列表中的请求，可以通过`resource`的`name`引用`resource`。指定时，使用`get`、`delete`、`update`和`patch`动词的请求可以限制某个`resource`实例。如将`subject`限制为仅`get`和`update`一个`configmap`实例，可以这么写：
+```yaml
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: configmap-updater
+rules:
+- apiGroups: [""]
+  resources: ["configmaps"]
+  resourceNames: ["my-configmap"]
+  verbs: ["update", "get"]
+```
+
+>Note:如果设置了resourceNames，则verbs不能是`list`、`watch`、`create`或`deletecollection`。由于这些 verbs 的 API 请求的 URL 中不存在资源名称，所以 resourceNames 不允许使用这些 verbs，因为规则的 resourceNames 部分与请求不匹配。
 
 ## Kubernetes logging architecture
 [kubernetes logging architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
