@@ -385,6 +385,7 @@ spec:
       - name: varlog
         hostPath:
           path: /var/log
+          path: /var/log
       - name: varlibdockercontainers
         hostPath:
           path: /var/lib/docker/containers
@@ -424,7 +425,7 @@ Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性
 当请求到达API时，会经历几个阶段，如下图所示：
 ![有帮助的截图]({{ site.url }}/assets/kubernetes-access-control-overview.svg)
 
-在典型的 Kubernetes 集群中，API 在端口`443`上提供服务。API server 提供一个证书。此证书通常是自签名的，因此用户计算机上的`$USER/.kube/config`通常包含 API server 证书的根证书，该证书在指定时会代替系统默认的根证书。当使用`kube-up.sh`自己创建群集时，此证书通常会自动写入`$USER/.kube/config`。如果群集有多个用户，则创建者需要与其他用户共享证书。
+在典型的 Kubernetes 集群中，API server 在端口`443`上提供服务。API server 提供一个证书。此证书通常是自签名的，你通常可以在 kubernetes master 上的`~/.kube/config`中找到 API server 的根证书。除此之外，这个`config`的`user`是管理员角色，它拥有整个集群所有资源的管理和访问权限！当使用`kube-up.sh`自己创建群集时，此证书通常会自动写入`$USER/.kube/config`。如果群集有多个用户，则创建者需要与其他用户共享证书。
 
 #### Authentication (认证)
 一旦 TLS 被建立，HTTP 请求就会进入 Authentication(认证)阶段，即上图中的`step1`。集群创建脚本或者集群管理员配置 API server 去运行一到多个身份认证模块，更多关于认证器的描述可以参考[Authenticator](https://kubernetes.io/docs/reference/access-authn-authz/authentication/)
