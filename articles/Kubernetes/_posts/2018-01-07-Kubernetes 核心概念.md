@@ -403,9 +403,6 @@ spec:
 ### Label and Selectors
 Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性。比如，你可能创建了一个`tier`和`app`标签，通过Label（tier=frontend, app=myapp）来标记前端Pod容器，Label（tier=backend, app=myapp）标记后台Pod。然后可以使用 Selectors 选择带有特定 Label 的一组 Pods，并且将 Service 或者 Replication Controller 应用到匹配到的这组 Pods 上面。
 
-
-## Container                                                                                  
-
 ## Using kubectl
 ### 使用 kubectl 与kubernetes 集群交互
 [安装 kubectl client](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl)
