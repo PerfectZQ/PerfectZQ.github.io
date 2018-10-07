@@ -182,7 +182,7 @@ output {
             format => "%{message}"
             charset => "UTF-8"
         }
-        bootstrap_servers => "kafka:9999"
+        bootstrap_server    s => "kafka:9999"
     }
 }
 ```
@@ -202,3 +202,21 @@ tail -100f logs/logstash-plain.log
 
 # 注意如果想同时启动多个 logstash 实例，需要修改 config/logstash.yml 中的 path.data
 ```
+
+## 异常
+### OutOfMemoryError
+```console
+java.lang.OutOfMemoryError: Java heap space
+Dumping heap to java_pid26719.hprof ...
+Heap dump file created [1385285026 bytes in 5.825 secs]
+Exception in thread "defaultEventExecutorGroup-4-1" java.lang.OutOfMemoryError: Java heap space
+Exception: java.lang.OutOfMemoryError thrown from the UncaughtExceptionHandler in thread "kafka-producer-network-thread | producer-1"
+
+Exception in thread "defaultEventExecutorGroup-4-2" java.lang.OutOfMemoryError: Java heap space
+Exception in thread "LogStash::Runner" java.lang.OutOfMemoryError: Java heap space
+Exception in thread "Ruby-0-Thread-1: /root/elk_zhangqiang/logstash-6.2.3-ship/lib/bootstrap/environment.rb:6" java.lang.OutOfMemoryError: Java heap space
+Exception in thread "nioEventLoopGroup-3-3" java.lang.OutOfMemoryError: Java heap space
+```
+通过 JVM 参数`--XX:-HeapDumpOnOutOfMemoryError`可以让 JVM 在出现内存溢出时 dump 出当前的内存转储快照，如上面的异常(第二行)所示。
+
+通过JProfiler等工具分析内存溢出的原因
