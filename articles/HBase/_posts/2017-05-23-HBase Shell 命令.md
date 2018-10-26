@@ -114,7 +114,7 @@ hbase(main)> whoami
 
 # 2）查询数据
 
-	a）查询某行记录
+	a)查询某行记录
 		
 		# 语法：get <table>,<rowkey>,[<family:column>,....]
 		
@@ -125,16 +125,14 @@ hbase(main)> whoami
 		# 查询表t1，rowke002中的f1下的所有列值
 		hbase(main)> get 't1','rowkey001'
 
-	b）扫描表
+	b)扫描表
 		
 		# 语法：scan <table>, {COLUMNS => [ <family:column>,.... ], LIMIT => num}
-
-
 		
 		# 例如：扫描表t1的前5条数据
 		hbase(main)> scan 't1',{LIMIT=>5}
 
-	c）查询表中的数据行数	
+	c)查询表中的数据行数	
 		
 		# 语法：count <table>, {INTERVAL => intervalNum, CACHE => cacheNum}
 		
@@ -143,6 +141,10 @@ hbase(main)> whoami
 		# 例如，查询表t1中的行数，每100条显示一次，缓存区为500
 		hbase(main)> count 't1', {INTERVAL => 100, CACHE => 500}
 
+    d)使用过滤器，查找所有以`prefix`为前缀的数据
+        
+        scan 'TABLE_NAME', { FILTER => "PrefixFilter('prefix')"}
+    
 # 3）删除数据
 	
 	a )删除行中的某个列值
