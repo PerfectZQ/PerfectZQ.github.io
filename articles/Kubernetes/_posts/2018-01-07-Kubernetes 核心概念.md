@@ -82,18 +82,21 @@ Kubernetes API is RESTful - 客户端通过标准 http 谓词(POST、PUT、DELET
 * Resource: 表示系统实体，可以通过 http 以 JSON 的方式从服务器检索。resources 可以表示为 collections - 一组相同类型的 resources，或者 element - 一个可以通过URL访问的单独的 resource。
 * API Group: 一组公开在一起的 resources，在`apiVersion`中显示为`GROUP/VERSION`，例如`policy.k8s.io/v1`
 
-每个 kubernetes object 都包含两个嵌套对象字段，用于控制对象的配置：对象规范和对象状态。您必须提供描述了对象所需状态的规范 - 对象具有的特征。状态描述对象的实际状态，由 Kubernetes 系统提供和更新。在任何给定时间，Kubernetes 控制平面都会主动管理对象的实际状态，以匹配您提供的所需状态。
+每个 kubernetes object 都包含两个嵌套对象字段，用于控制对象的配置：`对象规范(specification/spec)`和`对象状态`。规范用于描述对象所需状态(对象应该具有怎样的特征)，需要你规定一个规范，提交给 Kubernetes。而状态则是描述对象的实际状态，由 Kubernetes 系统提供和更新。Kubernetes 都时刻监控、管理对象的实际状态，以保证符合规范的所需状态。
 
-例如，Kubernetes Deployment 是一个表示在群集上运行的应用程序的对象。创建 Deployment 时设置 Deployment 规范，希望该应用程序运行三个副本。 Kubernetes 系统读取 Deployment 规范并启动所需应用程序的三个实例 - 更新状态以符合 Deployment 规范。如果这些实例中的任何一个失败（状态改变），Kubernetes 系统通过进行校正来响应规范和状态之间的差异 - 在这种情况下，启动替换实例。
+例如，Kubernetes Deployment 就是一种 Kubernetes Object。创建 Deployment 时设置 Deployment 规范，希望该应用程序运行三个副本。 Kubernetes 系统读取 Deployment 规范，然后启动三个规范中描述的应用程序实例(更新状态以符合 Deployment 规范)。如果这些实例中的任何一个失败（状态改变），Kubernetes 系统通过进行校正来响应规范和状态之间的差异(在这种情况下，启动替换实例)。
 
-一般通过 API 操作 object，需要在 request body 中提供一个 JSON 用于描述你的 object spec(规范)，但大多数情况下是指定一个`.yaml`文件，`kubectl`会在请求的时候将它转换成 JSON。一个`.yaml`例子：
+那么如何提供一个规范呢？一般通过 API 操作 object 时，需要在 request body 中提供一个 JSON 用于描述你的 object spec(规范)，但大多数情况下是指定一个`.yaml`文件，`kubectl`会在请求的时候将它转换成 JSON。一个`.yaml`例子：
 
 ```yaml
 # 其中 apiVersion、kind、metadata、spec 是必须的字段
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+# object 类型，表示当前 object 是哪一种 REST resource
 kind: Deployment
+# object 的标准 metadata
 metadata:
   name: nginx-deployment
+# 下面就是传说中的规范了(specification)
 spec:
   selector:
     matchLabels:
@@ -110,8 +113,9 @@ spec:
         ports:
         - containerPort: 80
 ```
+关于`metadata`的详细说明会可以参考[official reference](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)
 
-每种类型 object 的规范在定义上是有区别的，比如有些 object 会包含特有的字段，所有 object 的规范格式都可以在这里找到[Kubernetes API Reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/)
+不同类型 object 的规范在定义上是有区别的，比如有些 object 会包含特有的字段，所有 object 的规范格式都可以在这里找到[Kubernetes API Reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/)
 
 可以通过下面的命令来将`.yaml`作为参数传递
 ```shell
@@ -259,15 +263,63 @@ $ kubectl create configmap game-config-env-file \
 ### Service
 假设我们创建了一组 Pod 的副本，那么在这些副本上如何进行负载均衡？答案就是 [Service](https://kubernetes.io/docs/concepts/services-networking/service/)
 
-如果 Pods 是短暂的，那么重启时 IP 地址可能会改变，怎么才能从前端容器正确可靠地指向后台容器呢？答案同样是 Service
+如果 Pods 是短暂的，那么重启时 IP 地址可能会改变，怎么才能从前端容器正确可靠地指向后台容器呢？答案同样是 Service，
 
-Service 是定义一系列 Pod 以及访问这些 Pod 的策略的一层抽象。Service 通过 Label 找到 Pod 组。因为 Service 是抽象的，所以在图表里通常看不到它们的存在，这也就让这一概念更难以理解。
+Service 是一层抽象，它定义了一组逻辑 Pods 和访问它们的策略。Service 通过 [Label Selector](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors) 选择一组 Pods。因为 Service 是抽象的，所以在图表里通常看不到它们的存在，这也就让这一概念更难以理解。
 
-现在，假定有 2 个后台 Pod，并且定义后台 Service 的名称为`backend-service`，label 选择器为`(tier=backend, app=myapp)`。`backend-service`的 Service 会完成如下两件重要的事情：
-1. 为 Service 创建一个本地集群的 DNS 入口，因此前端 Pod 只需要 DNS 解析`backend-service`就能够得到前端应用程序可用的 IP 地址。
-2. 前端得到后台服务的 IP 地址后，但是它应该访问 2 个后台 Pod 的哪一个呢？Service 在这 2 个后台 Pod 之间提供透明的负载均衡，会将请求分发给其中的任意一个（如下面的动画所示）。通过每个 Node 上运行的代理（kube-proxy）完成。
+现在，假定有 2 个 backend pod，并且定义 Service 的名称为`backend-service`，Label Selector 为`(tier=backend, app=myapp)`。`backend-service`会完成两件事：
+1. 为 Service 创建一个本地集群的 DNS 入口，因此 frontend pod 只需要 DNS 解析`backend-service`就能够得到前端应用程序可用的 IP 地址。
+2. frontend 得到后台服务的 IP 地址后，但是它应该访问 2 个 backend pod 的哪一个呢？Service 在这 2 个 backend pod 之间提供透明的负载均衡，会将请求分发给其中的任意一个（如下面的动画所示）。这是通过每个 Node 上运行的代理（kube-proxy）完成的。
 
 ![有帮助的截图]({{ site.url }}/assets/kubernetes-service.gif)
+
+backend pod replicas 是一些可替代的复制品 frontend pods 并不关心它们具体使用的是哪一个 backend pod，尽管实际组成 backend 的 pods 可能会发生变化，但 frontend 不需要关心也不需要跟踪实际的 backend 列表。Service 抽象实现了这种解耦。
+
+对于 kubernetes-native application，kubernetes 提供一个简单的`Endpoints`API，只要 Service 中的 pod 集合发生变化，它就会更新。而对于 non-native applications，kubernetes 提供了一个基于桥接的 virtual-IP 访问 Services，然后重定向到 backend pod。
+
+#### Define a service
+类似 Pod，Service 是 REST object。因此 Service definition 可以 POST request 到 apiserver 创建新实例。假设你有一组暴露了`9376`端口，并且label为`app=MyApp`的 pods。
+```yaml
+kind: Service
+apiVersion: v1
+metadata:
+  name: my-service
+spec: 
+  selector:
+    app: MyApp
+  # 当前 service 向外暴露的接口列表
+  ports:
+    # 当前 service port 的名称，必须是 DNS_LABEL，且所有 service port name
+    # 必须是唯一的，它会被映射到 EndpointPort objects 的`name`字段，如果当前
+    # service 仅定义了 Service port(例如本例)，则该属性是可选的
+  - name: servi 
+    # UDP/TCP/SCTP(kubernetes1.12+)，默认 TCP
+    protocol: TCP 
+    # 当前 service 向外暴露的接口
+    port: 80 
+    # service 对应的目标 pod 的访问端口信息，可以是端口号(1~65536)
+    # 或者端口名称(IANA_SVC_NAME)
+    targetPort: 9376 
+```
+
+上面的 spec(规范)将创建一个`name=my-service`的 Service object，它会定位所有 label 为`app=MyApp`的 pods 的 TCP 端口`9376`。除此之外，他还会分配一个IP地址(有时也称为cluster IP)，给 proxies 使用。Service selector 会被持续评估，然后将结果 POST 到名为`my-service`的`Endpoints`对象。
+
+Service 可以将`port`映射到任意`targetPort`。如果给`targetPort`一个字符串，它会查找 target pod 中端口的`name`(端口名称)，这样即便不同 target pod 实际向外暴露的端口号不同，只要`name`相同就可以了，这为部署和扩展服务提供了很大的灵活性，即便更改 backend pod 的`port`，对 Service 也没有任影响。如果不指定`targetPort`则默认被设置为与`port`相同的端口号。对于`clusterIP=None`的service，此字段被忽略，即和`port`相同。
+
+规范参数的详细介绍可以参考[ServiceSpec v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#servicespec-v1-core)
+
+#### Virtual IPs and service proxies
+kubernetes cluster 中的每个 node 都会运行一个`kube-proxy`，它负责为 Services 实现虚拟IP，[ExternalName](https://kubernetes.io/docs/concepts/services-networking/service/#externalname)类型的 Service 除外。
+
+kubernetes proxy-mode 目前有这么几种，userspace(k8s/v1.0 add)、iptables(k8s/v1.1 add)、ipvs(k8s/v1.8.0-beta.0 add)
+* userspace: `kube-proxy`会监听`Master(apiserver)`的添加或删除`Service`和`Endpoints`objects的行为。对于每一个 Service，都会在本地 node 随机打开一个端口(代理端口)，代理端口(下图中的`kube-proxy`)的所有连接都会转发到 Service 的 backend pods 之一(根据 Service 的 SessionAffinity 决定使用哪个 backend pod)。Service 会根据安装的 iptables rules，捕获流量到 Service 的`clusterIP`(虚拟)和`port`，并将流量重定向到代理 backend pod 的代理端口，最终转发到 backend pods 之一。默认情况下循环选择 backend。
+![有帮助的截图]({{ site.url }}/assets/services-userspace-overview.svg)
+* iptables: k8s/v1.2+ 默认的 proxy-mode。`kube-proxy`会监听`Master(apiserver)`的添加或删除`Service`和`Endpoints`objects的行为。对于每个 Service，会安装 iptables rules 捕获流量到 Service 的`clusterIP`和`port`，然后重定向到 backend pods 之一。对于每个`Endpoints`object，它会安装 iptables rules 用于选择一个 backend pod。默认选择 backend 是随机的。显然，iptables不需要在 userspace(用户空间)和 kernelspace(内核空间)之间切换，他比 userspace proxy 更快、更可靠。但是，与 userspace proxy 不同的是，如果最初选择的 pod 没有响应时，iptables proxy 无法自动重试另一个 pod，因此它还需要依赖一个[就绪探测器(readiness probes)](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#defining-readiness-probes)
+![有帮助的截图]({{ site.url }}/assets/services-userspace-overview.svg)
+* ipvs: `kube-proxy`会监听`Service`和`Endpoints`，调用`netlink`接口去创建相应的 ipvs rules 并定期与`Service`和`Endpoints`同步 ipvs rules，以确保 ipvs 状态与期望一致，当访问`Service`时，流量将被重定向到其中一个 backend pod。类似 iptables，ipvs 基于 netfilter hook function，但是使用哈希表作为底层数据结构并在 kernelspace 中工作。这意味着 ipvs 可以更快的重定向流量，并且在同步 proxy rules 时具有更好的性能。此外，ipvs 还为负载均衡算法提供了更多选项。例如:`rr`:循环赛、`lc`:最少连接、`dh`:目的哈希、`sh`:源哈希、`sed`:最短的预期延迟、`nq`:永不排队。需要注意的是，ipvs 模式假定在运行`kube-proxy`之前在 node 上安装了 IPVS 内核模块。当`kube-porxy`以 ipvs 代理模式启动时，`kube-proxy`会验证节点上是否安装了 IPVS 模块，如果没有安装，则会回退到 iptables 代理模式。
+![有帮助的截图]({{ site.url }}/assets/services-ipvs-overview.svg)
+
+对于 virtual IPs 的详细内容参考[The gory details of virtual IPs](https://kubernetes.io/docs/concepts/services-networking/service/#the-gory-details-of-virtual-ips)
 
 ### Volume
 container 中的文件是短暂的，当 container 崩溃后 kubelet 会重新启动它，但是文件会丢失。volume 用来持久化文件，并在 container 之间共享它们。
