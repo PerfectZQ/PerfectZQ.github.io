@@ -23,7 +23,7 @@ libraryDependencies += "org.apache.hbase" % "hbase-client" % "1.3.1"
 ```scala
 package com.zq.hbase.learn
 
-import org.apache.hadoop.hbase.{HBaseConfiguration, HColumnDescriptor, HTableDescriptor, TableName}
+import org.apache.hadoop.hbase.{CellUtil, HBaseConfiguration, HColumnDescriptor, HTableDescriptor, TableName}
 import org.apache.hadoop.hbase.client._
 import org.apache.hadoop.hbase.util.Bytes
 
@@ -90,10 +90,18 @@ object HBaseUtil {
     // rowkey
     val get: Get = new Get(Bytes.toBytes("2018/4/27-rowkey"))
     val result: Result = table.get(get)
+    
     val value: Array[Byte] = result.value()
     println(Bytes.toString(value))
+    
+    result.rawCells()
+      .filter(cell => "column_family" == Bytes.toString(CellUtil.cloneFamily(cell)))
+      .map { cell =>
+        val qualifier = CellUtil.cloneQualifier(cell)
+        val value = CellUtil.cloneValue(cell)
+        (qualifier, value)
+      }
   }
-
 }
 ```
 
