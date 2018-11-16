@@ -53,9 +53,10 @@ hbase(main)> enable 'test1'
 is_enable 't1' | is_disable 't1'
     
 # 统计表记录数
-count 't1', INTERVAL => 10, CACHE => 1000 
-# INTERVAL: 是每统计10行显示一次
-# CACHE: 一次加载1000条数据
+count <table>, {INTERVAL => intervalNum, CACHE => cacheNum}
+# INTERVAL设置多少行显示一次及对应的rowkey，默认1000；CACHE每次去取的缓存区大小(一次加载多少条数据)，默认是10，调整该参数可提高查询速度
+# 例如，查询表t1中的行数，每100条显示一次，一次加载500条
+hbase(main)> count 't1', {INTERVAL => 100, CACHE => 500}
 # 如果表很大，统计会很慢，不建议使用。
 # <1> 可以调用 hbase.jar 自带的统计行数的 MapReduce 工具类
 $HBASE_HOME/bin/hbase   org.apache.hadoop.hbase.mapreduce.RowCounter 'tablename'
@@ -85,54 +86,108 @@ hbase(main)> revoke 'test','t1'
 
 ## 表数据的增删改查
 
+### 添加数据
 ```shell
-# 添加数据
-    put <table>,<rowkey>,<family:column>,<value>,<timestamp>
-    # 例如：给表t1的添加一行记录：rowkey是rowkey001，family name：f1，column name：col1，value：value01，timestamp：系统默认
-    hbase(main)> put 't1','rowkey001','f1:col1','value01'
+put <table>, <rowkey>, <family:column>, <value>, <timestamp>
+# 例如：给表t1的添加一行记录, timestamp 系统默认
+hbase(main)> put 't1', 'rk1', 'f1:col1', 'v1'
+```
 
-# 查询数据
-    # a)查询某行记录
-    get <table>,<rowkey>,[<family:column>,....]
-    # 例如：查询表t1，rowkey001中的f1下的col1的值
-    hbase(main)> get 't1','rowkey001', 'f1:col1'
-    # 或者：
-    hbase(main)> get 't1','rowkey001', {COLUMN=>'f1:col1'}
-    # 查询表t1，rowke002中的f1下的所有列值
-    hbase(main)> get 't1','rowkey001'
-    
-    # b)扫描表
-    scan <table>, {COLUMNS => [ <family:column>,.... ], LIMIT => num}
-            
-    # 例如：扫描表t1的前5条数据
-    hbase(main)> scan 't1',{LIMIT=>5}
-    
-    # c)查询表中的数据行数	
-    count <table>, {INTERVAL => intervalNum, CACHE => cacheNum}
-    # INTERVAL设置多少行显示一次及对应的rowkey，默认1000；CACHE每次去取的缓存区大小，默认是10，调整该参数可提高查询速度
-    # 例如，查询表t1中的行数，每100条显示一次，缓存区为500
-    hbase(main)> count 't1', {INTERVAL => 100, CACHE => 500}
-    
-    # d)使用过滤器，查找所有以`prefix`为前缀的数据
-    hbase(main)> scan 'TABLE_NAME', { FILTER => "PrefixFilter('prefix')"}
+### 查询数据
+```shell
+# a) 查询某行记录
+get <table>,<rowkey>,[<family:column>,....]
 
-# 删除数据
-    # a)删除行中的某个列值
-    delete <table>, <rowkey>,  <family:column> , <timestamp>,必须指定列名
-    # 例如：删除表t1，rowkey001中的f1:col1的数据
-    hbase(main)> delete 't1','rowkey001','f1:col1'
-    # 注：将删除改行f1:col1列所有版本的数据
+# 例如：查询表t1，rowkey001中的f1下的col1的值
+hbase(main)> get 't1','rowkey001', 'f1:col1'
+
+# 或者：
+hbase(main)> get 't1','rowkey001', { COLUMN=>'f1:col1'}
+
+# 查询表t1，rowke002中的f1下的所有列值
+hbase(main)> get 't1','rowkey001'
     
-    # b)删除行
-    deleteall <table>, <rowkey>,  <family:column> , <timestamp>，可以不指定列名，删除整行数据
-    # 例如：删除表t1，rowk001的数据
-    hbase(main)> deleteall 't1','rowkey001'
-    
-    # c）删除表中的所有数据
-    truncate <table>
-    # 其具体过程是：disable table -> drop table -> create table
-    # 例如：删除表t1的所有数据
-    hbase(main)> truncate 't1'
+# b) 扫描表
+scan <table>, {COLUMNS=>[<family:column>,...], LIMIT=>num}
+        
+# 例如：扫描表t1的前3条数据
+hbase(main)> scan 'test', {LIMIT=>3}
+ROW                                 COLUMN+CELL                                                                                            
+ 1                                  column=cf1:cq1, timestamp=1542264962903, value=1                                                       
+ 1                                  column=cf1:cq2, timestamp=1542265010138, value=2                                                       
+ 1                                  column=cf2:cq1, timestamp=1542264971415, value=1                                                       
+ 1                                  column=cf2:cq2, timestamp=1542265017234, value=2                                                       
+ 2                                  column=cf1:cq1, timestamp=1542265136926, value=1                                                       
+ 3                                  column=cf1:cq1, timestamp=1542265141513, value=1 
+3 row(s) in 0.0100 seconds
+
+# c) 过滤器 Filter
+# 显示所有可用的 filter
+hbase(main)> show_filters
+# 查看某个filter的使用方法
+
+
+# 只返回一个 rowkey 下所有 key-value 的第一条
+hbase(main)> scan 'test', {FILTER=>"FirstKeyOnlyFilter()"}
+ROW                                 COLUMN+CELL                                                                                            
+ 1                                  column=cf1:cq1, timestamp=1542264962903, value=1                                                       
+ 2                                  column=cf1:cq1, timestamp=1542265136926, value=1                                                       
+ 3                                  column=cf1:cq1, timestamp=1542265141513, value=1  
+3 row(s) in 0.0160 seconds
+
+# 只返回一个 rowkey 下所有 key-value 的 key
+hbase(main)> scan 'test', {FILTER=>"KeyOnlyFilter()"}
+ROW                                 COLUMN+CELL                                                                                            
+ 1                                  column=cf1:cq1, timestamp=1542264962903, value=                                                        
+ 1                                  column=cf1:cq2, timestamp=1542265010138, value=                                                        
+ 1                                  column=cf2:cq1, timestamp=1542264971415, value=                                                        
+ 1                                  column=cf2:cq2, timestamp=1542265017234, value=                                                        
+ 2                                  column=cf1:cq1, timestamp=1542265136926, value=                                                        
+ 3                                  column=cf1:cq1, timestamp=1542265141513, value=                                                        
+3 row(s) in 0.0270 seconds
+
+# 查找所有 rowkey 以 `abc` 为前缀的数据 row
+ROW                                 COLUMN+CELL                                                                                            
+ abcdef                             column=cf1:cq1, timestamp=1542265446897, value=1                                                       
+ abcdef                             column=cf1:cq2, timestamp=1542265868562, value=2                                                       
+1 row(s) in 0.0100 seconds
+
+# 返回满足条件的 column
+hbase(main)> scan 'test', {FILTER=>"PrefixFilter('abc') AND ColumnPrefixFilter('cq1')"}
+ROW                                 COLUMN+CELL                                                                                            
+ abcdef                             column=cf1:cq1, timestamp=1542265446897, value=1                                                       
+1 row(s) in 0.0090 seconds
+
+# 返回满足多条件的 column
+hbase(main)> scan 'test', {FILTER=>"PrefixFilter('abc') AND MultipleColumnPrefixFilter('cq1', 'cq2')"}
+ROW                                 COLUMN+CELL                                                                                            
+ abcdef                             column=cf1:cq1, timestamp=1542265446897, value=1                                                       
+ abcdef                             column=cf1:cq2, timestamp=1542265868562, value=2                                                       
+1 row(s) in 0.0210 seconds
+
+# 根据 limit 和 offset 返回 column
+hbase(main)> scan 'test',{STARTROW=>'1',STOPROW=>'3', FILTER=>"ColumnPaginationFilter(2,1)"}
+
+```
+
+### 删除数据
+```shell
+# a)删除行中的某个列值
+delete <table>, <rowkey>,  <family:column> , <timestamp>,必须指定列名
+# 例如：删除表t1，rowkey001中的f1:col1的数据
+hbase(main)> delete 't1','rowkey001','f1:col1'
+# 注：将删除改行f1:col1列所有版本的数据
+
+# b)删除行
+deleteall <table>, <rowkey>,  <family:column> , <timestamp>，可以不指定列名，删除整行数据
+# 例如：删除表t1，rowk001的数据
+hbase(main)> deleteall 't1','rowkey001'
+
+# c）删除表中的所有数据
+truncate <table>
+# 其具体过程是：disable table -> drop table -> create table
+# 例如：删除表t1的所有数据
+hbase(main)> truncate 't1'
 ```
 
 ## Namespace
