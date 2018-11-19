@@ -357,12 +357,12 @@ ElasticSearch 的 Query DSL 是基于 JSON 的，可以将 Query DSL 看作查�
 在`query context`和`filter context`使用查询子句的行为是不同的。
 
 1. `query context`中使用的查询子句，返回的结果是"这个文档与此查询子句有多么匹配"，除了决定文档是否匹配外，它还会计算一个得分`_score`，表示文档和查询子句的匹配程度。
-2. `filter context`中使用的查询子句，返回的结果是"这个文档和此查询子句是否匹配"，是就是，不是就不是。
+2. `filter context`中使用的查询子句，返回的结果是"这个文档和此查询子句是否匹配"，是就是，不是就不是。使用过滤往往会被 elasticsearch 自动缓存起来以提高性能
 
 炒个官方的栗子：
 
 ```javascript
-GET /_search
+GET /secisland/_search
 {
   "query": { // 用关键字 query 指明下面的查询子句用于 query context
     "bool": { // bool 和下面的两个 match 子句都属于 query context，用于说明文档有多匹配
@@ -370,7 +370,7 @@ GET /_search
         { "match": { "title":   "Search"        }}, 
         { "match": { "content": "Elasticsearch" }}  
       ],
-      "filter": [ // 用关键字 filter 指明下面的查询子句用于 filter context
+      "filter": [ // 用关键字 filter 指明下面的查询子句用于 filter context，不影响 query 计算文档的 _score
         { "term":  { "status": "published" }}, // term 和 range 子句属于 filter context
         { "range": { "publish_date": { "gte": "2015-01-01" }}} // 他们会将不匹配的文档过滤掉
       ]
@@ -383,5 +383,173 @@ GET /_search
 
 按照文档内容(各字段的值)，是否需要分词(analyse)，可以将查询子句分成两种`Full text queries`和`Term level queries`。
 ### Full text queries
+首先了解下 Analysis 阶段，它会按照设定的分词器(analyser)对文本(text)进行分词，分词器可以是 elasticsearch 内置的，也可以是自定义的。分词发生在下面的两种情况下：
+* index time analysis: 在索引的时候对`text type fileds`进行分词。每个`text`类型的字段都可以指定一个`analyser`。例如：
+
+```javascript
+// 为字段配置单独的分词器
+PUT my_index
+{
+  "mappings": {
+    "_doc": {
+      "properties": {
+        "title": {
+          "type": "text",
+          // 在索引阶段，text类型的字段如果没有指定analyser，它会在
+          // index settings中查找名为`default`分词器，如果没找到
+          // 则默认使用`standard`分词器
+          "analyzer": "standard"
+        }
+      }
+    }
+  }
+}
+// 为index设置全局的分词器
+
+```
+
+* search time analysis: 在搜索的时候对`query string`进行分词。
+
+`search time analysis`默认会按照下面的优先级来选择应该使用哪一个分词器
+
+1. An `analyzer` specified in the full-text query itself.
+```javascript
+GET /my_index/_search
+{
+    "query": {
+        "match" : {
+            "message": "身份证",
+            "analyser": "ik_smart" 
+        }
+    }
+}
+```
+2. The `search_analyzer` defined in the field mapping.
+```javascript
+PUT my_index
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "my_ngram_analyzer": {
+          "tokenizer": "my_ngram_tokenizer"
+        }
+      },
+      "tokenizer": {
+        "my_ngram_tokenizer": {
+          "type": "ngram",
+          "min_gram": 3,
+          "max_gram": 3,
+          "token_chars": [
+            "letter",
+            "digit"
+          ]
+        }
+      }
+    }
+  }
+}
+PUT my_index
+{
+  "mappings": {
+    "_doc": {
+      "properties": {
+        "title": {
+          "type": "text",
+          "search_analyzer": "my_ngram_analyzer"
+        }
+      }
+    }
+  }
+}
+```
+3. The `analyzer` defined in the field mapping.
+```javascript
+PUT my_index
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "my_ngram_analyzer": {
+          "tokenizer": "my_ngram_tokenizer"
+        }
+      },
+      "tokenizer": {
+        "my_ngram_tokenizer": {
+          "type": "ngram",
+          "min_gram": 3,
+          "max_gram": 3,
+          "token_chars": [
+            "letter",
+            "digit"
+          ]
+        }
+      }
+    }
+  }
+}
+PUT my_index
+{
+  "mappings": {
+    "_doc": {
+      "properties": {
+        "title": {
+          "type": "text",
+          "analyzer": "my_ngram_analyzer"
+        }
+      }
+    }
+  }
+}
+```
+4. An analyzer named `default_search` in the index settings.
+```javascript
+PUT my_index
+{
+    "settings": {
+        "analysis": {
+            "analyzer": {
+                "default_search": {
+                    "type": "ik_max_word"
+                }
+            }
+        }
+    }
+}
+// 或者下面的写法
+PUT my_index
+{
+  "settings": {
+    "index.analysis.analyzer.default_search.type": "ik_max_word"
+    }
+}
+```
+5. An analyzer named `default` in the index settings.
+```javascript
+{
+    "settings": {
+        "analysis": {
+            "analyzer": {
+                "default": {
+                    "type": "ik_max_word"
+                }
+            }
+        }
+    }
+}
+// 或者下面的写法
+PUT my_index
+{
+  "settings": {
+    "index.analysis.analyzer.default.type": "ik_max_word"
+    }
+}
+```
+6. The `standard` analyzer.
+
+
+>如果`index time analysis`和`search time analysis`指定了不同分词器，有可能会匹配不到，比如对于`身份证`：`index time analysis`指定为`standard`，会分词为`身、份、证`，而`search time analysis`指定为`ik_smart`会分词为`身份证`，这样就没有正确匹配上，会导致没有查询结果。
+
+#### match
 
 ### Term level queries
