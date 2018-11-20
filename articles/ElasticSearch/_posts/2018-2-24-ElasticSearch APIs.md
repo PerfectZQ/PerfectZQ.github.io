@@ -520,7 +520,7 @@ PUT my_index
 PUT my_index
 {
   "settings": {
-    "index.analysis.analyzer.default_search.type": "ik_max_word"
+        "index.analysis.analyzer.default_search.type": "ik_max_word"
     }
 }
 ```
@@ -541,7 +541,7 @@ PUT my_index
 PUT my_index
 {
   "settings": {
-    "index.analysis.analyzer.default.type": "ik_max_word"
+        "index.analysis.analyzer.default.type": "ik_max_word"
     }
 }
 ```
