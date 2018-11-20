@@ -405,7 +405,25 @@ PUT my_index
   }
 }
 // 为index设置全局的分词器
-
+PUT my_index
+{
+    "settings": {
+        "analysis": {
+            "analyzer": {
+                "default": {
+                    "type": "ik_max_word"
+                }
+            }
+        }
+    }
+}
+// 与上面的等价
+PUT my_index
+{
+  "settings": {
+        "index.analysis.analyzer.default.type": "ik_max_word"
+    }
+}
 ```
 
 * search time analysis: 在搜索的时候对`query string`进行分词。
@@ -526,6 +544,7 @@ PUT my_index
 ```
 5. An analyzer named `default` in the index settings.
 ```javascript
+PUT my_index
 {
     "settings": {
         "analysis": {
@@ -547,9 +566,100 @@ PUT my_index
 ```
 6. The `standard` analyzer.
 
-
->如果`index time analysis`和`search time analysis`指定了不同分词器，有可能会匹配不到，比如对于`身份证`：`index time analysis`指定为`standard`，会分词为`身、份、证`，而`search time analysis`指定为`ik_smart`会分词为`身份证`，这样就没有正确匹配上，会导致没有查询结果。
-
 #### match
+`match query`可以查询`text/numric/dates`类型的字段，`match`实质上是`bool`查询，也就是说它是对分词后的文本构造`bool query`，`operator`可以设置为`or(default)`或`and`，来控制匹配结果。下面举个例子
+
+```javascript
+// 添加一条数据
+PUT /my_index/_doc/1
+{
+  "title": "brown fox"
+}
+// operator 默认是 or，
+// `blue fox`会被 analyser 分词成为`blue`和`fox`，
+// `brown fox`会被 analyser 分词为`brown`和`fox`
+// 其中`fox`可以匹配上，因此是可以匹配到`brown fox`的
+GET my_index/_search
+{
+    "query": {
+        "match" : {
+            "title": {
+              "query": "blue fox"
+              // operator 默认为 or
+            }
+        }
+    }
+}
+// 上面的查询和下面的查询等价
+GET /my_index/_search
+{
+    "query": {
+        "bool": {
+            "should": [
+              { "term": { "title": "brown" }},
+              { "term": { "title": "fox"   }}
+            ]
+        }
+    }
+}
+// 下面把`operator`变成`and`，因为`blue`没有正确的匹配到结果，
+// `false and true => false`因此这个查询匹配不到`brown fox`
+GET /my_index/_search
+{
+    "query": {
+        "match" : {
+            "title": {
+              "query": "blue fox",
+              "operator": "and"
+            }
+        }
+    }
+}
+// 上面的查询和下面的查询等价
+GET /my_index/_search
+{
+    "query": {
+        "bool": {
+            "must": [
+              { "term": { "title": "brown" }},
+              { "term": { "title": "fox"   }}
+            ]
+        }
+    }
+}
+```
+
+可以使用`minimum_should_match`控制至少要匹配的`should`子句数，的详细介绍可以参考[minimum_should_match](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-minimum-should-match.html)
+```javascript
+// 如果加上 minimum_should_match，它会直接传入到 bool 查询中，详细的介绍可以参考
+GET /my_index/_search
+{
+    "query": {
+        "match": {
+            "title": {
+                "query": "quick brown fox",
+                // 3 * 75% 向下取整 = 2
+                "minimum_should_match": "75%"
+            }
+        }
+    }
+}
+// 上面的查询和下面的查询等价
+GET /my_index/_search
+{
+    "query": {
+        "bool": {
+            "should": [
+                { "term": { "title": "brown" }},
+                { "term": { "title": "fox"   }},
+                { "term": { "title": "quick" }}
+            ],
+            "minimum_should_match": 2 
+        }
+    }
+}
+```
+
+>Note: 如果`index time analysis`和`search time analysis`指定了不同分词器，有可能会匹配不到，比如对于`身份证`：`index time analysis`指定为`standard`，会分词为`身、份、证`，而`search time analysis`指定为`ik_smart`会分词为`身份证`，这样就没有能正确匹配上的term项，从而导致没有查询结果。
 
 ### Term level queries
