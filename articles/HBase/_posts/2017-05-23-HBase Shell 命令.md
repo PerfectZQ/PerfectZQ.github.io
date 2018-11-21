@@ -164,10 +164,6 @@ ROW                                 COLUMN+CELL
  abcdef                             column=cf1:cq1, timestamp=1542265446897, value=1                                                       
  abcdef                             column=cf1:cq2, timestamp=1542265868562, value=2                                                       
 1 row(s) in 0.0210 seconds
-
-# 根据 limit 和 offset 返回 column
-hbase(main)> scan 'test',{STARTROW=>'1',STOPROW=>'3', FILTER=>"ColumnPaginationFilter(2,1)"}
-
 ```
 
 ### 删除数据
