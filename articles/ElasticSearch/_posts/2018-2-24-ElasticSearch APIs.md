@@ -345,6 +345,56 @@ GET hsyk_diseases_info/_search
 ## Indices APIs
 
 ## cat APIs
+[Elasticsearch Reference - cat APIs](https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html)
+
+```shell
+# 查看主节点信息
+GET /_cat/master
+u_n93zwxThWHi1PDBJAGAg master 127.0.0.1 node-1
+
+# 通用参数 `v` verbose output，显示 header
+GET /_cat/master?v
+id                     host      ip      node
+u_n93zwxThWHi1PDBJAGAg master 127.0.0.1 node-1
+
+# 通用参数 `help`，显示命令包含的所有列的说明
+GET /_cat/master?help
+id   |   | node id
+host | h | host name
+ip   |   | ip address
+node | n | node name
+
+# 通用参数 `h`，指定要查看的列
+GET /_cat/nodes?h=ip,port,heapPercent,name
+127.0.0.1 9300 27 node-1
+# 也可使用通配符，如
+GET /_cat/thread_pool?h=ip,queue*
+
+# numberic formats
+# 对于一些提供数字类型输出的命令，如 bytes、size、time，默认都是方便人阅读的，如`3763212`
+# 会转换成`3.5mb`，这样就无法进行排序了，如果想排序就需要转换成 numberic 类型的值
+$curl '192.168.56.10:9200/_cat/indices?bytes=b' | sort -rnk8
+green wiki2 3 0 10000   0 105274918 105274918
+green wiki1 3 0 10000 413 103776272 103776272
+green foo   1 0   227   0   2065131   2065131
+
+# repsonse as text(default),json,smile,yaml,cbor
+# `pretty` 结果格式化
+$curl 'localhost:9200/_cat/indices?format=json&pretty'
+[
+  {
+    "pri.store.size": "650b",
+    "health": "yellow",
+    "status": "open",
+    "index": "twitter",
+    "pri": "5",
+    "rep": "1",
+    "docs.count": "0",
+    "docs.deleted": "0",
+    "store.size": "650b"
+  }
+]
+```
 
 ## Cluster APIs
 
