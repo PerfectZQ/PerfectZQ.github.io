@@ -41,3 +41,18 @@ $ create /ordinary ""
 缺点：羊群效应（不公平）。当锁释放后，假设有10000个进程去竞争锁，只有1个进程会成功，而其他9999个进程都会失败，资源浪费。
 
 ### 使用有序临时节点
+
+
+
+
+## 异常
+### 连接 zookeeper 特别慢
+```shell
+# 查看 hostname
+$ hostname
+zhangqiangdeMacBook-Pro.local
+# 将 hostname 配置到 127.0.0.1/::1
+$ vim /etc/hosts
+127.0.0.1       zhangqiangdeMacBook-Pro.local localhost
+::1             zhangqiangdeMacBook-Pro.local localhost
+```
