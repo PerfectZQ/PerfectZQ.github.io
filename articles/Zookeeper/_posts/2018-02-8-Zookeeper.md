@@ -51,7 +51,7 @@ $ create /ordinary ""
 # 查看 hostname
 $ hostname
 zhangqiangdeMacBook-Pro.local
-# 将 hostname 配置到 127.0.0.1/::1
+# 将 hostname 配置到 127.0.0.1/::1 或者 固定的静态IP
 $ vim /etc/hosts
 127.0.0.1       zhangqiangdeMacBook-Pro.local localhost
 ::1             zhangqiangdeMacBook-Pro.local localhost
