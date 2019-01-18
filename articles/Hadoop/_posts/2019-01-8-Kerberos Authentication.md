@@ -113,6 +113,8 @@ yarn/xxx.net@XXX.COM
 $ kdb5_util create -r EXAMPLE.COM -s
 
 # 进入 kadmin
+$ kinit admin/admin
+Password for admin/admin@RICHINFOAI.COM:
 $ kadmin
 Authenticating as principal admin/admin@RICHINFOAI.COM with password.
 Password for admin/admin@XXX.COM: 
