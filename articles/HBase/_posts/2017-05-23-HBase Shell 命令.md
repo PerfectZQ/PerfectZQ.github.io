@@ -36,6 +36,14 @@ hbase(main)> create 't1',{NAME => 'f1', VERSIONS => 2},{NAME => 'f2', VERSIONS =
 hbase(main)> disable 't1'
 hbase(main)> drop 't1'
 
+# 正则批量删除表
+hbase(main)> disable_all 'a.*'
+Disable the above 84 tables (y/n)?
+y
+hbase(main)> drop_all 'a.*'
+Drop the above 84 tables (y/n)?
+y
+
 # 查看表的结构
 describe <table>
 # 例如：查看表t1的结构
@@ -314,3 +322,13 @@ bin/graceful_stop.sh --restart --reload --debug inspurXXX.xxx.xxx.org
 `./hbase org.apache.hadoop.hbase.mapreduce.Driver import/export 表名 文件路径(默认hdfs,加前缀file:///为本地数据)`
 
 
+## 执行脚本
+```shell
+# 将多条命令写入脚本文件中
+$ vim shell.txt
+disable 'table'
+drop 'table'
+
+# 执行脚本
+$ hbase shell shell.txt
+```
