@@ -4,6 +4,9 @@ title: Spark SQL
 tag: Spark SQL
 ---
 
+## Built-in Functions
+[Spark SQL, Built-in Functions](http://spark.apache.org/docs/latest/api/sql/index.html)
+
 ## UDF
 注册 SparkSQL UDF 有两种方式`sparkSession.udf.register()`和`org.apache.spark.sql.function.udf()`
 
