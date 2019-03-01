@@ -38,10 +38,14 @@ hbase(main)> drop 't1'
 
 # 正则批量删除表
 hbase(main)> disable_all 'a.*'
-Disable the above 84 tables (y/n)?
+a1
+a2
+Disable the above 2 tables (y/n)?
 y
 hbase(main)> drop_all 'a.*'
-Drop the above 84 tables (y/n)?
+a1
+a2
+Drop the above 2 tables (y/n)?
 y
 
 # 查看表的结构
