@@ -62,6 +62,7 @@ FileBeat 保证事件将至少一次(At least once)传递到配置的`output`，
 add_kubernetes_metadata processor 根据 event 源自哪一个 kubernetes pod，使用相关 metadata 为每个 event 添加 annotations，包括：
 
 * Pod Name
+* Pod UID
 * Namespace
 * Labels
 
@@ -571,17 +572,17 @@ metadata:
 ```
 
 ## Auto discover
-当应用程序运行在容器中，对于监控系统来说，他们就变成了移动的目标。auto discover提供track功能，并在发生变化时调整设置。[official reference](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover.html#_providers)
+当应用程序运行在容器中，对于监控系统来说，他们就变成了移动的目标。auto discover 提供 track 功能，并在发生变化时调整设置。[official reference](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover.html#_providers)
 
-在`filebeat.yml`的`filebeat.autodiscover`部分定义一些`providers`来启用auto discover。当运行filebeat时，auto discover子系统就会开始监听服务。
+在`filebeat.yml`的`filebeat.autodiscover`部分定义一些`providers`来启用 auto discover。当运行 filebeat 时，auto discover 子系统就会开始监听服务。
 
 ### Providers
-auto discover providers会观察系统上的event，将这些事件转换为具有通用格式的内部auto discover event，配置provider的时候就可以使用event中的字段，当字段的值满足某种条件时就启用某些特定的配置。
+auto discover providers 会观察系统上的 event，并将这些 event 转换为具有通用格式的内部 auto discover event，这样在配置 provider template 的时候就可以获取 auto discover event 中的某些字段的值，当满足条件时就启用某些特定的配置(比如获取 docker.container.name = "my_redis" 的日志)。
 
-一开始，filebeat 会扫描所有现有容器并为他们启动合适的配置，然后它会观察新的开始/停止事件。
+一开始，filebeat 会扫描所有现有容器并为他们启动合适的配置，然后它会持续观察新的容器的开始/停止事件。
  
 ### Docker auto discover
-Docker auto discover provider 会监视 docker containers 的开始和结束事件，每个 event 的可用字段如下。
+Docker auto discover provider 会监视 docker containers 的开始和结束 event，然后转换成 auto discover event，每个 auto discover event 的可用字段如下。
 
 * host
 * port
@@ -590,7 +591,7 @@ Docker auto discover provider 会监视 docker containers 的开始和结束事�
 * docker.container.name
 * docker.container.labels
 
-例如一个具体的docker auto discover provider event
+例如一个具体的 docker auto discover event 如下
 ```json
 {
   "host": "10.4.15.9",
@@ -609,21 +610,23 @@ Docker auto discover provider 会监视 docker containers 的开始和结束事�
 }
 ```
 
-在provider中可以定义一组配置模版，以便在条件与事件匹配的时候应用。模版定义了与auto discover event匹配的条件，以及当event匹配成功时要执行的配置列表。
+在 providers 中可以定义一组配置模版，以便在条件与事件匹配的时候应用。模版用于定义与 auto discover event 匹配的条件，以及当条件匹配成功时要执行的配置列表。
 
-在配置模版中使用auto discover event的内容，可以通过`data`命名空间获取。如访问`port`字段信息：`${data.port}`会解析为`6379`。
+在配置模版中使用 auto discover event 的内容，可以通过`data`命名空间获取。如访问`host`字段信息：`${data.host}`会得到结果`10.4.15.9`。
 
-收集`docker.container.image`包含`redis`的所有 containers 的 docker logs
+下面举一个实际的例子，收集`docker.container.image`包含`redis`的所有 containers 的 docker logs
 
-filebeat支持`inputs`和`modules`的`templates`。
+filebeat 支持`inputs`(默认)和`modules`的`templates`。
 ```yaml
 filebeat.autodiscover:
   providers:
     - type: docker
       templates:
+          # 匹配条件
         - condition:
             contains:
               docker.container.image: redis
+          # 条件匹配成功时要执行的配置列表
           config:
             - type: docker
               containers.ids:
@@ -631,7 +634,7 @@ filebeat.autodiscover:
               exclude_lines: ["^\\s+[\\-`('.|_]"]  # drop asciiart lines
 ```
 
-如果使用modules，可以使用docker input重写default input
+如果使用`modules`，可以使用`docker input`重写`default input`
 ```yaml
 filebeat.autodiscover:
   providers:
@@ -675,8 +678,28 @@ autodiscover.providers:
               - "/mnt/logs/${data.docker.container.id}/*.log"
 ```
 
+对于多条件的条件匹配
+```yaml
+filebeat.autodiscover:
+  providers:
+    - type: docker
+      templates:
+        # 多条件匹配(且)
+        - condition.and:
+            - contains: 
+                docker.container.image: "**SOMETHING**"
+            - not.contains:
+                docker.container.image: "**SOMETHING_ELSE**"
+          # 条件匹配成功时要执行的配置列表
+          config:
+            - type: docker
+              containers.ids:
+                - "${data.docker.container.id}"
+              exclude_lines: ["^\\s+[\\-`('.|_]"]  # drop asciiart lines
+```
+
 ### Kubernetes auto discover
-Kubenetes auto discover provider 会监视 kubernetes pods 的开始、更新和结束事件，每个 event 的可用字段如下
+Kubernetes auto discover provider 会监视 kubernetes pods 的开始、更新和结束事件，并转换成标准的 auto discover event，每个 auto discover event 的可用字段如下
 
 * host
 * port
@@ -715,7 +738,7 @@ Kubenetes auto discover provider 会监视 kubernetes pods 的开始、更新和
 }
 ```
 
-kubernetes provider有如下配置项：
+kubernetes provider 有如下配置项：
 * in_cluster: (optional)在kubernetes客户端的集群设置中使用，默认为`true`
 * host: (optional)标记filebeat运行节点的host，以防无法正确检测到。如在host network mode下运行filebeat时。
 * kube_config: (optional)使用给定的配置文件作为kubernetes客户端的配置。
@@ -736,7 +759,7 @@ filebeat.autodiscover:
               exclude_lines: ["^\\s+[\\-`('.|_]"]  # drop asciiart lines
 ```
 
-如果使用modules，可以使用docker input重写default input
+如果使用 modules，可以使用 docker input 重写 default input
 ```yaml
 filebeat.autodiscover:
   providers:
