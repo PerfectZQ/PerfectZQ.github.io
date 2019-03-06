@@ -684,7 +684,7 @@ filebeat.autodiscover:
   providers:
     - type: docker
       templates:
-        # 多条件匹配(且)
+        # 多条件匹配(且), and 需要接收一个 list
         - condition.and:
             - contains: 
                 docker.container.image: "**SOMETHING**"

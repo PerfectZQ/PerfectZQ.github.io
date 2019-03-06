@@ -115,7 +115,7 @@ spec:
 ```
 关于`metadata`的详细说明会可以参考[official reference](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)
 
-不同类型 object 的规范在定义上是有区别的，比如有些 object 会包含特有的字段，所有类型的 object 的规范说明都可以在这里找到[Kubernetes API Reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/)
+不同类型 object 的规范在定义上是有区别的，比如有些 object 会包含特有的字段，**所有类型的 object 的 spec 说明都可以在这里找到[Kubernetes API Reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/)**
 
 可以通过下面的命令来将`.yaml`作为参数传递
 ```shell
