@@ -16,7 +16,7 @@
             while (index > 0) {
                 hash = (hash * 33) ^ text.charCodeAt(--index);
             }
-            return hash;
+            return hash + "";
         }
 
         const gitalk = new Gitalk({
