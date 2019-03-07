@@ -37,15 +37,15 @@ FileBeat 保证事件将至少一次(At least once)传递到配置的`output`，
 ## 配置文件格式
 [Config file format](https://www.elastic.co/guide/en/beats/libbeat/6.4/config-file-format.html)
 
-[YAML official doc](http://yaml.org/)
+[YAML](http://yaml.org/)
 
 ## filebeat.yml 各配置项详细介绍
-[filebeat.yml](https://arch-long.cn/articles/elasticsearch/FileBeat-Configuration.html)
+[Configure fileBeat.yml](https://arch-long.cn/articles/elasticsearch/FileBeat-Configuration.html)
 
 ## Filter and enhance the exported data
 由 filebeat 导出的数据，你可能希望过滤掉一些数据并增强一些数据(比如添加一些额外的 metadata)。filebeat提供了一系列的工具来做这些事。
 
-下面简单介绍一些方法，详细的可以参考[official reference](https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html)
+下面简单介绍一些方法，详细的可以参考[Filter and enhance the exported data](https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html)
 
 ### Processors
 在将 event 发送到 output 之前，你可以在配置文件中定义 processors 去处理 event。processor 可以完成下面的任务：
