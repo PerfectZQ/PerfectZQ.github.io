@@ -38,15 +38,15 @@ FileBeat 保证事件将至少一次(At least once)传递到配置的`output`，
 ## 安装
 注意安装换对应平台的 FileBeat，以防出现`can not exec bianary file`的异常
 
-[FileBeat目录结构](https://www.elastic.co/guide/en/beats/FileBeat/current/directory-layout.html)
+[FileBeat 目录结构](https://www.elastic.co/guide/en/beats/FileBeat/current/directory-layout.html)
 
 ## 启动
 ```shell
 # 运行 FileBeats
-# -e 记录到stderr并禁用syslog/文件输出
+# -e 日志输出到 stderr 并禁用 syslog/file 输出
 # -c 指定配置文件
-# -d 启用对指定选择器的调试
-sudo nohup filebeat -e -c filebeat.yml -d "publish" > filebeat.log 2>&1 &
+# -d 启用对指定选择器的调试，public 可以看到完整的 event 信息
+sudo nohup filebeat -e -c filebeat.yml -d "publish" >filebeat.log 2>&1 &
 
 # FileBeat 会在注册表中存储每个文件收集的状态，
 # 想强制 FileBeat 从日志的最开始重新读取，可以直接删除注册表文件
