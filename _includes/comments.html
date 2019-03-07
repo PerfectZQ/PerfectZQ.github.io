@@ -12,12 +12,14 @@
         const gitalk = new Gitalk({
             clientID: 'dc80d4614cbc22815905',
             clientSecret: '7885c51effe60bb458d955dfb27cf69d01c9923b',
-            repo: 'PerfectZQ.github.io',
+            repo: 'blog_comments',
             owner: 'PerfectZQ',
             admin: ['PerfectZQ'],
-            id: location.pathname,      // Ensure uniqueness and length less than 50
+            // Ensure uniqueness and length less than 50
+            // 默认 id: location.pathname ，但是会因为域名太长而出现 Error: Validation Failed
+            id: '{{ page.date }}',
             distractionFreeMode: false  // Facebook-like distraction free mode
-        })
+        });
 
         gitalk.render('gitalk-container')
     </script>
