@@ -17,7 +17,7 @@
 
             if (len) {
                 // Compact form
-                for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random()*radix];
+                for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random() * radix];
             } else {
                 // rfc4122, version 4 form
                 var r;
@@ -30,7 +30,7 @@
                 // per rfc4122, sec. 4.1.5
                 for (i = 0; i < 36; i++) {
                     if (!uuid[i]) {
-                        r = 0 | Math.random()*16;
+                        r = 0 | Math.random() * 16;
                         uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
                     }
                 }
@@ -47,7 +47,7 @@
             admin: ['PerfectZQ'],
             // Ensure uniqueness and length less than 50
             // 默认 id: location.pathname ，但是会因为域名太长而出现 Error: Validation Failed
-            id: uuid(50,32),
+            id: uuid(50, 32),
             distractionFreeMode: false  // Facebook-like distraction free mode
         });
 
