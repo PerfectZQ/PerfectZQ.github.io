@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 2019-02-21-Redis 事务与 Pipeline
+title: Redis 事务与 Pipeline
 tag: Redis
 ---
 
