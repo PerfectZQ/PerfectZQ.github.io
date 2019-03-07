@@ -1,17 +1,24 @@
 <!-- gitment 评论 -->
 <section class="post-comments">
-    <div id="gitmentContainer"></div>
-    <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-    <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <!-- or -->
+    <!--
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    -->
+    <div id="gitalk-container"></div>
     <script>
-        var gitment = new Gitment({
-            owner: 'PerfectZQ',
-            repo: 'PerfectZQ.github.io',
-            oauth: {
-                client_id: 'dc80d4614cbc22815905',
-                client_secret: '7885c51effe60bb458d955dfb27cf69d01c9923b',
-            },
-        });
-        gitment.render('gitmentContainer');
+        const gitalk = new Gitalk({
+            clientID: 'GitHub Application Client ID',
+            clientSecret: 'GitHub Application Client Secret',
+            repo: 'GitHub repo',
+            owner: 'GitHub repo owner',
+            admin: ['GitHub repo owner and collaborators, only these guys can initialize github issues'],
+            id: location.pathname,      // Ensure uniqueness and length less than 50
+            distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
     </script>
 </section>
