@@ -34,11 +34,13 @@ FileBeat 保证事件将至少一次(At least once)传递到配置的`output`，
 
 [FileBeat input log input 相关配置项介绍](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html)
 
-## 配置文件格式说明
+## 配置文件格式
 [Config file format](https://www.elastic.co/guide/en/beats/libbeat/6.4/config-file-format.html)
 
 [YAML official doc](http://yaml.org/)
 
+## filebeat.yml 各配置项详细介绍
+[filebeat.yml](https://arch-long.cn/articles/elasticsearch/FileBeat-Configuration.html)
 
 ## Filter and enhance the exported data
 由 filebeat 导出的数据，你可能希望过滤掉一些数据并增强一些数据(比如添加一些额外的 metadata)。filebeat提供了一系列的工具来做这些事。
@@ -57,7 +59,7 @@ FileBeat 保证事件将至少一次(At least once)传递到配置的`output`，
 具体如何定义 processor 可以参考[define processors](https://www.elastic.co/guide/en/beats/filebeat/current/defining-processors.html)
 
 ### Add Kubernetes metadata
-除了自己定义 processor 之外，filebeat 还提供了一些定义好的 processor，例如 add_kubernetes_metadata processor
+除了自己定义 processor 之外，filebeat 还提供了一些已经定义好的 processor，例如 add_kubernetes_metadata processor
 
 add_kubernetes_metadata processor 根据 event 源自哪一个 kubernetes pod，使用相关 metadata 为每个 event 添加 annotations，包括：
 
@@ -171,6 +173,7 @@ processors:
         "time": "2018-07-23T07:18:58.099250606Z"
     }
 ```
+
 其中`k8s.cloud/controller-kind`是在Pod Template 的 annotation中添加的。
 
 这样我们可以得到以下信息，PodName、ContainerName、AppName、Namespace和ControllerKind，以便于日志分析。
@@ -775,4 +778,187 @@ filebeat.autodiscover:
                   type: docker
                   containers.ids:
                     - "${data.kubernetes.container.id}"
+```
+
+### 实战
+使用 Kubernetes auto discover 进行日志收集
+```yaml
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: filebeat-config
+  namespace: default
+  labels:
+    k8s-app: filebeat
+data:
+  filebeat.yml: |-
+    # k8s 自动发现
+    # To enable hints based autodiscover, remove `filebeat.config.inputs` configuration and uncomment this:
+    filebeat.autodiscover:
+      providers:
+        - type: kubernetes
+          # 开启基于提供程序提示的自动发现，它会在kubernetes pod注释或去具有前缀co.elastic.logs的docker标签中查找提示
+          # hints.enabled: true
+          templates:
+            - condition.and:
+                - equals:
+                    kubernetes.namespace: default
+                - contains:
+                    kubernetes.container.image: mysql
+              config:
+                # inputs
+                - type: docker
+                  containers.ids:
+                    - "${data.kubernetes.container.id}"
+                  fields:
+                    log_type: "${data.kubernetes.container.name}"
+    # filter and enhance fields
+    processors:
+      - add_kubernetes_metadata:
+          in_cluster: true
+    # config elasticsearch index template
+    setup.template.name: "logs"
+    setup.template.overwrite: true
+    setup.template.pattern: "logs-*"
+    setup.template.settings:
+      index.number_of_shards: 3
+      index.codec: best_compression
+      # 必须启用！默认模版会把 event 信息放到 _source 字段下
+      _source.enabled: true
+    # 设置 elasticsearch output
+    output.elasticsearch:
+      hosts: ["http://192.168.51.81:9200", "http://192.168.51.82:9200"]
+      index: "logs-%{[fields.log_type]}-%{+yyyy.MM.dd}"
+    # =========== filebeat 运行日志 =========== 
+    path.logs: /usr/share/filebeat/logs
+    # =========== debug logging =========== 
+    logging.level: info
+    # Enable debug output for selected components，可用的选项 "beat", "publish", "service"
+    logging.selectors: ["*"]
+    # 可以通过 docker logs 查看 debug 日志
+    # logging.to_syslog: true
+    # 改为 true 启用写到指定 file 文件
+    logging.to_files: true
+    logging.files:
+      path: /usr/share/filebeat/logs
+      name: filebeat
+    logging.json: false
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: filebeat
+  namespace: default
+  labels:
+    k8s-app: filebeat
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: filebeat
+    spec:
+      # 指定运行在当前 pod 的 Service Account
+      serviceAccountName: filebeat
+      terminationGracePeriodSeconds: 30
+      containers:
+      # docker compose
+      - name: filebeat
+        image: 192.168.51.35:5000/filebeat:6.4.0
+        args: [
+          "-c", "/etc/filebeat.yml",
+          "-e",
+        ]
+        env:
+        - name: ES_HOST
+          value: "192.168.51.81"
+        - name: ES_PORT
+          value: "9200"
+        securityContext:
+          runAsUser: 0
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        # 将指定 volumes mount 到容器内的路径
+        volumeMounts:
+        - name: config
+          mountPath: /etc/filebeat.yml
+          readOnly: true
+          subPath: filebeat.yml
+        # registry 文件路径，用于记录 filebeat 读取本节点文件的 status
+        - name: data
+          mountPath: /usr/share/filebeat/data
+        - name: logs
+          mountPath: /usr/share/filebeat/logs
+        - name: varlibdockercontainers
+          mountPath: /var/lib/docker/containers
+          readOnly: true
+      # 创建 volumes
+      volumes:
+      - name: config
+        configMap:
+          defaultMode: 0600
+          name: filebeat-config
+      # data folder stores a registry of read status for all files, so we don't send everything again on a Filebeat pod restart
+      - name: data
+        hostPath:
+          path: /var/lib/filebeat-data
+          type: DirectoryOrCreate
+      - name: logs
+        hostPath:
+          path: /var/lib/filebeat-logs
+          type: DirectoryOrCreate
+      - name: varlibdockercontainers
+        hostPath:
+          path: /var/lib/docker/containers
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: filebeat
+# 主题包含对该角色适用的对象的引用
+subjects:
+- kind: ServiceAccount
+  name: filebeat
+  namespace: default
+# 只能引用全局 namespace 中的 clusterRole。如果无法解析 roleRef，则 Authorizer 一定会返回错误。
+roleRef:
+  kind: ClusterRole
+  name: filebeat
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: filebeat
+  labels:
+    k8s-app: filebeat
+# 此 ClusterRole 的所有策略规则
+rules:
+  # 包含 resources 的 apiGroup 的名字，如果指定了多个 apiGroup，
+  # 那么对于任何一个 apiGroup 资源请求的任何操作都会允许
+  # "" indicates the core API group
+- apiGroups: [""]
+  # 此 rule 适用的资源列表，`ResourceAll`代表所有资源
+  resources:
+  - namespaces
+  - pods
+  # 此 rule 适用的所有资源类型和属性限制的动词列表，`VerbAll`代表所有动词
+  verbs:
+  - get
+  - watch
+  - list
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: filebeat
+  namespace: default
+  labels:
+    k8s-app: filebeat
+---
 ```
