@@ -5,11 +5,19 @@ tag: Redis
 ---
 
 ## 原生事务
+```scala
+val redis = Redis.getRedisClient()
+// 开启事务
+redis.multi()
+redis.set("1", "1")
+redis.set("2", "2")
+// 执行事务
+redis.exec()
+```
 
 ## Pipeline 
 ```scala
 val redis = Redis.getRedisClient()
-redis.select(2)
 val pipeline = redis.pipelined()
 pipeline.set("1", "1")
 pipeline.set("2", "2")
@@ -20,7 +28,6 @@ pipeline.sync()
 ## Pipeline 事务
 ```scala
 val redis = Redis.getRedisClient()
-redis.select(2)
 val pipeline = redis.pipelined()
 // 开启事务
 pipeline.multi()
