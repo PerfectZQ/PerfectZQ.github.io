@@ -34,6 +34,30 @@ FileBeat 保证事件将至少一次(At least once)传递到配置的`output`，
 
 [FileBeat input log input 相关配置项介绍](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html)
 
+
+## 安装
+注意安装换对应平台的 FileBeat，以防出现`can not exec bianary file`的异常
+
+[FileBeat目录结构](https://www.elastic.co/guide/en/beats/FileBeat/current/directory-layout.html)
+
+## 启动
+```shell
+# 运行 FileBeats
+# -e 记录到stderr并禁用syslog/文件输出
+# -c 指定配置文件
+# -d 启用对指定选择器的调试
+sudo nohup filebeat -e -c filebeat.yml -d "publish" > filebeat.log 2>&1 &
+
+# FileBeat 会在注册表中存储每个文件收集的状态，
+# 想强制 FileBeat 从日志的最开始重新读取，可以直接删除注册表文件
+sudo rm data/registry
+# deb/rpm 安装路径
+sudo rm /var/lib/filebeat/registry
+
+# 查看 filebeat 运行日志，发送的事件格式
+tail -100f /var/log/filebeat/filebeat
+```
+
 ## 配置文件格式
 [Config file format](https://www.elastic.co/guide/en/beats/libbeat/6.4/config-file-format.html)
 
@@ -48,15 +72,13 @@ FileBeat 保证事件将至少一次(At least once)传递到配置的`output`，
 下面简单介绍一些方法，详细的可以参考[Filter and enhance the exported data](https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html)
 
 ### Processors
-在将 event 发送到 output 之前，你可以在配置文件中定义 processors 去处理 event。processor 可以完成下面的任务：
+在将 event 发送到 output 之前，你可以在配置文件中[define processors](https://www.elastic.co/guide/en/beats/filebeat/current/defining-processors.html)去处理 event。processor 可以完成下面的任务：
 
 * 减少导出的字段
 * 添加其他的 metadata
 * 执行额外的处理和解码
 
 每个 processor 会接收一个 event，将一些定义好的行为应用到 event，然后返回 event，如果你在配置文件中定义了一系列 processors，那么他会按定义的顺序依次执行。
-
-具体如何定义 processor 可以参考[define processors](https://www.elastic.co/guide/en/beats/filebeat/current/defining-processors.html)
 
 ### Add Kubernetes metadata
 除了自己定义 processor 之外，filebeat 还提供了一些已经定义好的 processor，例如 add_kubernetes_metadata processor
@@ -178,7 +200,8 @@ processors:
 
 这样我们可以得到以下信息，PodName、ContainerName、AppName、Namespace和ControllerKind，以便于日志分析。
 
-更加详细的内容可以参考[official reference](https://www.elastic.co/guide/en/beats/filebeat/current/add-kubernetes-metadata.html)
+更加详细的内容可以参考[add kubernetes metadata](https://www.elastic.co/guide/en/beats/filebeat/current/add-kubernetes-metadata.html)
+
 ## Manage Multiline Message
 FileBeat 默认是一行一行的处理日志的，但是对于类似 Java 异常栈这种多行的 message 怎么处理呢？这就需要配置`filebeat.yml`中的`multiline`去指出哪些行是属于同一事件。
 
@@ -326,28 +349,6 @@ FileBeat 发送给`output`的事件如下：
 ...
 ```
 
-## 安装
-注意安装换对应平台的 FileBeat，以防出现`can not exec bianary file`的异常
-
-[FileBeat目录结构](https://www.elastic.co/guide/en/beats/FileBeat/current/directory-layout.html)
-
-## 启动
-```shell
-# 运行 FileBeats
-# -e 记录到stderr并禁用syslog/文件输出
-# -c 指定配置文件
-# -d 启用对指定选择器的调试
-sudo nohup filebeat -e -c filebeat.yml -d "publish" > filebeat.log 2>&1 &
-
-# FileBeat 会在注册表中存储每个文件收集的状态，
-# 想强制 FileBeat 从日志的最开始重新读取，可以直接删除注册表文件
-sudo rm data/registry
-# deb/rpm 安装路径
-sudo rm /var/lib/filebeat/registry
-
-# 查看 filebeat 运行日志，发送的事件格式
-tail -100f /var/log/filebeat/filebeat
-```
 
 ## Running Filebeat on Kubernetes
 [official reference](https://www.elastic.co/guide/en/beats/filebeat/current/running-on-kubernetes.html)
