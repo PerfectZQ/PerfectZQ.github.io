@@ -4,7 +4,8 @@ title: ElasticSearch APIs
 tag: ElasticSearch
 ---
 ## 声明
-本文章是作者在阅读官方文档时的整理，因为作者水平有限，可能会有理解或翻译的不正确的地方，如果有读者发现，可以联系作者`inteli_zq@163.com`。文章都发布在[Github](https://github.com/PerfectZQ/PerfectZQ.github.io/blob/master/articles/)上，所以也可以直接在 Github 上提 Issues，我都能看到哦。
+本文章是作者在阅读官方文档时的整理，因为作者水平有限，可能会有理解或翻译的不正确的地方，可以在下方留言
+
 ## ElasticSearch APIs 简介
 和ElasticSearch交互的方式取决于是否用Java，如果使用Java，可以使用ElasticSearch的Java Client，否则使用RESTful API with JSON over HTTP
 
