@@ -64,7 +64,7 @@ tail -100f /var/log/filebeat/filebeat
 [YAML](http://yaml.org/)
 
 ## filebeat.yml 各配置项详细介绍
-[Configure fileBeat.yml](https://arch-long.cn/articles/elasticsearch/FileBeat-Configuration.html)
+[Configure filebeat.yml](https://arch-long.cn/articles/elasticsearch/FileBeat-Configuration.html)
 
 ## Filter and enhance the exported data
 由 filebeat 导出的数据，你可能希望过滤掉一些数据并增强一些数据(比如添加一些额外的 metadata)。filebeat提供了一系列的工具来做这些事。
