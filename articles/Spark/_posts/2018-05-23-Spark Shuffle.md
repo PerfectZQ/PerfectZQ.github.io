@@ -158,6 +158,7 @@ public class TaskMemoryManager {
    * When using an in-heap allocator, the entries in this map will point to pages' base objects.
    * Entries are added to this map as new data pages are allocated.
    */
+  // 通过 MemoryBlock[] 管理当前 Task 已分配到的内存
   private final MemoryBlock[] pageTable = new MemoryBlock[PAGE_TABLE_SIZE];
 
   /**
@@ -466,3 +467,6 @@ private[spark] abstract class MemoryManager(
   }
 }
 ```
+
+## Spark Shuffle
+Spark Shuffle 分为两个阶段:`Shuffle Write`和`Shuffle Read`，
