@@ -217,6 +217,7 @@ public class TaskMemoryManager {
 
       // Try to release memory from other consumers first, then we can reduce the frequency of
       // spilling, avoid to have too many spilled files.
+      // 如果没有申请到足够的内存，则先调用其他 consumer 的 spill 方法释放内存
       if (got < required) {
         // Call spill() on other consumers to release memory
         // Sort the consumers according their memory usage. So we avoid spilling the same consumer
@@ -267,8 +268,9 @@ public class TaskMemoryManager {
           }
         }
       }
-
+        
       // call spill() on itself
+      // 如果还不够，再调用当前 consumer 的 spill 方法释放内存
       if (got < required) {
         try {
           // MemoryConsumer 实现类将内存数据写入磁盘以释放内存
