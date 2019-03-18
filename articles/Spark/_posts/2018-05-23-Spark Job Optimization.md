@@ -4,6 +4,9 @@ title: Spark Job Optimization
 tag: Spark
 ---
 
+## References
+[Apache Spark 2.0 作业优化技巧](https://mp.weixin.qq.com/s/C94nFvrp9ALgKVsOmIX7Jw)
+
 ## reduce task 数目不合适
 调整分区数，设置为core数目的2-3倍，太少运行缓慢或者单个任务太大导致内存不足，数量太多，造成任务太小，增加启动任务的开销，因此需要合理的修改reduce task的数量
 ```shell

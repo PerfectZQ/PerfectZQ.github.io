@@ -10,3 +10,7 @@ tag: Spark
 [spark shuffle introduction](https://de.slideshare.net/colorant/spark-shuffle-introduction)
 
 [nsdi spark](http://people.csail.mit.edu/matei/papers/2012/nsdi_spark.pdf)
+
+[Spark Shuffle 内存使用](https://mp.weixin.qq.com/s/wB3xDWwl0k-GzIJ9j6nDyw)
+
+[]

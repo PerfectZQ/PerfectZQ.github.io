@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 监控管理
+title: Spark Monitor
 tag: Spark
 ---
 
