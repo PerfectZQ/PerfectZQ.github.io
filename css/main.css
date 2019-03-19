@@ -284,8 +284,9 @@ table {
     text-align: left;
     line-height: 28px;
     border: 1px solid #363636;
-    width: 90%;
+    width: 100%;
     margin: 20px 0;
+    table-layout: fixed;
 }
 
 thead tr:first-child {
@@ -305,6 +306,9 @@ tbody td {
     font-size: 0.9em;
     border: 1px solid #363636;
     padding: 5px 15px 5px 15px;
+    /* 自动换行 */
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 /* 第一列内容不换行 */
