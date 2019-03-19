@@ -553,10 +553,9 @@ private[spark] trait ShuffleManager {
 基于排序的`shuffle`有两种不同的写路径划分方式，以产生`map output files`:
 
 * **Serialized sorting**: 在满足以下三个条件时使用
-
-1.`ShuffleDependency`指定没有聚合和输出排序。
-2.`ShuffleSerializer`支持重新定位序列化值(`KryoSerializer`和 Spark SQL 的自定义`serializers`支持此功能)
-3.`shuffle`产生的输出分区数小于 16777216
+1. `ShuffleDependency`指定没有聚合和输出排序。
+2. `ShuffleSerializer`支持重新定位序列化值(`KryoSerializer`和 Spark SQL 的自定义`serializers`支持此功能)
+3. `shuffle`产生的输出分区数小于 16777216
 
 * **Deserialized sorting**: 用于所有其他情况
 
