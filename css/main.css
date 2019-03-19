@@ -247,8 +247,8 @@ code {
     margin-left: .2em;
     margin-right: .2em;
     background: #e8f2fb;
-    border: 1px solid #c9e1f6;
-    border-radius: 2px;
+    /*border: 1px solid #c9e1f6;*/
+    /*border-radius: 2px;*/
     font-family: Consolas, Courier;
     font-size: 1.0em;
     vertical-align: bottom;
