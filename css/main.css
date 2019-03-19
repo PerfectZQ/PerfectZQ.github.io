@@ -246,9 +246,9 @@ code {
     padding: .1em .4em;
     margin-left: .2em;
     margin-right: .2em;
-    background: #e8f2fb;
+    background: #e8f2fbaa;
     /*border: 1px solid #c9e1f6;*/
-    border: .05em solid #e8f2fb;
+    border: .05em solid #e8f2fbaa;
     border-radius: .1em;
     font-family: Consolas, Courier;
     vertical-align: bottom;
