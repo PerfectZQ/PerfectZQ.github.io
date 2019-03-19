@@ -552,11 +552,13 @@ private[spark] trait ShuffleManager {
 
 基于排序的`shuffle`有两种不同的写路径划分方式，以产生`map output files`:
 
-* **Serialized sorting**: 在满足以下三个条件时使用。
+* **Serialized sorting**: 在满足以下三个条件时使用
+
 1.`ShuffleDependency`指定没有聚合和输出排序。
 2.`ShuffleSerializer`支持重新定位序列化值(`KryoSerializer`和 Spark SQL 的自定义`serializers`支持此功能)
 3.`shuffle`产生的输出分区数小于 16777216
-* *Deserialized sorting*: 用于所有其他情况
+
+* **Deserialized sorting**: 用于所有其他情况
 
 对于`Serialized sorting mode`，读取的数据在传入`ShuffleWriter`后立即被序列化，并在排序期间以序列化的形式缓存。这种方式实现了以下的几种优化:
 * 它对序列化后的二进制数据进行排序，而不是 Java 对象，这样就会减少内存和 GC 的开销。该优化要求`record serializer`有能够不需要反序列化就可以对序列化后的数据进行排序的属性。参考[SPARK-4550](https://issues.apache.org/jira/browse/SPARK-4550?attachmentOrder=asc)，它首次提出并实现了该优化。
@@ -734,22 +736,29 @@ private[spark] object SortShuffleManager extends Logging {
    * Helper method for determining whether a shuffle should use an optimized serialized shuffle
    * path or whether it should fall back to the original path that operates on deserialized objects.
    */
+  // 判断能否使用 Serialized sorting
   def canUseSerializedShuffle(dependency: ShuffleDependency[_, _, _]): Boolean = {
     val shufId = dependency.shuffleId
     val numPartitions = dependency.partitioner.numPartitions
+    // 是否支持对序列化的二进制数据进行排序
     if (!dependency.serializer.supportsRelocationOfSerializedObjects) {
       log.debug(s"Can't use serialized shuffle for shuffle $shufId because the serializer, " +
         s"${dependency.serializer.getClass.getName}, does not support object relocation")
       false
-    } else if (dependency.mapSideCombine) {
+    } 
+    // 是否没有 map 端的聚合操作
+    else if (dependency.mapSideCombine) {
       log.debug(s"Can't use serialized shuffle for shuffle $shufId because we need to do " +
         s"map-side aggregation")
       false
-    } else if (numPartitions > MAX_SHUFFLE_OUTPUT_PARTITIONS_FOR_SERIALIZED_MODE) {
+    } 
+    // shuffle output partitions 数量是否小于 16777216
+    else if (numPartitions > MAX_SHUFFLE_OUTPUT_PARTITIONS_FOR_SERIALIZED_MODE) {
       log.debug(s"Can't use serialized shuffle for shuffle $shufId because it has more than " +
         s"$MAX_SHUFFLE_OUTPUT_PARTITIONS_FOR_SERIALIZED_MODE partitions")
       false
-    } else {
+    } 
+    else {
       log.debug(s"Can use serialized shuffle for shuffle $shufId")
       true
     }
