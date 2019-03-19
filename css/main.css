@@ -248,9 +248,9 @@ code {
     margin-right: .2em;
     background: #e8f2fb;
     /*border: 1px solid #c9e1f6;*/
-    /*border-radius: 2px;*/
+    border: .05em solid #c9e1f6;
+    border-radius: .1em;
     font-family: Consolas, Courier;
-    font-size: 1.0em;
     vertical-align: bottom;
     word-wrap: break-word;
 }
