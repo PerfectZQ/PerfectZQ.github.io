@@ -1555,6 +1555,7 @@ html {
     -webkit-transition: left 0.3s ease;
     transition: left 0.3s ease;
     z-index: 20;
+    font-family: Consolas, Microsoft YaHei, Courier;
 }
 
 .nav {
