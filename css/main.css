@@ -214,6 +214,7 @@ blockquote p:last-child {
 
 ol, ul {
     margin: 0 0 1.3em 1.5em;
+    font-family: Microsoft YaHei, Consolas, Courier;
 }
 
 ol li, ul li {
