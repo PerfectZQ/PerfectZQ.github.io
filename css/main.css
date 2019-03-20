@@ -232,6 +232,10 @@ ul {
     list-style-type: disc;
 }
 
+ol li a, ul li a {
+    font-family: "Microsoft YaHei";
+}
+
 nav.menu a {
     line-height: 20px;
 }
