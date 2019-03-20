@@ -214,15 +214,18 @@ function isDisplayLeftContent(flag) {
 }
 
 /**
- * 根据浏览器选择字体
+ * 根据浏览器和操作系统选择字体
  */
 function fontLoad() {
     var explorer = getExplorer();
-    var system = getSystemPlatform();
+    var system = getSystem();
     if (explorer === "Chrome" && system === "Mac") $("html").css({"font-family": 'Microsoft YaHei'});
     else $("html").css({"font-family": 'Consolas, Microsoft YaHei, Courier'});
 }
 
+/**
+ * 判断浏览器类型
+ */
 function getExplorer() {
     var explorer = window.navigator.userAgent;
     if (explorer.indexOf("MSIE") >= 0) return "IE";
@@ -236,14 +239,11 @@ function getExplorer() {
 /**
  * 判断操作系统
  */
-function getSystemPlatform() {
-    var isWin = (navigator.platform === "Win32") || (navigator.platform === "Windows");
-    if (isWin) return "Windows"
-    var isMac = (navigator.platform === "Mac68K") || (navigator.platform === "MacPPC") || (navigator.platform === "Macintosh") || (navigator.platform === "MacIntel");
-    if (isMac) return "Mac";
-    var isUnix = (navigator.platform === "X11") && !isWin && !isMac;
-    if (isUnix) return "Unix";
-    var isLinux = (String(navigator.platform).indexOf("Linux") > -1);
-    if (isLinux) return "Linux";
+function getSystem() {
+    var system = navigator.platform;
+    if (system.indexOf("Win") >= 0) return "Win";
+    else if (system.indexOf("Mac") >= 0) return "Mac";
+    else if (system.indexOf("X11") >= 0) return "Unix";
+    else if (system.indexOf("Linux") >= 0) return "Linux";
     return "Other";
 }
