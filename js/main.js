@@ -147,6 +147,7 @@ function scrollToView(id) {
 function isDisplayLeftContent(flag) {
     var windowWidth = $(window).width();
     if (flag) {
+        $(".header .side-change-container .menu-btn i").attr("class", "fas fa-angle-double-left");
         $(".header").animate(
             {left: "255px"},
             {duration: 50, easing: "swing"}
@@ -172,6 +173,7 @@ function isDisplayLeftContent(flag) {
             $(".content-wrapper").css("display", "none");
         }
     } else {
+        $(".header .side-change-container .menu-btn i").attr("class", "fas fa-angle-double-right");
         $(".header").animate(
             {left: "0px"},
             {duration: 50, easing: "swing"}
