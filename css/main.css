@@ -1672,6 +1672,7 @@ html {
     z-index: 20;
     right: 34px;
     position: fixed;
+    font-family: Consolas, Microsoft YaHei, Courier;
 }
 
 .sidebar_right div.div_content {
