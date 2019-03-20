@@ -215,7 +215,6 @@ ol, ul {
 
 ol li, ul li {
     line-height: 1.6em;
-    font-family: Microsoft YaHei, Consolas, Courier;
 }
 
 ol ol, ol ul, ul ol, ul ul {
@@ -229,10 +228,6 @@ ol {
 
 ul {
     list-style-type: disc;
-}
-
-ol li a, ul li a {
-    font-family: "Microsoft YaHei";
 }
 
 nav.menu a {
