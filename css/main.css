@@ -1566,6 +1566,7 @@ html {
     padding: 15px 10px 15px 35px;
     margin-left: 4px;
     margin-right: 4px;
+    font-family: Consolas, Microsoft YaHei, Courier;
 }
 
 [class^='nav'] li > a,
@@ -1715,6 +1716,7 @@ html {
 .sidebar_right a {
     margin: 0;
     color: #808080;
+    font-family: Consolas, Microsoft YaHei, Courier;
 }
 
 .sidebar_right a:hover {
