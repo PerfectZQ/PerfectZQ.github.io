@@ -32,7 +32,7 @@ body {
     width: 100%;
     *zoom: 1;
     line-height: 1;
-    font-family: Consolas, Microsoft YaHei, Courier;
+    font-family: Microsoft YaHei, Consolas, Courier;
     font-size: 16px;
     color: #333;
     -webkit-font-smoothing: antialiased;
@@ -1555,7 +1555,6 @@ html {
     -webkit-transition: left 0.3s ease;
     transition: left 0.3s ease;
     z-index: 20;
-    font-family: Consolas, Microsoft YaHei, Courier;
 }
 
 .nav {
@@ -1673,7 +1672,6 @@ html {
     z-index: 20;
     right: 34px;
     position: fixed;
-    font-family: Consolas, Microsoft YaHei, Courier;
 }
 
 .sidebar_right div.div_content {
