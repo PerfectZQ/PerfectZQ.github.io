@@ -112,6 +112,8 @@ $(function () {
         }
     }
 
+    // 改变字体
+    fontLoad();
 });
 
 /**
@@ -153,10 +155,10 @@ function isDisplayLeftContent(flag) {
             {width: "255px"},
             {
                 duration: 300, easing: "swing", complete:
-                function () {
-                    $(".sidebar-header").css("display", "block");
-                    $(".sidebar-container").css("display", "block");
-                }
+                    function () {
+                        $(".sidebar-header").css("display", "block");
+                        $(".sidebar-container").css("display", "block");
+                    }
             }
         );
         if (windowWidth >= 1100) {
@@ -178,12 +180,12 @@ function isDisplayLeftContent(flag) {
             {width: "0px"},
             {
                 duration: 300, easing: "swing", complete:
-                function () {
-                    if (windowWidth < 1100) {
-                        $(".header .top-right-menu").css("display", "block");
-                        $(".content-wrapper").css("display", "block");
+                    function () {
+                        if (windowWidth < 1100) {
+                            $(".header .top-right-menu").css("display", "block");
+                            $(".content-wrapper").css("display", "block");
+                        }
                     }
-                }
             }
         );
         if (windowWidth >= 1100) {
@@ -200,5 +202,32 @@ function isDisplayLeftContent(flag) {
         }
         $(".sidebar-header").css("display", "none");
         $(".sidebar-container").css("display", "none");
+    }
+}
+
+/**
+ * 根据浏览器选择字体
+ */
+function fontLoad() {
+    var explorer = window.navigator.userAgent;
+    //判断是否为IE浏览器
+    if (explorer.indexOf("MSIE") >= 0) {
+
+    }
+    //判断是否为Firefox浏览器
+    else if (explorer.indexOf("Firefox") >= 0) {
+
+    }
+    //判断是否为Chrome浏览器
+    else if (explorer.indexOf("Chrome") >= 0) {
+        $("html").css({"font-family": "Microsoft YaHei, Consolas, Courier"});
+    }
+    //判断是否为Opera浏览器
+    else if (explorer.indexOf("Opera") >= 0) {
+
+    }
+    //判断是否为Safari浏览器
+    else if (explorer.indexOf("Safari") >= 0) {
+        $("html").css({"font-family": "Consolas, Microsoft YaHei, Courier"});
     }
 }
