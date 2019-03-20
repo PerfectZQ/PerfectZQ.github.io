@@ -1513,6 +1513,24 @@ html {
     float: left;
 }
 
+.sidebar-bottom {
+
+}
+
+.sidebar-bottom .menu-btn {
+    background: none;
+    border: none;
+    box-shadow: none;
+    color: #a3a3a3;
+    font-size: 24px;
+    line-height: 40px;
+    border-radius: 0;
+    outline: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: initial;
+}
+
 .disappear {
     display: none;
 }
