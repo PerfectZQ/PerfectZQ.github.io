@@ -7,7 +7,10 @@ $(function () {
     else
         isDisplayBlog(true);
 
-    if (window.innerWidth <= 1100) $(".header .side-change-container .menu-btn i").attr("class", "fas fa-angle-double-right");
+    window.onresize = function () {
+        if (window.innerWidth <= 1100) $(".header .side-change-container .menu-btn i").attr("class", "fas fa-angle-double-right");
+        else $(".header .side-change-container .menu-btn i").attr("class", "fas fa-angle-double-left");
+    }
 
 
     /**
