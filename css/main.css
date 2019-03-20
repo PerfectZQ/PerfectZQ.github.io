@@ -1514,10 +1514,12 @@ html {
 }
 
 .sidebar-bottom {
-
+    position: absolute;
+    bottom: 0;
 }
 
-.sidebar-bottom .menu-btn {
+.sidebar-bottom .menu-btn-down {
+    width: 100%;
     background: none;
     border: none;
     box-shadow: none;
