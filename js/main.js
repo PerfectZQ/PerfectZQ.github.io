@@ -222,7 +222,7 @@ function fontLoad() {
     }
     //判断是否为Chrome浏览器
     else if (explorer.indexOf("Chrome") >= 0) {
-        $("html").css({"font-family": 'Microsoft YaHei'});
+        $("html").css({"font-family": 'Microsoft YaHei, Consolas, Courier'});
     }
     //判断是否为Opera浏览器
     else if (explorer.indexOf("Opera") >= 0) {
