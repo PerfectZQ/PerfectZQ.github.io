@@ -214,11 +214,11 @@ blockquote p:last-child {
 
 ol, ul {
     margin: 0 0 1.3em 1.5em;
-    font-family: Microsoft YaHei, Consolas, Courier;
 }
 
 ol li, ul li {
     line-height: 1.6em;
+    font-family: Microsoft YaHei, Consolas, Courier;
 }
 
 ol ol, ol ul, ul ol, ul ul {
