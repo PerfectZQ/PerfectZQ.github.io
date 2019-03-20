@@ -203,9 +203,7 @@ blockquote {
     padding-top: 5px;
     padding-bottom: 1px;
     padding-left: 10px;
-    font-family: PingFangSC, "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
-    font-weight: lighter;
-    font-size: 1em;
+    margin-bottom: 10px;
     border-left: 3px solid #4F4F4F;
 }
 
