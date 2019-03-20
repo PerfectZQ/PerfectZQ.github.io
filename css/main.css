@@ -1529,7 +1529,7 @@ html {
     line-height: 40px;
     border-radius: 0;
     outline: none;
-    padding-bottom: 0.5em;
+    padding-bottom: 0.8em;
     vertical-align: initial;
 }
 
@@ -1590,7 +1590,7 @@ html {
 .sidebar .sidebar-container {
     position: absolute;
     top: 95px;
-    bottom: 40px;
+    bottom: 50px;
     width: 100%;
     left: 0;
     right: 0;
