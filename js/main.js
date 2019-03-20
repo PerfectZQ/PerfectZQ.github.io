@@ -212,11 +212,11 @@ function fontLoad() {
     var explorer = window.navigator.userAgent;
     //判断是否为IE浏览器
     if (explorer.indexOf("MSIE") >= 0) {
-
+        $("html").css({"font-family": "Consolas, Microsoft YaHei, Courier"});
     }
     //判断是否为Firefox浏览器
     else if (explorer.indexOf("Firefox") >= 0) {
-
+        $("html").css({"font-family": "Consolas, Microsoft YaHei, Courier"});
     }
     //判断是否为Chrome浏览器
     else if (explorer.indexOf("Chrome") >= 0) {
@@ -224,7 +224,7 @@ function fontLoad() {
     }
     //判断是否为Opera浏览器
     else if (explorer.indexOf("Opera") >= 0) {
-
+        $("html").css({"font-family": "Consolas, Microsoft YaHei, Courier"});
     }
     //判断是否为Safari浏览器
     else if (explorer.indexOf("Safari") >= 0) {
