@@ -1857,6 +1857,10 @@ html {
     vertical-align: initial;
 }
 
+.header .side-change-container .menu-btn i{
+    font-size: 30px;
+}
+
 .header .top-right-menu {
     float: right;
     margin-right: 25px;
