@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 日志管理
+title: Spark Logs
 tag: Spark
 ---
 

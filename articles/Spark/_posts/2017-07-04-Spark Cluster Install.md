@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 集群搭建
+title: Spark Cluster Install
 tag: Spark
 ---
 

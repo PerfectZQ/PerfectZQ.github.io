@@ -18,8 +18,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
-    font: inherit;
     vertical-align: bottom;
 }
 
@@ -32,7 +30,6 @@ body {
     width: 100%;
     *zoom: 1;
     line-height: 1;
-    font-family: Consolas, Microsoft YaHei, Courier;
     font-size: 16px;
     color: #333;
     -webkit-font-smoothing: antialiased;
@@ -67,7 +64,6 @@ html, body {
 }
 
 html {
-    height: 100%;
     max-height: 100%;
 }
 
@@ -149,7 +145,7 @@ h2 {
 }
 
 h3 {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     font-family: 'Microsoft YaHei';
     padding: 10px 0px;
@@ -158,7 +154,7 @@ h3 {
 }
 
 h4 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     font-family: 'Microsoft YaHei';
     padding: 10px 0px;
@@ -167,7 +163,7 @@ h4 {
 }
 
 h5 {
-    margin-top: 18px;
+    margin-top: 16px;
     margin-bottom: .5em;
     font-size: 1em;
     font-weight: lighter;
@@ -177,7 +173,7 @@ h5 {
 
 p {
     line-height: 1.6em;
-    padding: 5px 0px 5px 2px;
+    padding: 0.4em 0em 0.6em 0.3em;
 }
 
 li p {
@@ -199,12 +195,8 @@ em {
 }
 
 blockquote {
-    padding-top: 5px;
-    padding-bottom: 1px;
-    padding-left: 10px;
-    font-family: PingFangSC, "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
-    font-weight: lighter;
-    font-size: 1em;
+    padding: 0.5em 1.0em 0.5em 1.0em;
+    margin-bottom: 1.0em;
     border-left: 3px solid #4F4F4F;
 }
 
@@ -246,17 +238,17 @@ code {
     padding: .1em .4em;
     margin-left: .2em;
     margin-right: .2em;
-    background: #e8f2fb;
-    border: 1px solid #c9e1f6;
-    border-radius: 2px;
+    background: #e8f2fbaa;
+    /*border: 1px solid #c9e1f6;*/
+    border: .05em solid #e8f2fbaa;
+    border-radius: .1em;
     font-family: Consolas, Courier;
-    font-size: 1.0em;
     vertical-align: bottom;
     word-wrap: break-word;
 }
 
 pre {
-    margin: 10px auto;
+    margin: 0.5em 0 1.5em 0;
     padding: 1em 2.5%;
     background: #f6f6f6;
     border: 1px solid #dddddd;
@@ -264,7 +256,6 @@ pre {
     font-size: .9em;
     font-weight: normal;
     line-height: 1.3em;
-    overflow: scroll;
 }
 
 pre code {
@@ -284,8 +275,9 @@ table {
     text-align: left;
     line-height: 28px;
     border: 1px solid #363636;
-    width: 90%;
+    width: 100%;
     margin: 20px 0;
+    table-layout: fixed;
 }
 
 thead tr:first-child {
@@ -305,6 +297,9 @@ tbody td {
     font-size: 0.9em;
     border: 1px solid #363636;
     padding: 5px 15px 5px 15px;
+    /* 自动换行 */
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 /* 第一列内容不换行 */
@@ -586,7 +581,7 @@ hr {
 
 .post pre {
     width: 94%;
-    overflow: auto;
+    overflow: scroll;
 }
 
 .post hr {
@@ -597,7 +592,7 @@ hr {
 }
 
 .post ul {
-    margin: 0 0 0 2.0em;
+    margin: 0 0 1.0em 2.0em;
 }
 
 .post ol {
@@ -1518,6 +1513,26 @@ html {
     float: left;
 }
 
+.sidebar-bottom {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
+.sidebar-bottom .menu-btn-down {
+    width: 100%;
+    background: none;
+    border: none;
+    box-shadow: none;
+    color: #a3a3a3;
+    font-size: 24px;
+    line-height: 40px;
+    border-radius: 0;
+    outline: none;
+    padding-bottom: 0.8em;
+    vertical-align: initial;
+}
+
 .disappear {
     display: none;
 }
@@ -1575,7 +1590,7 @@ html {
 .sidebar .sidebar-container {
     position: absolute;
     top: 95px;
-    bottom: 40px;
+    bottom: 50px;
     width: 100%;
     left: 0;
     right: 0;
@@ -1741,6 +1756,12 @@ html {
 
 ::-webkit-scrollbar-thumb {
     border-radius: 20px;
+    background: #3a4651;
+    opacity: 0.8;
+}
+
+.post pre::-webkit-scrollbar-thumb {
+    border-radius: 20px;
     background: #B9D3EE;
     opacity: 0.8;
 }
@@ -1834,6 +1855,10 @@ html {
     padding-left: 10px;
     padding-right: 10px;
     vertical-align: initial;
+}
+
+.header .side-change-container .menu-btn i{
+    font-size: 30px;
 }
 
 .header .top-right-menu {
@@ -1984,4 +2009,5 @@ html {
 /* 屏幕自适应 --end */
 code.highlighter-rouge {
     font-size: 0.9em;
+    color: #236B8E;
 }

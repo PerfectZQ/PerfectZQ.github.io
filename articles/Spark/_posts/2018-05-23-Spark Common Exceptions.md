@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 异常处理记录
+title: Spark Common Exceptions
 tag: Spark
 ---
 
