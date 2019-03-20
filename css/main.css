@@ -1736,6 +1736,12 @@ html {
 
 ::-webkit-scrollbar-thumb {
     border-radius: 20px;
+    background: #3a4651;
+    opacity: 0.8;
+}
+
+.post pre::-webkit-scrollbar-thumb {
+    border-radius: 20px;
     background: #B9D3EE;
     opacity: 0.8;
 }
