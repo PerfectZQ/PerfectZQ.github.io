@@ -217,54 +217,33 @@ function isDisplayLeftContent(flag) {
  * 根据浏览器选择字体
  */
 function fontLoad() {
+    var explorer = getExplorer();
+    var system = getSystemPlatform();
+    if (explorer === "Chrome" && system === "Mac") $("html").css({"font-family": 'Microsoft YaHei'});
+    else $("html").css({"font-family": 'Consolas, Microsoft YaHei, Courier'});
+}
+
+function getExplorer() {
     var explorer = window.navigator.userAgent;
-    //判断是否为IE浏览器
-    if (explorer.indexOf("MSIE") >= 0) {
-        $("html").css({"font-family": 'Consolas, Microsoft YaHei, Courier'});
-    }
-    //判断是否为Firefox浏览器
-    else if (explorer.indexOf("Firefox") >= 0) {
-        $("html").css({"font-family": 'Consolas, Microsoft YaHei, Courier'});
-    }
-    //判断是否为Chrome浏览器
-    else if (explorer.indexOf("Chrome") >= 0) {
-        $("html").css({"font-family": 'Microsoft YaHei, Consolas, Courier'});
-        $(".sidebar").css({"font-family": 'Consolas, Courier'});
-        $(".sidebar_right").css({"font-family": 'Consolas, Courier'});
-    }
-    //判断是否为Opera浏览器
-    else if (explorer.indexOf("Opera") >= 0) {
-        $("html").css({"font-family": 'Consolas, Microsoft YaHei, Courier'});
-    }
-    //判断是否为Safari浏览器
-    else if (explorer.indexOf("Safari") >= 0) {
-        $("html").css({"font-family": 'Consolas, Microsoft YaHei, Courier'});
-    }
+    if (explorer.indexOf("MSIE") >= 0) return "IE";
+    else if (explorer.indexOf("Firefox") >= 0) return "Firefox";
+    else if (explorer.indexOf("Chrome") >= 0) return "Chrome";
+    else if (explorer.indexOf("Opera") >= 0) return "Opera";
+    else if (explorer.indexOf("Safari") >= 0) return "Safari";
+    return "Other";
 }
 
 /**
  * 判断操作系统
  */
 function getSystemPlatform() {
-    var sUserAgent = navigator.userAgent;
-    var isWin = (navigator.platform == "Win32") || (navigator.platform == "Windows");
-    var isMac = (navigator.platform == "Mac68K") || (navigator.platform == "MacPPC") || (navigator.platform == "Macintosh") || (navigator.platform == "MacIntel");
+    var isWin = (navigator.platform === "Win32") || (navigator.platform === "Windows");
+    if (isWin) return "Windows"
+    var isMac = (navigator.platform === "Mac68K") || (navigator.platform === "MacPPC") || (navigator.platform === "Macintosh") || (navigator.platform === "MacIntel");
     if (isMac) return "Mac";
-    var isUnix = (navigator.platform == "X11") && !isWin && !isMac;
+    var isUnix = (navigator.platform === "X11") && !isWin && !isMac;
     if (isUnix) return "Unix";
     var isLinux = (String(navigator.platform).indexOf("Linux") > -1);
     if (isLinux) return "Linux";
-    if (isWin) {
-        var isWin2K = sUserAgent.indexOf("Windows NT 5.0") > -1 || sUserAgent.indexOf("Windows 2000") > -1;
-        if (isWin2K) return "Win2000";
-        var isWinXP = sUserAgent.indexOf("Windows NT 5.1") > -1 || sUserAgent.indexOf("Windows XP") > -1;
-        if (isWinXP) return "WinXP";
-        var isWin2003 = sUserAgent.indexOf("Windows NT 5.2") > -1 || sUserAgent.indexOf("Windows 2003") > -1;
-        if (isWin2003) return "Win2003";
-        var isWinVista = sUserAgent.indexOf("Windows NT 6.0") > -1 || sUserAgent.indexOf("Windows Vista") > -1;
-        if (isWinVista) return "WinVista";
-        var isWin7 = sUserAgent.indexOf("Windows NT 6.1") > -1 || sUserAgent.indexOf("Windows 7") > -1;
-        if (isWin7) return "Win7";
-    }
-    return "other";
+    return "Other";
 }
