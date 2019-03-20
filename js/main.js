@@ -7,6 +7,9 @@ $(function () {
     else
         isDisplayBlog(true);
 
+    if (window.innerWidth <= 1100) $(".header .side-change-container .menu-btn i").attr("class", "fas fa-angle-double-right");
+
+
     /**
      * 对博客目录进行重新排序
      */
