@@ -149,3 +149,170 @@ PropertyConfigurator.configure("Log4j.properties");
 logger.info("测试信息开始");
 logger.info("测试信息结束");
 ```
+
+## Log4j2 的介绍与配置语法
+
+### 依赖
+```xml
+<dependencies>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-1.2-api</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+        <!-- Log4j2 Json Format -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.8</version>
+        </dependency>
+    </dependencies>
+```
+
+### 配置文件
+注意应该是`log4j2.properties`而不是`log4j.properties`，否则会找不到。
+```properties
+# ---------------------------------------------------
+# -------------------- 定义变量 ----------------------
+# ---------------------------------------------------
+
+# `property`下的变量可以通过 ${filename} 获取相应的值
+property.filename = target/rolling/rolling.log
+
+# ---------------------------------------------------
+# ------------------ 定义 appender -------------------
+# ---------------------------------------------------
+
+# ----------------- json logs -----------------
+appender.json.type = Console
+appender.json.name = stdout
+appender.json.target = "SYSTEM_OUT"
+appender.json.layout.type = JsonLayout
+# If true, the appender does not use end-of-lines and indentation. Defaults to false.
+appender.json.layout.compact = true
+# If true, the appender appends an end-of-line after each record. Defaults to false. Use with eventEol=true and compact=true to get one record per line.
+appender.json.layout.eventEol = true
+# If true, ObjectMessage is serialized as JSON object to the "message" field of the output log. Defaults to false.
+appender.json.layout.objectMessageAsJsonObject = true
+# If true, the appender includes the JSON header and footer, and comma between records. Defaults to false.
+appender.json.layout.complete = false
+# If true, include full stacktrace of any logged Throwable (optional, default to true).
+appender.json.layout.includeStacktrace = true
+# Whether to format the stacktrace as a string, and not a nested object (optional, defaults to false).
+appender.json.layout.stacktraceAsString = true
+# If true, the appender includes the thread context map in the generated JSON. Defaults to false.
+appender.json.layout.properties = false
+# If true, the thread context map is included as a list of map entry objects, where each entry has a "key" attribute (whose value is the key) and a "value" attribute (whose value is the value). Defaults to false, in which case the thread context map is included as a simple map of key-value pairs.
+appender.json.layout.propertiesAsList = false
+appender.json.filter.threshold.type = ThresholdFilter
+appender.json.filter.threshold.level = info
+
+
+# ----------------- common logs -----------------
+appender.console.type = Console
+appender.console.name = stderr
+appender.console.target = "SYSTEM_ERR"
+appender.console.layout.type = PatternLayout
+appender.console.layout.pattern = %d{yyyy-MM-dd HH:mm:ss.sss} %c{10} %level %m
+appender.console.filter.threshold.type = ThresholdFilter
+appender.console.filter.threshold.level = error
+
+# ----------------- rolling file logs -----------------
+appender.rolling.type = RollingFile
+appender.rolling.name = rolling
+appender.rolling.append = true
+appender.rolling.bufferedIO = true
+appender.rolling.immediateFlush = false
+appender.rolling.fileName = ${filename}
+appender.rolling.filePattern = target/rolling/rolling-%d{MM-dd-yy-HH-mm-ss}-%i.log.gz
+appender.rolling.layout.type = PatternLayout
+appender.rolling.layout.pattern = %d %p %C{1.} [%t] %m%n
+appender.rolling.policies.type = Policies
+appender.rolling.policies.time.type = TimeBasedTriggeringPolicy
+appender.rolling.policies.time.interval = 60 * 10
+appender.rolling.policies.time.modulate = true
+appender.rolling.policies.size.type = SizeBasedTriggeringPolicy
+appender.rolling.policies.size.size = 100MB
+appender.rolling.strategy.type = DefaultRolloverStrategy
+appender.rolling.strategy.max = 5
+appender.rolling.filter.threshold.type = ThresholdFilter
+appender.rolling.filter.threshold.level = debug
+
+# ---------------------------------------------------
+# ------------------- 启用 loggers -------------------
+# ---------------------------------------------------
+
+rootLogger.level = info
+# `*.appenderRef.*.ref`通过`appender.*.name`指定前面定义好的 appender
+rootLogger.appenderRef.stdout.ref = stdout
+# 可以指定多个，保证`appenderRef`和`ref`之间的部分不冲突即可
+rootLogger.appenderRef.stderr.ref = stderr
+rootLogger.appenderRef.rolling.ref = rolling
+```
+
+### 使用
+```java
+package com.rich;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.message.ObjectMessage;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
+
+public class LogGenerator {
+
+    private final static Logger logger = LogManager.getLogger(LogGenerator.class);
+
+    public static void main(String[] args) {
+        nestedJsonLogs();
+    }
+
+    public static void nestedJsonLogs() {
+        while (true) {
+            // 输出 debug 信息到 rolling file
+            logger.debug("debug log zzzz");
+
+            // 输出异常栈信息到 stderr
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            try {
+                throw new IllegalArgumentException("error log qqq");
+            } catch (Exception e) {
+                e.printStackTrace(pw);
+                logger.error(sw.toString());
+            }
+
+            // 输出完整的 json 格式数据
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("name", "张三");
+            map.put("age", "24");
+            map.put("province", "山东");
+            map.put("girlfriend", "唐六");
+            ObjectMessage msg = new ObjectMessage(map);
+            logger.info(msg);
+
+            // 日志不要太快
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+}
+```
