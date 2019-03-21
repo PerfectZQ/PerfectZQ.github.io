@@ -330,18 +330,7 @@ kubernetes 支持很多类型的 volumes，如 configMap、hostPath、local、se
 kubernetes 支持由统一物理集群支持的多个虚拟集群。这些虚拟集群就称为[Namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)。
 
 ### Controllers
-除此之外。kubernetes 还包含一些高级抽象，称为 Controllers。Controllers 基于基本对象构建，并提供一些便利的功能和特性，下面简单介绍下，详细的可以用参考官方文档。
-
-#### ReplicaSet
-[ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/) 是下一代的 Replication Controller，大多数支持 Replication Controllers 的 kubectl 命令也支持 ReplicaSet。目前，他们唯一的区别就是 ReplicaSet 支持新的 set-based selector requirements，而 Replication Controller 仅支持 equality-based selector requirements。
-
-ReplicaSet 保证在任何时候都有指定数量的 pod 副本在运行。
-
-Deployment 是一个更高抽象的概念，它用来管理 ReplicaSet 并为 pod 提供声明式的更新以及很多其他有用的功能。因此，除非需要 custom update orchestration 或者根本不需要更新，更建议使用 Deployment 而不是直接使用 ReplicaSet。
-
->这实际就意味着可能永远不需要直接操作 ReplicaSet object，而是使用 Deployment，并在 spec 部分定义应用程序。
-
-replicaSet 有这么几个替代方案，Deployment(推荐)、Bare Pods、Job、DaemonSet
+除此之外。kubernetes 还包含一些高级抽象，称为 Controllers。Controllers 基于基本对象构建，并提供一些便利的功能和特性，下面简单介绍下，详细的可以参考官方文档。
 
 #### Replication Controller
 [Replication Controller](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/)用于创建和复制 Pod，Replication Controller 确保任意时间都有指定数量的 Pod 副本在运行。如果为某个 Pod 创建了 Replication Controller 并且指定 3 个副本，它会创建3个Pod，并且持续监控它们。如果某个 Pod 不响应，那么 Replication Controller 会替换它，保持总数为 3 如下面的动画所示：
@@ -354,6 +343,17 @@ replicaSet 有这么几个替代方案，Deployment(推荐)、Bare Pods、Job、
 
 1. Pod 模板：用来创建Pod副本的模板
 2. Label：Replication Controller 需要监控的 Pod 的标签。
+
+#### ReplicaSet
+[ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/) 是下一代的 Replication Controller，大多数支持 Replication Controllers 的 kubectl 命令也支持 ReplicaSet。目前，他们唯一的区别就是 ReplicaSet 支持新的 set-based selector requirements，而 Replication Controller 仅支持 equality-based selector requirements。
+
+ReplicaSet 保证在任何时候都有指定数量的 pod 副本在运行。
+
+Deployment 是一个更高抽象的概念，它用来管理 ReplicaSet 并为 pod 提供声明式的更新以及很多其他有用的功能。因此，除非需要 custom update orchestration 或者根本不需要更新，更建议使用 Deployment 而不是直接使用 ReplicaSet。
+
+>这实际就意味着可能永远不需要直接操作 ReplicaSet object，而是使用 Deployment，并在 spec 部分定义应用程序。
+
+replicaSet 有这么几个替代方案，Deployment(推荐)、Bare Pods、Job、DaemonSet
 
 #### Deployment
 [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) 为 Pod 和 ReplicaSet 提供声明性更新，在 Deployment object 描述一个期望的状态，然后 Deployment controller 就会将实际的状态按照 controller rate 转换成期望的状态。你可以定义 Deployments 来创建一个新的 ReplicaSets，或者删除已经存在的 Deployments 并且用新的 Deployments 更新资源状态。
