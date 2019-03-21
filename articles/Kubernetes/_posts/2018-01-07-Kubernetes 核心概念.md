@@ -353,7 +353,7 @@ Deployment 是一个更高抽象的概念，它用来管理 ReplicaSet 并为 po
 
 >这实际就意味着可能永远不需要直接操作 ReplicaSet object，而是使用 Deployment，并在 spec 部分定义应用程序。
 
-replicaSet 有这么几个替代方案，Deployment(推荐)、Bare Pods、Job、DaemonSet
+ReplicaSet 有这么几个替代方案，Deployment(推荐)、Bare Pods、Job、DaemonSet
 
 #### Deployment
 [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) 为 Pod 和 ReplicaSet 提供声明性更新，在 Deployment object 描述一个期望的状态，然后 Deployment controller 就会将实际的状态按照 controller rate 转换成期望的状态。你可以定义 Deployments 来创建一个新的 ReplicaSets，或者删除已经存在的 Deployments 并且用新的 Deployments 更新资源状态。
