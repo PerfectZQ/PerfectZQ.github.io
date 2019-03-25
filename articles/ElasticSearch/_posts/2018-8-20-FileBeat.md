@@ -598,19 +598,21 @@ Docker auto discover provider 会监视 docker containers 的开始和结束 eve
 例如一个具体的 docker auto discover event 如下
 ```json
 {
-  "host": "10.4.15.9",
-  "port": 6379,
-  "docker": {
-    "container": {
-      "id": "382184ecdb385cfd5d1f1a65f78911054c8511ae009635300ac28b4fc357ce51"
-      "name": "redis",
-      "image": "redis:3.2.11",
-      "labels": {
-        "io.kubernetes.pod.namespace": "default"
-        ...
-      }
+    "data": {
+        "host": "10.4.15.9",
+        "port": 6379,
+        "docker": {
+            "container": {
+                "id": "382184ecdb385cfd5d1f1a65f78911054c8511ae009635300ac28b4fc357ce51",
+                "name": "redis",
+                "image": "redis:3.2.11",
+                "labels": {
+                    "io.kubernetes.pod.namespace": "default",
+                    ...
+                }
+            }
+        }
     }
-  }
 }
 ```
 
@@ -719,26 +721,28 @@ Kubernetes auto discover provider 会监视 kubernetes pods 的开始、更新�
 
 ```json
 {
-  "host": "172.17.0.21",
-  "port": 9090,
-  "kubernetes": {
-    "container": {
-      "id": "bb3a50625c01b16a88aa224779c39262a9ad14264c3034669a50cd9a90af1527",
-      "image": "prom/prometheus",
-      "name": "prometheus"
-    },
-    "labels": {
-      "project": "prometheus",
-      ...
-    },
-    "namespace": "default",
-    "node": {
-      "name": "minikube"
-    },
-    "pod": {
-      "name": "prometheus-2657348378-k1pnh"
+    "data": {
+        "host": "172.17.0.21",
+        "port": 9090,
+        "kubernetes": {
+            "container": {
+                "id": "bb3a50625c01b16a88aa224779c39262a9ad14264c3034669a50cd9a90af1527",
+                "image": "prom/prometheus",
+                "name": "prometheus"
+            },
+            "labels": {
+                "project": "prometheus",
+                ...
+            },
+            "namespace": "default",
+            "node": {
+                "name": "minikube"
+            },
+            "pod": {
+                "name": "prometheus-2657348378-k1pnh"
+            }
+        }
     }
-  }
 }
 ```
 
