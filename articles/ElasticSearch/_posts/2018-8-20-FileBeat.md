@@ -785,8 +785,233 @@ filebeat.autodiscover:
                     - "${data.kubernetes.container.id}"
 ```
 
-### 实战
-使用 Kubernetes auto discover 进行日志收集
+## 实战
+
+### 使用 Kubernetes auto discover 进行日志收集
+
+#### 依赖
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.rich</groupId>
+    <artifactId>jsonlogs</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+
+        <!-- Log4j2 -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-1.2-api</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+        <!-- Log4j2 Json Format Dependency -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.8</version>
+        </dependency>
+
+        <!-- 你也可以不引入这个依赖而是直接使用上面的依赖，或者使用 Google 的 Gson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.56</version>
+        </dependency>
+
+        <!--
+         为了模拟项目中包含老版本 Log4j 的情况，在这里引入了比较老的 HBase client，在这里，我将所有冲突的 jar
+         包全部排除后，然后 HBase 输出的日志就以 Log4j2 的配置输出了，但是 JoJo 的 Spring 项目不知道什么原因并没有生效，
+         因此这一步可能需要根据大家项目的情况做一下具体的调整。
+
+         使用 Log4j2 不是强制要求，只要能正常输出日志就可以了，甚至是直接 System.out.prinltn()都是可以的。
+         但是个人推荐使用 Log4j2，不只是因为 Log4j2 支持完全的 Json Format Log 下面摘抄一下官网的原文:
+
+         Log4j 2 contains next-generation Asynchronous Loggers based on the LMAX Disruptor library.
+         In multi-threaded scenarios Asynchronous Loggers have 10 times higher throughput and orders
+         of magnitude lower latency than Log4j 1.x and Logback.
+
+         原文链接: https://logging.apache.org/log4j/2.x/manual/index.html
+        -->
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-shaded-client</artifactId>
+            <version>1.1.2</version>
+            <!--
+            关于解决 jar 包冲突的问题，我向大家推荐一款 idea 的插件，叫 Maven Helper，大家可以搜一下，
+            使用非常简单、直观，比使用`mvn dependency:tree -Dverbose > dependency.log` 和 idea
+            自带的 analyser 工具方便的多的多。
+            -->
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+</project>
+```
+
+#### 输出的日志程序
+```java
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.message.ObjectMessage;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
+
+public class LogGenerator {
+
+    private final static Logger logger = LogManager.getLogger(LogGenerator.class);
+
+    public static void main(String[] args) {
+        nestedJsonLogs();
+    }
+
+    public static void nestedJsonLogs() {
+        while (true) {
+            // 输出 debug 信息到 rolling file
+            logger.debug("debug log zzzz");
+
+            // 输出异常栈信息到 stderr
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            try {
+                throw new IllegalArgumentException("error log");
+            } catch (Exception e) {
+                e.printStackTrace(pw);
+                logger.error(sw.toString());
+            }
+
+            // 输出完整的 json 格式数据
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("name", "张强");
+            map.put("age", "24");
+            map.put("province", "山东");
+            map.put("girlfriend", "唐嘉蕙");
+            ObjectMessage msg = new ObjectMessage(map);
+            logger.info(msg);
+
+            // 日志不要太快
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+}
+```
+
+#### 配置 log4j2.properties
+```properties
+# ---------------------------------------------------
+# -------------------- 定义变量 ----------------------
+# ---------------------------------------------------
+
+# `property`下的变量可以通过 ${filename} 获取相应的值
+property.filename = target/rolling/rolling.log
+
+# ---------------------------------------------------
+# ------------------ 定义 appender -------------------
+# ---------------------------------------------------
+
+# ----------------- json logs -----------------
+appender.json.type = Console
+appender.json.name = stdout
+appender.json.target = "SYSTEM_OUT"
+appender.json.layout.type = JsonLayout
+# If true, the appender does not use end-of-lines and indentation. Defaults to false.
+appender.json.layout.compact = true
+# If true, the appender appends an end-of-line after each record. Defaults to false. Use with eventEol=true and compact=true to get one record per line.
+appender.json.layout.eventEol = true
+# If true, ObjectMessage is serialized as JSON object to the "message" field of the output log. Defaults to false.
+appender.json.layout.objectMessageAsJsonObject = true
+# If true, the appender includes the JSON header and footer, and comma between records. Defaults to false.
+appender.json.layout.complete = false
+# If true, include full stacktrace of any logged Throwable (optional, default to true).
+appender.json.layout.includeStacktrace = true
+# Whether to format the stacktrace as a string, and not a nested object (optional, defaults to false).
+appender.json.layout.stacktraceAsString = true
+# If true, the appender includes the thread context map in the generated JSON. Defaults to false.
+appender.json.layout.properties = false
+# If true, the thread context map is included as a list of map entry objects, where each entry has a "key" attribute (whose value is the key) and a "value" attribute (whose value is the value). Defaults to false, in which case the thread context map is included as a simple map of key-value pairs.
+appender.json.layout.propertiesAsList = false
+appender.json.filter.threshold.type = ThresholdFilter
+appender.json.filter.threshold.level = info
+
+
+# ----------------- common logs -----------------
+appender.console.type = Console
+appender.console.name = stderr
+appender.console.target = "SYSTEM_ERR"
+appender.console.layout.type = PatternLayout
+appender.console.layout.pattern = %d{yyyy-MM-dd HH:mm:ss.sss} %c{10} %level %m
+appender.console.filter.threshold.type = ThresholdFilter
+appender.console.filter.threshold.level = error
+
+# ----------------- rolling file logs -----------------
+appender.rolling.type = RollingFile
+appender.rolling.name = rolling
+appender.rolling.append = true
+appender.rolling.bufferedIO = true
+appender.rolling.immediateFlush = false
+appender.rolling.fileName = ${filename}
+appender.rolling.filePattern = target/rolling/rolling-%d{MM-dd-yy-HH-mm-ss}-%i.log.gz
+appender.rolling.layout.type = PatternLayout
+appender.rolling.layout.pattern = %d %p %C{1.} [%t] %m%n
+appender.rolling.policies.type = Policies
+appender.rolling.policies.time.type = TimeBasedTriggeringPolicy
+appender.rolling.policies.time.interval = 60 * 10
+appender.rolling.policies.time.modulate = true
+appender.rolling.policies.size.type = SizeBasedTriggeringPolicy
+appender.rolling.policies.size.size = 100MB
+appender.rolling.strategy.type = DefaultRolloverStrategy
+appender.rolling.strategy.max = 5
+appender.rolling.filter.threshold.type = ThresholdFilter
+appender.rolling.filter.threshold.level = debug
+
+# ---------------------------------------------------
+# ------------------- 启用 loggers -------------------
+# ---------------------------------------------------
+
+rootLogger.name = rootLogger
+rootLogger.level = info
+# `rootLogger.appenderRef.*.ref`通过`appender.*.name`指定前面定义好的 appender
+rootLogger.appenderRef.stdout.ref = stdout
+# 可以指定多个，保证`appenderRef`和`ref`之间的部分不冲突即可
+rootLogger.appenderRef.stderr.ref = stderr
+#rootLogger.appenderRef.rolling.ref = rolling
+```
+
+#### kubernetes-filebeat.yaml
 ```yaml
 
 ---
@@ -799,34 +1024,94 @@ metadata:
     k8s-app: filebeat
 data:
   filebeat.yml: |-
-    # k8s 自动发现
-    # To enable hints based autodiscover, remove `filebeat.config.inputs` configuration and uncomment this:
+    # k8s autodiscover
+    # To enable hints based autodiscover, you need to remove `filebeat.config.inputs` configuration and uncomment this:
     filebeat.autodiscover:
       providers:
         - type: kubernetes
           # 开启基于提供程序提示的自动发现，它会在kubernetes pod注释或去具有前缀co.elastic.logs的docker标签中查找提示
           # hints.enabled: true
           templates:
+            # 这里可以新建多个模板以匹配多个不同的条件
             - condition.and:
                 - equals:
                     kubernetes.namespace: default
                 - contains:
-                    kubernetes.container.image: mysql
+                    kubernetes.container.name: log4j2
               config:
-                # inputs
+                # 同理这里也可以配置多个 inputs
                 - type: docker
-                  containers.ids:
-                    - "${data.kubernetes.container.id}"
+                  containers:
+                    # all, stdout, stderr
+                    stream: all
+                    ids:
+                      - "${data.kubernetes.container.id}"
+                  # 添加自定义字段，默认放在字段 "fields" 下
                   fields:
                     log_type: "${data.kubernetes.container.name}"
+                  # 合并 java 异常栈为一条，将匹配的行放在不匹配行的后面
+                  multiline:
+                    pattern: '^\t'
+                    negate: false
+                    match: after
+                  # # 对合法的 json 字符串进行解析，注意必须是 json 字符串，json object 解析不出来
+                  # json:
+                  #   # 解析出的 key 不要放在 root 下，默认放在字段 "json" 下，这样可以避免很多 key 冲突
+                  #   keys_under_root: false
+                  #   add_error_key: true
+                  #   # 如果解析出的 key 和已有的 key 冲突，覆盖
+                  #   overwrite_keys: true
+                  #   # 指定以哪个 key 的值为标准，进行匹配过滤和多行合并，这个应以 debug publish 解析出的字段为准，而不是原生 docker logs
+                  #   # 的字段，比如"log"。因为在 line filtering、multiline 和 JSON decoding 之前已经被解析成了到了"message"中，并且提
+                  #   # 取了"timestamps"到"@timestamps"，因此如果这里指定"log"的话，根本解析不出日志来。
+                  #   # message_key 只能指定 root 下的 key，而且 value 必须是 string 类型的，如果是 jsonObject 会报错
+                  #   message_key: "message"
+                  #   ignore_decoding_error: false
     # filter and enhance fields
     processors:
-      - add_kubernetes_metadata:
-          in_cluster: true
-    # config elasticsearch index template
+      # # 添加 k8s 相关元数据
+      # - add_kubernetes_metadata:
+      #     in_cluster: true
+      # 字段重命名
+      - rename:
+          fields:
+            - from: "message" 
+              to: "raw_message"
+      # 对合法的 json 字符串进行解析，注意必须是 json 字符串，json object 解析不出来
+      - decode_json_fields:
+          # 指定要解析的字段
+          fields: ["raw_message"]
+          # 是否解析 json 数组
+          process_array: true
+          # 最大 json 解析层数
+          max_depth: 10
+          # `target: ""`代表合并到 event 根下，或者指定的字段下，不写则覆盖被解析的字段，比如"message"
+          target: "json_message"
+          # 如果已经存在解析出来的 key，是否覆盖
+          overwrite_keys: true
+      # 保证 es mapping 不会有字段类型冲突
+      - rename:
+          # 如果字段 json_message.message 不是字符串，而是 json object 就改名为 json_message.json
+          when:
+            not:
+              regexp:
+                json_message.message: ".*"
+          fields:
+            - from: "json_message.message"
+              to: "json_message.json"
+      # 丢掉一些不需要的字段
+      - drop_fields:
+          fields: ['input', 'beat', 'prospector', 'kubernetes']
+      # 如果是 json 类型的日志，丢弃原生日志
+      - drop_fields:
+          when: 
+            has_fields: ['json_message']
+          fields: ['raw_message']
+    # 配置 elasticsearch index template
     setup.template.name: "logs"
-    setup.template.overwrite: true
     setup.template.pattern: "logs-*"
+    # 如果为 false，在修改了 setup.template.settings 后需要手动删除 elasticsearch 的 template 才有效
+    setup.template.overwrite: true
     setup.template.settings:
       index.number_of_shards: 3
       index.codec: best_compression
@@ -839,13 +1124,15 @@ data:
     # =========== filebeat 运行日志 =========== 
     path.logs: /usr/share/filebeat/logs
     # =========== debug logging =========== 
-    logging.level: info
-    # Enable debug output for selected components，可用的选项 "beat", "publish", "service"
-    logging.selectors: ["*"]
+    logging.level: debug
+    # Enable debug output for selected components，可用的选项 "beat", "publish", "service", 全选使用 ["*"]
+    logging.selectors: ["publish"]
     # 可以通过 docker logs 查看 debug 日志
-    # logging.to_syslog: true
+    logging.to_stderr: true
+    logging.to_eventlog: false
+    logging.to_syslog: false
     # 改为 true 启用写到指定 file 文件
-    logging.to_files: true
+    logging.to_files: false
     logging.files:
       path: /usr/share/filebeat/logs
       name: filebeat
@@ -871,9 +1158,11 @@ spec:
       # docker compose
       - name: filebeat
         image: 192.168.51.35:5000/filebeat:6.4.0
+        # -d 启用对指定选择器的调试，publish 可以看到完整的 event 信息
         args: [
           "-c", "/etc/filebeat.yml",
           "-e",
+          "-d", "publish"
         ]
         env:
         - name: ES_HOST
