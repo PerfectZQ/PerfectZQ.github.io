@@ -1012,26 +1012,7 @@ rootLogger.appenderRef.stderr.ref = stderr
 ```
 
 #### build docker image
-关于 docker 相关操作可以参考[Docker 入门](https://arch-long.cn/articles/docker/Docker-%E5%85%A5%E9%97%A8.html)
-
-Dockerfile
-```dockerfile
-# 指定基础镜像
-FROM java:8
-# 作者信息
-MAINTAINER zhangqiang "inteli_zq@163.com"
-# 在容器内部创建一个文件夹
-RUN mkdir /home/log4j
-# 将 contextDir 中的 jsonlogs.jar 拷贝到容器的 /home/log4j 目录下
-# 注意: source 文件路径是相对于 contextDir 的，并且 docker 只能访问 contextDir 中的文件，如果访问 contextDir
-# 之外的文件会出现 COPY failed: Forbidden path outside the build context: ../test ()，如果想把 
-# contextDir 中的所有文件都拷贝到镜像内可以使用`COPY . /home/log4j`
-COPY jsonlogs.jar /home/log4j
-# 对外暴露端口
-EXPOSE 80
-# 当启动容器的时候执行的命令
-CMD ["java", "-jar", "/home/log4j/jsonlogs.jar"]
-```
+关于 docker 相关操作可以参考[Docker 实战](https://arch-long.cn/articles/docker/Docker-%E5%85%A5%E9%97%A8.html#%E5%AE%9E%E6%88%98)
 
 #### kubernetes-jsonlogs.yaml
 ```yaml
