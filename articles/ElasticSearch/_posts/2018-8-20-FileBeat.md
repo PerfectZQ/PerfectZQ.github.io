@@ -789,6 +789,61 @@ filebeat.autodiscover:
 
 ### 使用 Kubernetes auto discover 进行日志收集
 
+#### 输出的日志程序
+```java
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.message.ObjectMessage;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
+
+public class LogGenerator {
+
+    private final static Logger logger = LogManager.getLogger(LogGenerator.class);
+
+    public static void main(String[] args) {
+        nestedJsonLogs();
+    }
+
+    public static void nestedJsonLogs() {
+        while (true) {
+            // 输出 debug 信息到 rolling file
+            logger.debug("debug log zzzz");
+
+            // 输出异常栈信息到 stderr
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            try {
+                throw new IllegalArgumentException("error log");
+            } catch (Exception e) {
+                e.printStackTrace(pw);
+                logger.error(sw.toString());
+            }
+
+            // 输出完整的 json 格式数据
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("name", "张强");
+            map.put("age", "24");
+            map.put("province", "山东");
+            map.put("girlfriend", "唐嘉蕙");
+            ObjectMessage msg = new ObjectMessage(map);
+            logger.info(msg);
+
+            // 日志不要太快
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+}
+```
+
 #### 依赖
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -875,61 +930,6 @@ filebeat.autodiscover:
 </project>
 ```
 
-#### 输出的日志程序
-```java
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.message.ObjectMessage;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.Map;
-
-public class LogGenerator {
-
-    private final static Logger logger = LogManager.getLogger(LogGenerator.class);
-
-    public static void main(String[] args) {
-        nestedJsonLogs();
-    }
-
-    public static void nestedJsonLogs() {
-        while (true) {
-            // 输出 debug 信息到 rolling file
-            logger.debug("debug log zzzz");
-
-            // 输出异常栈信息到 stderr
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            try {
-                throw new IllegalArgumentException("error log");
-            } catch (Exception e) {
-                e.printStackTrace(pw);
-                logger.error(sw.toString());
-            }
-
-            // 输出完整的 json 格式数据
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("name", "张强");
-            map.put("age", "24");
-            map.put("province", "山东");
-            map.put("girlfriend", "唐嘉蕙");
-            ObjectMessage msg = new ObjectMessage(map);
-            logger.info(msg);
-
-            // 日志不要太快
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-}
-```
-
 #### 配置 log4j2.properties
 ```properties
 # ---------------------------------------------------
@@ -1009,6 +1009,53 @@ rootLogger.appenderRef.stdout.ref = stdout
 # 可以指定多个，保证`appenderRef`和`ref`之间的部分不冲突即可
 rootLogger.appenderRef.stderr.ref = stderr
 #rootLogger.appenderRef.rolling.ref = rolling
+```
+
+#### build docker image
+关于 docker 相关操作可以参考[Docker 入门](https://arch-long.cn/articles/docker/Docker-%E5%85%A5%E9%97%A8.html)
+
+Dockerfile
+```dockerfile
+# 指定基础镜像
+FROM java:8
+# 作者信息
+MAINTAINER zhangqiang "inteli_zq@163.com"
+# 在容器内部创建一个文件夹
+RUN mkdir /home/log4j
+# 将 contextDir 中的 jsonlogs.jar 拷贝到容器的 /home/log4j 目录下
+# 注意: source 文件路径是相对于 contextDir 的，并且 docker 只能访问 contextDir 中的文件，如果访问 contextDir
+# 之外的文件会出现 COPY failed: Forbidden path outside the build context: ../test ()，如果想把 
+# contextDir 中的所有文件都拷贝到镜像内可以使用`COPY . /home/log4j`
+COPY jsonlogs.jar /home/log4j
+# 对外暴露端口
+EXPOSE 80
+# 当启动容器的时候执行的命令
+CMD ["java", "-jar", "/home/log4j/jsonlogs.jar"]
+```
+
+#### kubernetes-jsonlogs.yaml
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log4j2-deployment
+  labels:
+    app: log4j2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log4j2
+  template:
+    metadata:
+      labels:
+        app: log4j2
+    spec:
+      containers:
+      - name: log4j2
+        image: 192.168.51.35:5000/log4j2_logs:v1
+        ports:
+        - containerPort: 80
 ```
 
 #### kubernetes-filebeat.yaml
