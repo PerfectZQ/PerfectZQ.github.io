@@ -890,8 +890,7 @@ public class LogGenerator {
 
         <!--
          为了模拟项目中包含老版本 Log4j 的情况，在这里引入了比较老的 HBase client，在这里，我将所有冲突的 jar
-         包全部排除后，然后 HBase 输出的日志就以 Log4j2 的配置输出了，但是 JoJo 的 Spring 项目不知道什么原因并没有生效，
-         因此这一步可能需要根据大家项目的情况做一下具体的调整。
+         包全部排除后，然后 HBase 输出的日志就以 Log4j2 的配置输出了。
 
          使用 Log4j2 不是强制要求，只要能正常输出日志就可以了，甚至是直接 System.out.prinltn()都是可以的。
          但是个人推荐使用 Log4j2，不只是因为 Log4j2 支持完全的 Json Format Log 下面摘抄一下官网的原文:
