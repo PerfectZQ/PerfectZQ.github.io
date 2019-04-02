@@ -9,6 +9,8 @@ tag: Spark
 // Loads CSV files and returns the result as a DataFrame.
 def csv(paths: String*): DataFrame
 ```
+
+```console
 This function will go through the input once to determine the input schema if inferSchema is enabled. To avoid going through the entire data once, disable inferSchema option or specify the schema explicitly using schema.
 
 You can set the following CSV-specific options to deal with CSV files:
@@ -55,6 +57,7 @@ mode (default PERMISSIVE): allows a mode for dealing with corrupt records during
 columnNameOfCorruptRecord (default is the value specified in spark.sql.columnNameOfCorruptRecord): allows renaming the new field having malformed string created by PERMISSIVE mode. This overrides spark.sql.columnNameOfCorruptRecord.
 
 multiLine (default false): parse one record, which may span multiple lines.
+```
 
 ## 实践一下
 ```scala
