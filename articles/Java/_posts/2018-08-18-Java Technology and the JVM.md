@@ -56,10 +56,10 @@ JVM 相关命令在`/System/Library/Frameworks/JavaVM.framework/Versions/Current
 ```shell
 # 需要在 src/META-INF/MANIFEST.MF 指定 Main-Class: com.xxx.YourMainApp，然后打成 executable jar
 # 否则会出现 Can't execute jar- file: “no main manifest attribute” 的问题
-java -jar myapp.jar
+java -jar yourapp.jar
 
-# 指定主类
-java -cp myapp.jar com.xxx.YourMainApp
+# 如果不是一个 executable jar 包，则可以通过下面的方式指定主类
+java -cp .:yourapp.jar com.xxx.YourMainApp
 ```
 
 ### jar
