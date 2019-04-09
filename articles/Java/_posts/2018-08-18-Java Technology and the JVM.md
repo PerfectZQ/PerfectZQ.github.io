@@ -51,6 +51,16 @@ JVM 相关命令在`/System/Library/Frameworks/JavaVM.framework/Versions/Current
 对于某个命令的详细介绍和参数介绍可以使用`info`查阅，例如查看`jps`命令可以使用`info jps`。
 
 下面介绍一些比较有用的命令。
+### java
+运行已经编译好的 java 程序
+```shell
+# 需要在 src/META-INF/MANIFEST.MF 指定 Main-Class: com.xxx.YourMainApp，然后打成 executable jar
+# 否则会出现 Can't execute jar- file: “no main manifest attribute” 的问题
+java -jar myapp.jar
+
+# 指定主类
+java -cp myapp.jar com.xxx.YourMainApp
+```
 
 ### jar
 压缩/解压缩 jar 文件
