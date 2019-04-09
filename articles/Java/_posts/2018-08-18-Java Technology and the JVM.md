@@ -66,6 +66,9 @@ java -jar yourapp.jar
 
 # 如果不是一个 executable jar 包，则可以通过下面的方式指定主类
 java -cp .:yourapp.jar com.xxx.YourMainApp
+
+# 为 jvm 分配可用内存
+java -cp .:yourapp.jar -Xms16g -Xmx16g com.xxx.YourMainApp
 ```
 
 ### jar
