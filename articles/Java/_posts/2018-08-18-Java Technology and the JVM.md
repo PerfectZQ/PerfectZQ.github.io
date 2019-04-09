@@ -48,12 +48,18 @@ Mac 各版本的 JDK 默认安装路径`/Library/Java/JavaVirtualMachines/`
 
 JVM 相关命令在`/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands`可以找到(当然在 JDK 的默认安装目录也能找到)，有很多命令和工具。
 
-对于某个命令的详细介绍和参数介绍可以使用`info`查阅，例如查看`jps`命令可以使用`info jps`。
+对于某个命令的详细介绍和参数介绍可以使用`info`查阅，例如查看`java`命令可以使用`info java`。
 
 下面介绍一些比较有用的命令。
+
 ### java
 运行已经编译好的 java 程序
 ```shell
+Usage: java [-options] class [args...]
+           (to execute a class)
+   or  java [-options] -jar jarfile [args...]
+           (to execute a jar file)
+
 # 需要在 src/META-INF/MANIFEST.MF 指定 Main-Class: com.xxx.YourMainApp，然后打成 executable jar
 # 否则会出现 Can't execute jar- file: “no main manifest attribute” 的问题
 java -jar yourapp.jar
