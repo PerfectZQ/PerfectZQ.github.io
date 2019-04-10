@@ -4,6 +4,9 @@ title: HBase Install
 tag: HBase
 ---
 
+## 下载
+[download](https://hbase.apache.org/downloads.html)
+
 ## 安装
 指定环境变量
 ```shell
