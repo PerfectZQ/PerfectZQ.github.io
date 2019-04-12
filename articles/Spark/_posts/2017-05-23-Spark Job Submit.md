@@ -25,6 +25,8 @@ SPARK_HOME/bin/spark-submit \ # 执行spark-submit脚本
 python file 提交
 ```shell
 # 环境变量指定 python 版本
+export SPARK_HOME=/usr/hdp/current/spark2-client
+export PYTHONPATH=/usr/bin/python3
 export IPYTHON=1
 export PYSPARK_PYTHON=/usr/bin/python3
 export PYSPARK_DRIVER_PYTHON=ipython3
