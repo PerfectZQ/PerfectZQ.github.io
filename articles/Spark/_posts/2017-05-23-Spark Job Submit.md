@@ -16,10 +16,27 @@ SPARK_HOME/bin/spark-submit \ # 执行spark-submit脚本
 		--class com.neusoft.client.xxxxxxxx \ 
 		# 4核cpu
 		--master local[4] \ 
-		# jar包路径，对于Python应用，在此位置传入一个.py文件并且以-py-files的方式搜索路径下加入Python.zip、.egg、.py文件
+		# jar包路径，对于Python应用，在此位置传入一个.py文件并且以--py-files的方式搜索路径下加入Python.zip、.egg、.py文件
 		/usr/zhangqiang/xxxx.jar 
 		# 额外的参数，传递给main函数的args
 		[application-arguments]
+```
+
+python file 提交
+```shell
+# 环境变量指定 python 版本
+export IPYTHON=1
+export PYSPARK_PYTHON=/usr/bin/python3
+export PYSPARK_DRIVER_PYTHON=ipython3
+export PYSPARK_DRIVER_PYTHON_OPTS="notebook"
+
+SPARK_HOME/bin/spark-submit \ # 执行spark-submit脚本
+		# 4核cpu
+		--master local[4] \ 
+		# 在此位置传入一个.py文件并且以--py-files的方式搜索路径下加入Python.zip、.egg、.py文件
+		--py-files test.py
+		# main
+		test.py
 ```
 ### standalone模式提交模板
 ```shell
