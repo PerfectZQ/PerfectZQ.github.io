@@ -54,10 +54,16 @@ export JAVA_HOME=/usr/jdk64/jdk1.8.0_112
 
 ## 启动
 ```shell
+# standalone 模式下，HBase 单个 JVM 中运行所有守护程序，如 HMaster、HRegionServer、ZooKeeper 守护程序。 
+# http://localhost:16010 是 HMaster Web UI。
 $ start-hbase.sh
+
+# 如果运行成功，可以看到 HMaster 进程
+$ jps
+22889 HMaster
 ```
 
-连接 hbase shell
+## 连接 hbase
 ```shell
 $ hbase shell
 ```
