@@ -214,14 +214,19 @@ sparkSession.time(sparkSession.read.format("org.apache.spark.sql.execution.datas
 // 启用 new orc format 为 default
 sparkSession.sql("SET spark.sql.orc.enabled=true")
 
+/* -------------- 分割线 --------------- */
+
 // Since Spark 2.3, Spark supports a vectorized ORC reader with a new ORC file format for ORC files
-// spark.sql.orc.impl 有`native`和`hive`两种选择:
-// spark.sql.orc.impl=hive，会选择 org.apache.spark.sql.hive.orc.OrcFileFormat(ORC library in Hive 1.2.1) 进行加载
-// spark.sql.orc.impl=native，会选择 org.apache.spark.sql.execution.datasources.orc.OrcFileFormat(Apache ORC 1.4) 进行加载
+// spark.sql.orc.impl=hive，会选择 org.apache.spark.sql.hive.orc.OrcFileFormat(ORC library in Hive 1.2.1, old) 进行加载
+// spark.sql.orc.impl=native，会选择 org.apache.spark.sql.execution.datasources.orc.OrcFileFormat(Apache ORC 1.4, new) 进行加载
 sparkSession.sql("SET spark.sql.orc.impl=native")
 
-// 对于 spark.sql.orc.impl=native，你可以选择启用 VectorizedReader 来开启 vectorized orc decoding 以增加读取性能
+// 当 spark.sql.orc.impl=native，并且 spark.sql.orc.enableVectorizedReader=true 时 vectorized reader
+// 会应用到 native ORC tables(如使用 USING ORC 子句创建的表)
 sparkSession.sql("SET spark.sql.orc.enableVectorizedReader=true")
+// 如果 spark.sql.orc.enableVectorizedReader=true，并且 spark.sql.hive.convertMetastoreOrc=true，对于
+// hive ORC tables(如使用 USING HIVE OPTIONS (fileFormat 'ORC') 子句创建的表) 也会启用 vectorized reader。
+sparkSession.sql("SET spark.sql.hive.convertMetastoreOrc=true")
 ```
 
 ### Spark 读写 Hive ORC 表
