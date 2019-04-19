@@ -9,7 +9,7 @@ tag: Spark SQL
 object DataSource extends Logging {
 
   /** A map to maintain backward compatibility in case we move data sources around. */
-  // 这里就是 DataReader/DataWriter 所支持的所有 source format 实际对应的 Format 类
+  // 笔者注: 这里就是 DataReader/DataWriter 所支持的所有 source format 实际对应的 Format 类
   private val backwardCompatibilityMap: Map[String, String] = {
     val jdbc = classOf[JdbcRelationProvider].getCanonicalName
     val json = classOf[JsonFileFormat].getCanonicalName
@@ -34,10 +34,10 @@ object DataSource extends Logging {
       "org.apache.spark.sql.parquet.DefaultSource" -> parquet,
       "org.apache.spark.sql.execution.datasources.parquet" -> parquet,
       "org.apache.spark.sql.execution.datasources.parquet.DefaultSource" -> parquet,
-      // ORC library in Hive 1.2.1(old)
+      // 笔者注: ORC library in Hive 1.2.1(old)
       "org.apache.spark.sql.hive.orc.DefaultSource" -> orc,
       "org.apache.spark.sql.hive.orc" -> orc,
-      // Apache ORC 1.4(new)
+      // 笔者注: Apache ORC 1.4(new)
       "org.apache.spark.sql.execution.datasources.orc.DefaultSource" -> nativeOrc,
       "org.apache.spark.sql.execution.datasources.orc" -> nativeOrc,
       "org.apache.spark.ml.source.libsvm.DefaultSource" -> libsvm,
@@ -57,15 +57,15 @@ object DataSource extends Logging {
     "org.apache.spark.Logging")
 
   /** Given a provider name, look up the data source class definition. */
-  // provider 就是 DataSource 支持的 source format
+  // 笔者注: provider 就是 DataSource 支持的 source format
   def lookupDataSource(provider: String, conf: SQLConf): Class[_] = {
     val provider1 = backwardCompatibilityMap.getOrElse(provider, provider) match {
-      // format == "orc" && spark.sql.orc.impl == "native"
+      // 笔者注: format == "orc" && spark.sql.orc.impl == "native"
       case name if name.equalsIgnoreCase("orc") &&
           conf.getConf(SQLConf.ORC_IMPLEMENTATION) == "native" =>
-        // org.apache.spark.sql.execution.datasources.orc.OrcFileFormat
+        // 笔者注: org.apache.spark.sql.execution.datasources.orc.OrcFileFormat
         classOf[OrcFileFormat].getCanonicalName
-      // format == "orc" && spark.sql.orc.impl == "hive"
+      // 笔者注: format == "orc" && spark.sql.orc.impl == "hive"
       case name if name.equalsIgnoreCase("orc") &&
           conf.getConf(SQLConf.ORC_IMPLEMENTATION) == "hive" =>
         "org.apache.spark.sql.hive.orc.OrcFileFormat"
