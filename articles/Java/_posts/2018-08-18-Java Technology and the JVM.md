@@ -4,13 +4,10 @@ title: Java Technology and the JVM
 tag: Java
 ---
 ## References
-[Java Platform Standard Edition Technical Documentation site](https://docs.oracle.com/en/java/javase/11/)
-
-[Java Language and Virtual Machine Specifications](https://docs.oracle.com/javase/specs/index.html)
-
-[The Java® Language Specification - Java SE 8 Edition](https://docs.oracle.com/javase/specs/jls/se8/html/index.html)
-
-[The Java® Virtual Machine Specification Java SE 8 Edition](https://docs.oracle.com/javase/specs/jvms/se8/html/index.html)
+* [**Java Platform Standard Edition Technical Documentation site - 各版本文档入口**](https://docs.oracle.com/en/java/javase/11/)
+* [Java Language and Virtual Machine Specifications](https://docs.oracle.com/javase/specs/index.html)
+* [The Java® Language Specification - Java SE 8 Edition](https://docs.oracle.com/javase/specs/jls/se8/html/index.html)
+* [The Java® Virtual Machine Specification Java SE 8 Edition](https://docs.oracle.com/javase/specs/jvms/se8/html/index.html)
 
 ## 基本概念
 ### Java Programming Language
@@ -33,13 +30,16 @@ JDK 和 JRE 共享 Java 应用程序编程接口（Java API 是开发人员用�
 
 ### Java Virtual Machine
 
+
 ### Java SE Platform at a Glance
 ![有帮助的截图]({{ site.url }}/assets/java-se-platform.jpg)
 
 [Java SE Platform at a Glance](https://www.oracle.com/technetwork/java/javase/tech/index.html)
 
 ## Java Garbage Collection
-[Java Garbage Collection Basics](https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html#overview)
+* [Java Garbage Collection Basics](https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html#overview)
+* [**HotSpot Virtual Machine Garbage Collection Tuning Guide Java SE 8**](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/)
+* [Sizing the Generations of JVM](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/sizing.html#sizing_generations)
 
 ## Tools and Commands Reference
 [Tools and Commands Reference](https://docs.oracle.com/en/java/javase/11/tools/tools-and-command-reference.html)
