@@ -189,6 +189,55 @@ where <option> is one of:
                          in this mode.
     -h | -help           to print this help message
     -J<flag>             to pass <flag> directly to the runtime system
+
+# 查看进程堆内存分配情况
+$ jmap -heap 8357
+Attaching to process ID 8357, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.181-b13
+
+using thread-local object allocation.
+Parallel GC with 6 thread(s)
+
+Heap Configuration:
+ MinHeapFreeRatio         = 0
+ MaxHeapFreeRatio         = 100
+ MaxHeapSize              = 8392802304 (8004.0MB)
+ NewSize                  = 175112192 (167.0MB)
+ MaxNewSize               = 2797600768 (2668.0MB)
+ OldSize                  = 351272960 (335.0MB)
+ NewRatio                 = 2
+ SurvivorRatio            = 8
+ MetaspaceSize            = 21807104 (20.796875MB)
+ CompressedClassSpaceSize = 1073741824 (1024.0MB)
+ MaxMetaspaceSize         = 17592186044415 MB
+ G1HeapRegionSize         = 0 (0.0MB)
+
+Heap Usage:
+PS Young Generation
+Eden Space:
+ capacity = 132120576 (126.0MB)
+ used     = 42286136 (40.32720184326172MB)
+ free     = 89834440 (85.67279815673828MB)
+ 32.00571574862041% used
+From Space:
+ capacity = 21495808 (20.5MB)
+ used     = 0 (0.0MB)
+ free     = 21495808 (20.5MB)
+ 0.0% used
+To Space:
+ capacity = 21495808 (20.5MB)
+ used     = 0 (0.0MB)
+ free     = 21495808 (20.5MB)
+ 0.0% used
+PS Old Generation
+ capacity = 351272960 (335.0MB)
+ used     = 0 (0.0MB)
+ free     = 351272960 (335.0MB)
+ 0.0% used
+
+4277 interned Strings occupying 340832 bytes.
 ```
 
 ### jhat
