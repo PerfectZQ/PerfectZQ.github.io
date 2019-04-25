@@ -218,7 +218,7 @@ xxJar
 
 另外，如果不在命令中写`executor-cores`参数，可以在`$SPARK_HOME/conf/spark-env.sh`里配置`export SPARK_EXECUTOR_CORES=4`，这样默认`executor-cores`就为 4 了。
 
-如果是 HDP 集群，则直接进入 Ambari Manager -> YARN -> Configs -> Settings -> CPU Node -> Enable CPU Scheduling
+如果是 HDP 集群，则直接进入 Ambari Manager -> YARN -> Configs -> Settings -> CPU Node -> Enable CPU Scheduling，[具体可以参考](https://arch-long.cn/articles/hadoop/Hadoop-%E5%B8%B8%E7%94%A8%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE.html)
 
 ## Executor heartbeat timed out after 132036 ms
 ```console
@@ -240,4 +240,4 @@ xxJar
 
 要解决这个问题可以从两个方面入手。
 * 第一检查一下自己的 task 是不是太大或太复杂导致内存不够引发 OOM 或者 CPU 飙升，一般情况下可以通过`repartition`进一步拆分 task 去解决
-* 第二跟家里商量商量提高一下担心你的阈值，比如`--conf spark.network.timeout 10000000`。
+* 第二跟家里商量商量提高一下担心你的阈值，比如`--conf spark.network.timeout 10000000`，另外需要了解的是`--conf spark.executor.heartbeatInterval=100000`，这个参数控制了`executor`向`driver`汇报心跳的时间间隔，因此这个值必须小于`spark.network.timeout`，但因为很多原因`executor`并不能保证及时汇报心跳，比如`executor`在 GC。
