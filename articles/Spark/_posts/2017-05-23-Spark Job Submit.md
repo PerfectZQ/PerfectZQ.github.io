@@ -164,4 +164,4 @@ sparkConf.set("HADOOP_USER_NAME", "hdfs")
 ```
 
 ## SparkSubmit 源码
-`spark-submit`具体的执行逻辑都在`spark-core org.apache.spark.deploy.SparkSubmit`中。
+`spark-submit`具体的执行逻辑都在`spark-core org.apache.spark.deploy.SparkSubmit`的`main`方法中。
