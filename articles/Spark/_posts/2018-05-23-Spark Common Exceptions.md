@@ -240,4 +240,4 @@ xxJar
 
 要解决这个问题可以从两个方面入手。
 * 第一检查一下自己的 task 是不是太大或太复杂导致内存不够引发 OOM 或者 CPU 飙升，一般情况下可以通过`repartition`进一步拆分 task 去解决
-* 第二跟家里商量商量提高一下担心你的阈值，比如`--conf spark.network.timeout 10000000`，另外需要了解的是`--conf spark.executor.heartbeatInterval=100000`，这个参数控制了`executor`向`driver`汇报心跳的时间间隔，因此这个值必须小于`spark.network.timeout`，但因为很多原因`executor`并不能保证及时汇报心跳，比如`executor`在 GC。
+* 第二跟家里商量商量提高一下担心你的阈值，比如`--conf spark.network.timeout=10000000ms`(`default=120000ms`)，这个值会被`spark.core.connection.ack.wait.timeout`、`spark.storage.blockManagerSlaveTimeoutMs`、`spark.shuffle.io.connectionTimeout`、`spark.rpc.askTimeout`、`spark.rpc.lookupTimeout`多个配置项引用为默认值，当然这些配置项也可以单独指定具体值。另外需要了解的是`--conf spark.executor.heartbeatInterval=100000`，这个参数控制了`executor`向`driver`汇报心跳的时间间隔，因此这个值必须小于`spark.network.timeout`，但因为很多原因`executor`并不能保证及时汇报心跳，比如`executor`在 GC。
