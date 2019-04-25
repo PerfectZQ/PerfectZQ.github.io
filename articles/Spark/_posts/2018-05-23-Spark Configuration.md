@@ -41,9 +41,7 @@ val conf = new SparkConf()
 conf.set("spark.speculation", "true")
 conf.set("spark.speculation.interval", "100ms")
 conf.set("spark.speculation.multiplier", "1.5")
-val sparkSession = SparkSession.builder
-                    .config(conf)
-                    .getOrCreate
+val sparkSession = SparkSession.builder.config(conf).getOrCreate
 ```
 
 ## 2 Kind of Spark Properties
