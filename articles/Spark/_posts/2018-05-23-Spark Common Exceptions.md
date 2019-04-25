@@ -232,8 +232,731 @@ xxJar
 19/04/25 11:38:32 INFO ContextCleaner: Cleaned accumulator 6
 19/04/25 11:38:32 INFO ContextCleaner: Cleaned accumulator 7
 19/04/25 11:38:32 INFO ContextCleaner: Cleaned accumulator 8
+19/04/25 11:38:32 INFO ContextCleaner: Cleaned accumulator 11
+19/04/25 11:38:32 INFO ContextCleaner: Cleaned accumulator 12
 19/04/25 11:38:32 WARN TaskSetManager: Lost task 15.0 in stage 2.0 (TID 91, hadoop1, executor 3): ExecutorLostFailure (executor 3 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 132036 ms
-...
+19/04/25 11:38:32 WARN TaskSetManager: Lost task 4.0 in stage 2.0 (TID 79, hadoop1, executor 3): ExecutorLostFailure (executor 3 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 132036 ms
+19/04/25 11:38:32 WARN TaskSetManager: Lost task 12.0 in stage 2.0 (TID 87, hadoop1, executor 3): ExecutorLostFailure (executor 3 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 132036 ms
+19/04/25 11:38:32 WARN TaskSetManager: Lost task 1.0 in stage 2.0 (TID 75, hadoop1, executor 3): ExecutorLostFailure (executor 3 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 132036 ms
+19/04/25 11:38:32 INFO DAGScheduler: Executor lost: 3 (epoch 1)
+19/04/25 11:38:32 INFO YarnClientSchedulerBackend: Requesting to kill executor(s) 3
+19/04/25 11:38:32 INFO YarnClientSchedulerBackend: Actual list of executor(s) to be killed is 3
+19/04/25 11:38:32 INFO BlockManagerMasterEndpoint: Trying to remove executor 3 from BlockManagerMaster.
+19/04/25 11:38:32 INFO BlockManagerMasterEndpoint: Removing block manager BlockManagerId(3, hadoop1, 36037, None)
+19/04/25 11:38:32 INFO BlockManagerInfo: Removed broadcast_2_piece0 on 192.168.51.23:38401 in memory (size: 3.7 KB, free: 366.2 MB)
+19/04/25 11:38:32 INFO BlockManagerMaster: Removed 3 successfully in removeExecutor
+19/04/25 11:38:32 INFO DAGScheduler: Shuffle files lost for executor: 3 (epoch 1)
+19/04/25 11:38:32 INFO DAGScheduler: Host added was in lost list earlier: hadoop1
+19/04/25 11:38:35 WARN TransportChannelHandler: Exception in connection from /192.168.51.21:59578
+java.io.IOException: Connection reset by peer
+        at sun.nio.ch.FileDispatcherImpl.read0(Native Method)
+        at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)
+        at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+        at sun.nio.ch.IOUtil.read(IOUtil.java:192)
+        at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)
+        at io.netty.buffer.PooledUnsafeDirectByteBuf.setBytes(PooledUnsafeDirectByteBuf.java:221)
+        at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:899)
+        at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:275)
+        at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:119)
+        at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:643)
+        at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:566)
+        at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:480)
+        at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:442)
+        at io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:131)
+        at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:144)
+        at java.lang.Thread.run(Thread.java:748)
+19/04/25 11:38:35 ERROR TransportResponseHandler: Still have 1 requests outstanding when connection from /192.168.51.21:59578 is closed
+19/04/25 11:38:35 INFO YarnSchedulerBackend$YarnDriverEndpoint: Disabling executor 3.
+19/04/25 11:38:35 INFO DAGScheduler: Executor lost: 3 (epoch 2)
+19/04/25 11:38:35 INFO BlockManagerMasterEndpoint: Trying to remove executor 3 from BlockManagerMaster.
+19/04/25 11:38:35 INFO BlockManagerMaster: Removed 3 successfully in removeExecutor
+19/04/25 11:38:35 INFO DAGScheduler: Shuffle files lost for executor: 3 (epoch 2)
+19/04/25 11:38:35 WARN BlockManagerMaster: Failed to remove broadcast 2 with removeFromMaster = true - Connection reset by peer
+java.io.IOException: Connection reset by peer
+        at sun.nio.ch.FileDispatcherImpl.read0(Native Method)
+        at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)
+        at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+        at sun.nio.ch.IOUtil.read(IOUtil.java:192)
+        at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)
+        at io.netty.buffer.PooledUnsafeDirectByteBuf.setBytes(PooledUnsafeDirectByteBuf.java:221)
+        at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:899)
+        at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:275)
+        at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:119)
+        at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:643)
+        at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:566)
+        at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:480)
+        at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:442)
+        at io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:131)
+        at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:144)
+        at java.lang.Thread.run(Thread.java:748)
+19/04/25 11:38:35 ERROR ContextCleaner: Error cleaning broadcast 2
+org.apache.spark.SparkException: Exception thrown in awaitResult: 
+        at org.apache.spark.util.ThreadUtils$.awaitResult(ThreadUtils.scala:205)
+        at org.apache.spark.rpc.RpcTimeout.awaitResult(RpcTimeout.scala:75)
+        at org.apache.spark.storage.BlockManagerMaster.removeBroadcast(BlockManagerMaster.scala:152)
+        at org.apache.spark.broadcast.TorrentBroadcast$.unpersist(TorrentBroadcast.scala:306)
+        at org.apache.spark.broadcast.TorrentBroadcastFactory.unbroadcast(TorrentBroadcastFactory.scala:45)
+        at org.apache.spark.broadcast.BroadcastManager.unbroadcast(BroadcastManager.scala:60)
+        at org.apache.spark.ContextCleaner.doCleanupBroadcast(ContextCleaner.scala:238)
+        at org.apache.spark.ContextCleaner$$anonfun$org$apache$spark$ContextCleaner$$keepCleaning$1$$anonfun$apply$mcV$sp$1.apply(ContextCleaner.scala:194)
+        at org.apache.spark.util.ThreadUtils$.awaitResult(ThreadUtils.scala:205)
+        at org.apache.spark.rpc.RpcTimeout.awaitResult(RpcTimeout.scala:75)
+        at org.apache.spark.storage.BlockManagerMaster.removeBroadcast(BlockManagerMaster.scala:152)
+        at org.apache.spark.broadcast.TorrentBroadcast$.unpersist(TorrentBroadcast.scala:306)
+        at org.apache.spark.broadcast.TorrentBroadcastFactory.unbroadcast(TorrentBroadcastFactory.scala:45)
+        at org.apache.spark.broadcast.BroadcastManager.unbroadcast(BroadcastManager.scala:60)
+        at org.apache.spark.ContextCleaner.doCleanupBroadcast(ContextCleaner.scala:238)
+        at org.apache.spark.ContextCleaner$$anonfun$org$apache$spark$ContextCleaner$$keepCleaning$1$$anonfun$apply$mcV$sp$1.apply(ContextCleaner.scala:194)
+        at org.apache.spark.ContextCleaner$$anonfun$org$apache$spark$ContextCleaner$$keepCleaning$1$$anonfun$apply$mcV$sp$1.apply(ContextCleaner.scala:185)
+        at scala.Option.foreach(Option.scala:257)
+        at org.apache.spark.ContextCleaner$$anonfun$org$apache$spark$ContextCleaner$$keepCleaning$1.apply$mcV$sp(ContextCleaner.scala:185)
+        at org.apache.spark.util.Utils$.tryOrStopSparkContext(Utils.scala:1279)
+        at org.apache.spark.ContextCleaner.org$apache$spark$ContextCleaner$$keepCleaning(ContextCleaner.scala:178)
+        at org.apache.spark.ContextCleaner$$anon$1.run(ContextCleaner.scala:73)
+Caused by: java.io.IOException: Connection reset by peer
+        at sun.nio.ch.FileDispatcherImpl.read0(Native Method)
+        at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)
+        at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+        at sun.nio.ch.IOUtil.read(IOUtil.java:192)
+        at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)
+        at io.netty.buffer.PooledUnsafeDirectByteBuf.setBytes(PooledUnsafeDirectByteBuf.java:221)
+        at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:899)
+        at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:275)
+        at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:119)
+        at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:643)
+        at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:566)
+        at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:480)
+        at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:442)
+        at io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:131)
+        at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:144)
+        at java.lang.Thread.run(Thread.java:748)
+19/04/25 11:38:35 INFO BlockManagerInfo: Removed broadcast_1_piece0 on 192.168.51.23:38401 in memory (size: 6.5 KB, free: 366.2 MB)
+19/04/25 11:38:35 ERROR YarnScheduler: Lost executor 3 on hadoop1: Container container_e1037_1555417068416_0066_01_000004 exited from explicit termination request.
+19/04/25 11:38:37 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.51.21:32808) with ID 5
+19/04/25 11:38:37 INFO TaskSetManager: Starting task 1.1 in stage 2.0 (TID 95, hadoop1, executor 5, partition 1, NODE_LOCAL, 5111 bytes)
+19/04/25 11:38:37 INFO TaskSetManager: Starting task 12.1 in stage 2.0 (TID 96, hadoop1, executor 5, partition 12, NODE_LOCAL, 5111 bytes)
+19/04/25 11:38:37 INFO TaskSetManager: Starting task 4.1 in stage 2.0 (TID 97, hadoop1, executor 5, partition 4, NODE_LOCAL, 5111 bytes)
+19/04/25 11:38:37 INFO TaskSetManager: Starting task 15.1 in stage 2.0 (TID 98, hadoop1, executor 5, partition 15, NODE_LOCAL, 5111 bytes)
+19/04/25 11:38:37 INFO TaskSetManager: Starting task 8.1 in stage 2.0 (TID 99, hadoop1, executor 5, partition 8, NODE_LOCAL, 5111 bytes)
+19/04/25 11:38:37 INFO BlockManagerMasterEndpoint: Registering block manager hadoop1:38879 with 4.1 GB RAM, BlockManagerId(5, hadoop1, 38879, None)
+19/04/25 11:39:31 WARN HeartbeatReceiver: Removing executor 1 with no recent heartbeats: 144788 ms exceeds timeout 120000 ms
+19/04/25 11:39:31 ERROR YarnScheduler: Lost executor 1 on hadoop4: Executor heartbeat timed out after 144788 ms
+19/04/25 11:39:31 WARN TaskSetManager: Lost task 3.0 in stage 2.0 (TID 77, hadoop4, executor 1): ExecutorLostFailure (executor 1 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 144788 ms
+19/04/25 11:39:31 WARN TaskSetManager: Lost task 17.0 in stage 2.0 (TID 89, hadoop4, executor 1): ExecutorLostFailure (executor 1 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 144788 ms
+19/04/25 11:39:31 WARN TaskSetManager: Lost task 9.0 in stage 2.0 (TID 85, hadoop4, executor 1): ExecutorLostFailure (executor 1 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 144788 ms
+19/04/25 11:39:31 WARN TaskSetManager: Lost task 6.0 in stage 2.0 (TID 81, hadoop4, executor 1): ExecutorLostFailure (executor 1 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 144788 ms
+19/04/25 11:39:31 WARN TaskSetManager: Lost task 18.0 in stage 2.0 (TID 93, hadoop4, executor 1): ExecutorLostFailure (executor 1 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 144788 ms
+19/04/25 11:39:31 INFO DAGScheduler: Executor lost: 1 (epoch 3)
+19/04/25 11:39:31 INFO YarnClientSchedulerBackend: Requesting to kill executor(s) 1
+19/04/25 11:39:31 INFO BlockManagerMasterEndpoint: Trying to remove executor 1 from BlockManagerMaster.
+19/04/25 11:39:31 INFO YarnClientSchedulerBackend: Actual list of executor(s) to be killed is 1
+19/04/25 11:39:31 WARN HeartbeatReceiver: Removing executor 4 with no recent heartbeats: 163380 ms exceeds timeout 120000 ms
+19/04/25 11:39:31 ERROR YarnScheduler: Lost executor 4 on hadoop3: Executor heartbeat timed out after 163380 ms
+19/04/25 11:39:31 INFO BlockManagerMasterEndpoint: Removing block manager BlockManagerId(1, hadoop4, 42088, None)
+19/04/25 11:39:31 WARN TaskSetManager: Lost task 16.0 in stage 2.0 (TID 92, hadoop3, executor 4): ExecutorLostFailure (executor 4 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 163380 ms
+19/04/25 11:39:31 INFO BlockManagerMaster: Removed 1 successfully in removeExecutor
+19/04/25 11:39:31 INFO DAGScheduler: Shuffle files lost for executor: 1 (epoch 3)
+19/04/25 11:39:31 INFO DAGScheduler: Host added was in lost list earlier: hadoop4
+19/04/25 11:39:31 WARN TaskSetManager: Lost task 5.0 in stage 2.0 (TID 80, hadoop3, executor 4): ExecutorLostFailure (executor 4 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 163380 ms
+19/04/25 11:39:31 WARN TaskSetManager: Lost task 0.0 in stage 2.0 (TID 76, hadoop3, executor 4): ExecutorLostFailure (executor 4 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 163380 ms
+19/04/25 11:39:31 WARN TaskSetManager: Lost task 13.0 in stage 2.0 (TID 88, hadoop3, executor 4): ExecutorLostFailure (executor 4 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 163380 ms
+19/04/25 11:39:31 WARN TaskSetManager: Lost task 10.0 in stage 2.0 (TID 84, hadoop3, executor 4): ExecutorLostFailure (executor 4 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 163380 ms
+19/04/25 11:39:31 INFO DAGScheduler: Executor lost: 4 (epoch 4)
+19/04/25 11:39:31 INFO BlockManagerMasterEndpoint: Trying to remove executor 4 from BlockManagerMaster.
+19/04/25 11:39:31 WARN BlockManagerMasterEndpoint: No more replicas available for broadcast_2_piece0 !
+19/04/25 11:39:31 INFO BlockManagerMasterEndpoint: Removing block manager BlockManagerId(4, hadoop3, 36148, None)
+19/04/25 11:39:31 INFO BlockManagerMaster: Removed 4 successfully in removeExecutor
+19/04/25 11:39:31 INFO DAGScheduler: Shuffle files lost for executor: 4 (epoch 4)
+19/04/25 11:39:31 INFO DAGScheduler: Host added was in lost list earlier: hadoop3
+19/04/25 11:39:31 INFO YarnClientSchedulerBackend: Requesting to kill executor(s) 4
+19/04/25 11:39:31 INFO YarnClientSchedulerBackend: Actual list of executor(s) to be killed is 4
+19/04/25 11:39:34 WARN TransportChannelHandler: Exception in connection from /192.168.51.23:37280
+java.io.IOException: Connection reset by peer
+	at sun.nio.ch.FileDispatcherImpl.read0(Native Method)
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+	at sun.nio.ch.IOUtil.read(IOUtil.java:192)
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)
+	at io.netty.buffer.PooledUnsafeDirectByteBuf.setBytes(PooledUnsafeDirectByteBuf.java:221)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:899)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:275)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:119)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:643)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:566)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:480)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:442)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:131)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:144)
+	at java.lang.Thread.run(Thread.java:748)
+19/04/25 11:39:34 ERROR TransportResponseHandler: Still have 2 requests outstanding when connection from /192.168.51.23:37280 is closed
+19/04/25 11:39:34 INFO YarnSchedulerBackend$YarnDriverEndpoint: Disabling executor 4.
+19/04/25 11:39:34 WARN BlockManagerMaster: Failed to remove broadcast 1 with removeFromMaster = true - Connection reset by peer
+java.io.IOException: Connection reset by peer
+	at sun.nio.ch.FileDispatcherImpl.read0(Native Method)
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+	at sun.nio.ch.IOUtil.read(IOUtil.java:192)
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)
+	at io.netty.buffer.PooledUnsafeDirectByteBuf.setBytes(PooledUnsafeDirectByteBuf.java:221)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:899)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:275)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:119)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:643)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:566)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:480)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:442)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:131)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:144)
+	at java.lang.Thread.run(Thread.java:748)
+19/04/25 11:39:34 INFO DAGScheduler: Executor lost: 4 (epoch 5)
+19/04/25 11:39:34 INFO BlockManagerMasterEndpoint: Trying to remove executor 4 from BlockManagerMaster.
+19/04/25 11:39:34 ERROR ContextCleaner: Error cleaning broadcast 1
+org.apache.spark.SparkException: Exception thrown in awaitResult: 
+	at org.apache.spark.util.ThreadUtils$.awaitResult(ThreadUtils.scala:205)
+	at org.apache.spark.rpc.RpcTimeout.awaitResult(RpcTimeout.scala:75)
+	at org.apache.spark.storage.BlockManagerMaster.removeBroadcast(BlockManagerMaster.scala:152)
+	at org.apache.spark.broadcast.TorrentBroadcast$.unpersist(TorrentBroadcast.scala:306)
+	at org.apache.spark.broadcast.TorrentBroadcastFactory.unbroadcast(TorrentBroadcastFactory.scala:45)
+	at org.apache.spark.broadcast.BroadcastManager.unbroadcast(BroadcastManager.scala:60)
+	at org.apache.spark.ContextCleaner.doCleanupBroadcast(ContextCleaner.scala:238)
+	at org.apache.spark.ContextCleaner$$anonfun$org$apache$spark$ContextCleaner$$keepCleaning$1$$anonfun$apply$mcV$sp$1.apply(ContextCleaner.scala:194)
+	at org.apache.spark.ContextCleaner$$anonfun$org$apache$spark$ContextCleaner$$keepCleaning$1$$anonfun$apply$mcV$sp$1.apply(ContextCleaner.scala:185)
+	at scala.Option.foreach(Option.scala:257)
+	at org.apache.spark.ContextCleaner$$anonfun$org$apache$spark$ContextCleaner$$keepCleaning$1.apply$mcV$sp(ContextCleaner.scala:185)
+	at org.apache.spark.util.Utils$.tryOrStopSparkContext(Utils.scala:1279)
+	at org.apache.spark.ContextCleaner.org$apache$spark$ContextCleaner$$keepCleaning(ContextCleaner.scala:178)
+	at org.apache.spark.ContextCleaner$$anon$1.run(ContextCleaner.scala:73)
+Caused by: java.io.IOException: Connection reset by peer
+	at sun.nio.ch.FileDispatcherImpl.read0(Native Method)
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+	at sun.nio.ch.IOUtil.read(IOUtil.java:192)
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)
+	at io.netty.buffer.PooledUnsafeDirectByteBuf.setBytes(PooledUnsafeDirectByteBuf.java:221)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:899)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:275)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:119)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:643)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:566)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:480)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:442)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:131)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:144)
+	at java.lang.Thread.run(Thread.java:748)
+19/04/25 11:39:34 INFO BlockManagerMaster: Removed 4 successfully in removeExecutor
+19/04/25 11:39:34 INFO DAGScheduler: Shuffle files lost for executor: 4 (epoch 5)
+19/04/25 11:39:34 INFO BlockManagerInfo: Removed broadcast_0_piece0 on 192.168.51.23:38401 in memory (size: 33.1 KB, free: 366.3 MB)
+19/04/25 11:39:34 ERROR YarnScheduler: Lost executor 4 on hadoop3: Container container_e1037_1555417068416_0066_01_000008 exited from explicit termination request.
+19/04/25 11:39:34 WARN TransportChannelHandler: Exception in connection from /192.168.51.24:43146
+java.io.IOException: Connection reset by peer
+	at sun.nio.ch.FileDispatcherImpl.read0(Native Method)
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+	at sun.nio.ch.IOUtil.read(IOUtil.java:192)
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)
+	at io.netty.buffer.PooledUnsafeDirectByteBuf.setBytes(PooledUnsafeDirectByteBuf.java:221)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:899)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:275)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:119)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:643)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:566)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:480)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:442)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:131)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:144)
+	at java.lang.Thread.run(Thread.java:748)
+19/04/25 11:39:34 ERROR TransportResponseHandler: Still have 2 requests outstanding when connection from /192.168.51.24:43146 is closed
+19/04/25 11:39:34 INFO YarnSchedulerBackend$YarnDriverEndpoint: Disabling executor 1.
+19/04/25 11:39:34 INFO DAGScheduler: Executor lost: 1 (epoch 6)
+19/04/25 11:39:34 INFO BlockManagerMasterEndpoint: Trying to remove executor 1 from BlockManagerMaster.
+19/04/25 11:39:34 INFO BlockManagerMaster: Removed 1 successfully in removeExecutor
+19/04/25 11:39:34 INFO DAGScheduler: Shuffle files lost for executor: 1 (epoch 6)
+19/04/25 11:39:34 ERROR YarnScheduler: Lost executor 1 on hadoop4: Container container_e1037_1555417068416_0066_01_000002 exited from explicit termination request.
+19/04/25 11:39:36 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.51.24:43446) with ID 7
+19/04/25 11:39:36 INFO TaskSetManager: Starting task 0.1 in stage 2.0 (TID 100, hadoop4, executor 7, partition 0, NODE_LOCAL, 5111 bytes)
+19/04/25 11:39:36 INFO TaskSetManager: Starting task 5.1 in stage 2.0 (TID 101, hadoop4, executor 7, partition 5, NODE_LOCAL, 5111 bytes)
+19/04/25 11:39:36 INFO TaskSetManager: Starting task 18.1 in stage 2.0 (TID 102, hadoop4, executor 7, partition 18, NODE_LOCAL, 5111 bytes)
+19/04/25 11:39:36 INFO TaskSetManager: Starting task 6.1 in stage 2.0 (TID 103, hadoop4, executor 7, partition 6, NODE_LOCAL, 5111 bytes)
+19/04/25 11:39:36 INFO TaskSetManager: Starting task 9.1 in stage 2.0 (TID 104, hadoop4, executor 7, partition 9, NODE_LOCAL, 5111 bytes)
+19/04/25 11:39:36 INFO BlockManagerMasterEndpoint: Registering block manager hadoop4:40763 with 4.1 GB RAM, BlockManagerId(7, hadoop4, 40763, None)
+19/04/25 11:39:37 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.51.23:34918) with ID 6
+19/04/25 11:39:37 INFO TaskSetManager: Starting task 10.1 in stage 2.0 (TID 105, hadoop3, executor 6, partition 10, NODE_LOCAL, 5111 bytes)
+19/04/25 11:39:37 INFO TaskSetManager: Starting task 13.1 in stage 2.0 (TID 106, hadoop3, executor 6, partition 13, NODE_LOCAL, 5111 bytes)
+19/04/25 11:39:37 INFO TaskSetManager: Starting task 16.1 in stage 2.0 (TID 107, hadoop3, executor 6, partition 16, NODE_LOCAL, 5111 bytes)
+19/04/25 11:39:37 INFO TaskSetManager: Starting task 17.1 in stage 2.0 (TID 108, hadoop3, executor 6, partition 17, NODE_LOCAL, 5111 bytes)
+19/04/25 11:39:37 INFO TaskSetManager: Starting task 19.0 in stage 2.0 (TID 109, hadoop3, executor 6, partition 19, NODE_LOCAL, 5111 bytes)
+19/04/25 11:39:37 INFO BlockManagerMasterEndpoint: Registering block manager hadoop3:37745 with 4.1 GB RAM, BlockManagerId(6, hadoop3, 37745, None)
+19/04/25 11:39:37 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on hadoop4:40763 (size: 8.0 KB, free: 4.1 GB)
+19/04/25 11:39:37 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on hadoop3:37745 (size: 8.0 KB, free: 4.1 GB)
+19/04/25 11:40:01 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on hadoop3:37745 (size: 33.2 KB, free: 4.1 GB)
+19/04/25 11:40:01 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on hadoop4:40763 (size: 33.2 KB, free: 4.1 GB)
+19/04/25 11:40:01 INFO BlockManagerInfo: Removed broadcast_1_piece0 on hadoop2:44747 in memory (size: 6.5 KB, free: 4.1 GB)
+19/04/25 11:40:01 INFO BlockManagerInfo: Removed broadcast_0_piece0 on hadoop2:44747 in memory (size: 33.1 KB, free: 4.1 GB)
+19/04/25 11:40:01 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on hadoop1:38879 (size: 8.0 KB, free: 4.1 GB)
+19/04/25 11:40:01 INFO ContextCleaner: Cleaned accumulator 1
+19/04/25 11:40:01 INFO ContextCleaner: Cleaned shuffle 0
+19/04/25 11:40:01 INFO ContextCleaner: Cleaned accumulator 4
+19/04/25 11:40:01 INFO ContextCleaner: Cleaned accumulator 5
+19/04/25 11:40:01 INFO ContextCleaner: Cleaned accumulator 10
+19/04/25 11:40:02 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on hadoop1:38879 (size: 33.2 KB, free: 4.1 GB)
+19/04/25 11:40:03 WARN TransportChannelHandler: Exception in connection from /192.168.51.22:42428
+java.io.IOException: Connection reset by peer
+	at sun.nio.ch.FileDispatcherImpl.read0(Native Method)
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+	at sun.nio.ch.IOUtil.read(IOUtil.java:192)
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)
+	at io.netty.buffer.PooledUnsafeDirectByteBuf.setBytes(PooledUnsafeDirectByteBuf.java:221)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:899)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:275)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:119)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:643)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:566)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:480)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:442)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:131)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:144)
+	at java.lang.Thread.run(Thread.java:748)
+19/04/25 11:40:03 ERROR TransportResponseHandler: Still have 1 requests outstanding when connection from /192.168.51.22:42428 is closed
+19/04/25 11:40:03 INFO YarnSchedulerBackend$YarnDriverEndpoint: Disabling executor 2.
+19/04/25 11:40:03 INFO DAGScheduler: Executor lost: 2 (epoch 7)
+19/04/25 11:40:03 INFO BlockManagerMasterEndpoint: Trying to remove executor 2 from BlockManagerMaster.
+19/04/25 11:40:03 INFO BlockManagerMasterEndpoint: Removing block manager BlockManagerId(2, hadoop2, 44747, None)
+19/04/25 11:40:03 INFO BlockManagerMaster: Removed 2 successfully in removeExecutor
+19/04/25 11:40:03 INFO DAGScheduler: Shuffle files lost for executor: 2 (epoch 7)
+19/04/25 11:40:03 WARN BlockManagerMaster: Failed to remove shuffle 0 - Connection reset by peer
+java.io.IOException: Connection reset by peer
+	at sun.nio.ch.FileDispatcherImpl.read0(Native Method)
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+	at sun.nio.ch.IOUtil.read(IOUtil.java:192)
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)
+	at io.netty.buffer.PooledUnsafeDirectByteBuf.setBytes(PooledUnsafeDirectByteBuf.java:221)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:899)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:275)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:119)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:643)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:566)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:480)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:442)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:131)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:144)
+	at java.lang.Thread.run(Thread.java:748)
+19/04/25 11:40:03 ERROR YarnScheduler: Lost executor 2 on hadoop2: Container marked as failed: container_e1037_1555417068416_0066_01_000003 on host: hadoop2. Exit status: 143. Diagnostics: Container killed on request. Exit code is 143
+Container exited with a non-zero exit code 143. 
+Killed by external signal
+
+19/04/25 11:40:03 WARN TaskSetManager: Lost task 11.0 in stage 2.0 (TID 86, hadoop2, executor 2): ExecutorLostFailure (executor 2 exited caused by one of the running tasks) Reason: Container marked as failed: container_e1037_1555417068416_0066_01_000003 on host: hadoop2. Exit status: 143. Diagnostics: Container killed on request. Exit code is 143
+Container exited with a non-zero exit code 143. 
+Killed by external signal
+
+19/04/25 11:40:03 WARN TaskSetManager: Lost task 7.0 in stage 2.0 (TID 82, hadoop2, executor 2): ExecutorLostFailure (executor 2 exited caused by one of the running tasks) Reason: Container marked as failed: container_e1037_1555417068416_0066_01_000003 on host: hadoop2. Exit status: 143. Diagnostics: Container killed on request. Exit code is 143
+Container exited with a non-zero exit code 143. 
+Killed by external signal
+
+19/04/25 11:40:03 WARN TaskSetManager: Lost task 20.0 in stage 2.0 (TID 94, hadoop2, executor 2): ExecutorLostFailure (executor 2 exited caused by one of the running tasks) Reason: Container marked as failed: container_e1037_1555417068416_0066_01_000003 on host: hadoop2. Exit status: 143. Diagnostics: Container killed on request. Exit code is 143
+Container exited with a non-zero exit code 143. 
+Killed by external signal
+
+19/04/25 11:40:03 WARN TaskSetManager: Lost task 2.0 in stage 2.0 (TID 78, hadoop2, executor 2): ExecutorLostFailure (executor 2 exited caused by one of the running tasks) Reason: Container marked as failed: container_e1037_1555417068416_0066_01_000003 on host: hadoop2. Exit status: 143. Diagnostics: Container killed on request. Exit code is 143
+Container exited with a non-zero exit code 143. 
+Killed by external signal
+
+19/04/25 11:40:03 WARN TaskSetManager: Lost task 14.0 in stage 2.0 (TID 90, hadoop2, executor 2): ExecutorLostFailure (executor 2 exited caused by one of the running tasks) Reason: Container marked as failed: container_e1037_1555417068416_0066_01_000003 on host: hadoop2. Exit status: 143. Diagnostics: Container killed on request. Exit code is 143
+Container exited with a non-zero exit code 143. 
+Killed by external signal
+
+19/04/25 11:40:03 WARN YarnSchedulerBackend$YarnSchedulerEndpoint: Container marked as failed: container_e1037_1555417068416_0066_01_000003 on host: hadoop2. Exit status: 143. Diagnostics: Container killed on request. Exit code is 143
+Container exited with a non-zero exit code 143. 
+Killed by external signal
+
+19/04/25 11:40:03 INFO BlockManagerMasterEndpoint: Trying to remove executor 2 from BlockManagerMaster.
+19/04/25 11:40:03 INFO BlockManagerMaster: Removal of executor 2 requested
+19/04/25 11:40:03 INFO YarnSchedulerBackend$YarnDriverEndpoint: Asked to remove non-existent executor 2
+19/04/25 11:40:06 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.51.22:43072) with ID 8
+19/04/25 11:40:06 INFO TaskSetManager: Starting task 14.1 in stage 2.0 (TID 110, hadoop2, executor 8, partition 14, NODE_LOCAL, 5111 bytes)
+19/04/25 11:40:06 INFO TaskSetManager: Starting task 2.1 in stage 2.0 (TID 111, hadoop2, executor 8, partition 2, NODE_LOCAL, 5111 bytes)
+19/04/25 11:40:06 INFO TaskSetManager: Starting task 20.1 in stage 2.0 (TID 112, hadoop2, executor 8, partition 20, NODE_LOCAL, 5111 bytes)
+19/04/25 11:40:06 INFO TaskSetManager: Starting task 7.1 in stage 2.0 (TID 113, hadoop2, executor 8, partition 7, NODE_LOCAL, 5111 bytes)
+19/04/25 11:40:06 INFO TaskSetManager: Starting task 11.1 in stage 2.0 (TID 114, hadoop2, executor 8, partition 11, NODE_LOCAL, 5111 bytes)
+19/04/25 11:40:06 INFO BlockManagerMasterEndpoint: Registering block manager hadoop2:40058 with 4.1 GB RAM, BlockManagerId(8, hadoop2, 40058, None)
+19/04/25 11:40:08 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on hadoop2:40058 (size: 8.0 KB, free: 4.1 GB)
+19/04/25 11:40:08 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on hadoop2:40058 (size: 33.2 KB, free: 4.1 GB)
+19/04/25 11:47:31 WARN TransportChannelHandler: Exception in connection from /192.168.51.24:43446
+java.io.IOException: Connection reset by peer
+	at sun.nio.ch.FileDispatcherImpl.read0(Native Method)
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+	at sun.nio.ch.IOUtil.read(IOUtil.java:192)
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)
+	at io.netty.buffer.PooledUnsafeDirectByteBuf.setBytes(PooledUnsafeDirectByteBuf.java:221)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:899)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:275)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:119)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:643)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:566)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:480)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:442)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:131)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:144)
+	at java.lang.Thread.run(Thread.java:748)
+19/04/25 11:47:31 INFO YarnSchedulerBackend$YarnDriverEndpoint: Disabling executor 7.
+19/04/25 11:47:31 INFO DAGScheduler: Executor lost: 7 (epoch 8)
+19/04/25 11:47:31 INFO BlockManagerMasterEndpoint: Trying to remove executor 7 from BlockManagerMaster.
+19/04/25 11:47:31 INFO BlockManagerMasterEndpoint: Removing block manager BlockManagerId(7, hadoop4, 40763, None)
+19/04/25 11:47:31 INFO BlockManagerMaster: Removed 7 successfully in removeExecutor
+19/04/25 11:47:31 INFO DAGScheduler: Shuffle files lost for executor: 7 (epoch 8)
+19/04/25 11:47:31 ERROR YarnScheduler: Lost executor 7 on hadoop4: Container marked as failed: container_e1037_1555417068416_0066_01_000007 on host: hadoop4. Exit status: 143. Diagnostics: Container killed on request. Exit code is 143
+Container exited with a non-zero exit code 143. 
+Killed by external signal
+
+19/04/25 11:47:31 WARN TaskSetManager: Lost task 5.1 in stage 2.0 (TID 101, hadoop4, executor 7): ExecutorLostFailure (executor 7 exited caused by one of the running tasks) Reason: Container marked as failed: container_e1037_1555417068416_0066_01_000007 on host: hadoop4. Exit status: 143. Diagnostics: Container killed on request. Exit code is 143
+Container exited with a non-zero exit code 143. 
+Killed by external signal
+
+19/04/25 11:47:31 WARN TaskSetManager: Lost task 9.1 in stage 2.0 (TID 104, hadoop4, executor 7): ExecutorLostFailure (executor 7 exited caused by one of the running tasks) Reason: Container marked as failed: container_e1037_1555417068416_0066_01_000007 on host: hadoop4. Exit status: 143. Diagnostics: Container killed on request. Exit code is 143
+Container exited with a non-zero exit code 143. 
+Killed by external signal
+
+19/04/25 11:47:31 WARN TaskSetManager: Lost task 0.1 in stage 2.0 (TID 100, hadoop4, executor 7): ExecutorLostFailure (executor 7 exited caused by one of the running tasks) Reason: Container marked as failed: container_e1037_1555417068416_0066_01_000007 on host: hadoop4. Exit status: 143. Diagnostics: Container killed on request. Exit code is 143
+Container exited with a non-zero exit code 143. 
+Killed by external signal
+
+19/04/25 11:47:31 WARN TaskSetManager: Lost task 6.1 in stage 2.0 (TID 103, hadoop4, executor 7): ExecutorLostFailure (executor 7 exited caused by one of the running tasks) Reason: Container marked as failed: container_e1037_1555417068416_0066_01_000007 on host: hadoop4. Exit status: 143. Diagnostics: Container killed on request. Exit code is 143
+Container exited with a non-zero exit code 143. 
+Killed by external signal
+
+19/04/25 11:47:31 WARN TaskSetManager: Lost task 18.1 in stage 2.0 (TID 102, hadoop4, executor 7): ExecutorLostFailure (executor 7 exited caused by one of the running tasks) Reason: Container marked as failed: container_e1037_1555417068416_0066_01_000007 on host: hadoop4. Exit status: 143. Diagnostics: Container killed on request. Exit code is 143
+Container exited with a non-zero exit code 143. 
+Killed by external signal
+
+19/04/25 11:47:31 WARN YarnSchedulerBackend$YarnSchedulerEndpoint: Container marked as failed: container_e1037_1555417068416_0066_01_000007 on host: hadoop4. Exit status: 143. Diagnostics: Container killed on request. Exit code is 143
+Container exited with a non-zero exit code 143. 
+Killed by external signal
+
+19/04/25 11:47:31 INFO BlockManagerMaster: Removal of executor 7 requested
+19/04/25 11:47:31 INFO YarnSchedulerBackend$YarnDriverEndpoint: Asked to remove non-existent executor 7
+19/04/25 11:47:31 INFO BlockManagerMasterEndpoint: Trying to remove executor 7 from BlockManagerMaster.
+19/04/25 11:47:33 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.51.24:43764) with ID 9
+19/04/25 11:47:33 INFO TaskSetManager: Starting task 18.2 in stage 2.0 (TID 115, hadoop4, executor 9, partition 18, NODE_LOCAL, 5111 bytes)
+19/04/25 11:47:33 INFO TaskSetManager: Starting task 6.2 in stage 2.0 (TID 116, hadoop4, executor 9, partition 6, NODE_LOCAL, 5111 bytes)
+19/04/25 11:47:33 INFO TaskSetManager: Starting task 0.2 in stage 2.0 (TID 117, hadoop4, executor 9, partition 0, NODE_LOCAL, 5111 bytes)
+19/04/25 11:47:33 INFO TaskSetManager: Starting task 9.2 in stage 2.0 (TID 118, hadoop4, executor 9, partition 9, NODE_LOCAL, 5111 bytes)
+19/04/25 11:47:33 INFO TaskSetManager: Starting task 5.2 in stage 2.0 (TID 119, hadoop4, executor 9, partition 5, NODE_LOCAL, 5111 bytes)
+19/04/25 11:47:33 INFO BlockManagerMasterEndpoint: Registering block manager hadoop4:33964 with 4.1 GB RAM, BlockManagerId(9, hadoop4, 33964, None)
+19/04/25 11:48:31 WARN HeartbeatReceiver: Removing executor 8 with no recent heartbeats: 156055 ms exceeds timeout 120000 ms
+19/04/25 11:48:31 ERROR YarnScheduler: Lost executor 8 on hadoop2: Executor heartbeat timed out after 156055 ms
+19/04/25 11:48:31 WARN TaskSetManager: Lost task 14.1 in stage 2.0 (TID 110, hadoop2, executor 8): ExecutorLostFailure (executor 8 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 156055 ms
+19/04/25 11:48:31 WARN TaskSetManager: Lost task 7.1 in stage 2.0 (TID 113, hadoop2, executor 8): ExecutorLostFailure (executor 8 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 156055 ms
+19/04/25 11:48:31 WARN TaskSetManager: Lost task 20.1 in stage 2.0 (TID 112, hadoop2, executor 8): ExecutorLostFailure (executor 8 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 156055 ms
+19/04/25 11:48:31 WARN TaskSetManager: Lost task 11.1 in stage 2.0 (TID 114, hadoop2, executor 8): ExecutorLostFailure (executor 8 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 156055 ms
+19/04/25 11:48:31 WARN TaskSetManager: Lost task 2.1 in stage 2.0 (TID 111, hadoop2, executor 8): ExecutorLostFailure (executor 8 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 156055 ms
+19/04/25 11:48:31 INFO YarnClientSchedulerBackend: Requesting to kill executor(s) 8
+19/04/25 11:48:31 INFO YarnClientSchedulerBackend: Actual list of executor(s) to be killed is 8
+19/04/25 11:48:31 INFO DAGScheduler: Executor lost: 8 (epoch 9)
+19/04/25 11:48:31 INFO BlockManagerMasterEndpoint: Trying to remove executor 8 from BlockManagerMaster.
+19/04/25 11:48:31 INFO BlockManagerMasterEndpoint: Removing block manager BlockManagerId(8, hadoop2, 40058, None)
+19/04/25 11:48:31 INFO BlockManagerMaster: Removed 8 successfully in removeExecutor
+19/04/25 11:48:31 INFO DAGScheduler: Shuffle files lost for executor: 8 (epoch 9)
+19/04/25 11:48:31 INFO DAGScheduler: Host added was in lost list earlier: hadoop2
+19/04/25 11:48:36 INFO YarnSchedulerBackend$YarnDriverEndpoint: Disabling executor 8.
+19/04/25 11:48:36 INFO DAGScheduler: Executor lost: 8 (epoch 10)
+19/04/25 11:48:36 INFO BlockManagerMasterEndpoint: Trying to remove executor 8 from BlockManagerMaster.
+19/04/25 11:48:36 INFO BlockManagerMaster: Removed 8 successfully in removeExecutor
+19/04/25 11:48:36 INFO DAGScheduler: Shuffle files lost for executor: 8 (epoch 10)
+19/04/25 11:48:36 ERROR YarnScheduler: Lost executor 8 on hadoop2: Container container_e1037_1555417068416_0066_01_000009 exited from explicit termination request.
+19/04/25 11:48:38 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.51.22:43676) with ID 10
+19/04/25 11:48:38 INFO TaskSetManager: Starting task 2.2 in stage 2.0 (TID 120, hadoop2, executor 10, partition 2, NODE_LOCAL, 5111 bytes)
+19/04/25 11:48:38 INFO TaskSetManager: Starting task 11.2 in stage 2.0 (TID 121, hadoop2, executor 10, partition 11, NODE_LOCAL, 5111 bytes)
+19/04/25 11:48:38 INFO TaskSetManager: Starting task 20.2 in stage 2.0 (TID 122, hadoop2, executor 10, partition 20, NODE_LOCAL, 5111 bytes)
+19/04/25 11:48:38 INFO TaskSetManager: Starting task 7.2 in stage 2.0 (TID 123, hadoop2, executor 10, partition 7, NODE_LOCAL, 5111 bytes)
+19/04/25 11:48:38 INFO TaskSetManager: Starting task 14.2 in stage 2.0 (TID 124, hadoop2, executor 10, partition 14, NODE_LOCAL, 5111 bytes)
+19/04/25 11:48:38 INFO BlockManagerMasterEndpoint: Registering block manager hadoop2:41775 with 4.1 GB RAM, BlockManagerId(10, hadoop2, 41775, None)
+19/04/25 11:48:39 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on hadoop2:41775 (size: 8.0 KB, free: 4.1 GB)
+19/04/25 11:48:51 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on hadoop4:33964 (size: 8.0 KB, free: 4.1 GB)
+19/04/25 11:49:31 WARN HeartbeatReceiver: Removing executor 6 with no recent heartbeats: 123724 ms exceeds timeout 120000 ms
+19/04/25 11:49:31 ERROR YarnScheduler: Lost executor 6 on hadoop3: Executor heartbeat timed out after 123724 ms
+19/04/25 11:49:31 WARN TaskSetManager: Lost task 16.1 in stage 2.0 (TID 107, hadoop3, executor 6): ExecutorLostFailure (executor 6 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 123724 ms
+19/04/25 11:49:31 WARN TaskSetManager: Lost task 13.1 in stage 2.0 (TID 106, hadoop3, executor 6): ExecutorLostFailure (executor 6 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 123724 ms
+19/04/25 11:49:31 WARN TaskSetManager: Lost task 19.0 in stage 2.0 (TID 109, hadoop3, executor 6): ExecutorLostFailure (executor 6 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 123724 ms
+19/04/25 11:49:31 WARN TaskSetManager: Lost task 10.1 in stage 2.0 (TID 105, hadoop3, executor 6): ExecutorLostFailure (executor 6 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 123724 ms
+19/04/25 11:49:31 WARN TaskSetManager: Lost task 17.1 in stage 2.0 (TID 108, hadoop3, executor 6): ExecutorLostFailure (executor 6 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 123724 ms
+19/04/25 11:49:31 INFO DAGScheduler: Executor lost: 6 (epoch 11)
+19/04/25 11:49:31 INFO BlockManagerMasterEndpoint: Trying to remove executor 6 from BlockManagerMaster.
+19/04/25 11:49:31 INFO BlockManagerMasterEndpoint: Removing block manager BlockManagerId(6, hadoop3, 37745, None)
+19/04/25 11:49:31 INFO YarnClientSchedulerBackend: Requesting to kill executor(s) 6
+19/04/25 11:49:31 INFO YarnClientSchedulerBackend: Actual list of executor(s) to be killed is 6
+19/04/25 11:49:31 INFO BlockManagerMaster: Removed 6 successfully in removeExecutor
+19/04/25 11:49:31 INFO DAGScheduler: Shuffle files lost for executor: 6 (epoch 11)
+19/04/25 11:49:31 INFO DAGScheduler: Host added was in lost list earlier: hadoop3
+19/04/25 11:49:35 INFO YarnSchedulerBackend$YarnDriverEndpoint: Disabling executor 6.
+19/04/25 11:49:35 INFO DAGScheduler: Executor lost: 6 (epoch 12)
+19/04/25 11:49:35 INFO BlockManagerMasterEndpoint: Trying to remove executor 6 from BlockManagerMaster.
+19/04/25 11:49:35 INFO BlockManagerMaster: Removed 6 successfully in removeExecutor
+19/04/25 11:49:35 INFO DAGScheduler: Shuffle files lost for executor: 6 (epoch 12)
+19/04/25 11:49:35 ERROR YarnScheduler: Lost executor 6 on hadoop3: Container container_e1037_1555417068416_0066_01_000011 exited from explicit termination request.
+19/04/25 11:49:37 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.51.23:55322) with ID 11
+19/04/25 11:49:37 INFO TaskSetManager: Starting task 17.2 in stage 2.0 (TID 125, hadoop3, executor 11, partition 17, NODE_LOCAL, 5111 bytes)
+19/04/25 11:49:37 INFO TaskSetManager: Starting task 10.2 in stage 2.0 (TID 126, hadoop3, executor 11, partition 10, NODE_LOCAL, 5111 bytes)
+19/04/25 11:49:37 INFO TaskSetManager: Starting task 19.1 in stage 2.0 (TID 127, hadoop3, executor 11, partition 19, NODE_LOCAL, 5111 bytes)
+19/04/25 11:49:37 INFO TaskSetManager: Starting task 13.2 in stage 2.0 (TID 128, hadoop3, executor 11, partition 13, NODE_LOCAL, 5111 bytes)
+19/04/25 11:49:37 INFO TaskSetManager: Starting task 16.2 in stage 2.0 (TID 129, hadoop3, executor 11, partition 16, NODE_LOCAL, 5111 bytes)
+19/04/25 11:49:37 INFO BlockManagerMasterEndpoint: Registering block manager hadoop3:41473 with 4.1 GB RAM, BlockManagerId(11, hadoop3, 41473, None)
+19/04/25 11:49:38 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on hadoop3:41473 (size: 8.0 KB, free: 4.1 GB)
+19/04/25 11:49:38 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on hadoop3:41473 (size: 33.2 KB, free: 4.1 GB)
+19/04/25 11:51:31 WARN HeartbeatReceiver: Removing executor 5 with no recent heartbeats: 128820 ms exceeds timeout 120000 ms
+19/04/25 11:51:31 ERROR YarnScheduler: Lost executor 5 on hadoop1: Executor heartbeat timed out after 128820 ms
+19/04/25 11:51:31 WARN TaskSetManager: Lost task 1.1 in stage 2.0 (TID 95, hadoop1, executor 5): ExecutorLostFailure (executor 5 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 128820 ms
+19/04/25 11:51:31 WARN TaskSetManager: Lost task 15.1 in stage 2.0 (TID 98, hadoop1, executor 5): ExecutorLostFailure (executor 5 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 128820 ms
+19/04/25 11:51:31 WARN TaskSetManager: Lost task 4.1 in stage 2.0 (TID 97, hadoop1, executor 5): ExecutorLostFailure (executor 5 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 128820 ms
+19/04/25 11:51:31 WARN TaskSetManager: Lost task 12.1 in stage 2.0 (TID 96, hadoop1, executor 5): ExecutorLostFailure (executor 5 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 128820 ms
+19/04/25 11:51:31 WARN TaskSetManager: Lost task 8.1 in stage 2.0 (TID 99, hadoop1, executor 5): ExecutorLostFailure (executor 5 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 128820 ms
+19/04/25 11:51:31 INFO DAGScheduler: Executor lost: 5 (epoch 13)
+19/04/25 11:51:31 INFO BlockManagerMasterEndpoint: Trying to remove executor 5 from BlockManagerMaster.
+19/04/25 11:51:31 INFO BlockManagerMasterEndpoint: Removing block manager BlockManagerId(5, hadoop1, 38879, None)
+19/04/25 11:51:31 INFO YarnClientSchedulerBackend: Requesting to kill executor(s) 5
+19/04/25 11:51:31 INFO YarnClientSchedulerBackend: Actual list of executor(s) to be killed is 5
+19/04/25 11:51:31 INFO BlockManagerMaster: Removed 5 successfully in removeExecutor
+19/04/25 11:51:31 INFO DAGScheduler: Shuffle files lost for executor: 5 (epoch 13)
+19/04/25 11:51:31 INFO DAGScheduler: Host added was in lost list earlier: hadoop1
+19/04/25 11:51:33 WARN TransportChannelHandler: Exception in connection from /192.168.51.21:32808
+java.io.IOException: Connection reset by peer
+	at sun.nio.ch.FileDispatcherImpl.read0(Native Method)
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+	at sun.nio.ch.IOUtil.read(IOUtil.java:192)
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)
+	at io.netty.buffer.PooledUnsafeDirectByteBuf.setBytes(PooledUnsafeDirectByteBuf.java:221)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:899)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:275)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:119)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:643)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:566)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:480)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:442)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:131)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:144)
+	at java.lang.Thread.run(Thread.java:748)
+19/04/25 11:51:33 INFO YarnSchedulerBackend$YarnDriverEndpoint: Disabling executor 5.
+19/04/25 11:51:33 INFO DAGScheduler: Executor lost: 5 (epoch 14)
+19/04/25 11:51:33 INFO BlockManagerMasterEndpoint: Trying to remove executor 5 from BlockManagerMaster.
+19/04/25 11:51:33 ERROR YarnScheduler: Lost executor 5 on hadoop1: Container container_e1037_1555417068416_0066_01_000006 exited from explicit termination request.
+19/04/25 11:51:33 INFO BlockManagerMaster: Removed 5 successfully in removeExecutor
+19/04/25 11:51:33 INFO DAGScheduler: Shuffle files lost for executor: 5 (epoch 14)
+19/04/25 11:51:36 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.51.21:34384) with ID 12
+19/04/25 11:51:36 INFO TaskSetManager: Starting task 8.2 in stage 2.0 (TID 130, hadoop1, executor 12, partition 8, NODE_LOCAL, 5111 bytes)
+19/04/25 11:51:36 INFO TaskSetManager: Starting task 12.2 in stage 2.0 (TID 131, hadoop1, executor 12, partition 12, NODE_LOCAL, 5111 bytes)
+19/04/25 11:51:36 INFO TaskSetManager: Starting task 4.2 in stage 2.0 (TID 132, hadoop1, executor 12, partition 4, NODE_LOCAL, 5111 bytes)
+19/04/25 11:51:36 INFO TaskSetManager: Starting task 15.2 in stage 2.0 (TID 133, hadoop1, executor 12, partition 15, NODE_LOCAL, 5111 bytes)
+19/04/25 11:51:36 INFO TaskSetManager: Starting task 1.2 in stage 2.0 (TID 134, hadoop1, executor 12, partition 1, NODE_LOCAL, 5111 bytes)
+19/04/25 11:51:36 INFO BlockManagerMasterEndpoint: Registering block manager hadoop1:38204 with 4.1 GB RAM, BlockManagerId(12, hadoop1, 38204, None)
+19/04/25 11:51:37 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on hadoop1:38204 (size: 8.0 KB, free: 4.1 GB)
+19/04/25 11:51:38 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on hadoop1:38204 (size: 33.2 KB, free: 4.1 GB)
+19/04/25 11:51:43 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on hadoop4:33964 (size: 33.2 KB, free: 4.1 GB)
+19/04/25 11:51:48 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on hadoop2:41775 (size: 33.2 KB, free: 4.1 GB)
+19/04/25 11:58:31 WARN HeartbeatReceiver: Removing executor 12 with no recent heartbeats: 162802 ms exceeds timeout 120000 ms
+19/04/25 11:58:31 ERROR YarnScheduler: Lost executor 12 on hadoop1: Executor heartbeat timed out after 162802 ms
+19/04/25 11:58:31 WARN TaskSetManager: Lost task 12.2 in stage 2.0 (TID 131, hadoop1, executor 12): ExecutorLostFailure (executor 12 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 162802 ms
+19/04/25 11:58:31 WARN TaskSetManager: Lost task 1.2 in stage 2.0 (TID 134, hadoop1, executor 12): ExecutorLostFailure (executor 12 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 162802 ms
+19/04/25 11:58:31 WARN TaskSetManager: Lost task 15.2 in stage 2.0 (TID 133, hadoop1, executor 12): ExecutorLostFailure (executor 12 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 162802 ms
+19/04/25 11:58:31 WARN TaskSetManager: Lost task 8.2 in stage 2.0 (TID 130, hadoop1, executor 12): ExecutorLostFailure (executor 12 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 162802 ms
+19/04/25 11:58:31 WARN TaskSetManager: Lost task 4.2 in stage 2.0 (TID 132, hadoop1, executor 12): ExecutorLostFailure (executor 12 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 162802 ms
+19/04/25 11:58:31 WARN HeartbeatReceiver: Removing executor 11 with no recent heartbeats: 157829 ms exceeds timeout 120000 ms
+19/04/25 11:58:31 ERROR YarnScheduler: Lost executor 11 on hadoop3: Executor heartbeat timed out after 157829 ms
+19/04/25 11:58:31 WARN TaskSetManager: Lost task 13.2 in stage 2.0 (TID 128, hadoop3, executor 11): ExecutorLostFailure (executor 11 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 157829 ms
+19/04/25 11:58:31 WARN TaskSetManager: Lost task 17.2 in stage 2.0 (TID 125, hadoop3, executor 11): ExecutorLostFailure (executor 11 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 157829 ms
+19/04/25 11:58:31 WARN TaskSetManager: Lost task 19.1 in stage 2.0 (TID 127, hadoop3, executor 11): ExecutorLostFailure (executor 11 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 157829 ms
+19/04/25 11:58:31 WARN TaskSetManager: Lost task 16.2 in stage 2.0 (TID 129, hadoop3, executor 11): ExecutorLostFailure (executor 11 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 157829 ms
+19/04/25 11:58:31 WARN TaskSetManager: Lost task 10.2 in stage 2.0 (TID 126, hadoop3, executor 11): ExecutorLostFailure (executor 11 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 157829 ms
+19/04/25 11:58:31 WARN HeartbeatReceiver: Removing executor 9 with no recent heartbeats: 134212 ms exceeds timeout 120000 ms
+19/04/25 11:58:31 ERROR YarnScheduler: Lost executor 9 on hadoop4: Executor heartbeat timed out after 134212 ms
+19/04/25 11:58:31 WARN TaskSetManager: Lost task 5.2 in stage 2.0 (TID 119, hadoop4, executor 9): ExecutorLostFailure (executor 9 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 134212 ms
+19/04/25 11:58:31 WARN TaskSetManager: Lost task 6.2 in stage 2.0 (TID 116, hadoop4, executor 9): ExecutorLostFailure (executor 9 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 134212 ms
+19/04/25 11:58:31 WARN TaskSetManager: Lost task 18.2 in stage 2.0 (TID 115, hadoop4, executor 9): ExecutorLostFailure (executor 9 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 134212 ms
+19/04/25 11:58:31 WARN TaskSetManager: Lost task 9.2 in stage 2.0 (TID 118, hadoop4, executor 9): ExecutorLostFailure (executor 9 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 134212 ms
+19/04/25 11:58:31 WARN TaskSetManager: Lost task 0.2 in stage 2.0 (TID 117, hadoop4, executor 9): ExecutorLostFailure (executor 9 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 134212 ms
+19/04/25 11:58:31 INFO DAGScheduler: Executor lost: 12 (epoch 15)
+19/04/25 11:58:31 INFO BlockManagerMasterEndpoint: Trying to remove executor 12 from BlockManagerMaster.
+19/04/25 11:58:31 INFO BlockManagerMasterEndpoint: Removing block manager BlockManagerId(12, hadoop1, 38204, None)
+19/04/25 11:58:31 INFO BlockManagerMaster: Removed 12 successfully in removeExecutor
+19/04/25 11:58:31 INFO DAGScheduler: Shuffle files lost for executor: 12 (epoch 15)
+19/04/25 11:58:31 INFO DAGScheduler: Executor lost: 11 (epoch 16)
+19/04/25 11:58:31 INFO BlockManagerMasterEndpoint: Trying to remove executor 11 from BlockManagerMaster.
+19/04/25 11:58:31 INFO BlockManagerMasterEndpoint: Removing block manager BlockManagerId(11, hadoop3, 41473, None)
+19/04/25 11:58:31 INFO YarnClientSchedulerBackend: Requesting to kill executor(s) 12
+19/04/25 11:58:31 INFO YarnClientSchedulerBackend: Actual list of executor(s) to be killed is 12
+19/04/25 11:58:31 INFO BlockManagerMaster: Removed 11 successfully in removeExecutor
+19/04/25 11:58:31 INFO DAGScheduler: Shuffle files lost for executor: 11 (epoch 16)
+19/04/25 11:58:31 INFO DAGScheduler: Executor lost: 9 (epoch 17)
+19/04/25 11:58:31 INFO BlockManagerMasterEndpoint: Trying to remove executor 9 from BlockManagerMaster.
+19/04/25 11:58:31 INFO BlockManagerMasterEndpoint: Removing block manager BlockManagerId(9, hadoop4, 33964, None)
+19/04/25 11:58:31 INFO BlockManagerMaster: Removed 9 successfully in removeExecutor
+19/04/25 11:58:31 INFO DAGScheduler: Shuffle files lost for executor: 9 (epoch 17)
+19/04/25 11:58:31 INFO DAGScheduler: Host added was in lost list earlier: hadoop1
+19/04/25 11:58:31 INFO DAGScheduler: Host added was in lost list earlier: hadoop3
+19/04/25 11:58:31 INFO DAGScheduler: Host added was in lost list earlier: hadoop4
+19/04/25 11:58:32 INFO YarnClientSchedulerBackend: Requesting to kill executor(s) 11
+19/04/25 11:58:32 INFO YarnClientSchedulerBackend: Actual list of executor(s) to be killed is 11
+19/04/25 11:58:32 INFO YarnClientSchedulerBackend: Requesting to kill executor(s) 9
+19/04/25 11:58:32 INFO YarnClientSchedulerBackend: Actual list of executor(s) to be killed is 9
+19/04/25 11:58:33 INFO YarnSchedulerBackend$YarnDriverEndpoint: Disabling executor 9.
+19/04/25 11:58:33 INFO DAGScheduler: Executor lost: 9 (epoch 18)
+19/04/25 11:58:33 INFO BlockManagerMasterEndpoint: Trying to remove executor 9 from BlockManagerMaster.
+19/04/25 11:58:33 INFO BlockManagerMaster: Removed 9 successfully in removeExecutor
+19/04/25 11:58:33 INFO DAGScheduler: Shuffle files lost for executor: 9 (epoch 18)
+19/04/25 11:58:33 ERROR YarnScheduler: Lost executor 9 on hadoop4: Container container_e1037_1555417068416_0066_01_000013 exited from explicit termination request.
+19/04/25 11:58:34 INFO YarnSchedulerBackend$YarnDriverEndpoint: Disabling executor 12.
+19/04/25 11:58:34 INFO DAGScheduler: Executor lost: 12 (epoch 19)
+19/04/25 11:58:34 INFO BlockManagerMasterEndpoint: Trying to remove executor 12 from BlockManagerMaster.
+19/04/25 11:58:34 INFO BlockManagerMaster: Removed 12 successfully in removeExecutor
+19/04/25 11:58:34 INFO DAGScheduler: Shuffle files lost for executor: 12 (epoch 19)
+19/04/25 11:58:34 ERROR YarnScheduler: Lost executor 12 on hadoop1: Container container_e1037_1555417068416_0066_01_000010 exited from explicit termination request.
+19/04/25 11:58:34 INFO YarnSchedulerBackend$YarnDriverEndpoint: Disabling executor 11.
+19/04/25 11:58:34 INFO DAGScheduler: Executor lost: 11 (epoch 20)
+19/04/25 11:58:34 INFO BlockManagerMasterEndpoint: Trying to remove executor 11 from BlockManagerMaster.
+19/04/25 11:58:34 INFO BlockManagerMaster: Removed 11 successfully in removeExecutor
+19/04/25 11:58:34 INFO DAGScheduler: Shuffle files lost for executor: 11 (epoch 20)
+19/04/25 11:58:34 ERROR YarnScheduler: Lost executor 11 on hadoop3: Container container_e1037_1555417068416_0066_01_000015 exited from explicit termination request.
+19/04/25 11:58:36 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.51.21:35366) with ID 14
+19/04/25 11:58:36 INFO TaskSetManager: Starting task 9.3 in stage 2.0 (TID 135, hadoop1, executor 14, partition 9, NODE_LOCAL, 5111 bytes)
+19/04/25 11:58:36 INFO TaskSetManager: Starting task 18.3 in stage 2.0 (TID 136, hadoop1, executor 14, partition 18, NODE_LOCAL, 5111 bytes)
+19/04/25 11:58:36 INFO TaskSetManager: Starting task 6.3 in stage 2.0 (TID 137, hadoop1, executor 14, partition 6, NODE_LOCAL, 5111 bytes)
+19/04/25 11:58:36 INFO TaskSetManager: Starting task 10.3 in stage 2.0 (TID 138, hadoop1, executor 14, partition 10, NODE_LOCAL, 5111 bytes)
+19/04/25 11:58:36 INFO TaskSetManager: Starting task 16.3 in stage 2.0 (TID 139, hadoop1, executor 14, partition 16, NODE_LOCAL, 5111 bytes)
+19/04/25 11:58:36 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.51.24:44224) with ID 13
+19/04/25 11:58:36 INFO TaskSetManager: Starting task 0.3 in stage 2.0 (TID 140, hadoop4, executor 13, partition 0, NODE_LOCAL, 5111 bytes)
+19/04/25 11:58:36 INFO TaskSetManager: Starting task 5.3 in stage 2.0 (TID 141, hadoop4, executor 13, partition 5, NODE_LOCAL, 5111 bytes)
+19/04/25 11:58:36 INFO TaskSetManager: Starting task 19.2 in stage 2.0 (TID 142, hadoop4, executor 13, partition 19, NODE_LOCAL, 5111 bytes)
+19/04/25 11:58:36 INFO TaskSetManager: Starting task 17.3 in stage 2.0 (TID 143, hadoop4, executor 13, partition 17, NODE_LOCAL, 5111 bytes)
+19/04/25 11:58:36 INFO TaskSetManager: Starting task 1.3 in stage 2.0 (TID 144, hadoop4, executor 13, partition 1, NODE_LOCAL, 5111 bytes)
+19/04/25 11:58:36 INFO BlockManagerMasterEndpoint: Registering block manager hadoop1:44587 with 4.1 GB RAM, BlockManagerId(14, hadoop1, 44587, None)
+19/04/25 11:58:36 INFO BlockManagerMasterEndpoint: Registering block manager hadoop4:36645 with 4.1 GB RAM, BlockManagerId(13, hadoop4, 36645, None)
+19/04/25 11:58:36 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.51.23:49770) with ID 15
+19/04/25 11:58:36 INFO TaskSetManager: Starting task 13.3 in stage 2.0 (TID 145, hadoop3, executor 15, partition 13, NODE_LOCAL, 5111 bytes)
+19/04/25 11:58:36 INFO TaskSetManager: Starting task 4.3 in stage 2.0 (TID 146, hadoop3, executor 15, partition 4, NODE_LOCAL, 5111 bytes)
+19/04/25 11:58:36 INFO TaskSetManager: Starting task 8.3 in stage 2.0 (TID 147, hadoop3, executor 15, partition 8, NODE_LOCAL, 5111 bytes)
+19/04/25 11:58:36 INFO TaskSetManager: Starting task 15.3 in stage 2.0 (TID 148, hadoop3, executor 15, partition 15, NODE_LOCAL, 5111 bytes)
+19/04/25 11:58:36 INFO TaskSetManager: Starting task 12.3 in stage 2.0 (TID 149, hadoop3, executor 15, partition 12, NODE_LOCAL, 5111 bytes)
+19/04/25 11:58:36 INFO BlockManagerMasterEndpoint: Registering block manager hadoop3:33294 with 4.1 GB RAM, BlockManagerId(15, hadoop3, 33294, None)
+19/04/25 11:58:37 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on hadoop3:33294 (size: 8.0 KB, free: 4.1 GB)
+19/04/25 11:59:31 WARN HeartbeatReceiver: Removing executor 10 with no recent heartbeats: 151116 ms exceeds timeout 120000 ms
+19/04/25 11:59:31 ERROR YarnScheduler: Lost executor 10 on hadoop2: Executor heartbeat timed out after 151116 ms
+19/04/25 11:59:31 WARN TaskSetManager: Lost task 20.2 in stage 2.0 (TID 122, hadoop2, executor 10): ExecutorLostFailure (executor 10 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 151116 ms
+19/04/25 11:59:31 WARN TaskSetManager: Lost task 14.2 in stage 2.0 (TID 124, hadoop2, executor 10): ExecutorLostFailure (executor 10 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 151116 ms
+19/04/25 11:59:31 WARN TaskSetManager: Lost task 11.2 in stage 2.0 (TID 121, hadoop2, executor 10): ExecutorLostFailure (executor 10 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 151116 ms
+19/04/25 11:59:31 WARN TaskSetManager: Lost task 2.2 in stage 2.0 (TID 120, hadoop2, executor 10): ExecutorLostFailure (executor 10 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 151116 ms
+19/04/25 11:59:31 WARN TaskSetManager: Lost task 7.2 in stage 2.0 (TID 123, hadoop2, executor 10): ExecutorLostFailure (executor 10 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 151116 ms
+19/04/25 11:59:31 INFO YarnClientSchedulerBackend: Requesting to kill executor(s) 10
+19/04/25 11:59:31 INFO DAGScheduler: Executor lost: 10 (epoch 21)
+19/04/25 11:59:31 INFO YarnClientSchedulerBackend: Actual list of executor(s) to be killed is 10
+19/04/25 11:59:31 INFO BlockManagerMasterEndpoint: Trying to remove executor 10 from BlockManagerMaster.
+19/04/25 11:59:31 INFO BlockManagerMasterEndpoint: Removing block manager BlockManagerId(10, hadoop2, 41775, None)
+19/04/25 11:59:31 INFO BlockManagerMaster: Removed 10 successfully in removeExecutor
+19/04/25 11:59:31 INFO DAGScheduler: Shuffle files lost for executor: 10 (epoch 21)
+19/04/25 11:59:31 INFO DAGScheduler: Host added was in lost list earlier: hadoop2
+19/04/25 11:59:33 INFO YarnSchedulerBackend$YarnDriverEndpoint: Disabling executor 10.
+19/04/25 11:59:33 INFO DAGScheduler: Executor lost: 10 (epoch 22)
+19/04/25 11:59:33 INFO BlockManagerMasterEndpoint: Trying to remove executor 10 from BlockManagerMaster.
+19/04/25 11:59:33 INFO BlockManagerMaster: Removed 10 successfully in removeExecutor
+19/04/25 11:59:33 INFO DAGScheduler: Shuffle files lost for executor: 10 (epoch 22)
+19/04/25 11:59:33 ERROR YarnScheduler: Lost executor 10 on hadoop2: Container container_e1037_1555417068416_0066_01_000012 exited from explicit termination request.
+19/04/25 11:59:35 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.51.22:44530) with ID 16
+19/04/25 11:59:35 INFO TaskSetManager: Starting task 7.3 in stage 2.0 (TID 150, hadoop2, executor 16, partition 7, NODE_LOCAL, 5111 bytes)
+19/04/25 11:59:35 INFO TaskSetManager: Starting task 2.3 in stage 2.0 (TID 151, hadoop2, executor 16, partition 2, NODE_LOCAL, 5111 bytes)
+19/04/25 11:59:35 INFO TaskSetManager: Starting task 11.3 in stage 2.0 (TID 152, hadoop2, executor 16, partition 11, NODE_LOCAL, 5111 bytes)
+19/04/25 11:59:35 INFO TaskSetManager: Starting task 14.3 in stage 2.0 (TID 153, hadoop2, executor 16, partition 14, NODE_LOCAL, 5111 bytes)
+19/04/25 11:59:35 INFO TaskSetManager: Starting task 20.3 in stage 2.0 (TID 154, hadoop2, executor 16, partition 20, NODE_LOCAL, 5111 bytes)
+19/04/25 11:59:35 INFO BlockManagerMasterEndpoint: Registering block manager hadoop2:41921 with 4.1 GB RAM, BlockManagerId(16, hadoop2, 41921, None)
+19/04/25 11:59:36 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on hadoop2:41921 (size: 8.0 KB, free: 4.1 GB)
+19/04/25 11:59:36 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on hadoop2:41921 (size: 33.2 KB, free: 4.1 GB)
+19/04/25 11:59:48 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on hadoop3:33294 (size: 33.2 KB, free: 4.1 GB)
+19/04/25 11:59:48 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on hadoop1:44587 (size: 8.0 KB, free: 4.1 GB)
+19/04/25 11:59:48 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on hadoop4:36645 (size: 8.0 KB, free: 4.1 GB)
+19/04/25 11:59:48 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on hadoop4:36645 (size: 33.2 KB, free: 4.1 GB)
+19/04/25 11:59:49 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on hadoop1:44587 (size: 33.2 KB, free: 4.1 GB)
+19/04/25 12:06:31 WARN HeartbeatReceiver: Removing executor 16 with no recent heartbeats: 130052 ms exceeds timeout 120000 ms
+19/04/25 12:06:31 ERROR YarnScheduler: Lost executor 16 on hadoop2: Executor heartbeat timed out after 130052 ms
+19/04/25 12:06:31 WARN TaskSetManager: Lost task 2.3 in stage 2.0 (TID 151, hadoop2, executor 16): ExecutorLostFailure (executor 16 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 130052 ms
+19/04/25 12:06:31 ERROR TaskSetManager: Task 2 in stage 2.0 failed 4 times; aborting job
+19/04/25 12:06:31 WARN TaskSetManager: Lost task 20.3 in stage 2.0 (TID 154, hadoop2, executor 16): ExecutorLostFailure (executor 16 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 130052 ms
+19/04/25 12:06:31 WARN TaskSetManager: Lost task 7.3 in stage 2.0 (TID 150, hadoop2, executor 16): ExecutorLostFailure (executor 16 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 130052 ms
+19/04/25 12:06:31 WARN TaskSetManager: Lost task 14.3 in stage 2.0 (TID 153, hadoop2, executor 16): ExecutorLostFailure (executor 16 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 130052 ms
+19/04/25 12:06:31 WARN TaskSetManager: Lost task 11.3 in stage 2.0 (TID 152, hadoop2, executor 16): ExecutorLostFailure (executor 16 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 130052 ms
+19/04/25 12:06:31 INFO YarnClientSchedulerBackend: Requesting to kill executor(s) 16
+19/04/25 12:06:31 INFO YarnClientSchedulerBackend: Actual list of executor(s) to be killed is 16
+19/04/25 12:06:31 INFO YarnScheduler: Cancelling stage 2
+19/04/25 12:06:31 INFO YarnScheduler: Stage 2 was cancelled
+19/04/25 12:06:31 INFO DAGScheduler: ResultStage 2 (foreachPartition at DU2Rockfs.scala:43) failed in 2049.529 s due to Job aborted due to stage failure: Task 2 in stage 2.0 failed 4 times, most recent failure: Lost task 2.3 in stage 2.0 (TID 151, hadoop2, executor 16): ExecutorLostFailure (executor 16 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 130052 ms
+Driver stacktrace:
+19/04/25 12:06:32 INFO DAGScheduler: Job 1 failed: foreachPartition at DU2Rockfs.scala:43, took 2049.609175 s
+19/04/25 12:06:32 INFO DAGScheduler: Executor lost: 16 (epoch 23)
+19/04/25 12:06:32 INFO BlockManagerMasterEndpoint: Trying to remove executor 16 from BlockManagerMaster.
+19/04/25 12:06:32 INFO BlockManagerMasterEndpoint: Removing block manager BlockManagerId(16, hadoop2, 41921, None)
+19/04/25 12:06:32 INFO BlockManagerMaster: Removed 16 successfully in removeExecutor
+19/04/25 12:06:32 INFO DAGScheduler: Shuffle files lost for executor: 16 (epoch 23)
+19/04/25 12:06:32 INFO DAGScheduler: Host added was in lost list earlier: hadoop2
+Exception in thread "main" org.apache.spark.SparkException: Job aborted due to stage failure: Task 2 in stage 2.0 failed 4 times, most recent failure: Lost task 2.3 in stage 2.0 (TID 151, hadoop2, executor 16): ExecutorLostFailure (executor 16 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 130052 ms
+Driver stacktrace:
+	at org.apache.spark.scheduler.DAGScheduler.org$apache$spark$scheduler$DAGScheduler$$failJobAndIndependentStages(DAGScheduler.scala:1517)
+	at org.apache.spark.scheduler.DAGScheduler$$anonfun$abortStage$1.apply(DAGScheduler.scala:1505)
+	at org.apache.spark.scheduler.DAGScheduler$$anonfun$abortStage$1.apply(DAGScheduler.scala:1504)
+	at scala.collection.mutable.ResizableArray$class.foreach(ResizableArray.scala:59)
+	at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:48)
+	at org.apache.spark.scheduler.DAGScheduler.abortStage(DAGScheduler.scala:1504)
+	at org.apache.spark.scheduler.DAGScheduler$$anonfun$handleTaskSetFailed$1.apply(DAGScheduler.scala:814)
+	at org.apache.spark.scheduler.DAGScheduler$$anonfun$handleTaskSetFailed$1.apply(DAGScheduler.scala:814)
+	at scala.Option.foreach(Option.scala:257)
+	at org.apache.spark.scheduler.DAGScheduler.handleTaskSetFailed(DAGScheduler.scala:814)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:1732)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1687)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1676)
+	at org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:48)
+	at org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:630)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2029)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2050)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2069)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2094)
+	at org.apache.spark.rdd.RDD$$anonfun$foreachPartition$1.apply(RDD.scala:926)
+	at org.apache.spark.rdd.RDD$$anonfun$foreachPartition$1.apply(RDD.scala:924)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)
+	at org.apache.spark.rdd.RDD.withScope(RDD.scala:362)
+	at org.apache.spark.rdd.RDD.foreachPartition(RDD.scala:924)
+	at org.apache.spark.sql.Dataset$$anonfun$foreachPartition$1.apply$mcV$sp(Dataset.scala:2341)
+	at org.apache.spark.sql.Dataset$$anonfun$foreachPartition$1.apply(Dataset.scala:2341)
+	at org.apache.spark.sql.Dataset$$anonfun$foreachPartition$1.apply(Dataset.scala:2341)
+	at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:65)
+	at org.apache.spark.sql.Dataset.withNewExecutionId(Dataset.scala:2828)
+	at org.apache.spark.sql.Dataset.foreachPartition(Dataset.scala:2340)
+	at com.rich.apps.DU2Rockfs$.main(DU2Rockfs.scala:43)
+	at com.rich.apps.DU2Rockfs.main(DU2Rockfs.scala)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.spark.deploy.SparkSubmit$.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:782)
+	at org.apache.spark.deploy.SparkSubmit$.doRunMain$1(SparkSubmit.scala:180)
+	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:205)
+	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:119)
+	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
+19/04/25 12:06:32 INFO SparkContext: Invoking stop() from shutdown hook
+19/04/25 12:06:32 INFO SparkUI: Stopped Spark web UI at http://192.168.51.23:4040
+19/04/25 12:06:32 INFO YarnClientSchedulerBackend: Interrupting monitor thread
+19/04/25 12:06:32 INFO YarnClientSchedulerBackend: Shutting down all executors
+19/04/25 12:06:32 INFO YarnSchedulerBackend$YarnDriverEndpoint: Asking each executor to shut down
+19/04/25 12:06:32 INFO SchedulerExtensionServices: Stopping SchedulerExtensionServices
+(serviceOption=None,
+ services=List(),
+ started=false)
+19/04/25 12:06:32 INFO YarnClientSchedulerBackend: Stopped
+19/04/25 12:06:32 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+19/04/25 12:06:32 INFO MemoryStore: MemoryStore cleared
+19/04/25 12:06:33 INFO BlockManager: BlockManager stopped
+19/04/25 12:06:33 INFO BlockManagerMaster: BlockManagerMaster stopped
+19/04/25 12:06:33 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+19/04/25 12:06:33 INFO SparkContext: Successfully stopped SparkContext
+19/04/25 12:06:33 INFO ShutdownHookManager: Shutdown hook called
+19/04/25 12:06:33 INFO ShutdownHookManager: Deleting directory /tmp/spark-209477c1-c178-450e-b37a-fe7542600115
 ```
 
 从日志可以看出`HeartbeatReceiver`已经有`132036ms`没有收到过`executor 3`的`heartbeat`了，超过了阈值`120000ms`，很担心它，以为它死了，所以把它丢了，接着你就看到了`Lost executor3...`的日志，发生这种事情的原因不一定是`executor 3`真的死了，也可能只是因为它真的很忙。这个故事告诉我们，再忙也要在担心阈值时间内给家里打个电话，不然可能以为你死了就把你逐出家门了。
