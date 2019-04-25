@@ -69,12 +69,12 @@ object Test {
 /**
   * 第三种：利用 JVM 类加载机制实现懒加载
   * 
-  * JVM 类加载机制: 与在编译时需要进行连接工作的语言不用，Java 类型的加载、连接和初始化都是在程序运行期间完成的。                                                                                                                                         
+  * JVM 类加载机制: 与在编译时需要进行连接工作的语言不同，Java 类型的加载、连接和初始化都是在程序运行期间完成的。                                                                                                                                         
   * JVM 会在我们尝试实例化(new、clone、deserialize、reflect...)一个对象的时候，先检测相关类是否已经初始化，
   * 如果没有初始化，则通过 ClassLoader.loadClass() 将相关类(.class 文件)加载到内存、然后验证、准备并初始化。
   * 
   * 注: 使用这种方式需要确保 RedisUtil 在 Executor 上执行之前没有被 Driver JVM 加载
-  * 过，即 Driver 端没有代码调用过 RedisUtil 类
+  * 过，即 Driver 端没有代码调用过 RedisUtil 类，否则就需要传输该对象，要传输该对象就需要序列化
   */
 object RedisUtil {
   // Scala 没有 static 关键字，object 中的成员变量实际上都是 static 的，而类中的 static 属性和 static {}
@@ -219,3 +219,25 @@ xxJar
 另外，如果不在命令中写`executor-cores`参数，可以在`$SPARK_HOME/conf/spark-env.sh`里配置`export SPARK_EXECUTOR_CORES=4`，这样默认`executor-cores`就为 4 了。
 
 如果是 HDP 集群，则直接进入 Ambari Manager -> YARN -> Configs -> Settings -> CPU Node -> Enable CPU Scheduling
+
+## Executor heartbeat timed out after 132036 ms
+```console
+...
+19/04/25 11:38:31 WARN HeartbeatReceiver: Removing executor 3 with no recent heartbeats: 132036 ms exceeds timeout 120000 ms
+19/04/25 11:38:32 ERROR YarnScheduler: Lost executor 3 on hadoop1: Executor heartbeat timed out after 132036 ms
+19/04/25 11:38:32 INFO ContextCleaner: Cleaned accumulator 3
+19/04/25 11:38:32 INFO ContextCleaner: Cleaned accumulator 2
+19/04/25 11:38:32 WARN TaskSetManager: Lost task 8.0 in stage 2.0 (TID 83, hadoop1, executor 3): ExecutorLostFailure (executor 3 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 132036 ms
+19/04/25 11:38:32 INFO ContextCleaner: Cleaned accumulator 9
+19/04/25 11:38:32 INFO ContextCleaner: Cleaned accumulator 6
+19/04/25 11:38:32 INFO ContextCleaner: Cleaned accumulator 7
+19/04/25 11:38:32 INFO ContextCleaner: Cleaned accumulator 8
+19/04/25 11:38:32 WARN TaskSetManager: Lost task 15.0 in stage 2.0 (TID 91, hadoop1, executor 3): ExecutorLostFailure (executor 3 exited caused by one of the running tasks) Reason: Executor heartbeat timed out after 132036 ms
+...
+```
+
+从日志可以看出`HeartbeatReceiver`已经有`132036ms`没有收到过`executor 3`的`heartbeat`了，超过了阈值`120000ms`，很担心它，以为它死了，所以把它丢了，接着你就看到了`Lost executor3...`的日志，发生这种事情的原因不一定是`executor 3`真的死了，也可能只是因为它真的很忙。这个故事告诉我们，再忙也要在担心阈值时间内给家里打个电话，不然可能以为你死了就把你逐出家门了。
+
+要解决这个问题可以从两个方面入手。
+* 第一检查一下自己的 task 是不是太大或太复杂导致内存不够引发 OOM 或者 CPU 飙升，一般情况下可以通过`repartition`进一步拆分 task 去解决
+* 第二跟家里商量商量提高一下担心你的阈值，比如`--conf spark.network.timeout 10000000`。
