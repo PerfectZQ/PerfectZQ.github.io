@@ -204,6 +204,11 @@ blockquote p:last-child {
     margin-bottom: 0;
 }
 
+blockquote .highlighter-rouge {
+    color: indianred;
+    background: none;
+}
+
 ol, ul {
     margin: 0 0 1.3em 1.5em;
 }
