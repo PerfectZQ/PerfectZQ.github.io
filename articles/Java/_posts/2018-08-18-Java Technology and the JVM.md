@@ -55,6 +55,7 @@ JVM 相关命令在`/System/Library/Frameworks/JavaVM.framework/Versions/Current
 ### java
 运行已经编译好的 java 程序
 ```shell
+$ java
 Usage: java [-options] class [args...]
            (to execute a class)
    or  java [-options] -jar jarfile [args...]
@@ -67,19 +68,18 @@ $ java -jar yourapp.jar
 # 如果不是一个 executable jar 包，则可以通过下面的方式指定主类
 $ java -cp .:yourapp.jar com.xxx.YourMainApp
 
-# 为 jvm 分配可用内存
+# 为 jvm 分配可用堆内存
 $ java -cp .:yourapp.jar -Xms16g -Xmx16g com.xxx.YourMainApp
 
-# 注意 [options] 必须在 class/-jar 前面，否则会被当作[args]
+# 注意 [options] 必须在 class/-jar 前面，否则会被当作[args...]
 $ java -Xms16g -Xmx16g -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -jar rockfs-server-1.0-SNAPSHOT.jar
 ```
 
 ### jar
 压缩/解压缩 jar 文件
 ```shell
-# 解压缩到当前目录，没有解压缩到指定文件夹，可以移除jar包，然后压缩
+# 解压缩到当前目录，没有解压缩到指定文件夹的参数，可以将jar包copy到一个空文件夹中，然后解压缩
 $ jar -xvf test.jar
-mv test.jar ../
 
 # 压缩 
 $ jar -cvf test.jar *
@@ -101,7 +101,7 @@ jps [options] [hostid]
 ```
 
 ### jstat
-虚拟机统计信息监控工具：用于收集运行中的 Hotspot 虚拟机各方面的运行数据
+虚拟机统计信息监控工具，用于收集运行中的 Hotspot 虚拟机各方面的运行数据
 
 ```shell
 $ jstat
@@ -171,9 +171,9 @@ grant codebase "file:${java.home}/../lib/tools.jar" {
 $ jstatd -J-Djava.security.policy=./jstatd.all.policy -J-Djava.rmi.server.hostname=192.168.51.82 -p 2020 &
 ```
 
-在`jvisualvm`图形界面右键`远程`，`添加远程主机(H)...`，`主机名`写`192.168.51.82`，点`高级设置`，`端口(P):`改为`2020`，确认即可。
+在`jvisualvm`添加一个远程服务器，图形界面右键`远程`，`添加远程主机(H)...`，`主机名`写`192.168.51.82`，点`高级设置`，`端口(P):`改为`2020`，确认即可。
 
-当使用`jstatd + jvisualvm`监控远程 jvm 的时候，你会发现无法获得 jvm 的 cpu、MBean 等信息，它会提示你使用`jmx`连接。[参考连接](https://segmentfault.com/a/1190000016636787)
+当使用`jstatd + jvisualvm`监控远程 JVM 的时候，你会发现无法获得 JVM 的 Cpu、Thread、MBean 等信息，它会提示你使用`JMX`连接。[参考连接](https://segmentfault.com/a/1190000016636787)
 
 JMX(Java Management Extensions)是管理 Java 的一些扩展。这种机制可以方便的管理、监控正在运行中的 Java 程序。常用于管理线程，内存，日志 Level，服务重启，系统环境等。jdk6+，Java 程序启动时都会在 JVM 内部启动一个 JMX Agent，JMX Agent 会启动一个 MBean Server 组件，把 MBeans(Java 平台标准的 MBean + 你自己创建的 MBean)注册到它里面，然后暴露给 JMX Client 管理。简单来说就是每个 Java 程序都可以通过 JMX 来被 JMX Client 管理，而且这一切都是自动发生的。而 VisualVm 就是一个JMX Client。
 
