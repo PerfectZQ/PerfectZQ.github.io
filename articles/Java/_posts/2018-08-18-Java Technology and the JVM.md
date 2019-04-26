@@ -168,8 +168,47 @@ grant codebase "file:${java.home}/../lib/tools.jar" {
        }; 
 
 # 启动 jstatd，这样 jvisualvm 就可以通过 jstatd 所在的服务器 host 和 port 获取 jvm 统计信息了
-$ jstatd -J-Djava.security.policy=jstatd.all.policy -p 2020 &
+$ jstatd -J-Djava.security.policy=./jstatd.all.policy -J-Djava.rmi.server.hostname=192.168.51.82 -p 2020 &
 ```
+
+在`jvisualvm`图形界面右键`远程`，`添加远程主机(H)...`，`主机名`写`192.168.51.82`，点`高级设置`，`端口(P):`改为`2020`，确认即可。
+
+当使用`jstatd + jvisualvm`监控远程 jvm 的时候，你会发现无法获得 jvm 的 cpu、MBean 等信息，它会提示你使用`jmx`连接。[参考连接](https://segmentfault.com/a/1190000016636787)
+
+JMX(Java Management Extensions)是管理 Java 的一些扩展。这种机制可以方便的管理、监控正在运行中的 Java 程序。常用于管理线程，内存，日志 Level，服务重启，系统环境等。jdk6+，Java 程序启动时都会在 JVM 内部启动一个 JMX Agent，JMX Agent 会启动一个 MBean Server 组件，把 MBeans(Java 平台标准的 MBean + 你自己创建的 MBean)注册到它里面，然后暴露给 JMX Client 管理。简单来说就是每个 Java 程序都可以通过 JMX 来被 JMX Client 管理，而且这一切都是自动发生的。而 VisualVm 就是一个JMX Client。
+
+要启用 JMX，需要在 Java 进程启动的时候指定几个参数
+* `com.sun.management.jmxremote.port`: 指定 JMX 暴露的端口。
+* `com.sun.management.jmxremote.rmi.port`: 指定 RMI Connector 端口，可以和`com.sun.management.jmxremote.port`保持一致。
+* `com.sun.management.jmxremote.ssl`: 指定是否使用 SSL，在开发环境下可以是`false`，但是在生产环境下强烈建议为`true`。
+* `com.sun.management.jmxremote.authenticate`: 指定是否需要密码才能够创建 JMX 连接。
+
+启动我们要被监控的 Java 程序
+```shell
+$ java \
+-Dcom.sun.management.jmxremote.authenticate=false \
+-Dcom.sun.management.jmxremote.ssl=false \
+-Dcom.sun.management.jmxremote.port=1100 \
+-Dcom.sun.management.jmxremote.rmi.port=1100 \
+-Djava.rmi.server.hostname=192.168.51.82 \
+-XX:+PrintGCDetails \
+-XX:+PrintGCDateStamps  \
+-Xloggc:/var/log/rockfs/gc.log  \
+-XX:+UseConcMarkSweepGC \
+-XX:+UseParNewGC \
+-XX:MaxTenuringThreshold=15 \
+-XX:+ExplicitGCInvokesConcurrent \
+-XX:+CMSParallelRemarkEnabled \
+-XX:+HeapDumpOnOutOfMemoryError \
+-XX:HeapDumpPath=/var/log/rockfs \
+-Xmx3g \
+-Xms3g \
+-jar target/rockfs-server-1.0-SNAPSHOT.jar \
+>rockfs.log 2>&1 &
+```
+
+然后在`jvisualvm`界面`jstatd`已经建立的`远程`服务器上右键，`添加 JMX 连接...`，输入`192.168.51.82:1100`，`不要求SSL连接(N)`钩上，`确定`即可。
+
 
 ### jinfo
 Java 配置信息工具：显示虚拟机配置信息，比如给 main 方法的提交参数等
