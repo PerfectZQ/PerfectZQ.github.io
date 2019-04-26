@@ -156,16 +156,32 @@ S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT
 ```
 
 ### jstatd
-虚拟机统计信息监控工具守护进程，可以方便的建立远程 RMI 服务器，这样就可以分析远程服务器上的 jvm 统计信息了。
+虚拟机统计信息监控工具守护进程，可以方便的建立远程 RMI 服务器，这样就可以通过`jvisualvm`分析远程服务器上的 jvm 统计信息了。
+```shell
+# 详细的说明可以阅读下面命令返回的信息
+$ info jstatd
+
+# 首先给 jstatd 访问权限
+$ vim ./jstatd.all.policy
+grant codebase "file:${java.home}/../lib/tools.jar" {
+           permission java.security.AllPermission;
+       }; 
+
+# 启动 jstatd，这样 jvisualvm 就可以通过 jstatd 所在的服务器 host 和 port 获取 jvm 统计信息了
+$ jstatd -J-Djava.security.policy=jstatd.all.policy -p 2020 &
+```
 
 ### jinfo
 Java 配置信息工具：显示虚拟机配置信息，比如给 main 方法的提交参数等
+
+>JVM 在发生 crash 的时候一般会生成两个文件`hs_err_pid3742.log`和`core.3742`，`3742`是`pid`，`hs_err_pid3742.log`通过 JVM 参数`-XX:ErrorFile=./hs_err_pid<pid>.log`配置，`core.3742`是 core dump 文件，它的命名规则通过`/proc/sys/kernel/core_pattern`的值控制，因此你生成的 core dump 文件不一定和我的命名规则一样。注意，需要保证`ulimit -c unlimited`才会在系统崩溃的时候生成`core.xxx`，默认`ulimit -c`是`0`，不生成。除了系统崩溃时生成 core dump，在系统卡住或者 cpu 使用率很高的时候也可以手动触发`kill -3 pid`吓唬下 JVM 生成 core dump 文件。下面的`<core>`即指的 core dump 文件。
+
 ```shell
 $ jinfo
 Usage:
     jinfo [option] <pid>
         (to connect to running process)
-    jinfo [option] <executable <core>
+    jinfo [option] <executable> <core>
         (to connect to a core file)
     jinfo [option] [server_id@]<remote server IP or hostname>
         (to connect to remote debug server)
@@ -178,6 +194,18 @@ where <option> is one of:
     -sysprops            to print Java system properties
     <no option>          to print both of the above
     -h | -help           to print this help message
+```
+
+查看一个 core dump 的 vm flags
+```shell
+$ jinfo -flags $JAVA_HOME/bin/java core.3742
+
+Attaching to core core.3742 from executable /usr/java/jdk1.8.0_181-amd64/bin/java, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.181-b13
+Non-default VM flags: -XX:CICompilerCount=3 -XX:InitialHeapSize=526385152 -XX:MaxHeapSize=8392802304 -XX:MaxNewSize=2797600768 -XX:MinHeapDeltaBytes=524288 -XX:NewSize=175112192 -XX:OldSize=351272960 -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseFastUnorderedTimeStamps -XX:+UseParallelGC 
+Command line:  
 ```
 
 ### jstack
@@ -202,13 +230,11 @@ Options:
     -h or -help to print this help message
 ```
 
-JVM 在发生 crash 的时候一般会生成两个文件`hs_err_pid3742.log`和`core.3742`，`3742`是`pid`，`hs_err_pid3742.log`通过 JVM 参数`-XX:ErrorFile=./hs_err_pid<pid>.log`配置，`core.3742`是 core dump 文件，它的命名规则通过`/proc/sys/kernel/core_pattern`的值控制，因此你生成的 core dump 文件不一定和我的命名规则一样。注意，需要保证`ulimit -c unlimited`才会在系统崩溃的时候生成`core.xxx`，默认`ulimit -c`是`0`，不生成。除了系统崩溃时生成 core dump，在系统卡住或者 cpu 使用率很高的时候也可以手动触发`kill -3 pid`吓唬下 JVM 生成 core dump 文件。
-
+attach core dump 文件
 ```shell
-# 连接 core 文件
 $ jstack $JAVA_HOME/bin/java core.3742
 
-Attaching to core core.3742 from executable /usr/bin/java, please wait...
+Attaching to core core.3742 from executable /usr/java/jdk1.8.0_181-amd64/bin/java, please wait...
 Debugger attached successfully.
 Server compiler detected.
 JVM version is 25.181-b13
@@ -236,26 +262,6 @@ Thread 28312: (state = BLOCKED)
  - java.util.concurrent.ThreadPoolExecutor$Worker.run() @bci=5, line=624 (Interpreted frame)
  - java.lang.Thread.run() @bci=11, line=748 (Interpreted frame)
 
-
-Thread 28310: (state = BLOCKED)
- - sun.misc.Unsafe.park(boolean, long) @bci=0 (Compiled frame; information may be imprecise)
- - java.util.concurrent.locks.LockSupport.park(java.lang.Object) @bci=14, line=175 (Interpreted frame)
- - java.util.concurrent.locks.AbstractQueuedSynchronizer.parkAndCheckInterrupt() @bci=1, line=836 (Interpreted frame)
- - java.util.concurrent.locks.AbstractQueuedSynchronizer.acquireQueued(java.util.concurrent.locks.AbstractQueuedSynchronizer$Node, int) @bci=67, line=870 (Interpreted frame)
- - java.util.concurrent.locks.AbstractQueuedSynchronizer.acquire(int) @bci=17, line=1199 (Compiled frame)
- - java.util.concurrent.locks.ReentrantLock$NonfairSync.lock() @bci=21, line=209 (Compiled frame)
- - java.util.concurrent.locks.ReentrantLock.lock() @bci=4, line=285 (Compiled frame)
- - com.rich.rockfs.server.Rockfs.getWritableRocksDB(com.rich.rockfs.beans.DBInfo) @bci=85, line=97 (Compiled frame)
- - com.rich.rockfs.server.RockServerImpl.batchPut(com.rich.rockfs.beans.MultiplePutRequest, io.grpc.stub.StreamObserver) @bci=15, line=128 (Compiled frame)
- - com.rich.rockfs.server.RocksServerGrpc$MethodHandlers.invoke(java.lang.Object, io.grpc.stub.StreamObserver) @bci=90, line=472 (Interpreted frame)
- - io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose() @bci=53, line=171 (Compiled frame)
- - io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed() @bci=15, line=283 (Compiled frame)
- - io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext() @bci=7, line=761 (Compiled frame)
- - io.grpc.internal.ContextRunnable.run() @bci=9, line=37 (Compiled frame)
- - io.grpc.internal.SerializingExecutor.run() @bci=18, line=123 (Compiled frame)
- - java.util.concurrent.ThreadPoolExecutor.runWorker(java.util.concurrent.ThreadPoolExecutor$Worker) @bci=95, line=1149 (Interpreted frame)
- - java.util.concurrent.ThreadPoolExecutor$Worker.run() @bci=5, line=624 (Interpreted frame)
- - java.lang.Thread.run() @bci=11, line=748 (Interpreted frame)
 ...
 ```
 
@@ -268,7 +274,7 @@ $ jmap
 Usage:
     jmap [option] <pid>
         (to connect to running process)
-    jmap [option] <executable <core>
+    jmap [option] <executable> <core>
         (to connect to a core file)
     jmap [option] [server_id@]<remote server IP or hostname>
         (to connect to remote debug server)
@@ -351,10 +357,15 @@ PS Old Generation
 $ jmap -heap $JAVA_HOME/bin/java core.3742
 ```
 
-### jhat
-虚拟机堆转储快照分析工具：用于分析 heapdump 文件，它会建立一个 HTTP/HTML 服务器，让用户可以在浏览器上查看分析结果
+从 core dump 中抽取 hprof 类型的 heap dump 文件
+```shell
+$ jmap -dump:format=b,file=3742.bin $JAVA_HOME/bin/java core.3742
+```
 
-一般不会直接使用 jhat 去分析 heapdump 文件，因为它的功能比较简陋。一般都会把转储文件拷贝到其他节点，使用更强大的 JProfiler/VisualVM/MAT 进行分析。
+### jhat
+虚拟机堆转储快照分析工具：用于分析 heap dump 文件，它会建立一个 HTTP/HTML 服务器，让用户可以在浏览器上查看分析结果
+
+一般不会直接使用 jhat 去分析 heap dump 文件，因为它的功能比较简陋。一般都会把转储文件拷贝到其他节点，使用更强大的 JProfiler/VisualVM/MAT 进行分析。
 
 
 ### jvisualvm
