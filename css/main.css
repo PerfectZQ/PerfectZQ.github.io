@@ -206,6 +206,9 @@ blockquote p:last-child {
 
 blockquote .highlighter-rouge {
     color: indianred;
+}
+
+blockquote code {
     background: none;
 }
 
