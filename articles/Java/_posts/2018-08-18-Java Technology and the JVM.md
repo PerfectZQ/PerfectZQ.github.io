@@ -9,7 +9,7 @@ tag: Java
 * [The Java® Language Specification - Java SE 8 Edition](https://docs.oracle.com/javase/specs/jls/se8/html/index.html)
 * [The Java® Virtual Machine Specification Java SE 8 Edition](https://docs.oracle.com/javase/specs/jvms/se8/html/index.html)
 
-## 基本概念
+## Terminology
 ### Java Programming Language
 Java 是一门面向对象的编程语言并有以下特性：
 
