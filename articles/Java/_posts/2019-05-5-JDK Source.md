@@ -5,7 +5,7 @@ tag: Java
 ---
 
 ## Thread.State
-* 版本: jdk1.8
+* 版本: oracle jdk1.8
 
 ```java
 package java.lang;
