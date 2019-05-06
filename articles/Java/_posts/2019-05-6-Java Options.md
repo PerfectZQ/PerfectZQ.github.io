@@ -5,12 +5,12 @@ tag: Java
 ---
 
 ## java 命令使用介绍
-```shell
+```console
 $ info java
 ```
 
 ## usage and description
-```shell
+```console
 File: *manpages*,  Node: java,  Up: (dir)
 
 java(1)                           Basic Tools                          java(1)
@@ -70,7 +70,7 @@ DESCRIPTION
 ```
 
 ## OPTIONS
-```shell
+```console
 OPTIONS
        The java command supports a wide range of options that can be divided
        into the following categories:
@@ -126,7 +126,7 @@ OPTIONS
        number from 0 to 1 (for example, specify 0.25 for 25%).
 ```
 ### Standard Options
-```shell
+```console
    Standard Options
        These are the most commonly used options that are supported by all
        implementations of the JVM.
@@ -375,7 +375,7 @@ OPTIONS
            the JAR file manifest rather than on the command line.
 ```
 ### Non-Standard Options
-```shell
+```console
 Non-Standard Options
        These options are general purpose options that are specific to the Java
        HotSpot Virtual Machine.
@@ -696,7 +696,7 @@ Non-Standard Options
 ```
 
 ### Advanced Runtime Options
-```shell
+```console
    Advanced Runtime Options
        These options control the runtime behavior of the Java HotSpot VM.
 
@@ -1272,7 +1272,7 @@ Non-Standard Options
 ```
 
 ### Advanced JIT Compiler Options
-```shell
+```console
    Advanced JIT Compiler Options
        These options control the dynamic just-in-time (JIT) compilation
        performed by the Java HotSpot VM.
@@ -1809,7 +1809,7 @@ Non-Standard Options
 ```
 
 ### Advanced Serviceability Options
-```shell
+```console
    Advanced Serviceability Options
        These options provide the ability to gather system information and
        perform extensive debugging.
@@ -1880,7 +1880,7 @@ Non-Standard Options
 ```
 
 ### Advanced Garbage Collection Options
-```shell
+```console
    Advanced Garbage Collection Options
        These options control how garbage collection (GC) is performed by the
        Java HotSpot VM.
@@ -2444,7 +2444,7 @@ Non-Standard Options
 ```
 
 ### Deprecated and Removed Options
-```shell
+```console
    Deprecated and Removed Options
        These options were included in the previous release, but have since
        been considered unnecessary.
@@ -2524,7 +2524,7 @@ Non-Standard Options
 ```
 
 ## PERFORMANCE TUNING EXAMPLES
-```shell
+```console
 PERFORMANCE TUNING EXAMPLES
        The following examples show how to use experimental tuning flags to
        either optimize throughput or to provide lower response time.
@@ -2541,7 +2541,7 @@ PERFORMANCE TUNING EXAMPLES
 ```
 
 ## LARGE PAGES
-```shell
+```console
 LARGE PAGES
        Also known as huge pages, large pages are memory pages that are
        significantly larger than the standard memory page size (which varies
@@ -2568,7 +2568,7 @@ LARGE PAGES
 ```
 
 ### Large Pages Support
-```shell
+```console
    Large Pages Support
        Solaris and Linux support large pages.
 
@@ -2667,7 +2667,7 @@ LARGE PAGES
 ```
 
 ## APPLICATION CLASS DATA SHARING
-```shell
+```console
 APPLICATION CLASS DATA SHARING
        Application Class Data Sharing (AppCDS) extends CDS (see
        https://docs.oracle.com/javase/8/docs/technotes/guides/vm/class-data-sharing.html)
