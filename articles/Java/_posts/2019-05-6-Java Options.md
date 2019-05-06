@@ -7,10 +7,7 @@ tag: Java
 ## java 命令使用介绍
 ```shell
 $ info java
-```
 
-详细说明
-```console
 File: *manpages*,  Node: java,  Up: (dir)
 
 java(1)                           Basic Tools                          java(1)
