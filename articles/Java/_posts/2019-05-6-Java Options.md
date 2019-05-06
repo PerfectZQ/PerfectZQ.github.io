@@ -7,7 +7,10 @@ tag: Java
 ## java 命令使用介绍
 ```shell
 $ info java
+```
 
+## usage and description
+```shell
 File: *manpages*,  Node: java,  Up: (dir)
 
 java(1)                           Basic Tools                          java(1)
@@ -64,7 +67,10 @@ DESCRIPTION
 
        Arguments after the class file name or the JAR file name are passed to
        the main() method.
+```
 
+## OPTIONS
+```shell
 OPTIONS
        The java command supports a wide range of options that can be divided
        into the following categories:
@@ -118,7 +124,9 @@ OPTIONS
        size to 8 GB, you can specify either 8g, 8192m, 8388608k, or 8589934592
        as the argument. If you are expected to specify the percentage, use a
        number from 0 to 1 (for example, specify 0.25 for 25%).
-
+```
+### Standard Options
+```shell
    Standard Options
        These are the most commonly used options that are supported by all
        implementations of the JVM.
@@ -365,8 +373,10 @@ OPTIONS
 
            For JAR files, the preference is to specify version requirements in
            the JAR file manifest rather than on the command line.
-
-   Non-Standard Options
+```
+### Non-Standard Options
+```shell
+Non-Standard Options
        These options are general purpose options that are specific to the Java
        HotSpot Virtual Machine.
 
@@ -683,7 +693,10 @@ OPTIONS
            none
                Disables verification of all bytecodes. Use of -Xverify:none is
                unsupported.
+```
 
+### Advanced Runtime Options
+```shell
    Advanced Runtime Options
        These options control the runtime behavior of the Java HotSpot VM.
 
@@ -1256,7 +1269,10 @@ OPTIONS
            Enables installation of signal handlers by the application. By
            default, this option is disabled and the application is not allowed
            to install signal handlers.
+```
 
+### Advanced JIT Compiler Options
+```shell
    Advanced JIT Compiler Options
        These options control the dynamic just-in-time (JIT) compilation
        performed by the Java HotSpot VM.
@@ -1790,7 +1806,10 @@ OPTIONS
            transformation of scalar operations into superword operations,
            specify -XX:-UseSuperWord. Only the Java HotSpot Server VM supports
            this option.
+```
 
+### Advanced Serviceability Options
+```shell
    Advanced Serviceability Options
        These options provide the ability to gather system information and
        perform extensive debugging.
@@ -1858,7 +1877,10 @@ OPTIONS
        -XX:+UnlockDiagnosticVMOptions
            Unlocks the options intended for diagnosing the JVM. By default,
            this option is disabled and diagnostic options are not available.
+```
 
+### Advanced Garbage Collection Options
+```shell
    Advanced Garbage Collection Options
        These options control how garbage collection (GC) is performed by the
        Java HotSpot VM.
@@ -2419,7 +2441,10 @@ OPTIONS
            Enables the use of thread-local allocation blocks (TLABs) in the
            young generation space. This option is enabled by default. To
            disable the use of TLABs, specify -XX:-UseTLAB.
+```
 
+### Deprecated and Removed Options
+```shell
    Deprecated and Removed Options
        These options were included in the previous release, but have since
        been considered unnecessary.
@@ -2496,7 +2521,10 @@ OPTIONS
        -XX:+UseStringCache
            Enables caching of commonly allocated strings. This option was
            removed from JDK 8 with no replacement.
+```
 
+## PERFORMANCE TUNING EXAMPLES
+```shell
 PERFORMANCE TUNING EXAMPLES
        The following examples show how to use experimental tuning flags to
        either optimize throughput or to provide lower response time.
@@ -2510,7 +2538,10 @@ PERFORMANCE TUNING EXAMPLES
 
                java -d64 -XX:+UseG1GC -Xms26g Xmx26g -XX:MaxGCPauseMillis=500 -XX:+PrintGCTimeStamp
 
+```
 
+## LARGE PAGES
+```shell
 LARGE PAGES
        Also known as huge pages, large pages are memory pages that are
        significantly larger than the standard memory page size (which varies
@@ -2534,7 +2565,10 @@ LARGE PAGES
        fragmentation, which could make it impossible to reserve enough large
        page memory. When this happens, either the OS or JVM reverts to using
        regular pages.
+```
 
+### Large Pages Support
+```shell
    Large Pages Support
        Solaris and Linux support large pages.
 
@@ -2630,7 +2664,10 @@ LARGE PAGES
                │                   areas are quite            │
                │                   large in size.             │
                └──────────────────────────────────────────────┘
+```
 
+## APPLICATION CLASS DATA SHARING
+```shell
 APPLICATION CLASS DATA SHARING
        Application Class Data Sharing (AppCDS) extends CDS (see
        https://docs.oracle.com/javase/8/docs/technotes/guides/vm/class-data-sharing.html)
