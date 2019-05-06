@@ -4,12 +4,12 @@ title: Java Options
 tag: Java
 ---
 
-## java 命令使用介绍
+## Java 命令使用介绍
 ```console
 $ info java
 ```
 
-## usage and description
+## Usage And Description
 ```console
 File: *manpages*,  Node: java,  Up: (dir)
 
