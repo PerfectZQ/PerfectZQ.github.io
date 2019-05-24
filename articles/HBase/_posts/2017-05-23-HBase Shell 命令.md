@@ -4,7 +4,7 @@ title: HBase Shell 命令
 tag: HBase
 ---
 
-## 基本命令
+## 基本操作
 
 ```shell
 # 安装完后可以在浏览器中输入下面的URL来测试安装是否成功：
@@ -12,6 +12,36 @@ http://localhost:60010
 
 # hbase目录输出日志文件所在位置：
 $HBASE_HOME/logs/
+
+# hbase Usage
+$ hbase
+Usage: hbase [<options>] <command> [<args>]
+Options:
+  --config DIR    Configuration direction to use. Default: ./conf
+  --hosts HOSTS   Override the list in 'regionservers' file
+
+Commands:
+Some commands take arguments. Pass no args or -h for usage.
+  shell           Run the HBase shell
+  hbck            Run the hbase 'fsck' tool
+  snapshot        Create a new snapshot of a table
+  wal             Write-ahead-log analyzer
+  hfile           Store file analyzer
+  zkcli           Run the ZooKeeper shell
+  upgrade         Upgrade hbase
+  master          Run an HBase HMaster node
+  regionserver    Run an HBase HRegionServer node
+  zookeeper       Run a Zookeeper server
+  rest            Run an HBase REST server
+  thrift          Run the HBase Thrift server
+  thrift2         Run the HBase Thrift2 server
+  clean           Run the HBase clean up script
+  classpath       Dump hbase CLASSPATH
+  mapredcp        Dump CLASSPATH entries required by mapreduce
+  pe              Run PerformanceEvaluation
+  ltt             Run LoadTestTool
+  version         Print the version
+  CLASSNAME       Run the class named CLASSNAME
 
 # 进入hbase shell console
 $HBASE_HOME/bin/hbase shell
