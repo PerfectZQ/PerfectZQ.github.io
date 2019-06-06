@@ -26,7 +26,7 @@ Java Client，主要分为两种：
 一个 ElasticSearch 的请求格式
 
 ```console
-curl -X<VERB> '<PROTOCOL>://<HOST>:<PORT>/<PATH>?<QUERY_STRING>' -d '<BODY>'
+curl -X <VERB> '<PROTOCOL>://<HOST>:<PORT>/<PATH>?<QUERY_STRING>' -H 'Content-Type: application/json' -d '<BODY>'
 # VERB : 适当的HTTP方法或谓词 GET(查询)、POST、PUT(添加或修改)、HEAD(验证文档是否存在) 或者 DELETE(删除)
 # PROTOCOL : http 或者 https（如果你在 Elasticsearch 前面有一个 https 代理）
 # HOST : ElasticSearch 节点的 host
