@@ -4,7 +4,11 @@ title: MySQL修改字符集为utf8mb4
 tag: RDBMS
 ---
 
+## 前言
+`utf8mb4`是`MySQL 5.5.3+`支持的字符集
+
 ## 查看当前字符集设置
+
 ### 查看当前系统默认的字符集设置
 ```shell
 mysql> SHOW VARIABLES WHERE Variable_name LIKE 'character\_set\_%' OR Variable_name LIKE 'collation%';
