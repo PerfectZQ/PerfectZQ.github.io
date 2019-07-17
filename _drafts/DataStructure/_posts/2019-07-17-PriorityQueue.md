@@ -17,7 +17,7 @@ tag:  DataStructure
 * 该队列是用数组实现，但是数组大小可以动态增加，容量无限。
 * 不是线程安全的。`PriorityBlockingQueue`是线程安全的。
 * 不允许`null`
-* 为插入方法`offer`、`poll`、`remove`和`add`提供`O(log(n))`时间，为`remove`和`contains`方法提供线性时间(`O(n)`)，为检索方法`peek`、`element`和`size`提供固定时间(`O(1)`)。
+* 为插入方法`offer`、`poll`、`remove()`和`add`提供`O(log(n))`时间，为`remove(Object)`和`contains(Object)`方法提供线性时间(`O(n)`)，为检索方法`peek`、`element`和`size`提供固定时间(`O(1)`)。
 * 方法`iterator()`中提供的迭代器并不保证以有序的方式遍历优先级队列中的元素。如果需要按顺序遍历，请考虑使用`Arrays.sort(pq.toArray())`。`PriorityQueue`及其迭代器实现了`Collection`和`Iterator`接口的所有可选方法。`PriorityQueue`的内部实现是对元素采用堆排序，头是按指定排序方式的最小元素。**堆排序只能保证根(用于实现堆的数组的第一个元素)是最大(最小)，实现堆的数组本身并不是有序的**。方法`iterator()`中提供的迭代器可能只是对整个数组的依次遍历，也就只能保证数组的第一个元素是最小的。
 
 ### 取1亿元素中top1000元素
