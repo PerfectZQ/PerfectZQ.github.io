@@ -37,6 +37,14 @@ curl -X <VERB> '<PROTOCOL>://<HOST>:<PORT>/<PATH>?<QUERY_STRING>' -H 'Content-Ty
 ```
 
 ElasticSearch 请求响应会返回一个HTTP状态码和一个JSON格式的返回值(HEAD请求不会返回)。如果想在返回结果中看到HTTP头信息，可以使用curl的`-i`参数。 `curl -i -XGET ...`
+```shell
+$ curl -XPUT "http://47.95.116.74:9200/_settings" -u username:password -H 'Content-Type: application/json' -d'
+{
+  "index": {
+      "max_result_window": "10000"
+  }
+}'
+```
 
 如果使用kibana的Dev Tools，只需要`<VERB> <PATH>?<QUERY_STRING> <BODY>`就可以了，kibana会自己添加其他的部分，写多了反而会出错！
 
