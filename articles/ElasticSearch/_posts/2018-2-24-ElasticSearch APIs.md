@@ -722,3 +722,38 @@ GET /my_index/_search
 >Note: 如果`index time analysis`和`search time analysis`指定了不同分词器，有可能会匹配不到，比如对于`身份证`：`index time analysis`指定为`standard`，会分词为`身、份、证`，而`search time analysis`指定为`ik_smart`会分词为`身份证`，这样就没有能正确匹配上的term项，从而导致没有查询结果。
 
 ### Term level queries
+
+## 定期删除 Index
+`_ttl`属性在`5.0+`弃用了，`7.0+`出现`ilm`的概念，即`Index lifecycle management`
+
+[定义一个 policy](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-put-lifecycle.html)，超过30天删除。
+```
+PUT _ilm/policy/logs_expire_policy   
+{
+  "policy": {                       
+    "phases": {
+      "delete": {
+        "min_age": "30d",           
+        "actions": {
+          "delete": {}              
+        }
+      }
+    }
+  }
+}
+```
+
+[创建一个 index template](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html)，指定`index.lifecycle.name`
+```
+PUT _template/logs_date_detection
+{
+    "order" : 10,
+    "index_patterns" : ["logs-*"],
+    "settings": {
+      "index.lifecycle.name": "logs_expire_policy"
+    }, 
+    "mappings": {
+      "date_detection" : true
+  }
+}
+```
