@@ -757,3 +757,5 @@ PUT _template/logs_date_detection
   }
 }
 ```
+
+>需要注意的是：指定 min_age=30d 并不是恰巧在过了 30d 整的时候删除，而是需要等到 ILM 去检查的时候发现已经过了 30d 才会删除，如果对时间要求严格，还是自己写 crontab 吧
