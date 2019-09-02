@@ -34,7 +34,7 @@ JDK 和 JRE 共享 Java 应用程序编程接口（Java API 是开发人员用�
 ### Java SE Platform at a Glance
 ![有帮助的截图]({{ site.url }}/assets/java-se-platform.jpg)
 
-[Java SE Platform at a Glance](https://www.oracle.com/technetwork/java/javase/tech/index.html)
+* [Java SE Platform at a Glance](https://www.oracle.com/technetwork/java/javase/tech/index.html)
 
 ## Java Garbage Collection
 * [Java Garbage Collection Basics](https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html#overview)
@@ -42,7 +42,7 @@ JDK 和 JRE 共享 Java 应用程序编程接口（Java API 是开发人员用�
 * [Sizing the Generations of JVM](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/sizing.html#sizing_generations)
 
 ## Tools and Commands Reference
-[Tools and Commands Reference](https://docs.oracle.com/en/java/javase/11/tools/tools-and-command-reference.html)
+* [Tools and Commands Reference](https://docs.oracle.com/en/java/javase/11/tools/tools-and-command-reference.html)
 
 Mac 各版本的 JDK 默认安装路径`/Library/Java/JavaVirtualMachines/`
 
@@ -53,7 +53,7 @@ JVM 相关命令在`/System/Library/Frameworks/JavaVM.framework/Versions/Current
 下面介绍一些比较有用的命令。
 
 ### java
-运行已经编译好的 java 程序
+运行已经编译好的 java 程序，[Java Options Details](https://arch-long.cn/articles/java/Java-Options.html)
 ```shell
 $ java
 Usage: java [-options] class [args...]
