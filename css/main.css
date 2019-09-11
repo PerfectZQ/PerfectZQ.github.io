@@ -155,8 +155,8 @@ h3 {
 
 h4 {
     font-size: 20px;
-    font-style: italic;
-    font-weight: bold;
+    font-style: normal;
+    font-weight: 400;
     font-family: 'Microsoft YaHei';
     padding: 10px 0px;
     line-height: 1.2em;
