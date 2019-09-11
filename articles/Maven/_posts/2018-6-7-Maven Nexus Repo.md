@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Maven Nexus Repo 搭建
+title: Maven Nexus Repo
 tag: Maven
 ---
 ## 搭建前的准备
