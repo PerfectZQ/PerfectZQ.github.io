@@ -125,7 +125,7 @@ Maven Repository 可以分为三种，不同的版本策略的 Maven 项目会�
 ## 上传本地项目到 Nexus hosted repository
 
 ### 修改 Maven settings.xml 配置
-指定`server`的登陆信息，`server`中的`id`可以随便起，但是在项目使用的时候要注意，`repository`的`id`一定要和它匹配。
+默认`${USER_HOME}/.m2/settings.xml`，指定`server`的登陆信息，`server`中的`id`可以随便起，但是在项目使用的时候要注意，`repository`的`id`一定要和它匹配。
 
 ```xml
 <servers>
@@ -211,7 +211,18 @@ mvn deploy:deploy-file \
 mvn deploy:deploy-file -DgroupId=com.oracle -DartifactId=jdbc -Dversion=6.0 -Dfile=D:\Oracle\instantclient_11_2\ojdbc6.jar -DrepositoryId=nexus -Durl=http://10.4.121.202:8081/repository/maven-releases/ 
 ```
 
+然后就可以通过在`pom.xml`中指定`<dependency>`引用依赖了
+```xml
+<dependency>
+    <groupId>com.oracle</groupId>
+    <artifactId>jdbc</artifactId>
+    <version>6.0</version>
+</dependency>
+```
+
 ### 将 jar 包安装到本地
+* [Guide to installing 3rd party JARs](https://maven.apache.org/guides/mini/guide-3rd-party-jars-local.html)
+
 ```shell
-mvn install:install-file -Dfile=JAR包所在路径（如D:/xxxx/x） -DgroupId=包的groupid名（可以是自己取的名） -DartifactId=包的artifactID名（可以是自己取的名） Dversion=版本号（可以自己取的，例如1.0） -Dpackaging=jar
+mvn install:install-file -Dfile=<jar-absolute-path>(D:/xxxx/x.jar) -DgroupId=<group-id> -DartifactId=<artifact-id> Dversion=<version>(版本号，例如1.0) -Dpackaging=jar
 ```
