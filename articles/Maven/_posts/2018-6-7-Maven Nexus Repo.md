@@ -191,7 +191,6 @@ Maven Repository 可以分为三种，不同的版本策略的 Maven 项目会�
 ```shell
 mvn deploy
 ```
-mvn install:install-file -Dfile=JAR包所在路径（如D:/xxxx/x） -DgroupId=包的groupid名（可以是自己取的名） -DartifactId=包的artifactID名（可以是自己取的名） Dversion=版本号（可以自己取的，例如1.0） -Dpackaging=jar
 ### 将 jar 包上传到 Nexus Repository
 mvn 命令的语法
 
