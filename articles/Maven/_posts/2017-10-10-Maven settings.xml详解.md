@@ -4,7 +4,12 @@ title: Maven settings.xml详解
 tag: Maven
 ---
 
-## maven settings.xml
+## Maven pom.xml
+* [POM Reference](https://maven.apache.org/pom.html)
+
+## Maven settings.xml
+* [Settings Reference](https://maven.apache.org/settings.html)
+
 除了pom.xml外，maven还有一个很重要的xml文件，其中包含了全局的各种配置项，具体配置项的含义如下。[原文链接](http://www.blogjava.net/hellxoul/archive/2013/05/16/399345.html)
 ```xml
 <project xmlns="http://maven.apache.org/POM/4.0.0 "
