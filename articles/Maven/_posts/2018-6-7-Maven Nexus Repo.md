@@ -223,5 +223,5 @@ mvn deploy:deploy-file -DgroupId=com.oracle -DartifactId=jdbc -Dversion=6.0 -Dfi
 * [Guide to installing 3rd party JARs](https://maven.apache.org/guides/mini/guide-3rd-party-jars-local.html)
 
 ```shell
-mvn install:install-file -Dfile=<jar-absolute-path>(D:/xxxx/x.jar) -DgroupId=<group-id> -DartifactId=<artifact-id> Dversion=<version>(版本号，例如1.0) -Dpackaging=jar
+mvn install:install-file -Dfile=<jar-absolute-path>(D:/xxxx/x.jar) -DgroupId=<group-id> -DartifactId=<artifact-id> -Dversion=<version>(版本号，例如1.0) -Dpackaging=jar
 ```
