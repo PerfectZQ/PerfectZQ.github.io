@@ -117,3 +117,46 @@ export SPARK_HISTORY_OPTS="-Dspark.history.ui.port=6666 -Dspark.history.retained
 
 spark-history-server的默认端口是`18080`，启动完成之后，通过地址：`http://localhost:18080`访问
 
+## Task Failure Monitor
+* [Spark任务之Task失败监控](https://blog.csdn.net/UUfFO/article/details/79935431)
+
+在 Spark 程序中，`task`会根据`spark.task.maxFailures(default 4)`失败后进行会先进行重试，而不是让整个 Spark App 死掉，只有重试次数超过阈值的时候才会杀死 App。另外，如果是 Spark on YARN，那么程序还会受 YARN 的重试机制尝试重启 Spark App，通过参数`yarn.resourcemanager.am.max-attempts(default 2)`控制。
+
+### Catch Task Failure Event
+* 在`Executor`中，不管`task`成功与否都会向`execBackend`报告`task`的状态
+```scala
+execBackend.statusUpdate(taskId, TaskState.FINISHED, serializedResult)
+```
+
+* `CoarseGrainedExecutorBackend`会向`driver`发送`StatusUpdate`状态变更信息
+```scala
+override def statusUpdate(taskId: Long, state: TaskState, data: ByteBuffer) {
+    val msg = StatusUpdate(executorId, taskId, state, data)
+    driver match {
+      case Some(driverRef) => driverRef.send(msg)
+      case None => logWarning(s"Drop $msg because has not yet connected to driver")
+    }
+  }
+```
+
+* `CoarseGrainedSchedulerBackend`收到信息后调用`scheduler.statusUpdate()`
+```scala
+// 1
+override def receive: PartialFunction[Any, Unit] = {
+      case StatusUpdate(executorId, taskId, state, data) =>
+        scheduler.statusUpdate(taskId, state, data.value)
+        .....
+        
+// 2
+taskResultGetter.enqueueFailedTask(taskSet, tid, state, serializedData)
+// 3
+scheduler.handleFailedTask(taskSetManager, tid, taskState, reason)
+// 4
+taskSetManager.handleFailedTask(tid, taskState, reason)
+// 5
+sched.dagScheduler.taskEnded(tasks(index), reason, null, accumUpdates, info)
+// 6
+eventProcessLoop.post(CompletionEvent(task, reason, result, accumUpdates, taskInfo)) 
+```
+
+* 
