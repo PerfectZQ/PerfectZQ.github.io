@@ -9,7 +9,7 @@ tag: Spark
 * [spark shuffle introduction](https://de.slideshare.net/colorant/spark-shuffle-introduction)
 * [nsdi spark](http://people.csail.mit.edu/matei/papers/2012/nsdi_spark.pdf)
 * [一篇文章了解 Spark Shuffle 内存使用](https://mp.weixin.qq.com/s/wB3xDWwl0k-GzIJ9j6nDyw)
-* []
+* [Shuffle Write解析 (Sort Based Shuffle)](https://github.com/teeyog/blog/issues/14)
 
 ## Spark Memory 管理
 `Executor`中的内存由`MemoryManager`统一管理，当一个`Task`被分配到某个`Executor`上时，会为该`Task`创建一个`TaskMemoryManager`，`TaskMemoryManager`实际上只对当前`Task`的内存使用进行管理，而真正的内存的申请、分配、释放工作交给`MemoryManager`的实现类去做，`MemoryManager`则又借助`MemoryAllocator`去真正执行内存的分配。一个`Exectutor`的`TaskMemoryManager`由`executor-cores`决定。
