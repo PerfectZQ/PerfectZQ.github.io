@@ -16,7 +16,6 @@ Redis 中的所有值对象在 Redis 内部定义为`RedisObject`，理解`Redis
 * **ref count**: 引用计数器
 * **data pointer**: 数据指针
 
-
 ```shell
 redis01:6379[15]> debug object test
 Value at:0x7f772a65ab30 refcount:1 encoding:hashtable serializedlength:10 lru:10004393 lru_seconds_idle:1915
@@ -27,5 +26,5 @@ redis 常用的五种数据结构，每种数据结构其实都有多种内部�
 
 ```shell
 # 查看 redis set 的内部编码
-
+$ obejct encoding "set1" 
 ```
