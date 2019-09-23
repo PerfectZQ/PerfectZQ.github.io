@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Properties的使用
+title: Properties
 tag: Java
 ---
 
@@ -29,3 +29,6 @@ val props: Properties = new Properties()
 props.load(new FileInputStream("/opt/neu/submit/gd_log_analyse.properties"))
 props.get("ip").toString
 ```
+
+## System.getProperties 和 System.getEnv
+`getProperties`获取的是启动 JVM 时候通过`-Dproperty=value`中传入的参数，而`getEnv`是获取真正的操作系统(非 JVM)的环境变量。
