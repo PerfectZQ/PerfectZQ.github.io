@@ -33,6 +33,7 @@ object Top1KFrom1E {
 
   def main(args: Array[String]): Unit = {
     val currentTime = System.currentTimeMillis()
+    // 极小堆求前1K个最大数值
     val priorityQueue = new FixSizePriorityQueue[java.lang.Long](1000)
     for (i <- 1 to 100000000) {
       priorityQueue.add(new Random().nextInt(i).asInstanceOf[Long])
