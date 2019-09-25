@@ -9,7 +9,7 @@ tag:  DataStructure
 
 `PriorityQueue`是从JDK1.5开始提供的新的数据结构接口，它是一种基于**优先级堆**实现的极大优先级队列。优先级队列是不同于先进先出队列的另一种队列。每次从队列中取出的是具有最高优先权的元素。如果不提供`Comparator`的话，优先队列中元素默认按自然顺序排列，也就是数字默认是小的在队列头，字符串则按字典序排列(参阅`Comparable`)，也可以根据`Comparator`来指定，这取决于使用哪种构造方法。优先级队列不允许`null`元素。依靠自然排序的优先级队列还不允许插入不可比较的对象，这样做可能导致`ClassCastException`。
 
-`PriorityQueue`队列的头默认是按指定排序方式的最小元素。如果同时存在多个最小值，随机返回一个。
+`PriorityQueue`队列的头默认是按指定排序方式的**最小元素**(极小堆)。如果同时存在多个最小值，随机返回一个。
 
 `poll`、`remove`、`peek`和`element`访问处于队列头的元素。`PriorityQueue`是无界的，但是有一个内部容量，控制着用于存储队列元素的数组的大小。**它总是至少与队列的大小相同，随着不断向优先级队列添加元素，其容量会自动增加，无需指定容量增加策略的细节**。
 
@@ -20,7 +20,7 @@ tag:  DataStructure
 * 为插入方法`offer`、`poll`、`remove()`和`add`提供`O(log(n))`时间，为`remove(Object)`和`contains(Object)`方法提供线性时间(`O(n)`)，为检索方法`peek`、`element`和`size`提供固定时间(`O(1)`)。
 * 方法`iterator()`中提供的迭代器并不保证以有序的方式遍历优先级队列中的元素。如果需要按顺序遍历，请考虑使用`Arrays.sort(pq.toArray())`。`PriorityQueue`及其迭代器实现了`Collection`和`Iterator`接口的所有可选方法。`PriorityQueue`的内部实现是对元素采用堆排序，头是按指定排序方式的最小元素。**堆排序只能保证根(用于实现堆的数组的第一个元素)是最大(最小)，实现堆的数组本身并不是有序的**。方法`iterator()`中提供的迭代器可能只是对整个数组的依次遍历，也就只能保证数组的第一个元素是最小的。
 
-### 取1亿元素中top1000元素
+### Top 1K from 1E numbers
 ```scala
 package com.rich.zq
 
