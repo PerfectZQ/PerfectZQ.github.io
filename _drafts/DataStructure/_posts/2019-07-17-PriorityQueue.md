@@ -44,6 +44,15 @@ object Top1KFrom1E {
     println(s"cost ${System.currentTimeMillis() - currentTime} milliseconds")
   }
 
+  
+  /**
+    * 固定容量的优先级队列
+    *
+    * @param maxSize   容量
+    * @param isMaxHeap 是否是最大堆，默认最小堆。
+    *                  Note: 最小堆用于求极大 maxSize 个元素
+    * @tparam E 元素类型
+    */
   class FixSizePriorityQueue[E <: Comparable[E]](maxSize: Int, isMaxHeap: Boolean = false) {
 
     if (maxSize < 0) throw new IllegalArgumentException("maxSize must greater than 0")
