@@ -18,6 +18,7 @@ Zookeeper 为程序提供节点的监听服务（类似数据库触发器，当�
 # 连接 zookeeper server
 $ ./zkCli.sh -server 192.168.51.246:2181
 Connecting to 192.168.51.246:2181
+# Zookeeper Server version
 2019-09-27 16:21:49,999 - INFO  [main:Environment@100] - Client environment:zookeeper.version=3.4.6-91--1, built on 01/04/2018 10:34 GMT
 2019-09-27 16:21:50,001 - INFO  [main:Environment@100] - Client environment:host.name=ambarissd
 2019-09-27 16:21:50,001 - INFO  [main:Environment@100] - Client environment:java.version=1.8.0_181
