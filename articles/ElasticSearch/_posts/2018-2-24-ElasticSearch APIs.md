@@ -83,7 +83,7 @@ ElasticSearch允许通过HTTP公开APIs，关于HTTP的设置目前不能动态�
 索引名称支持日期表达式
 
 ## Document APIs
-本章节主要讲解，对ElasticSearch Document的`CRUD`操作，即`增查改删`。ElasticSearch Document APIs 分为两个部分：Single document APIs 和 Multi-document APIs。
+本章节主要讲解，对 ElasticSearch Document 的`CRUD`操作，即`增查改删`，主要是`增删改`，主要的查询逻辑由`Search APIs`实现。ElasticSearch Document APIs 分为两个部分：Single document APIs 和 Multi-document APIs。
 ### Single document APIs
 
 #### Index API
@@ -107,6 +107,7 @@ ElasticSearch允许通过HTTP公开APIs，关于HTTP的设置目前不能动态�
 #### Reindex API
 
 ## Search APIs
+条件查询
 ### 搜索前的准备
 方便演示，首先添加几条数据
 ```javascript
