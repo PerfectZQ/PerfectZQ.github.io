@@ -1,6 +1,6 @@
 ---
 layout: post
-title: HBase Shell 命令
+title: HBase Shell
 tag: HBase
 ---
 

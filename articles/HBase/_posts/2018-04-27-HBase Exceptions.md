@@ -1,6 +1,6 @@
 ---
 layout: post
-title: HBase 异常处理
+title: HBase Exception
 tag: HBase
 ---
 ## java.lang.NoClassDefFoundError: com/yammer/metrics/core/Gauge

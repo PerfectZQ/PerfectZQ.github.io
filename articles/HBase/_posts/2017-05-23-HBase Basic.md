@@ -1,6 +1,6 @@
 ---
 layout: post
-title: HBase 基本概念
+title: HBase Basic
 tag: HBase
 ---
 
