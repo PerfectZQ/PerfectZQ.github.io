@@ -150,3 +150,36 @@ class Thread implements Runnable {
 * 信号量：它允许多个线程在同一时刻访问同一资源，但是需要限制在同一时刻访问此资源的最大线程数目 。信号量对象对线程的同步方式与前面几种方法不同，信号允许多个线程同时使用共享资源，这与操作系统中的PV操作相同。它指出了同时访问共享资源的线程最大数目。它允许多个线程在同一时刻访问同一资源，但是需要限制在同一时刻访问此资源的最大线程数目。
 * 事件：通过通知操作的方式来保持线程的同步，还可以方便实现对多个线程的优先级比较的操作。
 
+## Demos
+### 多线程加 1
+多个线程同时对变量`i`加一，保证结果正确。
+```scala
+object Test {
+
+  def main(args: Array[String]): Unit = {
+    var i = 0
+    val runnable = new Runnable {
+      override def run(): Unit = {
+        // 用来模拟一顿操作猛如虎
+        Thread.sleep(200)
+        // Note: this 是指当前 object Test，而不是 Thread 对象
+        this.synchronized {
+          i += 1
+        }
+      }
+    }
+    val threads = Range(0, 10000).map { _ => new Thread(runnable) }
+    /**
+     * Note: 多个线程的 start()、join() 要全部分开写，如果 
+     * thread1.start(); thread1.join();
+     * thread2.start(); thread2.join();
+     * 这样写的话，虽然你创建了多个线程，但还是串行执行的，并没有并发。
+     */
+    threads.foreach(thread => thread.start())
+    // 等所有线程都加完了(join)再输出，否则输出结果不对
+    threads.foreach(thread => thread.join())
+    println(i)
+  }
+
+}
+```
