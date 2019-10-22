@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Git 常用命令
+title: Git Commands
 tag: Git
 ---
 

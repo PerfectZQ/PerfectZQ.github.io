@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 本地 Git 库搭建
+title: Local Git Repository
 tag: Git
 ---
 
