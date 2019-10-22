@@ -9,7 +9,7 @@ tag: Java
 * [The Java® Language Specification - Java SE 8 Edition](https://docs.oracle.com/javase/specs/jls/se8/html/index.html)
 * [The Java® Virtual Machine Specification Java SE 8 Edition](https://docs.oracle.com/javase/specs/jvms/se8/html/index.html)
 
-## Nice Common References
+## Interesting Common References
 * [Java 堆外内存](https://www.cnblogs.com/duanxz/p/6089485.html)
 * [JVM: 能不能在 16G 机器上设置17G的堆?](https://www.jianshu.com/p/11ae309ab078)
 * [JVM 与 Linux 的内存关系详解](https://zhuanlan.zhihu.com/p/64737522)
