@@ -413,5 +413,8 @@ $ jmap -dump:format=b,file=3742.bin $JAVA_HOME/bin/java core.3742
 
 
 ### jvisualvm
+```shell
+$ jvisualvm
+```
 
 
