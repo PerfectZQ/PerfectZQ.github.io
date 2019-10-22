@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Kubernetes 核心概念
+title: Kubernetes
 tag:  Kubernetes
 ---
 

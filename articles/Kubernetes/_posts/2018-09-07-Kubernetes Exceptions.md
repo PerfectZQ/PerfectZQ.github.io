@@ -1,6 +1,6 @@
 ---
 layout: post
-title: kubernetes 异常处理
+title: Kubernetes Exceptions
 tag:  Kubernetes
 ---
 ## kubectl 异常
