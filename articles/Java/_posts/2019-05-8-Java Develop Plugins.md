@@ -1,13 +1,13 @@
 ---
 layout: post
-title: Lombok
+title: Java Develop Plugins
 tag: Java
 ---
 
-## 简介
-[juejin.im/post/5b00517cf265da0ba0636d4b](juejin.im/post/5b00517cf265da0ba0636d4b)
+## Lombok
+* [juejin.im/post/5b00517cf265da0ba0636d4b](juejin.im/post/5b00517cf265da0ba0636d4b)
 
-## 引入依赖
+### 引入依赖
 ```xml
 <dependency>
   <groupId>org.projectlombok</groupId>
@@ -17,11 +17,11 @@ tag: Java
 </dependency>
 ```
 
-## IDEA 集成
+### IDEA 集成
 * 安装插件 `Preferences -> Plugins -> Lombok`
 * 开启注解 `Preferences -> Build,Execution,Deployment -> Compiler -> Annotation Processors -> Enable Annocation Processors`
 
-## 原理
+### 原理
 自从Java 6起，javac就支持`JSR 269 Pluggable Annotation Processing API`规范，只要程序实现了该API，就能在`javac`运行的时候得到调用。
 
 Lombok 就是一个实现了`JSR 269 API`的程序。在使用`javac`的过程中，它产生作用的具体流程如下：

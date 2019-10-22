@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Java 常见异常
+title: Java Exceptions
 tag: Java
 ---
 ## Common Exceptions
