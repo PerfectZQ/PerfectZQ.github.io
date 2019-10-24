@@ -66,8 +66,8 @@ $ curl -XPUT "http://47.95.116.74:9200/_settings" -u username:password -H 'Conte
 本章讲述API的公约，来源参考[official reference](https://www.elastic.co/guide/en/elasticsearch/reference/current/api-conventions.html)
 
 ElasticSearch允许通过HTTP公开APIs，关于HTTP的设置目前不能动态改变，只能通过设置`elasticsearch.yml`生效。详细的配置参数参考[official reference](https://www.elastic.co/guide/en/elasticsearch/reference/current/modulElasticSearch-http.html)
-### Multiple IndicElasticSearch
-大多数引用`index`参数的API支持跨多个索引执行，例如同时对三个索引`index1`、`index2`、`index3`执行查询操作，`GET /index1,index2,index3/_search?q=tag:wow`。`_all`代表所有的索引，除此之外还支持通配符`*`，如`index*`、`in*ex*`。如果只想查询`index1`和`index2`还可以使用`-`排除索引，如`index*,-index3`。
+### Multiple Indic
+ElasticSearch大多数引用`index`参数的API支持跨多个索引执行，例如同时对三个索引`index1`、`index2`、`index3`执行查询操作，`GET /index1,index2,index3/_search?q=tag:wow`。`_all`代表所有的索引，除此之外还支持通配符`*`，如`index*`、`in*ex*`。如果只想查询`index1`和`index2`还可以使用`-`排除索引，如`index*,-index3`。
 
 所有支持`Multiple IndicElasticSearch`的APIs还支持下面的url查询参数
 
