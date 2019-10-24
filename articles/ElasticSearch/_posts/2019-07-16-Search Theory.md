@@ -140,3 +140,7 @@ Payload 主要有以下几种用法:
 #### 标准化因子文件(nrm)
 
 #### 删除文档文件(del)
+
+## NRT
+Nearly Real Time 实现
+* [Elasticsearch 内核原理解密](https://zq99299.github.io/note-book/elasticsearch-core/67-kernel-principle-decryption.html)
