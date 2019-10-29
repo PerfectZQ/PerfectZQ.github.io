@@ -34,3 +34,4 @@ Lombok 就是一个实现了`JSR 269 API`的程序。在使用`javac`的过程�
 ## 实用分享
 * [IntelliJ IDEA 超实用使用技巧分享](https://mp.weixin.qq.com/s/X_DKo4pAIa7TootqkJNXhA)
 * [IDEA高级用法：集成JIRA、UML类图插件、SSH、FTP...](https://mp.weixin.qq.com/s/K-nhlK5aRBKTE-N_Nk9N4A)
+* [IDEA Features](http://www.jetbrains.com/idea/features/)
