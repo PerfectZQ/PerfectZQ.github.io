@@ -13,5 +13,8 @@ tag: HBase
 ## Summary
 
 * [HBase抗战总结 - 阿里巴巴HBase高可用8年抗战回忆录](https://mp.weixin.qq.com/s/oyZjswjAy1dJCQldEhGqNg)
-* [HBase内存管理 - MemStore进化论](https://mp.weixin.qq.com/s/LPhfQmx0lhRayA_KQWD0-g)
 ### HBase 内存管理
+* [HBase内存管理 - MemStore进化论](https://mp.weixin.qq.com/s/LPhfQmx0lhRayA_KQWD0-g)
+
+### HBase Region Split & Compaction
+* [HBase Region Split Compaction 过程分析以及调优](https://cloud.tencent.com/developer/article/1005586)
