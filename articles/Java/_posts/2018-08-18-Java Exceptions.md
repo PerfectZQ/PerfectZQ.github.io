@@ -3,6 +3,7 @@ layout: post
 title: Java Exceptions
 tag: Java
 ---
+
 ## Common Exceptions
 [Common Java Exceptions](https://www.baeldung.com/java-common-exceptions)
 
