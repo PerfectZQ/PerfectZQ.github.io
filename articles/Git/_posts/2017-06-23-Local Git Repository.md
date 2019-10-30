@@ -10,10 +10,12 @@ tag: Git
 ```shell
 yum update
 ```
+
 ### 卸载旧版本git（如果有的话）
 ```shell
 yum remove git -y	
 ```
+
 ### 安装相关的依赖包
 ```shell
 yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel gcc perl-ExtUtils-MakeMaker
