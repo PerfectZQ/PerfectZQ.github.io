@@ -3,8 +3,73 @@ layout: post
 title: Java Design Patterns
 tag: Java
 ---
+## 简介
+* [设计模式（45 种）](https://github.com/guanguans/notes/blob/master/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%8845%E7%A7%8D%EF%BC%89.md)
 
-## Builder 模式
+设计模式总结为下面的几大类
+### 创建型模式(Creational Patterns)
+提供一种在创建对象的同时隐藏创建逻辑的方式，而不是使用`new`直接实例化对象，根据给定条件创建相应的对象，更灵活。
+
+* 工厂模式（Factory Pattern）
+* 抽象工厂模式（Abstract Factory Pattern）
+* 单例模式（Singleton Pattern）
+* 建造者模式（Builder Pattern）
+* 原型模式（Prototype Pattern）
+* 对象池模式 *（Pool）
+* 多例模式 *（Multiton）
+* 静态工厂模式 *（Static Factory）
+
+### 结构型模式(Structural Patterns)
+关注类和对象的组合。利用继承组合接口/定义组合对象扩展新功能。
+
+* 适配器模式（Adapter Pattern）
+* 桥接模式（Bridge Pattern）
+* 过滤器模式（Filter、Criteria Pattern）
+* 组合模式（Composite Pattern）
+* 装饰器模式（Decorator Pattern）
+* 外观模式（Facade Pattern）
+* 享元模式（Flyweight Pattern）
+* 代理模式（Proxy Pattern）
+* 数据映射模式 *（Data Mapper）
+* 依赖注入模式 *（Dependency Injection）
+* 门面模式 *（Facade）
+* 流接口模式 *（Fluent Interface）
+* 注册模式 *（Registry）
+
+### 行为型模式(Behavioral Patterns)
+关注对象之间的行为/通信。
+
+* 责任链模式（Chain of Responsibility Pattern）
+* 命令模式（Command Pattern）
+* 解释器模式（Interpreter Pattern）
+* 迭代器模式（Iterator Pattern）
+* 中介者模式（Mediator Pattern）
+* 备忘录模式（Memento Pattern）
+* 观察者模式（Observer Pattern）
+* 状态模式（State Pattern）
+* 空对象模式（Null Object Pattern）
+* 策略模式（Strategy Pattern）
+* 提供者模式（Provider Pattern）
+* 模板模式（Template Pattern）
+* 访问者模式（Visitor Pattern）
+* 规格模式 *（Specification）
+* 访问者模式 *（Visitor）
+
+### J2EE 设计模式
+特别关注表示层。这些模式是由 Sun Java Center 鉴定的。
+
+* MVC 模式（MVC Pattern）
+* 业务代表模式（Business Delegate Pattern）
+* 组合实体模式（Composite Entity Pattern）
+* 数据访问对象模式（Data Access Object Pattern）
+* 前端控制器模式（Front Controller Pattern）
+* 拦截过滤器模式（Intercepting Filter Pattern）
+* 服务定位器模式（Service Locator Pattern）
+* 传输对象模式（Transfer Object Pattern）
+* 委托模式 *（Delegation）
+* 资源库模式 *（Repository）
+
+## 建造者模式（Builder Pattern）
 ### 参考
 [Java Builder 模式,你搞懂了么?](https://juejin.im/post/5c2088205188251920598d85)
 
@@ -28,7 +93,7 @@ public static void main(String[] args){
 
 这时候，就需要 Builder 模式。
 
-## Proxy 模式
+## 代理模式（Proxy Pattern）
 
 ### 参考
 [详解 Java 中的三种代理模式](https://mp.weixin.qq.com/s?__biz=MzI3ODcxMzQzMw==&mid=2247486759&idx=2&sn=6769d8ff9d163babe726b6213c6d15e4&chksm=eb538811dc240107bcf2a6e65b5381b2a68175af8ff12f4e2c1b0a06f7d16850db4acb64a18e&scene=21#wechat_redirect)
@@ -205,3 +270,7 @@ public class ProxyFactory implements MethodInterceptor{
 }
 ```
 
+## 提供者模式（Provider Pattern）
+
+## 装饰者模式（Decorator Pattern）
+* [Java 设计模式 装饰者模式](https://blog.csdn.net/luanlouis/article/details/19021803)
