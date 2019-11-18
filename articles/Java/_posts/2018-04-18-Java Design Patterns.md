@@ -274,5 +274,6 @@ public class ProxyFactory implements MethodInterceptor{
 ## 提供者模式（Provider Pattern）
 * [打造属于你的提供者（Provider = Strategy + Factory Method）](https://www.cnblogs.com/rush/archive/2011/08/28/2156312.html)
 
+提供者模式（Provider）的结构图，和策略模式（Strategy）结构基本一致，就是**通过继承扩展不同种类的算法**。
 ## 装饰者模式（Decorator Pattern）
 * [Java 设计模式 装饰者模式](https://blog.csdn.net/luanlouis/article/details/19021803)
