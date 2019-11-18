@@ -185,7 +185,8 @@ public class ProxyFactory {
 
     // 维护一个目标对象
     private Object target;
-
+    
+    // 需要传入一个目标对象
     public ProxyFactory(Object target) {
         this.target = target;
     }
@@ -271,6 +272,7 @@ public class ProxyFactory implements MethodInterceptor{
 ```
 
 ## 提供者模式（Provider Pattern）
+* [打造属于你的提供者（Provider = Strategy + Factory Method）](https://www.cnblogs.com/rush/archive/2011/08/28/2156312.html)
 
 ## 装饰者模式（Decorator Pattern）
 * [Java 设计模式 装饰者模式](https://blog.csdn.net/luanlouis/article/details/19021803)
