@@ -288,7 +288,7 @@ git rebase --continue
 ```shell script
 # 删除指定文件本地所有历史提交记录
 $ git filter-branch --force --index-filter \
-'git rm --cached --ignore-unmatch /Users/zhangqiang/IdeaProjects/PerfectZQ.github.io/articles/Java/_posts/2017-07-20-split\()和replace\()方法特殊字符的处理.md' \
+'git rm --cached --ignore-unmatch /Users/zhangqiang/IdeaProjects/PerfectZQ.github.io/articles/Java/_posts/2017-07-20-split\(\)和replace\(\)方法特殊字符的处理.md' \
 --prune-empty --tag-name-filter cat -- --all
 # 同步到所有 branch
 $ git push origin --force --all
