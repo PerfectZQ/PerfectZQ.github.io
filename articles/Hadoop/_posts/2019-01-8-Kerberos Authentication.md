@@ -139,30 +139,30 @@ kadmin: q
 ### 启动KDC
 ```
 # kdc 主程序
-systemctl start krb5-kdc
+$ systemctl start krb5-kdc
 # kdc 管理员程序，可以让使用者远程管理 kdc 数据库
-systemctl start krb5-admin-server
+$ systemctl start krb5-admin-server
 ```
 
 ### 向KDC申请TGT
 ```
 # 使用密码向KDC申请TGT
-kinit hdfs-kerambari0
+$ kinit hdfs-kerambari0
 Password for hdfs-kerambari0@XXX.COM:
 
 # 使用keytab向KDC申请TGT
-kinit -kt /etc/security/keytabs/hdfs.headless.keytab hdfs-kerambari0@XXX.COM
+$ kinit -kt /etc/security/keytabs/hdfs.headless.keytab hdfs-kerambari0@XXX.COM
 ```
 
 ### 销毁当前的TGT
 ```
-kdestroy
+$ kdestroy
 ```
 
 ### 显示当前的TGT
 ```
 # 如果当前没有TGT会显示如下
-klist
+$ klist
 klist: No credentials cache found (filename: /tmp/krb5cc_0)
 
 # 如果申请了TGT显示如下
@@ -176,10 +176,10 @@ Valid starting       Expires              Service principal
 ### 刷新TGT
 从上面可以看到 TGT 是有实效性的，超过 Expires 日期就不可以再使用，但是可以在过期之前使用下面命令刷新
 ```
-klist -r
+$ kinit -R
 ```
 
 ### 切换admin
 ```
-kinit admin/admin
+$ kinit admin/admin
 ```
