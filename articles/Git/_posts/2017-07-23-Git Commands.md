@@ -290,6 +290,15 @@ git rebase --continue
 $ git filter-branch --force --index-filter \
 'git rm --cached --ignore-unmatch articles/Java/_posts/2017-07-20-split\(\)和replace\(\)方法特殊字符的处理.md' \
 --prune-empty --tag-name-filter cat -- --all
+....
+Rewrite 0b30bca6fbc19366d79fe3db40cc98865815991b (2416/2419) (466 seconds passed, remaining 0 predicted)    rm 'articles/Java/_posts/2017-07-20-split()和replace()方法特殊字符的处理.md'
+Rewrite 2eb7b50c93766d5baf7b84292b4620b1aa034b72 (2416/2419) (466 seconds passed, remaining 0 predicted)    rm 'articles/Java/_posts/2017-07-20-split()和replace()方法特殊字符的处理.md'
+Rewrite 22c48d18d1904cba062a200314f9cb6ec9a901a2 (2416/2419) (466 seconds passed, remaining 0 predicted)    rm 'articles/Java/_posts/2017-07-20-split()和replace()方法特殊字符的处理.md'
+
+Ref 'refs/heads/master' was rewritten
+Ref 'refs/remotes/origin/master' was rewritten
+Ref 'refs/remotes/origin/develop' was rewritten
+WARNING: Ref 'refs/remotes/origin/master' is unchanged
 
 # 同步到所有 branch
 $ git push origin --force --all
