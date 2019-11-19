@@ -283,6 +283,26 @@ git rebase --continue
 
 >由于新 commit 将替换掉旧的 commit，因此不要在已公开的 commit 中使用 git rebase，否则项目历史记录将会消失。
 
+### 删除某个文件的所有 git 提交记录
+* [Removing sensitive data from a repository](https://help.github.com/en/github/authenticating-to-github/removing-sensitive-data-from-a-repository)
+```shell script
+# 删除指定文件本地所有历史提交记录
+$ git filter-branch --force --index-filter \
+'git rm --cached --ignore-unmatch /Users/zhangqiang/IdeaProjects/PerfectZQ.github.io/articles/Java/_posts/2017-07-20-split()和replace()方法特殊字符的处理.md' \
+--prune-empty --tag-name-filter cat -- --all
+# 同步到所有 branch
+$ git push origin --force --all
+# 同步到所有 tags
+$ git push origin --force --tags
+# 强制解除对local repository所有对象的引用
+$ git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin
+$ git reflog expire --expire=now --all
+# 执行垃圾回收
+$ git gc --prune=now
+# 查看文件历史记录是否全部被清空
+$ git log 
+```
+
 ## 撤销提交和更改
 [Undoing Commits & Changes](https://www.atlassian.com/git/tutorials/undoing-changes)
 ### reset
