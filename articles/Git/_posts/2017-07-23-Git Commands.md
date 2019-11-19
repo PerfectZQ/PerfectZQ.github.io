@@ -290,17 +290,27 @@ git rebase --continue
 $ git filter-branch --force --index-filter \
 'git rm --cached --ignore-unmatch articles/Java/_posts/2017-07-20-split\(\)和replace\(\)方法特殊字符的处理.md' \
 --prune-empty --tag-name-filter cat -- --all
+
 # 同步到所有 branch
 $ git push origin --force --all
 # 同步到所有 tags
 $ git push origin --force --tags
+
 # 强制解除对local repository所有对象的引用
 $ git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin
 $ git reflog expire --expire=now --all
+
 # 执行垃圾回收
 $ git gc --prune=now
+Enumerating objects: 12635, done.
+Counting objects: 100% (12635/12635), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (6426/6426), done.
+Writing objects: 100% (12635/12635), done.
+Total 12635 (delta 7933), reused 7429 (delta 4750)
+
 # 查看文件历史记录是否全部被清空
-$ git log 
+$ git log "articles/Java/_posts/2017-07-20-split\(\)和replace\(\)方法特殊字符的处理.md"
 ```
 
 ## 撤销提交和更改
