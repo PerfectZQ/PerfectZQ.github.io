@@ -105,7 +105,7 @@ apt-get install krb5-admin-server krb5-kdc krb5-user krb5-config
 # OSX 自带，不需要装
 ```
 ### 配置
-配置kdc、kerberos客户端，以及调用 kerberos api 时都会使用到。
+配置kdc、kerberos客户端，指定日志写入路径、realm 信息、kdc、admin-server服务器地址等。
 
 * ticket_lifetime: 指定 kdc 授权 ticket 的过期时长
 * renew_lifetime: 指定允许更新现有 ticket 的时长。
