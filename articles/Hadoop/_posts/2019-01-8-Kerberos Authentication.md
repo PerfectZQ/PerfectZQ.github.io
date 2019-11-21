@@ -104,6 +104,8 @@ zq@XXX.COM
 yarn/xxx.net@XXX.COM
 ```
 
+## 安装 krb5user
+
 ## 常用命令
 ### 创建数据库 和 principal 相关操作
 [http://web.mit.edu/kerberos/krb5-1.12/doc/admin/admin_commands/kadmin_local.html](http://web.mit.edu/kerberos/krb5-1.12/doc/admin/admin_commands/kadmin_local.html)

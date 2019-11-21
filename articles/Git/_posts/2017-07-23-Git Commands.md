@@ -336,3 +336,9 @@ $ git reset
 
 ## Links local repo to multi remote repos
 [Git 将本地仓库连接多个远程仓库](https://blog.csdn.net/qq_36667170/article/details/79336760)
+
+
+## Git Extension
+下面有一些比较有意思的开源项目
+* [git-history](https://github.com/pomber/git-history)，以图形界面的形式展示任意Git Repository中单个文件的Git history，里面有visual code的插件，`Command/Ctrl + Shift + P`输入`Git File History`就可以使用了
+
