@@ -5,12 +5,9 @@ tag: Hadoop
 ---
 
 ## 参考
-[kerberos 认证原理](https://blog.csdn.net/wulantian/article/details/42418231)
-
-[kerberos 体系下的应用(yarn, spark on yarn)](https://www.jianshu.com/p/ae5a3f39a9af)
-
-[kerberos 入坑指南](https://www.jianshu.com/p/fc2d2dbd510b)
-
+* [kerberos 认证原理](https://blog.csdn.net/wulantian/article/details/42418231)
+* [kerberos 体系下的应用(yarn, spark on yarn)](https://www.jianshu.com/p/ae5a3f39a9af)
+* [kerberos 入坑指南](https://www.jianshu.com/p/fc2d2dbd510b)
 
 ## Kerberos 认证流程
 
@@ -88,12 +85,12 @@ component1/component2@REALM
 principals 又可以分为两种
 ```
 # User Principals
-# 代表的是一个属于 REALM：XXX.COM 的用户 zq
-zq@XXX.COM
+# 代表的是一个属于 REALM：HADOOP-BJ.MYCOMPANY.COM 的用户 zhangqiang/admin
+zhangqiang/admin@HADOOP-BJ.MYCOMPANY.COM
 
 # Service Principals
 # / 前面的部分为 yarn，说明它代表的是 yarn 的服务，/ 后面的部分则是DNS域名，@后面的则是每个principals都必须有的 REALM
-yarn/xxx.net@XXX.COM
+yarn/xxx.net@HADOOP-BJ.MYCOMPANY.COM
 ```
 
 
@@ -164,27 +161,27 @@ $ vim /etc/krb5kdc/kdc.conf
 
 ```
 # 创建数据库，用于存放 principal 
-$ kdb5_util create -r EXAMPLE.COM -s
+$ kdb5_util create -r HADOOP-BJ.MYCOMPANY.COM -s
 
 # 进入 kadmin
 $ kinit admin/admin
-Password for admin/admin@RICHINFOAI.COM:
+Password for admin/admin@HADOOP-BJ.MYCOMPANY.COM:
 $ kadmin
-Authenticating as principal admin/admin@RICHINFOAI.COM with password.
-Password for admin/admin@XXX.COM: 
+Authenticating as principal admin/admin@HADOOP-BJ.MYCOMPANY.COM with password.
+Password for admin/admin@HADOOP-BJ.MYCOMPANY.COM: 
 
 # 添加 principal
-kadmin: add_principal test/test@XXX.COM
-WARNING: no policy specified for test/test@XXX.COM; defaulting to no policy
-Enter password for principal "test/test@XXX.COM":
-Re-enter password for principal "test/test@XXX.COM":
-Principal "test/test@XXX.COM" created.
+kadmin: add_principal zhangqiang/admin@HADOOP-BJ.MYCOMPANY.COM
+WARNING: no policy specified for zhangqiang/admin@HADOOP-BJ.MYCOMPANY.COM; defaulting to no policy
+Enter password for principal "zhangqiang/admin@HADOOP-BJ.MYCOMPANY.COM":
+Re-enter password for principal "zhangqiang/admin@HADOOP-BJ.MYCOMPANY.COM":
+Principal "zhangqiang/admin@HADOOP-BJ.MYCOMPANY.COM" created.
 
 # 为 principal 指定 keytab
-kadmin: ktadd -k /etc/krb5.keytab test/test@XXX.COM
+kadmin: ktadd -k /etc/krb5.keytab zhangqiang/admin@HADOOP-BJ.MYCOMPANY.COM
 
 # 查看所有的 principals
-kadmin: list_principals test*
+kadmin: list_principals zhangqiang*
 
 # 退出 kadmin
 kadmin: q
@@ -202,10 +199,10 @@ $ systemctl start krb5-admin-server
 ```
 # 使用密码向KDC申请TGT
 $ kinit hdfs-kerambari0
-Password for hdfs-kerambari0@XXX.COM:
+Password for hdfs-kerambari0@HADOOP-BJ.MYCOMPANY.COM:
 
 # 使用keytab向KDC申请TGT
-$ kinit -kt /etc/security/keytabs/hdfs.headless.keytab hdfs-kerambari0@XXX.COM
+$ kinit -kt /etc/security/keytabs/hdfs.headless.keytab hdfs-kerambari0@HADOOP-BJ.MYCOMPANY.COM
 ```
 
 ### 销毁当前的TGT
@@ -221,10 +218,10 @@ klist: No credentials cache found (filename: /tmp/krb5cc_0)
 
 # 如果申请了TGT显示如下
 Ticket cache: FILE:/tmp/krb5cc_0
-Default principal: hdfs-kerambari0@XXX.COM
+Default principal: hdfs-kerambari0@HADOOP-BJ.MYCOMPANY.COM
 
 Valid starting       Expires              Service principal
-01/09/2019 10:48:24  01/10/2019 10:48:24  krbtgt/XXX.COM@XXX.COM
+01/09/2019 10:48:24  01/10/2019 10:48:24  krbtgt/HADOOP-BJ.MYCOMPANY.COM@HADOOP-BJ.MYCOMPANY.COM
 ```
 
 ### 刷新TGT
