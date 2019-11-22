@@ -11,6 +11,8 @@ tag: Java
 ```scala
 // 获取classpath的根目录：file:/D:/IdeaProjects/javalearn/target/classes/
 println(this.getClass.getClassLoader.getResource(""))
+// 取classpath的根目录: D:/IdeaProjects/javalearn/target/classes/
+println(this.getClass.getClassLoader.getResource("").getPath())
 // 获取classpath根目录+当前类包路径：file:/D:/IdeaProjects/javalearn/target/classes/com/zq/
 println(this.getClass.getResource(""))
 ```
