@@ -332,6 +332,11 @@ $ git log "articles/Java/_posts/2017-07-20-split\(\)和replace\(\)方法特殊�
 ```shell
 $ git reset
 
+# 撤销某个文件已经 add 暂存区(Staging Index)，但是还没 commit 到工作区(Working Directory)的修改
+# 1）使用git reset将文件从索引区移除（但会保留在工作区）
+$ git reset HEAD [filename]
+# 撤销工作区中文件的修改
+$ git checkout [filename]
 ```
 
 ## Links local repo to multi remote repos
