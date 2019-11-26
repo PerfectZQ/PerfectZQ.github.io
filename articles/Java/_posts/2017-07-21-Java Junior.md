@@ -7,6 +7,33 @@ tag: Java
 ## Introduction
 本篇主要整理 Java 初级的一些知识点
 
+## JDK 环境变量
+```shell
+# OSX 查找 JAVA_HOME 的方法
+# === 方法1 ===
+$ which java
+/usr/bin/java
+$ ls -l /usr/bin/java
+lrwxr-xr-x  1 root  wheel  74 12 19 19:56 /usr/bin/java -> /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java
+$ cd /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/
+$ ./java_home -V
+# 显示如下信息：
+Matching Java Virtual Machines (1):
+    1.8.0_144, x86_64:	"Java SE 8"	/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home
+# === 方法2 ===
+$ /usr/libexec/java_home -V
+# 查看某个版本的 java_home
+$ /usr/libexec/java_home -v 1.8
+
+# 配置 JAVA_HOME
+$ vim ~/.bash_profile
+export JAVA_8_HOME=`/usr/libexec/java_home -v 1.8` 
+export JAVA_HOME=$JAVA_8_HOME
+export CLASS_PATH=$JAVA_HOME/lib
+export PATH=$PATH:$JAVA_HOME/bin
+$ source ~/.bash_profile
+```
+
 ## Classpath 
 ```scala
 // 获取classpath的根目录：file:/D:/IdeaProjects/javalearn/target/classes/
