@@ -507,5 +507,5 @@ public final class ServiceLoader<S>
 
 再重新打包执行，成了。。
 
-# Reference
+## Reference
 * [java – 如何通过OSGI包中的kerberos与hdfs连接](https://codeday.me/bug/20190711/1430750.html)
