@@ -8,6 +8,7 @@ tag: Hadoop
 * [kerberos 认证原理](https://blog.csdn.net/wulantian/article/details/42418231)
 * [kerberos 体系下的应用(yarn, spark on yarn)](https://www.jianshu.com/p/ae5a3f39a9af)
 * [kerberos 入坑指南](https://www.jianshu.com/p/fc2d2dbd510b)
+* [HDFS配置Kerberos认证](https://yq.aliyun.com/articles/25636)
 
 ## Kerberos 认证流程
 
