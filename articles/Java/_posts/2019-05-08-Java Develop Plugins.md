@@ -46,7 +46,7 @@ TestProcessor.java
 先编译好 Annotations 和 Processors，将编译生成的`.class`放到`-d classes/`下
 ```shell
 # javac 相关的依赖在 tools.jar 中
-$ javac -extdirs "%JAVA_HOME%/lib/tools.jar" -source 1.8 -d classes/ apt/src/main/java/com/zq/apt/annotations/* apt/src/main/java/com/zq/apt/core/*
+$ javac -extdirs "${JAVA_HOME}/lib/tools.jar" -source 1.8 -d classes/ apt/src/main/java/com/zq/apt/annotations/* apt/src/main/java/com/zq/apt/core/*
 ```
 
 在编译过程中，指定`Processor`去处理`TestProcessor.java`中相应的`Annotation`，修改 AST，将生成的`.class`文件放到`-d classes/`下
