@@ -48,9 +48,7 @@ JDK 和 JRE 共享 Java 应用程序编程接口（Java API 是开发人员用�
 * [Sizing the Generations of JVM](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/sizing.html#sizing_generations)
 
 ## Tools and Commands Reference
-* [Tools and Commands Reference](https://docs.oracle.com/en/java/javase/11/tools/tools-and-command-reference.html)
-
-Mac 各版本的 JDK 默认安装路径`/Library/Java/JavaVirtualMachines/`
+Mac 各版本的 JDK 默认安装路径`/Library/Java/JavaVirtualMachines/`，`/usr/libexec/java_home -V`查看已安装JDK。
 
 JVM 相关命令在`/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands`可以找到(当然在 JDK 的默认安装目录也能找到)，有很多命令和工具。
 
