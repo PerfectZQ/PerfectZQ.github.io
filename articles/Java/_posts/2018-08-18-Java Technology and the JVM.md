@@ -889,4 +889,6 @@ $ jmap -dump:format=b,file=3742.bin $JAVA_HOME/bin/java core.3742
 $ jvisualvm
 ```
 
+`jvisualvm`默认没有安装`Visual GC`插件，需要手动安装，打开`jvisualvm`后，`工具->插件->可用插件->Visual GC->安装`
+
 
