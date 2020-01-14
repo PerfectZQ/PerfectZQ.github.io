@@ -5,8 +5,8 @@ tag: Java
 ---
 
 ## Official References
-* [**Java Platform Standard Edition Technical Documentation site - 各版本文档入口**](https://docs.oracle.com/en/java/javase/11/)
-* [Java Language and Virtual Machine Specifications](https://docs.oracle.com/javase/specs/index.html)
+* [**Java Platform, Standard Edition Documentation - Multiple Releases Portal\(JDK 7 - 13\)**](https://docs.oracle.com/en/java/javase/index.html)
+* [**Java Language and Virtual Machine Specifications - Multiple Releases Portal\(Java SE 6 - 13\)**](https://docs.oracle.com/javase/specs/index.html)
 * [The Java® Language Specification - Java SE 8 Edition](https://docs.oracle.com/javase/specs/jls/se8/html/index.html)
 * [The Java® Virtual Machine Specification Java SE 8 Edition](https://docs.oracle.com/javase/specs/jvms/se8/html/index.html)
 
@@ -54,7 +54,10 @@ Mac 各版本的 JDK 默认安装路径`/Library/Java/JavaVirtualMachines/`
 
 JVM 相关命令在`/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands`可以找到(当然在 JDK 的默认安装目录也能找到)，有很多命令和工具。
 
-对于某个命令的详细介绍和参数介绍可以使用`info`查阅，例如查看`java`命令可以使用`info java`。
+可以使用`info`或者`man`查阅当前版本JDK Tools命令的详细介绍，例如查看`java`命令可以使用`info java`或者`man java`。也可以通过 Oracle 官网查看:
+* [JDK Tools and Utilities - 8](https://docs.oracle.com/javase/8/docs/technotes/tools/)
+* [JDK Tools and Utilities - 11](https://docs.oracle.com/en/java/javase/11/tools/tools-and-command-reference.html)
+* [JDK Tools and Utilities - 13](https://docs.oracle.com/en/java/javase/13/docs/specs/man/index.html)
 
 下面介绍一些比较有用的命令。
 
@@ -161,7 +164,7 @@ S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT
 0.00  20.29  12.14   9.84  97.26  92.48     89    0.486     3    0.209    0.695
 ```
 
-详细的`info jstat`介绍
+详细的`info jstat`介绍，不同操作系统不同版本的 JDK 会有差异，下面是`OSX jdk1.8.0_231`的信息
 ```console
 File: *manpages*,  Node: jstat,  Up: (dir)
 
