@@ -232,7 +232,15 @@ Cglib 是一个强大的高性能的代码生成包，它可以在运行期(Runt
 Cglib 包的底层是通过使用一个小而快的字节码处理框架 ASM 来转换字节码并生成新的类。不鼓励直接使用 ASM，因为它要求你必须对 JVM 内部结构包括 class 文件的格式和指令集都很熟悉。
 
 实现 Cglib 子类代理:
-* 需要引入 cglib 的 jar 文件，但是 Spring 的 core 包中已经包括了 Cglib 功能，所以直接引入 spring-core-xxx.jar 即可在内存中动态构建子类。
+* 需要引入 cglib 的依赖，`cglib-nodep`包含`cglib`、`asm`和`asm-util`
+```xml
+<!-- Cglib -->
+<dependency>
+    <groupId>cglib</groupId>
+    <artifactId>cglib-nodep</artifactId>
+    <version>3.3.0</version>
+</dependency>
+```
 * 代理类不能为`final`，否则报错
 * 目标对象的方法如果为`final/static`，方法就不会被拦截，因此就不会执行目标对象额外的业务逻辑。
 
