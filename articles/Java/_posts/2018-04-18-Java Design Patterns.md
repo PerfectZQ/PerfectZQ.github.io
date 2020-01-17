@@ -280,6 +280,12 @@ public class ProxyFactory implements MethodInterceptor{
 }
 ```
 
+### AspectJ 动态代理
+AspectJ 会在编译时期修改目标类的字节码，将动态代理的字节码织入进去，不会生成新类
+
+### Instrumentation 动态代理
+Instrumentation 基于`javaagent`在类装载时期动态拦截修改目标类的字节码，不会生成新类，例如`-javaagent:spring-instrument-4.3.8.RELEASE.jar`
+
 ## 提供者模式（Provider Pattern）
 * [打造属于你的提供者（Provider = Strategy + Factory Method）](https://www.cnblogs.com/rush/archive/2011/08/28/2156312.html)
 
