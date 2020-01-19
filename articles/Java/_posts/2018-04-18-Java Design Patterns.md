@@ -242,6 +242,7 @@ Cglib 包的底层是通过使用一个小而快的字节码处理框架 ASM 来
 </dependency>
 ```
 * 代理类不能为`final`，否则报错
+* 被代理的类必须有无参构造函数，否则需要在创建的时候指定构造参数
 * 目标对象的方法如果为`final/static`，方法就不会被拦截，因此就不会执行目标对象额外的业务逻辑。
 
 ```java
@@ -278,6 +279,12 @@ public class ProxyFactory implements MethodInterceptor{
    }
 }
 ```
+
+### AspectJ 动态代理
+AspectJ 会在编译时期修改目标类的字节码，将动态代理的字节码织入进去，不会生成新类
+
+### Instrumentation 动态代理
+Instrumentation 基于`javaagent`在类装载时期动态拦截修改目标类的字节码，不会生成新类，例如`-javaagent:spring-instrument-4.3.8.RELEASE.jar`
 
 ## 提供者模式（Provider Pattern）
 * [打造属于你的提供者（Provider = Strategy + Factory Method）](https://www.cnblogs.com/rush/archive/2011/08/28/2156312.html)
