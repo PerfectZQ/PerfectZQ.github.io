@@ -9,6 +9,7 @@ tag: Hadoop
 * [kerberos 体系下的应用(yarn, spark on yarn)](https://www.jianshu.com/p/ae5a3f39a9af)
 * [kerberos 入坑指南](https://www.jianshu.com/p/fc2d2dbd510b)
 * [HDFS配置Kerberos认证](https://yq.aliyun.com/articles/25636)
+* [windows 域认证 Kerberos详解](https://blog.csdn.net/wy_97/article/details/87649262)
 
 ## Kerberos 认证流程
 
