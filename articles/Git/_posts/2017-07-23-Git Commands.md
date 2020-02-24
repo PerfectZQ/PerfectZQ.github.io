@@ -58,6 +58,9 @@ $ git remote -v
 
 # 删除已经关联的远程库
 $ git remote rm origin
+
+# 重置远程库登录凭证信息，这样在修改密码后就可以重新设置密码了
+$ git config --system --unset credential.helper
 ```
 
 ## 分支
