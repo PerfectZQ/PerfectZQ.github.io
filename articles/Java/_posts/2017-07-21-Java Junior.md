@@ -44,6 +44,66 @@ println(this.getClass.getClassLoader.getResource("").getPath())
 println(this.getClass.getResource(""))
 ```
 
+## Spring 获取当前路径
+```java
+// 1. IDEA Main,
+// C:\Users\zhangqiang\IdeaProjects\dataplat-meta\meta-plat-service\target\classes
+// 2. java -jar ./meta-plat-service-1.0-SNAPSHOT.jar,
+// C:\Users\zhangqiang\IdeaProjects\dataplat-meta\meta-plat-service\target
+// 3. cd C:\Users\zhangqiang && java -jar C:\Users\zhangqiang\IdeaProjects\dataplat-meta\meta-plat-service\target\meta-plat-service-1.0-SNAPSHOT.jar,
+// C:\Users\zhangqiang
+File path = new File(ResourceUtils.getURL("classpath:").getPath());
+if (!path.exists()) path = new File("");
+System.out.println(path.getAbsolutePath());
+
+
+// 1. IDEA Main,
+// C:\Users\zhangqiang\IdeaProjects\dataplat-meta
+// 2. java -jar ./meta-plat-service-1.0-SNAPSHOT.jar,
+// C:\Users\zhangqiang\IdeaProjects\dataplat-meta\meta-plat-service\target
+// 3. cd C:\Users\zhangqiang && java -jar C:\Users\zhangqiang\IdeaProjects\dataplat-meta\meta-plat-service\target\meta-plat-service-1.0-SNAPSHOT.jar,
+// C:\Users\zhangqiang
+System.out.println(System.getProperty("user.dir"));
+
+
+// 1. IDEA Main,
+// C:\Users\zhangqiang\IdeaProjects\dataplat-meta
+// 2. java -jar ./meta-plat-service-1.0-SNAPSHOT.jar,
+// C:\Users\zhangqiang\IdeaProjects\dataplat-meta\meta-plat-service\target
+// 3. cd C:\Users\zhangqiang && java -jar C:\Users\zhangqiang\IdeaProjects\dataplat-meta\meta-plat-service\target\meta-plat-service-1.0-SNAPSHOT.jar,
+// C:\Users\zhangqiang\IdeaProjects\dataplat-meta\meta-plat-service\target
+ApplicationHome home = new ApplicationHome();
+System.out.println(home.getDir());
+File executeJarFile = home.getSource();
+// 1. IDEA Main,
+// java.lang.NullPointerException
+// 2. java -jar ./meta-plat-service-1.0-SNAPSHOT.jar,
+// C:\Users\zhangqiang\IdeaProjects\dataplat-meta\meta-plat-service\target\meta-plat-service-1.0-SNAPSHOT.jar
+// 3. cd C:\Users\zhangqiang && java -jar C:\Users\zhangqiang\IdeaProjects\dataplat-meta\meta-plat-service\target\meta-plat-service-1.0-SNAPSHOT.jar,
+// C:\Users\zhangqiang\IdeaProjects\dataplat-meta\meta-plat-service\target\meta-plat-service-1.0-SNAPSHOT.jar
+System.out.println(executeJarFile.toString());
+
+
+// 1. IDEA Main,
+// /C:/Users/zhangqiang/IdeaProjects/dataplat-meta/meta-plat-service/target/classes/
+// 2. java -jar ./meta-plat-service-1.0-SNAPSHOT.jar,
+// file:/C:/Users/zhangqiang/IdeaProjects/dataplat-meta/meta-plat-service/target/meta-plat-service-1.0-SNAPSHOT.jar!/BOOT-INF/classes!/
+// 3. cd C:\Users\zhangqiang && java -jar C:\Users\zhangqiang\IdeaProjects\dataplat-meta\meta-plat-service\target\meta-plat-service-1.0-SNAPSHOT.jar,
+// file:/C:/Users/zhangqiang/IdeaProjects/dataplat-meta/meta-plat-service/target/meta-plat-service-1.0-SNAPSHOT.jar!/BOOT-INF/classes!/
+String path1 = ClassUtils.getDefaultClassLoader().getResource("").getPath();
+System.out.println(URLDecoder.decode(path1, "utf-8"));
+
+
+// 1. IDEA Main,
+// /C:/Users/zhangqiang/IdeaProjects/dataplat-meta/meta-plat-service/target/classes/
+// 2. java -jar ./meta-plat-service-1.0-SNAPSHOT.jar,
+// file:/C:/Users/zhangqiang/IdeaProjects/dataplat-meta/meta-plat-service/target/meta-plat-service-1.0-SNAPSHOT.jar!/BOOT-INF/classes!/
+// 3. cd C:\Users\zhangqiang && java -jar C:\Users\zhangqiang\IdeaProjects\dataplat-meta\meta-plat-service\target\meta-plat-service-1.0-SNAPSHOT.jar,
+// file:/C:/Users/zhangqiang/IdeaProjects/dataplat-meta/meta-plat-service/target/meta-plat-service-1.0-SNAPSHOT.jar!/BOOT-INF/classes!/
+String path2 = ResourceUtils.getURL("classpath:").getPath();
+System.out.println(path2);
+```
+
 ## Properties
 ### Load Properties in resource directories
 java项目中的`resources`等资源文件夹中的文件在编译后，会添加到classpath下，因此可以直接使用下面的方法读取资源目录下的文件。
