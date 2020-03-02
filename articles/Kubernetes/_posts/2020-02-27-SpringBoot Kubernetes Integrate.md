@@ -88,5 +88,5 @@ Rancher 2 provides 4 options in the "Ports" section when deploying a new workloa
 What are the differences? Especially between NodePort, HostPort and Cluster IP?
 
 首先`NodePort`和`HostPort`都是需要向 Cluster 外暴露端口的，区别如下
-* `NodePort`会在集群的每一个物理节点上暴露一个端口，但是会自动做端口映射，比如你的程序指定了端口`8088`，它会将把该端口随机映射到物理机`30,000~33,000`的一个端口`ExposePort`并暴露出来，你用任何一台物理机的`NodeIp:ExposePort`都可以正确访问服务(尽管你实际只是指定了1个`pod`，而你的集群物理节点有5台)，因此适合做负载均衡。
+* `NodePort`会在集群的每一个物理节点上暴露一个端口，但是会自动做端口映射，比如你的程序指定了端口`8088`，它默认会将把该端口随机映射到物理机`30,000~33,000`的一个端口`ExposePort`并暴露出来（也可以指定，但必须在范围内），你用任何一台物理机的`NodeIp:ExposePort`都可以正确访问服务(尽管你实际只是指定了1个`pod`，而你的集群物理节点有5台)，因此适合做负载均衡。
 * `HostPort`需要你指定一台物理节点，如果你不指定默认就是`0.0.0.0`，然后手动指定一个`ExposePort`，
