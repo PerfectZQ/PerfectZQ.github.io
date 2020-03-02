@@ -426,3 +426,21 @@ $ git commit -m "commit message"
 # 将子模块的更新推到父模块库（本地分支:远程分支）
 $ git push origin test:test
 ```
+
+### 删除子模块
+```shell
+# 删除子模块目录及源码
+$ rm -rf submodule_dir_name
+#  删除项目目录下.gitmodules文件中子模块相关条目
+$ vi .gitmodules
+# 删除配置项中子模块相关条目
+$ vi .git/config
+# 删除模块下的子模块目录，每个子模块对应一个目录，注意只删除对应的子模块目录即可
+$ rm .git/module/*
+
+# 如果添加新的module报错，清一下缓存
+$ git rm --cached submodule_dir_name
+
+# 完成删除后提交到仓库即可
+$ git commit
+```
