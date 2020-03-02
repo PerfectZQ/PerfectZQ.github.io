@@ -375,14 +375,54 @@ $ git checkout [filename]
 * [git-history](https://github.com/pomber/git-history)，以图形界面的形式展示任意Git Repository中单个文件的Git history，里面有visual code的插件，`Command/Ctrl + Shift + P`输入`Git File History`就可以使用了
 
 ## Git Submodule
+项目中经常使用别人维护的模块，在git中使用子模块的功能能够大大提高开发效率。使用子模块后，不必负责子模块的维护，只需要在必要的时候同步更新子模块即可。
+
+```shell
+# 查看使用帮助
+$ git submodule -h
+usage: git submodule [--quiet] [--cached]
+   or: git submodule [--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
+   or: git submodule [--quiet] status [--cached] [--recursive] [--] [<path>...]
+   or: git submodule [--quiet] init [--] [<path>...]
+   or: git submodule [--quiet] deinit [-f|--force] (--all| [--] <path>...)
+   or: git submodule [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--] [<path>...]   
+   or: git submodule [--quiet] set-branch (--default|--branch <branch>) [--] <path>
+   or: git submodule [--quiet] set-url [--] <path> <newurl>
+   or: git submodule [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+   or: git submodule [--quiet] foreach [--recursive] <command>
+   or: git submodule [--quiet] sync [--recursive] [--] [<path>...]
+   or: git submodule [--quiet] absorbgitdirs [--] [<path>...]
+```
+
+### 添加子模块
+```shell
+$ git submodule add <repository> [path]
+# 执行成功后, 可以看到项目修改了 .gitmodules，并增加了一个新文件（刚刚添加的路径）
+$ git status 
+# 查看修改内容
+$ git diff --cached
+# 提交子模块
+$ git commit .
+```
+
+### 初始化子模块
+新克隆的项目默认子模块下没有任何内容。需要初始化并完成子模块的加载
+```shell
+$ git submodule init 
+$ git submodule update
+# 或者直接执行
+$ git submodule update --init --recursive
+```
+
 ### 更新子模块代码
 ```shell
 # 子模块代码提交之后，在父模块中执行如下操作
 $ git pull --recurse-submodules && git submodule update --recursive
-# 对当前模块的每一个子模块执行 pull 操作
+# 或者，对当前模块的每一个子模块执行 pull 操作
 $ git submodule foreach git pull origin dev
+
 $ git add submodule_dir_name
 $ git commit -m "commit message"
-# 本地分支:远程分支
+# 将子模块的更新推到父模块库（本地分支:远程分支）
 $ git push origin test:test
 ```
