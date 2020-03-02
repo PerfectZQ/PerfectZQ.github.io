@@ -58,6 +58,27 @@ $ git remote -v
 
 # 删除已经关联的远程库
 $ git remote rm origin
+```
+
+## 配置
+```shell
+# 配置用户名
+$ git config --global user.name "zhangqiang"
+
+# 配置邮箱
+$ git config --global user.email "inteli_zq@163.com"
+
+# 在 config 中配置用户名密码
+$ vim ~/.git-credentials
+http://username:password@gitlab.com
+$ git config --global credential.helper store
+# 看到如下信息表示成功
+$ cat ~/.gitconfig
+[user]
+        name = zhangqiang
+        email = zhangqiang@sensetime.com
+[credential]
+        helper = store
 
 # 重置远程库登录凭证信息，这样在修改密码后就可以重新设置密码了
 $ git config --system --unset credential.helper
