@@ -14,9 +14,9 @@ tag: Hadoop
 2019-11-26 22:17:04.013 INFO [main] Extract2JsonFiles$: ===> hadoop-sz : begin extract
 2019-11-26 22:17:04.086 WARN [main] Client: Exception encountered while connecting to the server : org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]
 2019-11-26 22:17:04.093 WARN [main] Client: Exception encountered while connecting to the server : org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]
-2019-11-26 22:17:04.094 INFO [main] RetryInvocationHandler: Exception while invoking getFileInfo of class ClientNamenodeProtocolTranslatorPB over master001.hadoop-sz.data.sensetime.com/172.20.22.61:8020 after 1 fail over attempts. Trying to fail over immediately.
+2019-11-26 22:17:04.094 INFO [main] RetryInvocationHandler: Exception while invoking getFileInfo of class ClientNamenodeProtocolTranslatorPB over master001.hadoop-sz.data.example.com/172.20.22.61:8020 after 1 fail over attempts. Trying to fail over immediately.
 # 但下面的异常又拒绝了我的认证，一头雾水。
-java.io.IOException: Failed on local exception: java.io.IOException: org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]; Host Details : local host is: "adm001.hadoop-sz.data.sensetime.com/172.20.52.58"; destination host is: "master001.hadoop-sz.data.sensetime.com":8020; 
+java.io.IOException: Failed on local exception: java.io.IOException: org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]; Host Details : local host is: "adm001.hadoop-sz.data.example.com/172.20.52.58"; destination host is: "master001.hadoop-sz.data.example.com":8020; 
         at org.apache.hadoop.net.NetUtils.wrapException(NetUtils.java:776) ~[myutils-1.0-SNAPSHOT.jar:?]
         at org.apache.hadoop.ipc.Client.call(Client.java:1479) ~[myutils-1.0-SNAPSHOT.jar:?]
         at org.apache.hadoop.ipc.Client.call(Client.java:1412) ~[myutils-1.0-SNAPSHOT.jar:?]
@@ -75,12 +75,12 @@ Caused by: org.apache.hadoop.security.AccessControlException: Client cannot auth
 至此已经揪掉了1000根头发，把日志等级调成`DEBUG`
 
 ```console
-2019-11-27 18:19:35.886 DEBUG [main] UserGroupInformation: PrivilegedAction as:robot_data@HADOOP-SZ.DATA.SENSETIME.COM (auth:KERBEROS) from:com.zq.app.Extract2JsonFiles$.main(Extract2JsonFiles.scala:47)
+2019-11-27 18:19:35.886 DEBUG [main] UserGroupInformation: PrivilegedAction as:robot_data@HADOOP-SZ.DATA.example.COM (auth:KERBEROS) from:com.zq.app.Extract2JsonFiles$.main(Extract2JsonFiles.scala:47)
 2019-11-27 18:19:35.991 DEBUG [main] BlockReaderLocal: dfs.client.use.legacy.blockreader.local = false
 2019-11-27 18:19:35.991 DEBUG [main] BlockReaderLocal: dfs.client.read.shortcircuit = false
 2019-11-27 18:19:35.992 DEBUG [main] BlockReaderLocal: dfs.client.domain.socket.data.traffic = false
 2019-11-27 18:19:35.992 DEBUG [main] BlockReaderLocal: dfs.domain.socket.path = 
-2019-11-27 18:19:36.131 DEBUG [main] HAUtil: No HA service delegation token found for logical URI hdfs://sensetime-data-hadoop-sz
+2019-11-27 18:19:36.131 DEBUG [main] HAUtil: No HA service delegation token found for logical URI hdfs://example-data-hadoop-sz
 2019-11-27 18:19:36.132 DEBUG [main] BlockReaderLocal: dfs.client.use.legacy.blockreader.local = false
 2019-11-27 18:19:36.132 DEBUG [main] BlockReaderLocal: dfs.client.read.shortcircuit = false
 2019-11-27 18:19:36.132 DEBUG [main] BlockReaderLocal: dfs.client.domain.socket.data.traffic = false
@@ -92,8 +92,8 @@ Caused by: org.apache.hadoop.security.AccessControlException: Client cannot auth
 2019-11-27 18:19:36.622 DEBUG [main] DataTransferSaslUtil: DataTransferProtocol using SaslPropertiesResolver, configured QOP dfs.data.transfer.protection = authentication, configured class dfs.data.transfer.saslproperties.resolver.class = class org.apache.hadoop.security.SaslPropertiesResolver
 2019-11-27 18:19:36.622 INFO [main] Extract2JsonFiles$: ===> hadoop-sz : begin extract
 2019-11-27 18:19:36.640 DEBUG [main] Client: The ping interval is 60000 ms.
-2019-11-27 18:19:36.641 DEBUG [main] Client: Connecting to master002.hadoop-sz.data.sensetime.com/172.20.22.62:8020
-2019-11-27 18:19:36.653 DEBUG [main] UserGroupInformation: PrivilegedAction as:robot_data@HADOOP-SZ.DATA.SENSETIME.COM (auth:KERBEROS) from:org.apache.hadoop.ipc.Client$Connection.setupIOstreams(Client.java:720)
+2019-11-27 18:19:36.641 DEBUG [main] Client: Connecting to master002.hadoop-sz.data.example.com/172.20.22.62:8020
+2019-11-27 18:19:36.653 DEBUG [main] UserGroupInformation: PrivilegedAction as:robot_data@HADOOP-SZ.DATA.example.COM (auth:KERBEROS) from:org.apache.hadoop.ipc.Client$Connection.setupIOstreams(Client.java:720)
 2019-11-27 18:19:36.707 DEBUG [main] SaslRpcClient: Sending sasl message state: NEGOTIATE
 
 2019-11-27 18:19:36.714 DEBUG [main] SaslRpcClient: Received SASL message state: NEGOTIATE
@@ -108,17 +108,17 @@ auths {
   method: "KERBEROS"
   mechanism: "GSSAPI"
   protocol: "nn"
-  serverId: "master002.hadoop-sz.data.sensetime.com"
+  serverId: "master002.hadoop-sz.data.example.com"
 }
 
 # 下面这两行，非常奇怪，返回了两个 null，接着下面就出上面显示的异常了
 2019-11-27 18:19:36.715 DEBUG [main] SaslRpcClient: Get token info proto:interface org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolPB info:null
 2019-11-27 18:19:36.715 DEBUG [main] SaslRpcClient: Get kerberos info proto:interface org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolPB info:null
-2019-11-27 18:19:36.716 DEBUG [main] UserGroupInformation: PrivilegedActionException as:robot_data@HADOOP-SZ.DATA.SENSETIME.COM (auth:KERBEROS) cause:org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]
-2019-11-27 18:19:36.716 DEBUG [main] UserGroupInformation: PrivilegedAction as:robot_data@HADOOP-SZ.DATA.SENSETIME.COM (auth:KERBEROS) from:org.apache.hadoop.ipc.Client$Connection.handleSaslConnectionFailure(Client.java:645)
+2019-11-27 18:19:36.716 DEBUG [main] UserGroupInformation: PrivilegedActionException as:robot_data@HADOOP-SZ.DATA.example.COM (auth:KERBEROS) cause:org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]
+2019-11-27 18:19:36.716 DEBUG [main] UserGroupInformation: PrivilegedAction as:robot_data@HADOOP-SZ.DATA.example.COM (auth:KERBEROS) from:org.apache.hadoop.ipc.Client$Connection.handleSaslConnectionFailure(Client.java:645)
 2019-11-27 18:19:36.717 WARN [main] Client: Exception encountered while connecting to the server : org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]
-2019-11-27 18:19:36.717 DEBUG [main] UserGroupInformation: PrivilegedActionException as:robot_data@HADOOP-SZ.DATA.SENSETIME.COM (auth:KERBEROS) cause:java.io.IOException: org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]
-2019-11-27 18:19:36.718 DEBUG [main] Client: closing ipc connection to master002.hadoop-sz.data.sensetime.com/172.20.22.62:8020: org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]
+2019-11-27 18:19:36.717 DEBUG [main] UserGroupInformation: PrivilegedActionException as:robot_data@HADOOP-SZ.DATA.example.COM (auth:KERBEROS) cause:java.io.IOException: org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]
+2019-11-27 18:19:36.718 DEBUG [main] Client: closing ipc connection to master002.hadoop-sz.data.example.com/172.20.22.62:8020: org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]
 java.io.IOException: org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]
         at org.apache.hadoop.ipc.Client$Connection$1.run(Client.java:682) ~[myutils-1.0-SNAPSHOT.jar:?]
         at java.security.AccessController.doPrivileged(Native Method) ~[?:1.8.0_77]

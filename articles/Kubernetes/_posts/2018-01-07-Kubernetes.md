@@ -54,7 +54,7 @@ Kubernetes Master 是在集群中的单个节点上运行的三个进程的集�
 1. 从 API Server 到每个 Node 上都会运行的 Kubelet 进程。
 2. 通过 API Server 的代理功能连到集群的任何 Node、Pod、Service。
 
-### apiserver to kubelet
+### API Server to Kubelet
 主要用于：
 * 获取 pods 的日志
 * attach(通过 kubectl) 到正在运行的 pods 上
@@ -76,9 +76,9 @@ kubernetes object 可以理解为`record of intent`，即一旦你创建了一�
 Kubernetes API is RESTful - 客户端通过标准 http 谓词(POST、PUT、DELETE、GET)创建、更新、删除或者检索对象的描述，这些 API 优先接收 JSON 并返回 JSON。kubernetes 还为其他非标准动词公开了额外的端点，并允许其他的内容类型。服务器接收或返回的 JSON 都有一个 Schema，由`kind`和`apiVersion`标识。另外所有的 API 公约在[API conventions doc](https://git.k8s.io/community/contributors/devel/api-conventions.md)中有详细的描述。例如：
 
 * Kind: kind 是表示特定对象的名称，例如`cat`和`dog`kind就会包含不同的字段属性，它又可以分为三种：
-1. Objects: object kind 是意图记录，一旦创建，系统将确保该资源会存在。一个 object 可能具有多个资源，client 可以对这些资源执行增删改查操作。
-2. Lists: list kind 是一种或更多种类资源的集合。List kind 的 name 必须以`List`结尾。所有 list 都需要`items`字段来包含它们返回的对象数组。任何具有`items`字段的类型必须是 list kind。
-3. Simple: simple kind 用于对象和非持久性实体的特定操作
+    1. Objects: object kind 是意图记录，一旦创建，系统将确保该资源会存在。一个 object 可能具有多个资源，client 可以对这些资源执行增删改查操作。
+    2. Lists: list kind 是一种或更多种类资源的集合。List kind 的 name 必须以`List`结尾。所有 list 都需要`items`字段来包含它们返回的对象数组。任何具有`items`字段的类型必须是 list kind。
+    3. Simple: simple kind 用于对象和非持久性实体的特定操作
 * Resource: 表示系统实体，可以通过 http 以 JSON 的方式从服务器检索。resources 可以表示为 collections - 一组相同类型的 resources，或者 element - 一个可以通过URL访问的单独的 resource。
 * API Group: 一组公开在一起的 resources，在`apiVersion`中显示为`GROUP/VERSION`，例如`policy.k8s.io/v1`
 
