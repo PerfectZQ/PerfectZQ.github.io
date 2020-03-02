@@ -418,7 +418,6 @@ $ git submodule update --init --recursive
 ```shell
 # 子模块代码提交之后，在父模块中执行如下操作
 $ git pull --recurse-submodules && git submodule update --recursive
-# 或者，对当前模块的每一个子模块执行 pull 操作
 $ git submodule foreach git pull origin dev
 
 $ git add submodule_dir_name
