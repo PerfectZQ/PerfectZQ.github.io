@@ -104,6 +104,9 @@ $ git branch -D dev/zhangqiang
 # 删除远程库中的分支，需要验证信息
 $ git push origin :dev/zhangqiang
 
+# 推送指定本地分支到指定远程分支
+$ git push origin test:test
+
 # 本地分支重命名
 $ git branch -m old_name new_name
 
@@ -371,3 +374,15 @@ $ git checkout [filename]
 下面有一些比较有意思的开源项目
 * [git-history](https://github.com/pomber/git-history)，以图形界面的形式展示任意Git Repository中单个文件的Git history，里面有visual code的插件，`Command/Ctrl + Shift + P`输入`Git File History`就可以使用了
 
+## Git Submodule
+### 更新子模块代码
+```shell
+# 子模块代码提交之后，在父模块中执行如下操作
+$ git pull --recurse-submodules && git submodule update --recursive
+# 对当前模块的每一个子模块执行 pull 操作
+$ git submodule foreach git pull origin dev
+$ git add submodule_dir_name
+$ git commit -m "commit message"
+# 本地分支:远程分支
+$ git push origin test:test
+```
