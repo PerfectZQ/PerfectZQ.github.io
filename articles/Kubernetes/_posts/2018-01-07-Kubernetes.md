@@ -284,7 +284,8 @@ kind: Service
 apiVersion: v1
 metadata:
   name: my-service
-spec: 
+spec:
+  type: ClusterIP 
   selector:
     app: MyApp
   # 当前 service 向外暴露的接口列表
@@ -308,8 +309,19 @@ Service 可以将`port`映射到任意`targetPort`。如果给`targetPort`一个
 
 规范参数的详细介绍可以参考[ServiceSpec v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#servicespec-v1-core)
 
+#### Service type
+[Kubernetes Service详解（概念、原理、流量分析、代码）](https://blog.csdn.net/liukuan73/article/details/82585732)
+
+根据创建Service的`type`类型不同，可分成几种种模式：
+* `ClusterIP`： 默认方式。根据是否生成`ClusterIP`又可分为普通`Service`和`Headless Service`两类:
+    1. `普通Service`：通过为 Kubernetes 的 Service 分配一个集群内部可访问的固定虚拟IP（`Cluster IP`），实现集群内的访问。为最常见的方式。
+    2. `Headless Service`：该服务不会分配`Cluster IP`，也不通过`kube-proxy`做反向代理和负载均衡。而是通过DNS提供稳定的网络ID来访问，DNS会将`headless service`的后端直接解析为`podIP`列表。主要供`StatefulSet`使用。
+* `NodePort`：除了使用`Cluster IP`之外，还通过将`Service`的`port`映射到集群内每个节点的相同一个端口，实现通过`nodeIP:nodePort`从集群外部访问服务。
+* `LoadBalancer`：和`NodePort`类似，不过除了使用一个`Cluster IP`和`NodePort`之外，还会向所使用的公有云申请一个负载均衡器(负载均衡器后端映射到各节点的NodePort)，实现从集群外通过LB访问服务。
+* `ExternalName`：是 Service 的特例。此模式主要面向运行在集群外部的服务，通过它可以将外部服务映射进k8s集群，且具备k8s内服务的一些特征（如具备namespace等属性），来为集群内部提供服务。此模式要求kube-dns的版本为1.7或以上。这种模式和前三种模式（除headless service）最大的不同是重定向依赖的是dns层次，而不是通过kube-proxy。
+  
 #### Virtual IPs and service proxies
-kubernetes cluster 中的每个 node 都会运行一个`kube-proxy`，它负责为 Services 实现虚拟IP，[ExternalName](https://kubernetes.io/docs/concepts/services-networking/service/#externalname)类型的 Service 除外。
+kubernetes cluster 中的每个 node 都会运行一个`kube-proxy`，它负责为 Services 实现虚拟的 IP，[ExternalName](https://kubernetes.io/docs/concepts/services-networking/service/#externalname)类型的 Service 除外。这个 IP 相对固定，只要不删除 Service, ClusterIP 就不会变。
 
 kubernetes proxy-mode 目前有这么几种，userspace(k8s/v1.0 add)、iptables(k8s/v1.1 add)、ipvs(k8s/v1.8.0-beta.0 add)
 * userspace: `kube-proxy`会监听`Master(apiserver)`的添加或删除`Service`和`Endpoints`objects的行为。对于每一个 Service，都会在本地 node 随机打开一个端口(代理端口)，代理端口(下图中的`kube-proxy`)的所有连接都会转发到 Service 的 backend pods 之一(根据 Service 的 SessionAffinity 决定使用哪个 backend pod)。Service 会根据安装的 iptables rules，捕获流量到 Service 的`clusterIP`(虚拟)和`port`，并将流量重定向到代理 backend pod 的代理端口，最终转发到 backend pods 之一。默认情况下循环选择 backend。
@@ -320,6 +332,8 @@ kubernetes proxy-mode 目前有这么几种，userspace(k8s/v1.0 add)、iptables
 ![有帮助的截图]({{ site.url }}/assets/services-ipvs-overview.svg)
 
 对于 virtual IPs 的详细内容参考[The gory details of virtual IPs](https://kubernetes.io/docs/concepts/services-networking/service/#the-gory-details-of-virtual-ips)
+
+### Kubernetes 容器间的访问
 
 ### Volume
 container 中的文件是短暂的，当 container 崩溃后 kubelet 会重新启动它，但是文件会丢失。volume 用来持久化文件，并在 container 之间共享它们。
