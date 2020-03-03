@@ -14,26 +14,24 @@ tag:  Kubernetes
 
 Kubernetes（k8s）是自动化容器操作的开源平台，包括部署、调度和集群扩展。如果你曾经用过 Docker 容器技术部署容器，那么可以将 Docker 看成 Kubernetes 内部使用的低级别组件。Kubernetes 不仅仅支持 Docker，还支持 Rocket，这是另一种容器技术。
 
-Kubernetes可以：
-
+Kubernetes 的功能：
 * 自动化容器的部署和复制
 * 随时扩展或收缩容器规模
 * 将容器组织成组，并且提供容器间的负载均衡
 * 很容易地升级应用程序容器的新版本
 * 提供容器弹性，如果容器失效就替换它，等等...
 
-实际上，使用Kubernetes只需一个部署文件，使用一条命令就可以部署多层容器（前端，后台等）的完整集群：
+实际上，使用 Kubernetes 只需一个部署文件，使用一条命令就可以部署多层容器（前端，后台等）的完整集群：
 ```shell
-$ kubectl create -f single-config-file.yaml
+$ kubectl create -f just-single-config-file.yaml
 ```
 
-## Kubernetes Cluster 架构
+## Kubernetes Cluster Architecture
 集群是一组节点，它可以是物理服务器或者虚拟机，其上安装了 kubernetes 所需要的组件，如下图所示。
 
 ![有帮助的截图]({{ site.url }}/assets/kubernetes-cluster.png)
 
 从上图可以看到一些比较关键的组件
-
 * Kubernetes Master
 * Replication Controller
 * Service
@@ -42,19 +40,21 @@ $ kubectl create -f single-config-file.yaml
 * Container
 * Label
 
-[kubernetes basic concepts](https://kubernetes.io/docs/concepts/)
-
-[kubernetes components introduction](https://kubernetes.io/docs/concepts/overview/components/)
+详细参考:
+* [kubernetes basic concepts](https://kubernetes.io/docs/concepts/)
+* [kubernetes components introduction](https://kubernetes.io/docs/concepts/overview/components/)
 
 ## Kubernetes Master
-Kubernetes Master 是在集群中的单个节点上运行的三个进程的集合，它被指定为主节点。 这些进程是：[kube-apiserver](https://kubernetes.io/docs/admin/kube-apiserver/)，[kube-controller-manager](https://kubernetes.io/docs/admin/kube-controller-manager/) 和 [kube-scheduler](https://kubernetes.io/docs/admin/kube-scheduler/)。
+Kubernetes Master 是在集群中的单个节点(Node)上运行的三个进程的集合，它被指定为主节点。 这些进程是：
+1. [kube-apiserver](https://kubernetes.io/docs/admin/kube-apiserver/)
+2. [kube-controller-manager](https://kubernetes.io/docs/admin/kube-controller-manager/) 
+3. [kube-scheduler](https://kubernetes.io/docs/admin/kube-scheduler/)。
 
 主节点掌控集群的通信路径主要有两条。
+1. 从 API Server 到每个 Node 上都会运行的 kubelet 进程。
+2. 通过 API Server 的代理功能 kube-proxy 连到集群的任何 Node、Pod、Service。
 
-1. 从 API Server 到每个 Node 上都会运行的 Kubelet 进程。
-2. 通过 API Server 的代理功能连到集群的任何 Node、Pod、Service。
-
-### API Server to Kubelet
+### apiserver to kubelet
 主要用于：
 * 获取 pods 的日志
 * attach(通过 kubectl) 到正在运行的 pods 上
@@ -64,17 +64,18 @@ Kubernetes Master 是在集群中的单个节点上运行的三个进程的集�
 apiserver 通过 http 连接与 nodes, pods and services 交互
 
 ## Node
-节点（上图橘色方框）是物理或者虚拟机器，作为 Kubernetes Worker，过去称为 Minion。每个节点都运行如下 Kubernetes 关键组件：
-* Kubelet：与 kubernetes master 交互。
-* Kube-proxy：网络代理，反射了每个节点上的 network services。
+节点（上图橘色方框）是物理或者虚拟机器，作为 Kubernetes Worker（过去称为 Minion）。每个节点都运行如下 Kubernetes 关键组件：
+1. [kubelet](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/)：与 kubernetes master 交互。
+2. [kube-proxy](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/)：网络代理，反射了每个节点上的 network services。
 
 ## Kubernetes Objects
 kubernetes object 可以理解为`record of intent`，即一旦你创建了一个 object，那么 kubernetes 就会持续保证有这么一个 object 存在。并不是说这个 object 不会出问题，而是就算出问题了，kubernetes 也会新创建一个新 object，来满足你的`record of intent`。详细的可以参考[understanding kubernetes objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/#understanding-kubernetes-objects)
 
-想要操作 kubernetes object，比如创建、修改或者删除，就需要 [Kubernetes API](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)，可以使用 command line，通过`kubectl`调用 API，也可以在应用程序程序中使用[Client Libraries](https://kubernetes.io/docs/reference/using-api/client-libraries/)调用 API。
+想要操作 kubernetes object，比如创建、修改或者删除，就需要 [Kubernetes API](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)
+* 可以使用 command line，通过[kubectl](https://kubernetes.io/docs/reference/kubectl/overview/)调用 API
+* 也可以在应用程序程序中使用[client-libraries](https://kubernetes.io/docs/reference/using-api/client-libraries/)调用 API。
 
 Kubernetes API is RESTful - 客户端通过标准 http 谓词(POST、PUT、DELETE、GET)创建、更新、删除或者检索对象的描述，这些 API 优先接收 JSON 并返回 JSON。kubernetes 还为其他非标准动词公开了额外的端点，并允许其他的内容类型。服务器接收或返回的 JSON 都有一个 Schema，由`kind`和`apiVersion`标识。另外所有的 API 公约在[API conventions doc](https://git.k8s.io/community/contributors/devel/api-conventions.md)中有详细的描述。例如：
-
 * Kind: kind 是表示特定对象的名称，例如`cat`和`dog`kind就会包含不同的字段属性，它又可以分为三种：
     1. Objects: object kind 是意图记录，一旦创建，系统将确保该资源会存在。一个 object 可能具有多个资源，client 可以对这些资源执行增删改查操作。
     2. Lists: list kind 是一种或更多种类资源的集合。List kind 的 name 必须以`List`结尾。所有 list 都需要`items`字段来包含它们返回的对象数组。任何具有`items`字段的类型必须是 list kind。
@@ -113,9 +114,9 @@ spec:
         ports:
         - containerPort: 80
 ```
-关于`metadata`的详细说明会可以参考[official reference](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)
+关于`metadata`的详细说明会可以参考[api-conventions-metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)
 
-不同类型 object 的规范在定义上是有区别的，比如有些 object 会包含特有的字段，**所有类型的 object 的 spec 说明都可以在这里找到[Kubernetes API Reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/)**
+不同类型 object 的规范在定义上是有区别的，比如有些 object 会包含特有的字段，**所有类型的 object 的 spec 说明都通过[kubernetes-api](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/)找到**
 
 可以通过下面的命令来将`.yaml`作为参数传递
 ```shell
@@ -159,7 +160,6 @@ $ kubectl cerate configmap <map-name> <data-source>
 
 #### Create ConfigMaps from directories
 * 从文件夹创建 configmap
-
 ```shell
 $ mkdir -p configure-pod-container/configmap/kubectl/
 $ wget https://k8s.io/docs/tasks/configure-pod-container/configmap/kubectl/game.properties -O configure-pod-container/configmap/kubectl/game.properties
@@ -167,9 +167,7 @@ $ wget https://k8s.io/docs/tasks/configure-pod-container/configmap/kubectl/ui.pr
 $ kubectl create configmap game-config --from-file=configure-pod-container/configmap/kubectl/
 configmap/game-config created
 ```
-
 * 查看创建好的 configmap
-
 ```shell
 $ kubectl describe configmaps game-config
 
@@ -198,9 +196,7 @@ how.nice.to.look=fairlyNice
 
 Events:  <none>
 ```
-
 * 以 yaml 格式查看生成的 configmap
-
 ```shell
 $ kubectl get configmaps game-config -o yaml
 
@@ -228,9 +224,7 @@ metadata:
   selfLink: /api/v1/namespaces/default/configmaps/game-config
   uid: abc545c3-bb39-11e8-9edf-00163e08ecdb
 ```
-
 * 删除 configmap
-
 ```shell
 $ kubectl delete configmap game-config
 configmap "game-config" deleted
@@ -261,11 +255,10 @@ $ kubectl create configmap game-config-env-file \
 
 
 ### Service
-假设我们创建了一组 Pod 的副本，那么在这些副本上如何进行负载均衡？答案就是 [Service](https://kubernetes.io/docs/concepts/services-networking/service/)
+* 假设我们创建了一组 Pod 的副本，那么在这些副本上如何进行负载均衡？
+* 如果 Pods 是短暂的，那么重启时 IP 地址可能会改变，怎么才能从前端容器正确可靠地指向后台容器呢？
 
-如果 Pods 是短暂的，那么重启时 IP 地址可能会改变，怎么才能从前端容器正确可靠地指向后台容器呢？答案同样是 Service，
-
-Service 是一层抽象，它定义了一组逻辑 Pods 和访问它们的策略。Service 通过 [Label Selector](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors) 选择一组 Pods。因为 Service 是抽象的，所以在图表里通常看不到它们的存在，这也就让这一概念更难以理解。
+答案是[Service](https://kubernetes.io/docs/concepts/services-networking/service/)，它定义了一组逻辑 Pods 和访问它们的策略。Service 通过[Label Selector](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors) 选择一组 Pods。因为 Service 是抽象的，所以在图表里通常看不到它们的存在。
 
 现在，假定有 2 个 backend pod，并且定义 Service 的名称为`backend-service`，Label Selector 为`(tier=backend, app=myapp)`。`backend-service`会完成两件事：
 1. 为 Service 创建一个本地集群的 DNS 入口，因此 frontend pod 只需要 DNS 解析`backend-service`就能够得到前端应用程序可用的 IP 地址。
@@ -275,16 +268,17 @@ Service 是一层抽象，它定义了一组逻辑 Pods 和访问它们的策略
 
 backend pod replicas 是一些可替代的复制品 frontend pods 并不关心它们具体使用的是哪一个 backend pod，尽管实际组成 backend 的 pods 可能会发生变化，但 frontend 不需要关心也不需要跟踪实际的 backend 列表。Service 抽象实现了这种解耦。
 
-对于 kubernetes-native application，kubernetes 提供一个简单的`Endpoints`API，只要 Service 中的 pod 集合发生变化，它就会更新。而对于 non-native applications，kubernetes 提供了一个基于桥接的 virtual-IP 访问 Services，然后重定向到 backend pod。
+对于 kubernetes-native application，kubernetes 提供一个简单的`Endpoints`API，只要 Service 中的 pod 集合发生变化，它就会更新。而对于 non-native applications，kubernetes 提供了一个基于桥接的 Virtual-IP(VIP) 访问 Services，然后重定向到 backend pod。
 
 #### Define a service
-类似 Pod，Service 是 REST object。因此 Service definition 可以 POST request 到 apiserver 创建新实例。假设你有一组暴露了`9376`端口，并且label为`app=MyApp`的 pods。
+类似 Pod，Service 是 REST object。因此 Service definition 可以 POST request 到 APIServer 创建新实例。假设你有一组暴露了`9376`端口，并且label为`app=MyApp`的 pods。
 ```yaml
 kind: Service
 apiVersion: v1
 metadata:
   name: my-service
 spec:
+  # 不指定 type 默认就是 ClusterIP
   type: ClusterIP 
   selector:
     app: MyApp
@@ -296,21 +290,21 @@ spec:
   - name: servi 
     # UDP/TCP/SCTP(kubernetes1.12+)，默认 TCP
     protocol: TCP 
-    # 当前 service 向外暴露的接口
+    # 当前 Service 向外暴露的接口
     port: 80 
-    # service 对应的目标 pod 的访问端口信息，可以是端口号(1~65536)
-    # 或者端口名称(IANA_SVC_NAME)
+    # service 对应的目标 pod 的访问端口信息，可以是端口号(1~65536),或者端口名称(IANA_SVC_NAME)
     targetPort: 9376 
 ```
 
-上面的 spec(规范)将创建一个`name=my-service`的 Service object，它会定位所有 label 为`app=MyApp`的 pods 的 TCP 端口`9376`。除此之外，他还会分配一个IP地址(有时也称为cluster IP)，给 proxies 使用。Service selector 会被持续评估，然后将结果 POST 到名为`my-service`的`Endpoints`对象。
+上面的 spec(规范)将创建一个`name=my-service`的 Service object，它会定位所有 label 为`app=MyApp`的 pods 的 TCP 端口`9376`。除此之外，他还会分配一个 Virtual-IP 地址(有时也称为Cluster IP)，给 proxies 使用。Service selector 会被持续评估，然后将结果 POST 到名为`my-service`的`Endpoints`对象。
 
 Service 可以将`port`映射到任意`targetPort`。如果给`targetPort`一个字符串，它会查找 target pod 中端口的`name`(端口名称)，这样即便不同 target pod 实际向外暴露的端口号不同，只要`name`相同就可以了，这为部署和扩展服务提供了很大的灵活性，即便更改 backend pod 的`port`，对 Service 也没有任影响。如果不指定`targetPort`则默认被设置为与`port`相同的端口号。对于`clusterIP=None`的service，此字段被忽略，即和`port`相同。
 
 规范参数的详细介绍可以参考[ServiceSpec v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#servicespec-v1-core)
 
 #### Service type
-[Kubernetes Service详解（概念、原理、流量分析、代码）](https://blog.csdn.net/liukuan73/article/details/82585732)
+* [Using Source IP](https://kubernetes.io/docs/tutorials/services/source-ip/)
+* [Kubernetes Service详解（概念、原理、流量分析、代码）](https://blog.csdn.net/liukuan73/article/details/82585732)
 
 根据创建Service的`type`类型不同，可分成几种种模式：
 * `ClusterIP`： 默认方式。根据是否生成`ClusterIP`又可分为普通`Service`和`Headless Service`两类:
@@ -318,7 +312,7 @@ Service 可以将`port`映射到任意`targetPort`。如果给`targetPort`一个
     2. `Headless Service`：该服务不会分配`Cluster IP`，也不通过`kube-proxy`做反向代理和负载均衡。而是通过DNS提供稳定的网络ID来访问，DNS会将`headless service`的后端直接解析为`podIP`列表。主要供`StatefulSet`使用。
 * `NodePort`：除了使用`Cluster IP`之外，还通过将`Service`的`port`映射到集群内每个节点的相同一个端口，实现通过`nodeIP:nodePort`从集群外部访问服务。
 * `LoadBalancer`：和`NodePort`类似，不过除了使用一个`Cluster IP`和`NodePort`之外，还会向所使用的公有云申请一个负载均衡器(负载均衡器后端映射到各节点的NodePort)，实现从集群外通过LB访问服务。
-* `ExternalName`：是 Service 的特例。此模式主要面向运行在集群外部的服务，通过它可以将外部服务映射进k8s集群，且具备k8s内服务的一些特征（如具备namespace等属性），来为集群内部提供服务。此模式要求kube-dns的版本为1.7或以上。这种模式和前三种模式（除headless service）最大的不同是重定向依赖的是dns层次，而不是通过kube-proxy。
+* `ExternalName`：是 Service 的特例。此模式主要面向运行在集群外部的服务，通过它可以将外部服务映射进k8s集群，且具备k8s内服务的一些特征（如具备namespace等属性），来为集群内部提供服务。此模式要求`kube-dns`的版本为1.7或以上。这种模式和前三种模式（除headless service）最大的不同是重定向依赖的是 dns 层次，而不是通过 kube-proxy。
   
 #### Virtual IPs and service proxies
 kubernetes cluster 中的每个 node 都会运行一个`kube-proxy`，它负责为 Services 实现虚拟的 IP，[ExternalName](https://kubernetes.io/docs/concepts/services-networking/service/#externalname)类型的 Service 除外。这个 IP 相对固定，只要不删除 Service, ClusterIP 就不会变。
@@ -333,7 +327,26 @@ kubernetes proxy-mode 目前有这么几种，userspace(k8s/v1.0 add)、iptables
 
 对于 virtual IPs 的详细内容参考[The gory details of virtual IPs](https://kubernetes.io/docs/concepts/services-networking/service/#the-gory-details-of-virtual-ips)
 
-### Kubernetes 容器间的访问
+#### Kubernetes 的服务发现 kube-dns
+`kube-dns`可以解决 Service 的发现问题，k8s 将 Service 的名称当做域名注册到`kube-dns`中，通过 Service 的名称就可以访问其提供的服务。
+
+实际上`kube-dns`插件只是运行在`kube-system`命名空间下的 Pod，完全可以手动创建它。可以在k8s源码（v1.2）的`cluster/addons/dns`目录下找到两个模板（[skydns-rc.yaml.in](https://github.com/kubernetes/kubernetes/blob/release-1.2/cluster/addons/dns/skydns-rc.yaml.in)和[skydns-svc.yaml.in](https://github.com/kubernetes/kubernetes/blob/release-1.2/cluster/addons/dns/skydns-svc.yaml.in)）来创建
+
+通过`skydns-rc.yaml`文件创建`kube-dns` Pod，其中包含了四个 Containers：
+1. [etcd](https://github.com/coreos/etcd): 它的用途是保存DNS规则，是一种开源的分布式 key-value存储，其功能与ZooKeeper类似。在`kube-dns`中的作用为存储`skydns`需要的各种数据，写入方为`kube2sky`，读取方为`skydns`。
+2. [kube2sky](https://github.com/kubernetes/kubernetes/tree/release-1.2/cluster/addons/dns/kube2sky): 作用是写入 DNS 规则
+3. [skydns](https://github.com/skynetservices/skydns): 是用于服务发现的开源框架，构建于`etcd`之上。作用是为 kubernetes 集群中的 Pod 提供 DNS 查询接口
+4. [exec-healthz](https://github.com/kubernetes/contrib/tree/master/exec-healthz): 是k8s提供的一种辅助容器，多用于 side car 模式中。它的原理是定期执行指定的 Linux 指令，从而判断当前 Pod 中关键容器的健康状态。在`kube-dns`中的作用就是通过`nslookup`指令检查 DNS 查询服务的健康状态，k8s livenessProbe 通过访问`exec-healthz`提供的 Http API 了解健康状态，并在出现故障时重启容器。
+
+有了 Pod 之后，还需要创建一个 Service 以便集群中的其他 Pod 访问 DNS 查询服务。通过`skydns-svc.yaml`创建 Service
+
+目前最新的版本可以参考[kube-dns.yaml](https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/dns/kube-dns/kube-dns.yaml.in)
+
+`kube-dns`支持的域名格式，具体为：`<service_name>.<namespace>.svc.<cluster_domain>`，其中`cluster_domain`可以使用`kubelet`的`–cluster-domain=SomeDomain`参数进行设置，同时也要保证`kube2sky`容器的启动参数中`–domain`参数设置了相同的值。通常设置为`cluster.local`。
+
+既然完整域名是这样的，那为什么在 Pod 中只通过`<service_name>.<namespace>`就能访问 Service 呢？
+
+
 
 ### Volume
 container 中的文件是短暂的，当 container 崩溃后 kubelet 会重新启动它，但是文件会丢失。volume 用来持久化文件，并在 container 之间共享它们。
@@ -451,7 +464,6 @@ spec:
       - name: varlog
         hostPath:
           path: /var/log
-          path: /var/log
       - name: varlibdockercontainers
         hostPath:
           path: /var/lib/docker/containers
@@ -563,21 +575,21 @@ Kubernetes 支持多种授权模块，例如`ABAC`模式，`RBAC`模式和`Webho
 上面提到的适用于发送到 API server`secure port`的请求。API server 实际上可以在两个端口上提供服务，默认为`Localhost Port`和`Secure Port`。
 
 * Localhost Port(本地端口)
-1. 主要用于测试和引导，以及主节点的其他组件(scheduler,container-manager)与API通信。
-2. no TLS
-3. 默认端口`8080`，可以用`--insecure-port`修改
-4. 默认IP是`localhost`，可以用`--insecure-bind-address`修改
-5. 请求会**绕过(bypass)** authentication 和 authorization 模块
-6. 请求由 admission control 模块处理
-7. 需要拥有主机的访问权限
+    1. 主要用于测试和引导，以及主节点的其他组件(scheduler,container-manager)与API通信。
+    2. no TLS
+    3. 默认端口`8080`，可以用`--insecure-port`修改
+    4. 默认IP是`localhost`，可以用`--insecure-bind-address`修改
+    5. 请求会**绕过(bypass)** authentication 和 authorization 模块
+    6. 请求由 admission control 模块处理
+    7. 需要拥有主机的访问权限
 * Secure Port(安全端口)
-1. 尽可能使用安全端口。
-2. 使用 TLS。使用`--tls-cer-file`设置证书，使用`--tls-private-key-file`设置密钥。
-3. 默认端口`6443`，可以用`--secure-port`修改
-4. 默认IP是第一个非`localhost`网络接口，可以用`--bind-address`修改
-5. 请求由 authentication 和 authorization 模块处理
-6. 请求由 admission control 模块处理
-7. authentication and authorization modules run.
+    1. 尽可能使用安全端口。
+    2. 使用 TLS。使用`--tls-cer-file`设置证书，使用`--tls-private-key-file`设置密钥。
+    3. 默认端口`6443`，可以用`--secure-port`修改
+    4. 默认IP是第一个非`localhost`网络接口，可以用`--bind-address`修改
+    5. 请求由 authentication 和 authorization 模块处理
+    6. 请求由 admission control 模块处理
+    7. authentication and authorization modules run.
 
 当群集由`kube-up.sh`，Google Compute Engine（GCE）以及其他几个云提供商创建时，API server 在端口`443`上运行。在GCE上，在项目上配置防火墙规则以允许外部HTTPS访问API。其他群集设置方法各不相同
 
