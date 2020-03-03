@@ -167,6 +167,7 @@ $ wget https://k8s.io/docs/tasks/configure-pod-container/configmap/kubectl/ui.pr
 $ kubectl create configmap game-config --from-file=configure-pod-container/configmap/kubectl/
 configmap/game-config created
 ```
+
 * 查看创建好的 configmap
 ```shell
 $ kubectl describe configmaps game-config
@@ -196,6 +197,7 @@ how.nice.to.look=fairlyNice
 
 Events:  <none>
 ```
+
 * 以 yaml 格式查看生成的 configmap
 ```shell
 $ kubectl get configmaps game-config -o yaml
@@ -224,6 +226,7 @@ metadata:
   selfLink: /api/v1/namespaces/default/configmaps/game-config
   uid: abc545c3-bb39-11e8-9edf-00163e08ecdb
 ```
+
 * 删除 configmap
 ```shell
 $ kubectl delete configmap game-config
