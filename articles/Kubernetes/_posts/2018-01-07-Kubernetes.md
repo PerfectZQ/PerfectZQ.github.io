@@ -327,8 +327,15 @@ kubernetes proxy-mode 目前有这么几种，userspace(k8s/v1.0 add)、iptables
 
 对于 virtual IPs 的详细内容参考[The gory details of virtual IPs](https://kubernetes.io/docs/concepts/services-networking/service/#the-gory-details-of-virtual-ips)
 
-#### Kubernetes 的服务发现 kube-dns
-`kube-dns`可以解决 Service 的发现问题，k8s 将 Service 的名称当做域名注册到`kube-dns`中，通过 Service 的名称就可以访问其提供的服务。
+#### DNS for Services and Pods
+* [DNS for Services and Pods](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/)
+* [Customizing DNS Service](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/)
+* [Using CoreDNS for Service Discovery](https://kubernetes.io/docs/tasks/administer-cluster/coredns/)
+* [使用 kube-dns 实现服务发现](https://my.oschina.net/xiaominmin/blog/1599748)
+
+Note: [kube-dns](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/#kube-dns) is now available as an optional DNS server since [CoreDNS](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/#coredns) is now the default. 
+
+kube-dns 可以解决 Service 的发现问题，k8s 将 Service 的名称当做域名注册到`kube-dns`中，通过 Service 的名称就可以访问其提供的服务。
 
 实际上`kube-dns`插件只是运行在`kube-system`命名空间下的 Pod，完全可以手动创建它。可以在k8s源码（v1.2）的`cluster/addons/dns`目录下找到两个模板（[skydns-rc.yaml.in](https://github.com/kubernetes/kubernetes/blob/release-1.2/cluster/addons/dns/skydns-rc.yaml.in)和[skydns-svc.yaml.in](https://github.com/kubernetes/kubernetes/blob/release-1.2/cluster/addons/dns/skydns-svc.yaml.in)）来创建
 
@@ -345,7 +352,6 @@ kubernetes proxy-mode 目前有这么几种，userspace(k8s/v1.0 add)、iptables
 `kube-dns`支持的域名格式，具体为：`<service_name>.<namespace>.svc.<cluster_domain>`，其中`cluster_domain`可以使用`kubelet`的`–cluster-domain=SomeDomain`参数进行设置，同时也要保证`kube2sky`容器的启动参数中`–domain`参数设置了相同的值。通常设置为`cluster.local`。
 
 既然完整域名是这样的，那为什么在 Pod 中只通过`<service_name>.<namespace>`就能访问 Service 呢？
-
 
 
 ### Volume
