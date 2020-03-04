@@ -228,6 +228,12 @@ function fontLoad() {
             });
         $(".sidebar_right").css({"font-family": 'Arial'});
         $(".sidebar-container").css({"font-family": 'Arial'});
+        $("h1").css({"font-family": 'Arial'});
+        $("h2").css({"font-family": 'Arial'});
+        $("h3").css({"font-family": 'Arial'});
+        $("h4").css({"font-family": 'Arial'});
+        $("h5").css({"font-family": 'Arial'});
+        $("h6").css({"font-family": 'Arial'});
     }
 }
 
