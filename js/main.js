@@ -224,7 +224,7 @@ function fontLoad() {
     } else {
         $("html").css({
             "font-family": 'Roboto, Arial',
-            "font-weight": 300
+            "font-weight": 400
             });
         $(".sidebar_right").css({"font-family": 'Arial'});
         $(".sidebar-container").css({"font-family": 'Arial'});
