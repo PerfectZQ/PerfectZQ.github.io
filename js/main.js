@@ -222,7 +222,9 @@ function fontLoad() {
     if (explorer === "Chrome" && system === "Mac") {
         $("html").css({"font-family": 'Microsoft YaHei'});
     } else {
-        $("html").css({"font-family": 'Roboto, Arial'});
+        $("html").css({
+            "font-family": 'Roboto, Arial'
+            "font-weight": 300});
         $(".sidebar_right").css({"font-family": 'Arial'});
         $(".sidebar-container").css({"font-family": 'Arial'});
     }
