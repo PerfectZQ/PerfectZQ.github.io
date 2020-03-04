@@ -4,13 +4,12 @@ title: Kubernetes
 tag:  Kubernetes
 ---
 
-## 参考来源
-[http://www.dockone.io/article/932](http://www.dockone.io/article/932)
+## Reference
+* [dockone.io](http://www.dockone.io/article/932)
+* [kubernetes.io](https://kubernetes.io/docs/)
 
-[https://kubernetes.io/docs/](https://kubernetes.io/docs/)
-
-## 什么是 kubernetes
-[what is kubernetes?](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/)
+## What is kubernetes
+* [what is kubernetes?](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/)
 
 Kubernetes（k8s）是自动化容器操作的开源平台，包括部署、调度和集群扩展。如果你曾经用过 Docker 容器技术部署容器，那么可以将 Docker 看成 Kubernetes 内部使用的低级别组件。Kubernetes 不仅仅支持 Docker，还支持 Rocket，这是另一种容器技术。
 
@@ -54,13 +53,13 @@ Kubernetes Master 是在集群中的单个节点(Node)上运行的三个进程�
 1. 从 API Server 到每个 Node 上都会运行的 kubelet 进程。
 2. 通过 API Server 的代理功能 kube-proxy 连到集群的任何 Node、Pod、Service。
 
-### apiserver to kubelet
+### APIServer to Kubelet
 主要用于：
 * 获取 pods 的日志
 * attach(通过 kubectl) 到正在运行的 pods 上
 * 提供 kubelet 的端口转发功能
 
-### apiserver to nodes, pods and services
+### APIServer to nodes, pods and services
 apiserver 通过 http 连接与 nodes, pods and services 交互
 
 ## Node
@@ -404,6 +403,11 @@ cirros                1         1         1            1           5m
 $ kubectl delete deployment busybox --namespace test
 deployment.extensions "busybox" deleted
 ```
+
+#### Ingress
+[Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) is an [API object](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.17/#ingress-v1beta1-networking-k8s-io) that manages external access to the services in a cluster, typically HTTP. Ingress can provide load balancing, SSL termination and name-based virtual hosting. Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. Traffic routing is controlled by rules defined on the Ingress resource.
+                                                                                                                                                                                                                                                                                                                                                                      
+
 
 ### Volume
 container 中的文件是短暂的，当 container 崩溃后 kubelet 会重新启动它，但是文件会丢失。volume 用来持久化文件，并在 container 之间共享它们。
