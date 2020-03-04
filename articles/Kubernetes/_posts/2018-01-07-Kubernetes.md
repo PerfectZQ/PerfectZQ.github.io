@@ -334,9 +334,8 @@ kubernetes proxy-mode 目前有这么几种，userspace(k8s/v1.0 add)、iptables
 * [DNS for Services and Pods](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/)
 * [Customizing DNS Service](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/)
 * [Using CoreDNS for Service Discovery](https://kubernetes.io/docs/tasks/administer-cluster/coredns/)
-* [使用 kube-dns 实现服务发现](https://my.oschina.net/xiaominmin/blog/1599748)
 
-Note: [kube-dns](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/#kube-dns) is now available as an optional DNS server since [CoreDNS](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/#coredns) is now the default. 
+>Note: Since [CoreDNS](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/#coredns) is now the default, [kube-dns](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/#kube-dns) is now available as an optional DNS server.
 
 kube-dns 可以解决 Service 的发现问题，k8s 将 Service 的名称当做域名注册到`kube-dns`中，通过 Service 的名称就可以访问其提供的服务。
 
@@ -355,7 +354,52 @@ kube-dns 可以解决 Service 的发现问题，k8s 将 Service 的名称当做�
 `kube-dns`支持的域名格式，具体为：`<service_name>.<namespace>.svc.<cluster_domain>`，其中`cluster_domain`可以使用`kubelet`的`–cluster-domain=SomeDomain`参数进行设置，同时也要保证`kube2sky`容器的启动参数中`–domain`参数设置了相同的值。通常设置为`cluster.local`。
 
 既然完整域名是这样的，那为什么在 Pod 中只通过`<service_name>.<namespace>`就能访问 Service 呢？
+* [使用 kube-dns 实现服务发现](https://my.oschina.net/xiaominmin/blog/1599748)
 
+#### Verify DNS
+* [Debugging DNS Resolution](https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/)
+
+我们可以使用 kubernetes 内置的 image`buzybox`测试一下 DNS，如果还要测试网络可以使用`cirros`，它包含了常用的网络命令，如`curl`, `ping`等等
+```shell
+$ kubectl run buzybox --rm -ti --image=busybox /bin/sh --namespace test
+$ kubectl run cirros --rm -ti --image=cirros /bin/sh --namespace test
+
+$ kubectl get pods --namespace test
+NAME                                  READY   STATUS    RESTARTS   AGE
+busybox-7cd98849ff-t5qbh              1/1     Running   0          53s
+cirros-8584959b4f-frr7c               1/1     Running   0          26s
+metadata-test-7fdc74749-nvm7q   1/1     Running       0          12h
+
+$ kubectl get service --namespace test -o wide
+NAME                     TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE    SELECTOR
+metadata-test            ClusterIP   10.43.226.228   <none>        8088/TCP         1d     app=metadata-test
+metadata-test-nodeport   NodePort    10.43.48.104    <none>        8088:30638/TCP   1d     app=metadata-test
+
+$ kubectl exec -it cirros-8584959b4f-frr7c  /bin/sh --namespace test
+/ # curl http://metadata-test:8088/metadata/swagger-ui.html
+<!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Swagger UI</title>
+  <link rel="stylesheet" type="text/css" href="webjars/springfox-swagger-ui/springfox.css?v=2.9.2" >
+  <link rel="stylesheet" type="text/css" href="webjars/springfox-swagger-ui/swagger-ui.css?v=2.9.2" >
+...
+
+# 删除 pod，可以看到一个新的 buzybox 又起来了，这是在确保 replicas 为 1 的 intent
+$ kubectl delete pod busybox-7cd98849ff-t5qbh --namespace test
+NAME                                  READY   STATUS        RESTARTS   AGE
+busybox-7cd98849ff-gjtsd              1/1     Running       0          15s
+busybox-7cd98849ff-t5qbh              1/1     Terminating   0          1m
+
+$ kubectl get deployment --namespace test
+NAME                  DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+busybox               1         1         1            1           17m
+cirros                1         1         1            1           5m
+$ kubectl delete deployment busybox --namespace test
+deployment.extensions "busybox" deleted
+```
 
 ### Volume
 container 中的文件是短暂的，当 container 崩溃后 kubelet 会重新启动它，但是文件会丢失。volume 用来持久化文件，并在 container 之间共享它们。
