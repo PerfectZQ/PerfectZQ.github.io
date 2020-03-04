@@ -223,8 +223,8 @@ function fontLoad() {
         $("html").css({"font-family": 'Microsoft YaHei'});
     } else {
         $("html").css({
-            "font-family": 'Roboto, Arial'
-            "font-weight": '300'});
+            "font-family": 'Roboto, Arial',
+            "font-weight": 300});
         $(".sidebar_right").css({"font-family": 'Arial'});
         $(".sidebar-container").css({"font-family": 'Arial'});
     }
