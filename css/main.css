@@ -602,11 +602,11 @@ hr {
 }
 
 .post ul {
-    margin: 0 0 1.0em 2.0em;
+    margin: 0 0 0 2.0em;
 }
 
 .post ol {
-    margin: 0 0 0 2.5em;
+    margin: 0 0 0 2.0em;
 }
 
 .panel {
