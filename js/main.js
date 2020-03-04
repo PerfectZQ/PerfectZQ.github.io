@@ -219,8 +219,13 @@ function isDisplayLeftContent(flag) {
 function fontLoad() {
     var explorer = getExplorer();
     var system = getSystem();
-    if (explorer === "Chrome" && system === "Mac") $("html").css({"font-family": 'Microsoft YaHei'});
-    else $("html").css({"font-family": 'Consolas, Microsoft YaHei, Courier'});
+    if (explorer === "Chrome" && system === "Mac") {
+        $("html").css({"font-family": 'Microsoft YaHei'});
+    } else {
+        $("html").css({"font-family": 'Roboto, Arial'});
+        $(".sidebar_right").css({"font-family": 'Arial'});
+        $(".sidebar-container").css({"font-family": 'Arial'});
+    }
 }
 
 /**
