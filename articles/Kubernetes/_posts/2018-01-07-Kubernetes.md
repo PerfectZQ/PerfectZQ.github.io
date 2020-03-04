@@ -160,6 +160,7 @@ $ kubectl cerate configmap <map-name> <data-source>
 
 #### Create ConfigMaps from directories
 * 从文件夹创建 configmap
+
 ```shell
 $ mkdir -p configure-pod-container/configmap/kubectl/
 $ wget https://k8s.io/docs/tasks/configure-pod-container/configmap/kubectl/game.properties -O configure-pod-container/configmap/kubectl/game.properties
@@ -169,6 +170,7 @@ configmap/game-config created
 ```
 
 * 查看创建好的 configmap
+
 ```shell
 $ kubectl describe configmaps game-config
 
@@ -199,6 +201,7 @@ Events:  <none>
 ```
 
 * 以 yaml 格式查看生成的 configmap
+
 ```shell
 $ kubectl get configmaps game-config -o yaml
 
@@ -228,6 +231,7 @@ metadata:
 ```
 
 * 删除 configmap
+
 ```shell
 $ kubectl delete configmap game-config
 configmap "game-config" deleted
