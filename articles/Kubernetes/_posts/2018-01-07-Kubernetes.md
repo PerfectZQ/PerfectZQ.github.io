@@ -540,13 +540,15 @@ Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性
 
 ## Using kubectl
 ### 使用 kubectl 与kubernetes 集群交互
-[安装 kubectl client](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl)
+* [install-kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl)
 
 ### kubectl-commands
-[official reference](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands)
+* [kubectl-commands](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands)
 
 ### kubectl yaml 配置项
-[deploying applications](https://kubernetes.io/docs/user-guide/deploying-applications/)、[configuring containers](https://kubernetes.io/docs/tasks/)、[object management using kubectl](https://kubernetes.io/docs/concepts/overview/object-management-kubectl/overview/)
+* [deploying applications](https://kubernetes.io/docs/user-guide/deploying-applications/)
+* [configuring containers](https://kubernetes.io/docs/tasks/)
+* [object management using kubectl](https://kubernetes.io/docs/concepts/overview/object-management-kubectl/overview/)
 
 ## Accessing the kubernetes API (Authorization)
 ### Controlling Access to the Kubernetes API
