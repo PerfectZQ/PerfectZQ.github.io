@@ -146,7 +146,7 @@ h2 {
 
 h3 {
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 500;
     font-family: 'Microsoft YaHei';
     padding: 10px 0px;
     line-height: 1.4em;
@@ -156,7 +156,7 @@ h3 {
 h4 {
     font-size: 20px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 450;
     font-family: 'Microsoft YaHei';
     padding: 10px 0px;
     line-height: 1.2em;
@@ -174,8 +174,14 @@ h5 {
 }
 
 p {
-    line-height: 1.6em;
-    padding: 0.5em 0em 0.5em 0.3em;
+    line-height: 1.65em;
+    padding: 0;
+    letter-spacing: 0.1px;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
 }
 
 li p {
@@ -187,7 +193,7 @@ li p.excerpt {
 }
 
 strong {
-    font-weight: bold;
+    font-weight: 600;
     padding-left: 2px;
     padding-right: 2px;
 }
