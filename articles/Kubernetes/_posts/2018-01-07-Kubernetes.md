@@ -371,7 +371,7 @@ $ kubectl get pods --namespace test
 NAME                                  READY   STATUS    RESTARTS   AGE
 busybox-7cd98849ff-t5qbh              1/1     Running   0          53s
 cirros-8584959b4f-frr7c               1/1     Running   0          26s
-metadata-test-7fdc74749-nvm7q   1/1     Running       0          12h
+metadata-test-7fdc74749-nvm7q         1/1     Running   0          12h
 
 $ kubectl get service --namespace test -o wide
 NAME                     TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE    SELECTOR
