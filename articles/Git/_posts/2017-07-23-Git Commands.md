@@ -312,6 +312,7 @@ git rebase --continue
 
 ### 删除某个文件的所有 git 提交记录
 * [Removing sensitive data from a repository](https://help.github.com/en/github/authenticating-to-github/removing-sensitive-data-from-a-repository)
+
 ```shell script
 # 删除指定文件本地所有历史提交记录，注意文件必须使用相对路径，使用绝对路径会出现 xxx is outside repository 的 fatal
 $ git filter-branch --force --index-filter \
@@ -351,6 +352,7 @@ $ git log "articles/Java/_posts/2017-07-20-split\(\)和replace\(\)方法特殊�
 
 ## 撤销提交和更改
 [Undoing Commits & Changes](https://www.atlassian.com/git/tutorials/undoing-changes)
+
 ### reset
 [Git Reset](https://www.atlassian.com/git/tutorials/undoing-changes/git-reset)
 
@@ -368,7 +370,6 @@ $ git checkout [filename]
 
 ## Links local repo to multi remote repos
 [Git 将本地仓库连接多个远程仓库](https://blog.csdn.net/qq_36667170/article/details/79336760)
-
 
 ## Git Extension
 下面有一些比较有意思的开源项目
