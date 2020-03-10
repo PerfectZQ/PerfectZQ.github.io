@@ -1,7 +1,7 @@
 ---
 layout: post
 title: JWT with Spring Security
-tag: Java
+tag: JavaWeb
 ---
 
 ## Reference
