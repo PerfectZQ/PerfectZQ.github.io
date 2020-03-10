@@ -313,7 +313,7 @@ git rebase --continue
 ### 删除某个文件的所有 git 提交记录
 * [Removing sensitive data from a repository](https://help.github.com/en/github/authenticating-to-github/removing-sensitive-data-from-a-repository)
 
-```shell script
+```shell
 # 删除指定文件本地所有历史提交记录，注意文件必须使用相对路径，使用绝对路径会出现 xxx is outside repository 的 fatal
 $ git filter-branch --force --index-filter \
 'git rm --cached --ignore-unmatch articles/Java/_posts/2017-07-20-split\(\)和replace\(\)方法特殊字符的处理.md' \
