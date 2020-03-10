@@ -891,4 +891,20 @@ $ jvisualvm
 
 `jvisualvm`默认没有安装`Visual GC`插件，需要手动安装，打开`jvisualvm`后，`工具->插件->可用插件->Visual GC->安装`，这样就可以以可视化的方式查看整个`GC`的过程
 
+### jmc
+* [Java Platform, Standard Edition Java Mission Control User's Guide](https://docs.oracle.com/javacomponents/jmc-5-5/jmc-user-guide/intro.htm#JMCCI109)
 
+使用 Java Mission Control 监控和管理 Java 程序，它使用 JVM 的常规自适应动态收集数据，能够最小化额外的性能开销，并且消除了观察器效应的问题，JMC由客户端和一些插件组成。
+
+```shell
+# 启动
+$ jmc
+
+# 覆盖jmc.ini文件中指定的那些选项
+$ jmc -vmarg [args]
+
+# 附加到jmc.ini文件中指定的选项
+$ jmc --launcher.appendVmargs -vmarg [args]
+```
+
+默认连接本地 JVM 应用，如果要连接远程 JVM 应用，类似`jvisualvm`需要保证远程 JVM 应用启用了 JMX。
