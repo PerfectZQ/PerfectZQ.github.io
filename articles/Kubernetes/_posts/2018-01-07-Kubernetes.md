@@ -667,7 +667,14 @@ Kubernetes 支持多种授权模块，例如`ABAC`模式，`RBAC`模式和`Webho
 
 当你访问集群时(例如，使用`kubectl`)，apiserver 会授权你一个特定的 User Account(通常是`admin`，如果集群管理员没有自定义过的话)。pod 中容器内的进程也可以访问 apiserver，当他们这样做的时候，他们就会被认证为特定的 Service Account(例如`default`)。 
 
-当创建一个 pod 的时候，如果没有指定 Service Account，那么会在同一 namespace 中自动分配一个默认的 Service Account。可以通过`kubectl get pods/podname -o yaml`看到`spec.serviceAccountName`字段已经被自动设置。
+当创建一个 pod 的时候，如果没有指定 Service Account，那么会在同一 namespace 中自动分配一个默认的 Service Account。可以通过`kubectl get pod podname -o yaml`看到`spec.serviceAccountName`字段已经被自动设置。
+```yaml
+...
+spec:
+  serviceAccount: default
+  serviceAccountName: default
+...
+```
 
 你可以使用 automatically mounted service account 从 pod 中访问 apiserver，像[Access the API from a pod](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/#accessing-the-api-from-a-pod)中描述的那样。service account 的权限取决于正在使用的授权插件和策略。
 
