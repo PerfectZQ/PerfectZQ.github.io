@@ -7,6 +7,7 @@ tag: JavaWeb
 ## Reference
 * **[为什么 Kubernetes 天然适合微服务？](https://juejin.im/post/5ad4403af265da23766bc0aa)**，这篇文章讲的非常好强烈推荐
 * [Spring Cloud Kubernetes](https://cloud.spring.io/spring-cloud-static/spring-cloud-kubernetes/1.1.2.RELEASE/reference/html/)
+* [spring-cloud-kubernetes官方demo运行实战](https://blog.csdn.net/boling_cavalry/article/details/91346780)
 
 ## Starters
 ```xml
