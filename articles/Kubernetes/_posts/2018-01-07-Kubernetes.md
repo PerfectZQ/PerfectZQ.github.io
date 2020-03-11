@@ -70,7 +70,7 @@ apiserver 通过 http 连接与 nodes, pods and services 交互
 ## Kubernetes Objects
 kubernetes object 可以理解为`record of intent`，即一旦你创建了一个 object，那么 kubernetes 就会持续保证有这么一个 object 存在。并不是说这个 object 不会出问题，而是就算出问题了，kubernetes 也会新创建一个新 object，来满足你的`record of intent`。详细的可以参考[understanding kubernetes objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/#understanding-kubernetes-objects)
 
-想要操作 kubernetes object，比如创建、修改或者删除，就需要 [Kubernetes API](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)，详细可以参考[api-concepts](https://kubernetes.io/docs/reference/using-api/api-concepts/)
+想要操作 kubernetes object，比如创建、修改或者删除，就需要 [Kubernetes API](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)，关于如何使用 API 详细可以参考[api-concepts](https://kubernetes.io/docs/reference/using-api/api-concepts/)
 * 可以使用 command line，通过[kubectl](https://kubernetes.io/docs/reference/kubectl/overview/)调用 API
 * 也可以在应用程序程序中使用[client-libraries](https://kubernetes.io/docs/reference/using-api/client-libraries/)调用 API。
 * 或者直接通过 Restful Request 发送 HTTP 请求
