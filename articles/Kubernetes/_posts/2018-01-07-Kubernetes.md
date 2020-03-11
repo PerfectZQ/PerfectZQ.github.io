@@ -405,8 +405,9 @@ deployment.extensions "busybox" deleted
 ```
 
 #### Ingress
-* [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) is an [API object](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.17/#ingress-v1beta1-networking-k8s-io) that manages external access to the services in a cluster, typically HTTP. Ingress can provide load balancing, SSL termination and name-based virtual hosting. Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. Traffic routing is controlled by rules defined on the Ingress resource.
 * [K8s 工程师必懂的 10 种 Ingress 控制器](https://zhuanlan.zhihu.com/p/88123412)                                                                                                                                                                                                                                                                                                                                                                      
+
+[Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) is an [API object](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.17/#ingress-v1beta1-networking-k8s-io) that manages external access to the services in a cluster, typically HTTP. Ingress can provide load balancing, SSL termination and name-based virtual hosting. Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. Traffic routing is controlled by rules defined on the Ingress resource.
 
 
 ### Volume
