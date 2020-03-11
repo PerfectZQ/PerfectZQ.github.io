@@ -70,9 +70,10 @@ apiserver 通过 http 连接与 nodes, pods and services 交互
 ## Kubernetes Objects
 kubernetes object 可以理解为`record of intent`，即一旦你创建了一个 object，那么 kubernetes 就会持续保证有这么一个 object 存在。并不是说这个 object 不会出问题，而是就算出问题了，kubernetes 也会新创建一个新 object，来满足你的`record of intent`。详细的可以参考[understanding kubernetes objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/#understanding-kubernetes-objects)
 
-想要操作 kubernetes object，比如创建、修改或者删除，就需要 [Kubernetes API](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)
+想要操作 kubernetes object，比如创建、修改或者删除，就需要 [Kubernetes API](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)，详细可以参考[api-concepts](https://kubernetes.io/docs/reference/using-api/api-concepts/)
 * 可以使用 command line，通过[kubectl](https://kubernetes.io/docs/reference/kubectl/overview/)调用 API
 * 也可以在应用程序程序中使用[client-libraries](https://kubernetes.io/docs/reference/using-api/client-libraries/)调用 API。
+* 或者直接通过 Restful Request 发送 HTTP 请求
 
 Kubernetes API is RESTful - 客户端通过标准 http 谓词(POST、PUT、DELETE、GET)创建、更新、删除或者检索对象的描述，这些 API 优先接收 JSON 并返回 JSON。kubernetes 还为其他非标准动词公开了额外的端点，并允许其他的内容类型。服务器接收或返回的 JSON 都有一个 Schema，由`kind`和`apiVersion`标识。另外所有的 API 公约在[API conventions doc](https://git.k8s.io/community/contributors/devel/api-conventions.md)中有详细的描述。例如：
 * Kind: kind 是表示特定对象的名称，例如`cat`和`dog`kind就会包含不同的字段属性，它又可以分为三种：
