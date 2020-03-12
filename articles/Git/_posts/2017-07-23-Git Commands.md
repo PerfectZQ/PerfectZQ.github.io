@@ -127,6 +127,9 @@ $ git checkout master
 # 默认将合并指定分支的所有 commits，这样保留了原来的所有 commit messages
 $ git merge dev/zhangqiang
 
+# 合并其他分支单一文件
+$ git checkout -p(--patch) abc.txt
+
 # 合并远程分支到当前分支
 $ git merge origin dev/zhangqiang
 
