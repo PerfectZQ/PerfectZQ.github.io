@@ -128,7 +128,10 @@ $ git checkout master
 $ git merge dev/zhangqiang
 
 # 合并其他分支单一文件
-$ git checkout -p(--patch) abc.txt
+$ git checkout other_branch_name a/b/abc.txt
+# 合并其他分支单一文件，交互式 -p(--patch)
+$ git checkout other_branch_name -p a/b/abc.txt
+
 
 # 合并远程分支到当前分支
 $ git merge origin dev/zhangqiang
