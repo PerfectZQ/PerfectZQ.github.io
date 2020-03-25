@@ -153,6 +153,18 @@ $ git reflog
 $ git branch dev/zhangqiang_recovery HEAD@{8}
 ```
 
+### 查看分支的差异
+```shell
+# 查看所有有差异的文件列表
+$ git diff branch1 branch2 --stat
+
+# 显示指定文件的详细差异
+$ diff branch1 branch2 filePath
+
+# 查看所有有差异的文件的详细差异
+$ git diff branch1 branch2
+```
+
 ## 打标签
 [Git 基础 - 打标签](https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE)
 
