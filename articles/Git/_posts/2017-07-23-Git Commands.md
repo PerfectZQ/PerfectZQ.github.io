@@ -149,19 +149,13 @@ $ git checkout master
 # 默认将合并指定分支的所有 commits，这样保留了原来的所有 commit messages
 $ git merge dev/zhangqiang
 
-# 合并其他分支单一文件
-$ git checkout other_branch_name a/b/abc.txt
-# 合并其他分支单一文件，交互式 -p(--patch)
-$ git checkout other_branch_name -p a/b/abc.txt
-
 # 合并远程分支到当前分支
 $ git merge origin dev/zhangqiang
 
-# 查看已经合并进当前分支的其他分支
-$ git branch --merged
-
-# 查看还没有合并进当前分支的其他分支
-$ git branch --no-merged
+# 当分支 merge 过程中遇到 merge conflict，修改冲突的文件后，执行一下操作
+$ git add conflict_file
+# 注意 git commit 不需要添加任何文件路径
+$ git commit -m "fix conflicts"
 
 # 将 dev/zhangqiang 分支的所有 commits merge 到当前分支(master)，但合并的时候只保留一条 commit 记录
 $ git checkout master
@@ -170,6 +164,17 @@ $ git checkout master
 $ git merge --squash dev/zhangqiang
 # 提交 commit，并指定 commit message
 $ git commit -m 'develop:finished import data interface'
+
+# 查看已经合并进当前分支的其他分支
+$ git branch --merged
+
+# 查看还没有合并进当前分支的其他分支
+$ git branch --no-merged
+
+# 合并其他分支单一文件
+$ git checkout other_branch_name a/b/abc.txt
+# 合并其他分支单一文件，交互式 -p(--patch)
+$ git checkout other_branch_name -p a/b/abc.txt
 ```
 
 ### 恢复删除的分支
