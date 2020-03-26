@@ -85,13 +85,17 @@ $ git config --system --unset credential.helper
 ```
 
 ## 分支
+### 查看分支
 ```shell
 # 查看本地的所有分支
 $ git branch
 
 # 查看所有分支，包括远程分支
 $ git branch -a
-    
+```
+
+### 修改分支
+```shell
 # 创建分支
 $ git branch dev/zhangqiang
 
@@ -104,14 +108,17 @@ $ git branch -D dev/zhangqiang
 # 删除远程库中的分支，需要验证信息
 $ git push origin :dev/zhangqiang
 
-# 推送指定本地分支到指定远程分支
-$ git push origin test:test
-
 # 本地分支重命名
 $ git branch -m old_name new_name
+```
 
+### 常用操作
+```shell
 # 查看各个分支的最后一次提交的信息
 $ git branch -v
+
+# 推送指定本地分支到指定远程分支
+$ git push origin test:test
 
 # 切换分支
 $ git checkout dev/zhangqiang
@@ -121,7 +128,22 @@ $ git checkout -b dev/zhangqiang master
 
 # 从远程分支创建一个新的分支，并切换到新的分支
 $ git checkout -b dev/zhangqaing origin/remotebranch
+```
 
+### 查看分支的差异
+```shell
+# 查看所有有差异的文件列表
+$ git diff branch1 branch2 --stat
+
+# 显示指定文件的详细差异
+$ diff branch1 branch2 filePath
+
+# 查看所有有差异的文件的详细差异
+$ git diff branch1 branch2
+```
+
+### 合并分支
+```shell
 # 合并指定分支到当前分支(master)
 $ git checkout master
 # 默认将合并指定分支的所有 commits，这样保留了原来的所有 commit messages
@@ -131,7 +153,6 @@ $ git merge dev/zhangqiang
 $ git checkout other_branch_name a/b/abc.txt
 # 合并其他分支单一文件，交互式 -p(--patch)
 $ git checkout other_branch_name -p a/b/abc.txt
-
 
 # 合并远程分支到当前分支
 $ git merge origin dev/zhangqiang
@@ -149,7 +170,10 @@ $ git checkout master
 $ git merge --squash dev/zhangqiang
 # 提交 commit，并指定 commit message
 $ git commit -m 'develop:finished import data interface'
+```
 
+### 恢复删除的分支
+```
 # 恢复已经删除的分支，需要配合 git reflog 查找 <hash_val>
 $ git reflog
 ...
@@ -159,17 +183,6 @@ $ git reflog
 $ git branch dev/zhangqiang_recovery HEAD@{8}
 ```
 
-### 查看分支的差异
-```shell
-# 查看所有有差异的文件列表
-$ git diff branch1 branch2 --stat
-
-# 显示指定文件的详细差异
-$ diff branch1 branch2 filePath
-
-# 查看所有有差异的文件的详细差异
-$ git diff branch1 branch2
-```
 
 ## 打标签
 [Git 基础 - 打标签](https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE)
