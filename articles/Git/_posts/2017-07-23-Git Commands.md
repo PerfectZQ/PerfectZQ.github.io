@@ -191,7 +191,7 @@ $ git branch dev/zhangqiang_recovery HEAD@{8}
 
 
 ## 打标签
-[Git 基础 - 打标签](https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE)
+* [Git 基础 - 打标签](https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE)
 
 Git 使用的标签有两种类型：轻量级的（lightweight）和含附注的（annotated）。轻量级标签就像是个不会变化的分支，实际上它就是个指向特定提交对象的引用。而含附注标签，实际上是存储在仓库中的一个独立对象，它有自身的校验和信息，包含着标签的名字，电子邮件地址和日期，以及标签说明，标签本身也允许使用 GNU Privacy Guard (GPG) 来签署或验证。一般我们都建议使用含附注型的标签，以便保留相关信息；当然，如果只是临时性加注标签，或者不需要旁注额外信息，用轻量级标签也没问题。
 ```shell
@@ -241,7 +241,7 @@ $ git reflog
 ```
 
 ## 重写历史
-[Rewriting History](https://www.atlassian.com/git/tutorials/rewriting-history)
+* [Rewriting History](https://www.atlassian.com/git/tutorials/rewriting-history)
 
 ### 修改最近一次的 Git commit
 ```shell
@@ -264,7 +264,7 @@ $ git commit --amend --no-edit
 >Amended commits 实际上是全新的提交，之前被修改的 commit 将不会再存在于当前的分支上，因此应该尽量避免在公共分支上使用该参数，以免删掉其他开发人员的 commit 记录，或使得别人感到困惑，(我 commit 呢？！/我记得我之前的 commit 不是这样的啊，真是见鬼了！)
 
 ### 修改多个 Git commits
-[git rebase](https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase)
+* [git rebase](https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase)
 
 Rebasing 是集成上游变更到本地库的常用方式，当使用`git merge`合并上游变更时往往会导致多余的 commit，而 rebase 会生成完美的线性提交历史，更加清爽。
 
@@ -388,10 +388,10 @@ $ git log "articles/Java/_posts/2017-07-20-split\(\)和replace\(\)方法特殊�
 ```
 
 ## 撤销提交和更改
-[Undoing Commits & Changes](https://www.atlassian.com/git/tutorials/undoing-changes)
+* [Undoing Commits & Changes](https://www.atlassian.com/git/tutorials/undoing-changes)
 
 ### reset
-[Git Reset](https://www.atlassian.com/git/tutorials/undoing-changes/git-reset)
+* [Git Reset](https://www.atlassian.com/git/tutorials/undoing-changes/git-reset)
 
 `reset`是一个用于撤销变更的复杂且通用的命令，它主要有三种调用形式，`--soft`、`--mixed`、`--hard`，分别对应了 Git 的三种内部状态管理机制，即 Commit Tree(Head)、The Staging Index、The Working Directory 要正确理解改命令的使用，我们必须先了解下 Git 内部状态管理机制，有时候这些机制又被称为 Git 的 three trees，称为树可能用词不当，因为他们并不是严格的传统树数据结构，但他们是 Git 用于跟踪编辑时间线的基于节点和指针的数据结构
 
@@ -406,7 +406,14 @@ $ git checkout [filename]
 ```
 
 ## Links local repo to multi remote repos
-[Git 将本地仓库连接多个远程仓库](https://blog.csdn.net/qq_36667170/article/details/79336760)
+* [Git 将本地仓库连接多个远程仓库](https://blog.csdn.net/qq_36667170/article/details/79336760)
+
+```shell
+$ git remote add [remote_repository_name_1] [remote_repository_url_1]
+$ git remote add [remote_repository_name_2] remote_repository_url_2]
+$ git push [remote_repository_name_1] [branch_name]
+$ git push [remote_repository_name_2] [branch_name]
+```
 
 ## Git Extension
 下面有一些比较有意思的开源项目
