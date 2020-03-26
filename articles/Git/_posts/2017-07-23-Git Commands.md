@@ -156,6 +156,7 @@ $ git merge origin dev/zhangqiang
 $ git add conflict_file
 # 注意 git commit 不需要添加任何文件路径
 $ git commit -m "fix conflicts"
+$ git push
 
 # 将 dev/zhangqiang 分支的所有 commits merge 到当前分支(master)，但合并的时候只保留一条 commit 记录
 $ git checkout master
