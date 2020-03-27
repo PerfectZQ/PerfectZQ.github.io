@@ -85,13 +85,17 @@ $ git config --system --unset credential.helper
 ```
 
 ## 分支
+### 查看分支
 ```shell
 # 查看本地的所有分支
 $ git branch
 
 # 查看所有分支，包括远程分支
 $ git branch -a
-    
+```
+
+### 修改分支
+```shell
 # 创建分支
 $ git branch dev/zhangqiang
 
@@ -104,14 +108,17 @@ $ git branch -D dev/zhangqiang
 # 删除远程库中的分支，需要验证信息
 $ git push origin :dev/zhangqiang
 
-# 推送指定本地分支到指定远程分支
-$ git push origin test:test
-
 # 本地分支重命名
 $ git branch -m old_name new_name
+```
 
+### 常用操作
+```shell
 # 查看各个分支的最后一次提交的信息
 $ git branch -v
+
+# 推送指定本地分支到指定远程分支
+$ git push origin test:test
 
 # 切换分支
 $ git checkout dev/zhangqiang
@@ -121,42 +128,6 @@ $ git checkout -b dev/zhangqiang master
 
 # 从远程分支创建一个新的分支，并切换到新的分支
 $ git checkout -b dev/zhangqaing origin/remotebranch
-
-# 合并指定分支到当前分支(master)
-$ git checkout master
-# 默认将合并指定分支的所有 commits，这样保留了原来的所有 commit messages
-$ git merge dev/zhangqiang
-
-# 合并其他分支单一文件
-$ git checkout other_branch_name a/b/abc.txt
-# 合并其他分支单一文件，交互式 -p(--patch)
-$ git checkout other_branch_name -p a/b/abc.txt
-
-
-# 合并远程分支到当前分支
-$ git merge origin dev/zhangqiang
-
-# 查看已经合并进当前分支的其他分支
-$ git branch --merged
-
-# 查看还没有合并进当前分支的其他分支
-$ git branch --no-merged
-
-# 将 dev/zhangqiang 分支的所有 commits merge 到当前分支(master)，但合并的时候只保留一条 commit 记录
-$ git checkout master
-# --squash 会暂停 commits 提交，并将所有的 commits 压缩为一条 commit 不加 --squash 参数的话默认会自
-# 动提交要合并分支的所有的 commits
-$ git merge --squash dev/zhangqiang
-# 提交 commit，并指定 commit message
-$ git commit -m 'develop:finished import data interface'
-
-# 恢复已经删除的分支，需要配合 git reflog 查找 <hash_val>
-$ git reflog
-...
-104e242 HEAD@{8}: checkout: moving from master to dev/zhangqiang
-...
-# 从历史分支中创建一个分支
-$ git branch dev/zhangqiang_recovery HEAD@{8}
 ```
 
 ### 查看分支的差异
@@ -171,8 +142,56 @@ $ diff branch1 branch2 filePath
 $ git diff branch1 branch2
 ```
 
+### 合并分支
+```shell
+# 合并指定分支到当前分支(master)
+$ git checkout master
+# 默认将合并指定分支的所有 commits，这样保留了原来的所有 commit messages
+$ git merge dev/zhangqiang
+
+# 合并远程分支到当前分支
+$ git merge origin dev/zhangqiang
+
+# 当分支 merge 过程中遇到 merge conflict，修改冲突的文件后，执行一下操作
+$ git add conflict_file
+# 注意 git commit 不需要添加任何文件路径
+$ git commit -m "fix conflicts"
+$ git push
+
+# 将 dev/zhangqiang 分支的所有 commits merge 到当前分支(master)，但合并的时候只保留一条 commit 记录
+$ git checkout master
+# --squash 会暂停 commits 提交，并将所有的 commits 压缩为一条 commit 不加 --squash 参数的话默认会自
+# 动提交要合并分支的所有的 commits
+$ git merge --squash dev/zhangqiang
+# 提交 commit，并指定 commit message
+$ git commit -m 'develop:finished import data interface'
+
+# 查看已经合并进当前分支的其他分支
+$ git branch --merged
+
+# 查看还没有合并进当前分支的其他分支
+$ git branch --no-merged
+
+# 合并其他分支单一文件
+$ git checkout other_branch_name a/b/abc.txt
+# 合并其他分支单一文件，交互式 -p(--patch)
+$ git checkout other_branch_name -p a/b/abc.txt
+```
+
+### 恢复删除的分支
+```
+# 恢复已经删除的分支，需要配合 git reflog 查找 <hash_val>
+$ git reflog
+...
+104e242 HEAD@{8}: checkout: moving from master to dev/zhangqiang
+...
+# 从历史分支中创建一个分支
+$ git branch dev/zhangqiang_recovery HEAD@{8}
+```
+
+
 ## 打标签
-[Git 基础 - 打标签](https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE)
+* [Git 基础 - 打标签](https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE)
 
 Git 使用的标签有两种类型：轻量级的（lightweight）和含附注的（annotated）。轻量级标签就像是个不会变化的分支，实际上它就是个指向特定提交对象的引用。而含附注标签，实际上是存储在仓库中的一个独立对象，它有自身的校验和信息，包含着标签的名字，电子邮件地址和日期，以及标签说明，标签本身也允许使用 GNU Privacy Guard (GPG) 来签署或验证。一般我们都建议使用含附注型的标签，以便保留相关信息；当然，如果只是临时性加注标签，或者不需要旁注额外信息，用轻量级标签也没问题。
 ```shell
@@ -222,7 +241,7 @@ $ git reflog
 ```
 
 ## 重写历史
-[Rewriting History](https://www.atlassian.com/git/tutorials/rewriting-history)
+* [Rewriting History](https://www.atlassian.com/git/tutorials/rewriting-history)
 
 ### 修改最近一次的 Git commit
 ```shell
@@ -245,7 +264,7 @@ $ git commit --amend --no-edit
 >Amended commits 实际上是全新的提交，之前被修改的 commit 将不会再存在于当前的分支上，因此应该尽量避免在公共分支上使用该参数，以免删掉其他开发人员的 commit 记录，或使得别人感到困惑，(我 commit 呢？！/我记得我之前的 commit 不是这样的啊，真是见鬼了！)
 
 ### 修改多个 Git commits
-[git rebase](https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase)
+* [git rebase](https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase)
 
 Rebasing 是集成上游变更到本地库的常用方式，当使用`git merge`合并上游变更时往往会导致多余的 commit，而 rebase 会生成完美的线性提交历史，更加清爽。
 
@@ -369,10 +388,10 @@ $ git log "articles/Java/_posts/2017-07-20-split\(\)和replace\(\)方法特殊�
 ```
 
 ## 撤销提交和更改
-[Undoing Commits & Changes](https://www.atlassian.com/git/tutorials/undoing-changes)
+* [Undoing Commits & Changes](https://www.atlassian.com/git/tutorials/undoing-changes)
 
 ### reset
-[Git Reset](https://www.atlassian.com/git/tutorials/undoing-changes/git-reset)
+* [Git Reset](https://www.atlassian.com/git/tutorials/undoing-changes/git-reset)
 
 `reset`是一个用于撤销变更的复杂且通用的命令，它主要有三种调用形式，`--soft`、`--mixed`、`--hard`，分别对应了 Git 的三种内部状态管理机制，即 Commit Tree(Head)、The Staging Index、The Working Directory 要正确理解改命令的使用，我们必须先了解下 Git 内部状态管理机制，有时候这些机制又被称为 Git 的 three trees，称为树可能用词不当，因为他们并不是严格的传统树数据结构，但他们是 Git 用于跟踪编辑时间线的基于节点和指针的数据结构
 
@@ -387,7 +406,14 @@ $ git checkout [filename]
 ```
 
 ## Links local repo to multi remote repos
-[Git 将本地仓库连接多个远程仓库](https://blog.csdn.net/qq_36667170/article/details/79336760)
+* [Git 将本地仓库连接多个远程仓库](https://blog.csdn.net/qq_36667170/article/details/79336760)
+
+```shell
+$ git remote add [remote_repository_name_1] [remote_repository_url_1]
+$ git remote add [remote_repository_name_2] remote_repository_url_2]
+$ git push [remote_repository_name_1] [branch_name]
+$ git push [remote_repository_name_2] [branch_name]
+```
 
 ## Git Extension
 下面有一些比较有意思的开源项目
