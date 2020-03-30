@@ -96,7 +96,9 @@ yarn/xxx.net@HADOOP-BJ.MYCOMPANY.COM
 ```
 
 
-## 实践 - 搭建KDC
+## 实践 - 搭建 KDC
+KDC(key distribution center)
+
 ### 下载和安装
 ```
 # krb5-admin-server: kdc管理员程序，可以让使用者远程管理kdc数据库。
