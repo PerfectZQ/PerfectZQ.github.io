@@ -6,6 +6,7 @@ tag: Hadoop
 
 ## 参考
 * [图解 Kerberos 协议原理](http://www.nosqlnotes.com/technotes/kerberos-protocol/)
+* [Kerberos基本概念及原理汇总](https://841809077.github.io/2018/12/18/Kerberos%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%8E%9F%E7%90%86%E6%B1%87%E6%80%BB.html)
 * [Kerberos 认证原理](https://blog.csdn.net/wulantian/article/details/42418231)
 * [Kerberos 体系下的应用(yarn, spark on yarn)](https://www.jianshu.com/p/ae5a3f39a9af)
 * [Kerberos 入坑指南](https://www.jianshu.com/p/fc2d2dbd510b)
