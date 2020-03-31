@@ -5,14 +5,15 @@ tag: Hadoop
 ---
 
 ## 参考
+* [图解 Kerberos 协议原理](http://www.nosqlnotes.com/technotes/kerberos-protocol/)
 * [Kerberos 认证原理](https://blog.csdn.net/wulantian/article/details/42418231)
 * [Kerberos 体系下的应用(yarn, spark on yarn)](https://www.jianshu.com/p/ae5a3f39a9af)
 * [Kerberos 入坑指南](https://www.jianshu.com/p/fc2d2dbd510b)
 * [HDFS 配置 Kerberos 认证](https://yq.aliyun.com/articles/25636)
 * [Windows 域认证 Kerberos 详解](https://blog.csdn.net/wy_97/article/details/87649262)
 * [美团数据平台 Kerberos 优化实战](https://tech.meituan.com/2018/05/20/kerberos-big-data-platform.html)
-## Kerberos 认证流程
 
+## Kerberos 认证流程
 ### 认证实际要解决的问题
 证明某个人确确实实就是他或她所声称的那个人
 
