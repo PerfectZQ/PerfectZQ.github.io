@@ -403,6 +403,30 @@ $ git reset
 $ git reset HEAD [filename]
 # 撤销工作区中文件的修改
 $ git checkout [filename]
+
+# 一般配合 git reflog 使用
+$ git reflog
+bceced2 (HEAD -> prod, gitlab/prod) HEAD@{0}: reset: moving to HEAD@{15}
+35b5339 HEAD@{1}: reset: moving to HEAD
+35b5339 HEAD@{2}: reset: moving to HEAD~24
+e088c79 (gitlab/test, test) HEAD@{3}: reset: moving to HEAD
+e088c79 (gitlab/test, test) HEAD@{4}: merge test: Fast-forward
+bceced2 (HEAD -> prod, gitlab/prod) HEAD@{5}: checkout: moving from test to prod
+e088c79 (gitlab/test, test) HEAD@{6}: commit: add batch update by specific condition
+7a25fab HEAD@{7}: commit: modify hdfs ipc client props
+6dbf640 HEAD@{8}: commit: add meta update funcs
+7b1a6c3 HEAD@{9}: commit: add sampleSpaceFactory=10
+82cd731 HEAD@{10}: commit: rm useless test case
+9be0b30 HEAD@{11}: commit: add sampleSpaceFactor
+f2994ea HEAD@{12}: commit: add sampleSpaceFactor
+b3d73fe HEAD@{13}: commit: sorted sample seq
+5a63c2e HEAD@{14}: commit: <E4><BC><98><E5><8C><96> SampleFiles
+a6f4776 HEAD@{15}: checkout: moving from prod to test
+bceced2 (HEAD -> prod, gitlab/prod) HEAD@{16}: checkout: moving from test to prod
+a6f4776 HEAD@{17}: commit (merge): Merge branch 'prod' into test
+
+# 回退到 bceced2 版本的代码
+$ git reset --hard HEAD@{16}
 ```
 
 ## Links local repo to multi remote repos
