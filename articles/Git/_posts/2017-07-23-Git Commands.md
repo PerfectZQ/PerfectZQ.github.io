@@ -234,10 +234,18 @@ $ git fetch origin
 # --pretty=online 可以简化输出信息
 $ git log
 
-# 查看本地所有分支的所有操作记录（包括`commit`、`reset`的操作和甚至已经被删除的
-# `commit`记录。`git log`不能看已经删除了的`commit`记录，因此回退之后想再回到
-# 之前的版本就需要这个命令了
+# 查看本地 所有分支(注意不只是当前分支的) 的所有操作记录(包括`checkout`、`commit`、`reset`的操作和甚至已经被删除的
+# `commit`记录)。`git log`不能看已经删除了的`commit`记录，因此回退之后想再回到之前的版本就需要这个命令了
 $ git reflog
+...
+104e242 HEAD@{8}: checkout: moving from master to dev/zhangqiang
+...
+
+# 显示 commit 的相对时间，而非序号
+$ git reflog --relative-date
+...
+104e242 HEAD@{3 days ago}: checkout: moving from master to dev/zhangqiang
+...
 ```
 
 ## 重写历史
@@ -405,28 +413,14 @@ $ git reset HEAD [filename]
 $ git checkout [filename]
 
 # 一般配合 git reflog 使用
-$ git reflog
-bceced2 (HEAD -> prod, gitlab/prod) HEAD@{0}: reset: moving to HEAD@{15}
-35b5339 HEAD@{1}: reset: moving to HEAD
-35b5339 HEAD@{2}: reset: moving to HEAD~24
-e088c79 (gitlab/test, test) HEAD@{3}: reset: moving to HEAD
-e088c79 (gitlab/test, test) HEAD@{4}: merge test: Fast-forward
-bceced2 (HEAD -> prod, gitlab/prod) HEAD@{5}: checkout: moving from test to prod
-e088c79 (gitlab/test, test) HEAD@{6}: commit: add batch update by specific condition
-7a25fab HEAD@{7}: commit: modify hdfs ipc client props
-6dbf640 HEAD@{8}: commit: add meta update funcs
-7b1a6c3 HEAD@{9}: commit: add sampleSpaceFactory=10
-82cd731 HEAD@{10}: commit: rm useless test case
-9be0b30 HEAD@{11}: commit: add sampleSpaceFactor
-f2994ea HEAD@{12}: commit: add sampleSpaceFactor
-b3d73fe HEAD@{13}: commit: sorted sample seq
-5a63c2e HEAD@{14}: commit: <E4><BC><98><E5><8C><96> SampleFiles
-a6f4776 HEAD@{15}: checkout: moving from prod to test
-bceced2 (HEAD -> prod, gitlab/prod) HEAD@{16}: checkout: moving from test to prod
-a6f4776 HEAD@{17}: commit (merge): Merge branch 'prod' into test
+$ git reflog 
+e088c79 (HEAD -> prod, gitlab/test, test) HEAD@{0}: checkout: moving from test to prod
+e088c79 (HEAD -> prod, gitlab/test, test) HEAD@{1}: checkout: moving from prod to test
+e088c79 (HEAD -> prod, gitlab/test, test) HEAD@{2}: merge test: Fast-forward
+bceced2 (gitlab/prod) HEAD@{3}: reset: moving to HEAD@{15}
 
 # 回退到 bceced2 版本的代码
-$ git reset --hard HEAD@{16}
+$ git reset --hard HEAD@{3} | git reset --hard bceced2
 ```
 
 ## Links local repo to multi remote repos
