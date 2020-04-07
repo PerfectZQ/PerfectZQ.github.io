@@ -154,7 +154,7 @@ $ git merge origin dev/zhangqiang
 
 # 当分支 merge 过程中遇到 merge conflict，修改冲突的文件后，执行一下操作
 $ git add conflict_file
-# 注意 git commit 不需要添加任何文件路径
+# 注意 git commit 不需要添加任何文件路径，或者加 -a
 $ git commit -m "fix conflicts"
 $ git push
 
