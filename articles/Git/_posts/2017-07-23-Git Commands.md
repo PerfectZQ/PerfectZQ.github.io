@@ -176,6 +176,24 @@ $ git branch --no-merged
 $ git checkout other_branch_name a/b/abc.txt
 # 合并其他分支单一文件，交互式 -p(--patch)
 $ git checkout other_branch_name -p a/b/abc.txt
+
+# merge 时排除指定的文件
+# 首先需要添加一个名叫 ignore 的 merge driver，true 表示使用这个 merge driver 的文件在 merge 
+# 的时候什么都不会做，也就是保持不变
+$ git config --global merge.ignore.driver true
+$ git checkout test
+$ vim .gitattributes
+.gitlab-ci.yml merge=ignore
+$ git commit .gitattributes -m "init .gitattributes"
+$ git checkout master
+$ vim .gitattributes
+.gitlab-ci.yml merge=ignore
+$ git commit .gitattributes -m "init .gitattributes"
+# 如果想忽略某个文件，比如.gitlab-ci.yml，需要先修改 test 分支的文件并提交，再修改 master 
+# 的文件并提交，然后 merge，才能成功忽略，因为.gitattributes 首次识别时是由文件的更新时间
+# 来确定保留识别的，如果 test 的某个文件的修改不想合并到 master 分支上的话，那么 master 的
+# 文件上的修改时间必须在 test 的修改时间之后，否则忽略不成功。以后 test 再对该文件的修改就
+# 不会合并到 master 上了。
 ```
 
 ### 恢复删除的分支
