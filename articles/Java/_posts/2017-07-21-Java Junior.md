@@ -126,6 +126,9 @@ props.get("ip").toString
 ### Differences between getProperties & getEnv
 `System.getProperties`获取的是启动 JVM 时候通过`-Dproperty=value`中传入的参数，而`System.getEnv`是获取真正的操作系统(非 JVM)的环境变量。
 
+### Differences between setProperty & java -Dproperty
+
+
 ## Special characters in java regex
 在字符串分割split()方法和replace()方法中，`.`字符、`|`字符以及`\`字符都是需要额外转义的特殊字符。
 
