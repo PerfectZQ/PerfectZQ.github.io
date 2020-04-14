@@ -13,7 +13,7 @@ Java 管理依赖的工具有 Maven、Gradle，而对于 Go，以前(1.13之前)
 自 1.13 之后[Go Modules](https://blog.golang.org/using-go-modules)正式成为默认依赖管理方式。项目也不必一定要在`$GOPATH/src`中了，现在 Go 允许在`$GOPATH/src`外的任何目录使用`go.mod`创建项目
 
 ### Global Caching
-这个主要是针对 Go modules 的全局缓存数据说明，如下：
+Go modules 的全局数据缓存
 * 同一个模块版本的数据只缓存一份，所有其他模块共享使用。
 * 目前所有模块版本数据均缓存在`$GOPATH/pkg/mod`和`$GOPATH/pkg/sum`下，未来或将移至`$GOCACHE/mod`和`$GOCACHE/sum`下(可能会在当`$GOPATH`被淘汰后)。
 * 可以使用`go clean -modcache`清理所有已缓存的模块版本数据。
@@ -36,6 +36,14 @@ $ go env -w GO111MODULE=on
 # 错误时，Go 自动尝试列表中的下一个，遇见 direct 时回源，遇见 EOF 时终止并抛出类似 
 # `invalid version: unknown revision...` 的错误。
 $ go env -w GOPROXY=https://goproxy.io,direct
+# GoLand 设置
+Settings -> Go -> Go Moudles(vgo) -> Enable Go Modules (vgo) integration -> Proxy https://goproxy.io,direct
+# 如果是 vendoring 项目可以 check Vendoring mode 
+
+
+# 设置私库地址(1.13+)，它可以声明指定域名为私有仓库，go get 在处理该域名下的所有依赖时，
+# 会直接跳过 GOPROXY 和 CHECKSUM 等逻辑
+$ export GOPRIVATE=gitlab.com/xxx
 ```
 
 ## 生成 go.mod
