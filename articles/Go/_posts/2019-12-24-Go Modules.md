@@ -21,13 +21,16 @@ Go modules 的全局数据缓存
 
 ## 配置环境变量
 ```shell
+# 查看所有环境变量
+$ go env
+
 # 修改 GOBIN 路径（Optional）
 $ go env -w GOBIN=$HOME/bin
 
-# 打开 Go modules
-# auto: (default) 只在项目包含了 go.mod 文件时启用 Go modules
-# on: 启用 Go modules
-# off: 禁用 Go modules
+# 打开 Go Modules
+# auto(default): 只在项目包含了 go.mod 文件时启用 Go modules
+# on:            启用 Go modules
+# off:           禁用 Go modules
 $ go env -w GO111MODULE=on
 
 # 设置 GOPROXY，设置 Go 模块代理，它的值是一个以英文逗号`,`分割的 Go module proxy 列表

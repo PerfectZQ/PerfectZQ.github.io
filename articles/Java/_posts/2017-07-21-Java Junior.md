@@ -255,17 +255,20 @@ System.out.println(Integer.toBinaryString(num));
 
 // 左移: num = num * 2^3
 // 64
+// Note: 左/右移的实际操作是，移位数大于等于32位操作时，会先求余（%）后再进行移位操作
+// - 对于 int: 如果左移 32 位，实际是左移 32 % 32 = 0 位
+// - 对于 long: 如果左移 32 位，实际是左移 32 % 64 = 32 位
 num = num << 3;
 // 00000000000000000000000001000000
 System.out.println(Integer.toBinaryString(num));
 
-// 右移: num = num / 2^3
+// 右移: num = num / 2^3 丢弃右边指定位，左边补符号位的值(对于负数就全部补1，对于正数就全部补零)
 // -268435455
 num = num >> 3;
 // 11110000000000000000000000000001
 System.out.println(Integer.toBinaryString(num));
 
-// 无符号右移: 忽略符号位，最高位补零
+// 无符号右移: 不论符号位是正负，高位全部补零
 num = -1
 // 11111111111111111111111111111111
 System.out.println(Integer.toBinaryString(num));
