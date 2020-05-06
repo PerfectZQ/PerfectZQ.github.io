@@ -4,6 +4,10 @@ title: Spring WebFlux
 tag: JavaWeb
 ---
 
+## Difference
+* Spring Web (Servlet API)
+* Spring WebFlux
+* [WebSocket Support](https://docs.spring.io/spring-framework/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/html/websocket.html)
 
 ## Reference
 * [Reactor Core Features: Flux, Mono...](https://projectreactor.io/docs/core/release/reference/#core-features)
