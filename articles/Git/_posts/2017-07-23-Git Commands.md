@@ -54,7 +54,7 @@ Changes not staged for commit:
 ```
 
 ### Staging Index
-Staging Index 用于跟踪由`git add`添加的文件/目录后，导致 Working Directory 的变更，这些变更会在下一次`git commit`时被存储。Staging index 是一个复杂的内部缓存机制。 Git 通常试图向用户隐藏 Staging index 的实现细节。为了准确查看暂存索引的状态，我们必须利用鲜为人知的Git命令`git ls-files`。 `git ls-files`命令本质上是一个调试实用程序，用于检查暂存索引树的状态。
+Staging Index 用于跟踪由`git add`添加的 Working Directory 的变更，这些变更会在下一次`git commit`时被存储。Staging index 是一个复杂的内部缓存机制。 Git 通常试图向用户隐藏 Staging index 的实现细节。为了准确查看暂存索引的状态，我们必须利用鲜为人知的Git命令`git ls-files`。 `git ls-files`命令本质上是一个调试实用程序，用于检查暂存索引树的状态。
 
 ```shell
 # 查看处于 Staging Index 的文件列表，-s, --stage 展示额外的元数据信息。
@@ -81,6 +81,7 @@ $ git ls-files -s
 $ git commit -am"update content of reset_lifecycle_file"
 [master dc67808] update content of reset_lifecycle_file
 1 file changed, 1 insertion(+)
+
 $ git status
 On branch master
 nothing to commit, working tree clean
