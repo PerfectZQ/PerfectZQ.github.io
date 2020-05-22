@@ -16,6 +16,76 @@ tag: Git
 $ git [command] -h,--help
 ```
 
+## Git 的三种内部状态管理机制
+要理解 Git 的原理，我们就需要了解 Git 的三种内部状态管理的机制
+* Commit Tree(Head)
+* The Staging Index
+* The Working Directory
+
+理解了这些，对于我们理解和使用命令有很大的帮助。首先我们先做一下准备工作
+```shell
+$ mkdir git_reset_test
+$ cd git_reset_test/
+$ git init .
+Initialized empty Git repository in /git_reset_test/.git/
+$ touch reset_lifecycle_file
+$ git add reset_lifecycle_file
+$ git commit -m"initial commit"
+[master (root-commit) d386d86] initial commit
+1 file changed, 0 insertions(+), 0 deletions(-)
+create mode 100644 reset_lifecycle_file
+```
+
+### The Working Directory
+Working Directory 与本地文件系统同步，代表对文件和目录中内容的立即更改。
+
+```shell
+# 修改 reset_lifecycle_file 文件内容
+$ echo 'hello git reset' > reset_lifecycle_file
+
+# 调用 git status 发现 Git 已经意识到了文件的内容变更，这部分内容变更的记录就存储在 Working Directory
+# git status 命令可以查看 Working Directory 的变更记录。
+$ git status 
+On branch master 
+Changes not staged for commit: 
+    (use "git add <file>..." to update what will be committed)
+    (use "git restore <file>... | git checkout -- ..." to discard changes in working directory)
+        modified: reset_lifecycle_file
+```
+
+### Staging Index
+Staging Index 用于跟踪由`git add`添加的文件/目录后，导致 Working Directory 的变更，这些变更会在下一次`git commit`时被存储。Staging index 是一个复杂的内部缓存机制。 Git 通常试图向用户隐藏 Staging index 的实现细节。为了准确查看暂存索引的状态，我们必须利用鲜为人知的Git命令`git ls-files`。 `git ls-files`命令本质上是一个调试实用程序，用于检查暂存索引树的状态。
+
+```shell
+# 查看处于 Staging Index 的文件列表，-s, --stage 展示额外的元数据信息。
+# 比较重要的是第二列，是当前处于 Staging Index 中文件文本内容的 Hash，即 Object SHA
+$ git ls-files -s 
+100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0 reset_lifecycle_file
+
+# 将修改后的 reset_lifecycle_file 添加到 Staging index
+$ git add reset_lifecycle_file 
+$ git status 
+On branch master Changes to be committed: 
+Changes to be committed:
+  (use "git restore --staged <file>... | git reset HEAD ..." to unstage)
+        modified:   reset_lifecycle_file
+
+# 查看文件 Object SHA 已经变了，并会在下次执行 git commit 时存储该变更
+$ git ls-files -s
+100644 d7d77c1b04b5edd5acfc85de0b592449e5303770 0 reset_lifecycle_file
+```
+### Commit history
+`git commit`命令把变更添加到 Commit History 中的永久快照，快照还包括提交时 Staging Index 的状态。
+
+```shell
+$ git commit -am"update content of reset_lifecycle_file"
+[master dc67808] update content of reset_lifecycle_file
+1 file changed, 1 insertion(+)
+$ git status
+On branch master
+nothing to commit, working tree clean
+```
+
 ## 初始化本地库
 ```shell
 # 创建一个本地库，在当前文件夹下生成 .git 文件夹，用于 trace 当前文件夹下和子文件夹下的所有文件
