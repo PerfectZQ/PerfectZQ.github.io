@@ -105,6 +105,21 @@ ElasticSearch大多数引用`index`参数的API支持跨多个索引执行，例
 #### Update By Query API
 
 #### Reindex API
+*[Reindex](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-reindex.html)
+
+复制一个 index 的 documents 到另一个 index
+
+```javascript
+POST _reindex?slices=5&refresh
+{
+  "source": {
+    "index": "twitter"
+  },
+  "dest": {
+    "index": "new_twitter"
+  }
+}
+```
 
 ## Search APIs
 条件查询
@@ -760,3 +775,5 @@ PUT _template/logs_date_detection
 ```
 
 >需要注意的是：指定 min_age=30d 并不是恰巧在过了 30d 整的时候删除，而是需要等到 ILM 去检查的时候发现已经过了 30d 才会删除，如果对时间要求严格，还是自己写 crontab 吧
+
+
