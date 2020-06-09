@@ -24,6 +24,12 @@ yarn 解决了 npm 存在的一些缺陷，编译起来会更快
 # Usages
 $ yarn help
 $ yarn help COMMAND
+
+# Add path
+$ export PATH="$PATH:`yarn global bin`:$HOME/.config/yarn/global/node_modules/.bin"
+
+# Config registry
+$ yarn config set registry 'https://registry.npm.taobao.org'
 ```
 
 ## Init vue project
