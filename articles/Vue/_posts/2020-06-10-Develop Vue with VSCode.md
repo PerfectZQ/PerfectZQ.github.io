@@ -27,31 +27,33 @@ $ yarn help COMMAND
 ```
 
 ## Init vue project
+* [Vue CLI](https://cli.vuejs.org/)
+
 ```shell
-# Ctrl + ` 打开 VS Code 命令终端，安装 vue-cli
-$ yarn add vue-cli@latest
+# ========= Vue CLI 2 ==========
+
+# Install Vue CLI 2
+$ yarn global add vue-cli@latest
 # Or
 $ npm install -g vue-cli@latest
 
-# 构建一个新的项目
-$ vue init webpack ${projectName}
+# Init project
+$ vue init webpack vuelearn
 
-? Project name y
-? Project description
-? Author zhangqiang <zhangqiang@sensetime.com>
-? Vue build standalone
-? Install vue-router? Yes
-? Use ESLint to lint your code? Yes
-? Pick an ESLint preset Standard
-? Set up unit tests Yes
-? Pick a test runner jest
-? Setup e2e tests with Nightwatch? Yes
-? Should we run `npm install` for you after the project has been created? (recommended) npm
+# ========= Vue CLI 3/4 ==========
 
-   vue-cli · Generated "vuelearn".
+# Uninstall Vue CLI 2
+$ yarn global remove vue-cli
+# Or
+$ npm uninstall -g vue-cli
 
+# Install Vue CLI 3
+$ yarn global add @vue/cli
+# Or
+$ npm install -g @vue/cli
 
-# Installing project dependencies ...
-# ========================
-
+# Create a project
+$ vue create ${projectName}
+# OR
+$ vue ui
 ```
