@@ -74,7 +74,7 @@ Changes to be committed:
 $ git ls-files -s
 100644 d7d77c1b04b5edd5acfc85de0b592449e5303770 0 reset_lifecycle_file
 ```
-### Commit history
+### Commit History
 `git commit`命令把变更添加到 Commit History 中的永久快照，快照还包括提交时 Staging Index 的状态。
 
 ```shell
