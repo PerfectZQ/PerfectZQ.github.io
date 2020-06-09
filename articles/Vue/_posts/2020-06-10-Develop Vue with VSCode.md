@@ -25,7 +25,7 @@ yarn 解决了 npm 存在的一些缺陷，编译起来会更快
 $ yarn help
 $ yarn help COMMAND
 
-# Add path
+# Configure system path
 $ export PATH="$PATH:`yarn global bin`:$HOME/.config/yarn/global/node_modules/.bin"
 
 # Config registry
