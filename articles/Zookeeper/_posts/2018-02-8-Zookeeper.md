@@ -13,10 +13,113 @@ Zookeeper 的数据结构类似 Linux 文件系统
 
 Zookeeper 为程序提供节点的监听服务（类似数据库触发器，当数据发生变化，会通知客户端程序）
 
+## Install
+```shell
+# Download
+$ wget https://mirrors.tuna.tsinghua.edu.cn/apache/zookeeper/zookeeper-3.6.1/apache-zookeeper-3.6.1-bin.tar.gz
+$ tar -zxvf apache-zookeeper-3.6.1-bin.tar.gz
+
+$ cd apache-zookeeper-3.6.1-bin/conf && cp zoo_sample.cfg zoo.cfg
+
+# 修改配置文件
+$ vim zoo.cfg
+# The number of milliseconds of each tick
+tickTime=2000
+# The number of ticks that the initial 
+# synchronization phase can take
+initLimit=10
+# The number of ticks that can pass between 
+# sending a request and getting an acknowledgement
+syncLimit=5
+# the directory where the snapshot is stored.
+# do not use /tmp for storage, /tmp here is just 
+# example sakes.
+dataDir=/data/zookeeper/dataDir
+# write the transaction log to the dataLogDir rather than the dataDir
+dataLogDir=/data/zookeeper/dataLogDir
+# the port at which the clients will connect
+clientPort=2182
+# the maximum number of client connections.
+# increase this if you need to handle more clients
+maxClientCnxns=1000
+#
+# Be sure to read the maintenance section of the 
+# administrator guide before turning on autopurge.
+#
+# http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc_maintenance
+#
+# The number of snapshots to retain in dataDir
+#autopurge.snapRetainCount=3
+# Purge task interval in hours
+# Set to "0" to disable auto purge feature
+#autopurge.purgeInterval=1
+
+## Metrics Providers
+#
+# https://prometheus.io Metrics Exporter
+#metricsProvider.className=org.apache.zookeeper.metrics.prometheus.PrometheusMetricsProvider
+#metricsProvider.httpPort=7000
+#metricsProvider.exportJvmInfo=true
+
+# Server Config
+server.1=10.53.4.232:2999:3999
+server.2=10.53.7.223:2999:3999
+server.3=10.53.4.238:2999:3999
+
+## Security Config
+# enable server sasl authentication
+authProvider.1=org.apache.zookeeper.server.auth.SASLAuthenticationProvider
+authProvider.2=org.apache.zookeeper.server.auth.SASLAuthenticationProvider
+authProvider.3=org.apache.zookeeper.server.auth.SASLAuthenticationProvider
+
+
+# 创建 myid 
+$ vim /data/zookeeper/dataDir/myid
+1
+
+
+# JAAS Server 配置
+$ vim conf/jaas-server.conf
+Server {
+       org.apache.zookeeper.server.auth.DigestLoginModule required
+       user_admin="password"
+       user_zhangqiang="password";
+};
+
+# JAAS Client 配置
+$ vim conf/jaas-client.conf
+Client {
+       org.apache.zookeeper.server.auth.DigestLoginModule required
+       username="admin"
+       password="password";
+};
+
+# 配置 JVM 启动参数
+$ vim conf/java.env
+# New in 3.6.0: When set to true, ZooKeeper server will only accept connections and requests from clients that have authenticated with server via SASL. 
+# Clients that are not configured with SASL authentication, or configured with SASL but failed authentication (i.e. with invalid credential) will not be
+# able to establish a session with server. A typed error code (-124) will be delivered in such case, both Java and C client will close the session with
+# server thereafter, without further attempts on retrying to reconnect.
+SASL_OPT="-Dzookeeper.sessionRequireClientSASLAuth=true"
+# Note: use absolute path
+JAAS_SERVER_OPT="-Djava.security.auth.login.config=/opt/apache-zookeeper-3.6.1-bin/conf/jaas-server.conf"
+JAAS_CLIENT_OPT="-Djava.security.auth.login.config=/opt/apache-zookeeper-3.6.1-bin/conf/jaas-client.conf"
+# Disable all 4 letters commands
+FOUR_LW_OPT="-D4lw.commands.whitelist=none"
+
+SERVER_JVMFLAGS="$SERVER_JVMFLAGS $JAAS_SERVER_OPT $SASL_OPT $FOUR_LW_OPT"
+
+CLIENT_JVMFLAGS="$CLIENT_JVMFLAGS $JAAS_CLIENT_OPT"
+
+
+# 启动
+$ bin/zkServer.sh start
+```
+
 ## zkCli
 ```shell
 # 连接 zookeeper server
-$ ./zkCli.sh -server 192.168.51.246:2181
+$ bin/zkCli.sh -server 192.168.51.246:2181
 Connecting to 192.168.51.246:2181
 # Zookeeper Server version
 2019-09-27 16:21:49,999 - INFO  [main:Environment@100] - Client environment:zookeeper.version=3.4.6-91--1, built on 01/04/2018 10:34 GMT
