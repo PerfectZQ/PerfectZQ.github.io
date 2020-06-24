@@ -54,6 +54,10 @@ maxClientCnxns=1000
 # Set to "0" to disable auto purge feature
 #autopurge.purgeInterval=1
 
+standaloneEnabled=false
+#reconfigEnabled=true
+#dynamicConfigFile=/opt/apache-zookeeper-3.6.1-bin/conf/zoo.cfg.dynamic
+
 ## Metrics Providers
 #
 # https://prometheus.io Metrics Exporter
@@ -62,9 +66,9 @@ maxClientCnxns=1000
 #metricsProvider.exportJvmInfo=true
 
 # Server Config
-server.1=10.53.4.232:2999:3999
-server.2=10.53.7.223:2999:3999
-server.3=10.53.4.238:2999:3999
+server.1=10.53.4.232:2999:3999:participant;0.0.0.0:2182
+server.2=10.53.7.223:2999:3999:participant;0.0.0.0:2182
+server.3=10.53.4.238:2999:3999:participant;0.0.0.0:2182
 
 ## Security Config
 # enable server sasl authentication
