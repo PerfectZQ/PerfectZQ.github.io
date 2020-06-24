@@ -57,7 +57,7 @@ maxClientCnxns=1000
 standaloneEnabled=false
 # https://zookeeper.apache.org/doc/r3.6.0/zookeeperReconfig.html
 # https://blog.csdn.net/u012421093/article/details/105313699
-#reconfigEnabled=true
+#reconfigEnabled=false
 #dynamicConfigFile=/opt/apache-zookeeper-3.6.1-bin/conf/zoo.cfg.dynamic
 
 ## Metrics Providers
@@ -212,3 +212,16 @@ $ vim /etc/hosts
 127.0.0.1       zhangqiangdeMacBook-Pro.local localhost
 ::1             zhangqiangdeMacBook-Pro.local localhost
 ```
+
+## Configurations
+* [Configuration Parameters](https://zookeeper.apache.org/doc/r3.6.1/zookeeperAdmin.html#sc_configuration)
+
+## 4lw - Four letter words
+* [ZooKeeper Commands](https://zookeeper.apache.org/doc/r3.6.1/zookeeperAdmin.html#sc_4lw)
+```shell
+$ nc 127.0.0.1 2181
+ruok
+ruok is not executed because it is not in the whitelist.
+```
+Note: Moving forward, Four Letter Words will be deprecated, please use AdminServer instead.
+* [The AdminServer](https://zookeeper.apache.org/doc/r3.6.1/zookeeperAdmin.html#sc_adminserver)
