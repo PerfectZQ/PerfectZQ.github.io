@@ -55,6 +55,8 @@ maxClientCnxns=1000
 #autopurge.purgeInterval=1
 
 standaloneEnabled=false
+# https://zookeeper.apache.org/doc/r3.6.0/zookeeperReconfig.html
+# https://blog.csdn.net/u012421093/article/details/105313699
 #reconfigEnabled=true
 #dynamicConfigFile=/opt/apache-zookeeper-3.6.1-bin/conf/zoo.cfg.dynamic
 
