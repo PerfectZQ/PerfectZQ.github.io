@@ -30,8 +30,7 @@ $ kubectl create -f just-single-config-file.yaml
 ```
 
 ## Kubernetes Cluster Architecture
-* [kubernetes basic concepts](https://kubernetes.io/docs/concepts/)
-* [kubernetes components introduction](https://kubernetes.io/docs/concepts/overview/components/)
+* [Kubernetes Cluster Architecture](https://kubernetes.io/docs/concepts/architecture/)
 
 集群是一组节点，它可以是物理服务器或者虚拟机，其上安装了 kubernetes 所需要的组件，如下图所示。
 
