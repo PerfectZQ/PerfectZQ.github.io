@@ -125,7 +125,7 @@ spec:
 ```
 关于`metadata`的详细说明会可以参考[api-conventions-metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)
 
-不同类型 object 的规范在定义上是有区别的，比如有些 object 会包含特有的字段，**所有类型的 object 的 spec 说明都通过[kubernetes-api](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/)找到**
+不同类型 object 的规范在定义上是有区别的，比如有些 object 会包含特有的字段，**所有类型的 object 的 spec 使用说明都可以通过[kubernetes-api](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/)找到**
 
 可以通过下面的命令来将`.yaml`作为参数传递
 ```shell
@@ -157,13 +157,13 @@ Pod 本身不会自我修复，尽管可以直接使用 Pod，但在 kubernetes 
 对于 pod 的一些配置可以参考：[configure-pod-container](https://kubernetes.io/docs/tasks/configure-pod-container/)
 
 ### ConfigMaps
-[Configure a pod to use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)
+* [Configure a pod to use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)
 
 使用`kubectl cerate configmap`从[directories](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-directories)、[files](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-files)、[literal values](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-configmaps-from-literal-values)创建ConfigMap。
 
 ```shell
-# <map-name>是分配给configmap的name
-# <data-source>是要提取数据的源，可以是目录、文件或文字值
+# <map-name> 是分配给configmap的name
+# <data-source> 是要提取数据的源，可以是目录、文件或文字值
 $ kubectl cerate configmap <map-name> <data-source>
 ```
 
