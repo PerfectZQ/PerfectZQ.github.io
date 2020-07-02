@@ -69,6 +69,9 @@ apiserver 通过 http 连接与 nodes, pods and services 交互
 1. [kubelet](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/)：与 kubernetes master 交互。
 2. [kube-proxy](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/)：网络代理，反射了每个节点上的 network services。
 
+## Standardized Glossary
+* [Standardized Glossary](https://kubernetes.io/docs/reference/glossary/?fundamental=true) This glossary is intended to be a comprehensive, standardized list of Kubernetes terminology. It includes technical terms that are specific to Kubernetes, as well as more general terms that provide useful context.
+
 ## Kubernetes Objects
 kubernetes object 可以理解为`record of intent`，即一旦你创建了一个 object，那么 kubernetes 就会持续保证有这么一个 object 存在。并不是说这个 object 不会出问题，而是就算出问题了，kubernetes 也会新创建一个新 object，来满足你的`record of intent`。详细的可以参考[understanding kubernetes objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/#understanding-kubernetes-objects)
 
