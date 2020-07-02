@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Ubuntu
+title: Ubuntu Remote Desktop
 tag: Linux
 ---
 
@@ -106,8 +106,12 @@ Starting applications specified in /home/zhangqiang/.vnc/xstartup
 Log file is /home/zhangqiang/.vnc/ubuntu1804:1.log
 Use xtigervncviewer -SecurityTypes VncAuth,TLSVnc -passwd /home/zhangqiang/.vnc/passwd ubuntu1804:1 to connect to the VNC server.
 
+# Close all remote desktops
+$ vncserver -kill :*
+# Close desktop :1
+$ vncserver -kill :1
 
-# Systemd Daemon Config
+# === Systemd Daemon Config (Optional)
 # The @ symbol at the end of the name will let us pass in an argument we can use in the service configuration.
 # We'll use this to specify the VNC display port we want to use when we manage the service.
 $ sudo vim /etc/systemd/system/vncserver@.service
@@ -134,12 +138,6 @@ $ sudo systemctl daemon-reload
 $ sudo systemctl enable vncserver@1.service
 $ sudo systemctl start vncserver@1
 $ sudo systemctl status vncserver@1
-
-
-# Close all remote desktops
-$ vncserver -kill :*
-# Close desktop :1
-$ vncserver -kill :1
 ```
 
 重新安装
