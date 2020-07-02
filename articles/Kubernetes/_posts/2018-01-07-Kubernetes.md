@@ -8,8 +8,12 @@ tag:  Kubernetes
 * [dockone.io](http://www.dockone.io/article/932)
 * [kubernetes.io](https://kubernetes.io/docs/)
 
-## What is kubernetes
-* [what is kubernetes?](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/)
+## Overview
+* [Overview](https://kubernetes.io/docs/concepts/overview/)
+    * [what is kubernetes?](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/)
+    * [Kubernetes Components](https://kubernetes.io/docs/concepts/overview/components/)
+    * [The Kubernetes API](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)
+    * [Working with Kubernetes Objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/)
 
 Kubernetes（k8s）是自动化容器操作的开源平台，包括部署、调度和集群扩展。如果你曾经用过 Docker 容器技术部署容器，那么可以将 Docker 看成 Kubernetes 内部使用的低级别组件。Kubernetes 不仅仅支持 Docker，还支持 Rocket，这是另一种容器技术。
 
@@ -26,6 +30,9 @@ $ kubectl create -f just-single-config-file.yaml
 ```
 
 ## Kubernetes Cluster Architecture
+* [kubernetes basic concepts](https://kubernetes.io/docs/concepts/)
+* [kubernetes components introduction](https://kubernetes.io/docs/concepts/overview/components/)
+
 集群是一组节点，它可以是物理服务器或者虚拟机，其上安装了 kubernetes 所需要的组件，如下图所示。
 
 ![有帮助的截图]({{ site.url }}/assets/kubernetes-cluster.png)
@@ -39,11 +46,7 @@ $ kubectl create -f just-single-config-file.yaml
 * Container
 * Label
 
-详细参考:
-* [kubernetes basic concepts](https://kubernetes.io/docs/concepts/)
-* [kubernetes components introduction](https://kubernetes.io/docs/concepts/overview/components/)
-
-## Kubernetes Master
+### Control Pane(Kubernetes Master)
 Kubernetes Master 是在集群中的单个节点(Node)上运行的三个进程的集合，它被指定为主节点。 这些进程是：
 1. [kube-apiserver](https://kubernetes.io/docs/admin/kube-apiserver/)
 2. [kube-controller-manager](https://kubernetes.io/docs/admin/kube-controller-manager/) 
@@ -53,16 +56,16 @@ Kubernetes Master 是在集群中的单个节点(Node)上运行的三个进程�
 1. 从 API Server 到每个 Node 上都会运行的 kubelet 进程。
 2. 通过 API Server 的代理功能 kube-proxy 连到集群的任何 Node、Pod、Service。
 
-### APIServer to Kubelet
+#### APIServer to Kubelet
 主要用于：
 * 获取 pods 的日志
 * attach(通过 kubectl) 到正在运行的 pods 上
 * 提供 kubelet 的端口转发功能
 
-### APIServer to nodes, pods and services
+#### APIServer to nodes, pods and services
 apiserver 通过 http 连接与 nodes, pods and services 交互
 
-## Node
+### Node
 节点（上图橘色方框）是物理或者虚拟机器，作为 Kubernetes Worker（过去称为 Minion）。每个节点都运行如下 Kubernetes 关键组件：
 1. [kubelet](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/)：与 kubernetes master 交互。
 2. [kube-proxy](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/)：网络代理，反射了每个节点上的 network services。
