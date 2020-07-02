@@ -73,7 +73,9 @@ apiserver 通过 http 连接与 nodes, pods and services 交互
 * [Standardized Glossary](https://kubernetes.io/docs/reference/glossary/?fundamental=true) This glossary is intended to be a comprehensive, standardized list of Kubernetes terminology. It includes technical terms that are specific to Kubernetes, as well as more general terms that provide useful context.
 
 ## Kubernetes Objects
-kubernetes object 可以理解为`record of intent`，即一旦你创建了一个 object，那么 kubernetes 就会持续保证有这么一个 object 存在。并不是说这个 object 不会出问题，而是就算出问题了，kubernetes 也会新创建一个新 object，一直满足你的`record of intent`。详细的可以参考[understanding kubernetes objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/#understanding-kubernetes-objects)
+* [understanding kubernetes objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/#understanding-kubernetes-objects)
+
+kubernetes object 可以理解为`record of intent`，即一旦你创建了一个 object，那么 kubernetes 就会持续保证有这么一个 object 存在。并不是说这个 object 不会出问题，而是就算出问题了，kubernetes 也会新创建一个新 object，一直满足你的`record of intent`。
 
 想要操作 kubernetes object，比如创建、修改或者删除，就需要 [Kubernetes API](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)，关于如何使用 API 详细可以参考[api-concepts](https://kubernetes.io/docs/reference/using-api/api-concepts/)
 * 可以使用 command line，通过[kubectl](https://kubernetes.io/docs/reference/kubectl/overview/)调用 API
@@ -85,7 +87,9 @@ Kubernetes API is RESTful - 客户端通过标准 http 谓词(POST、PUT、DELET
     1. Objects: object kind 是意图记录，一旦创建，系统将确保该资源会存在。一个 object 可能具有多个资源，client 可以对这些资源执行增删改查操作。
     2. Lists: list kind 是一种或更多种类资源的集合。List kind 的 name 必须以`List`结尾。所有 list 都需要`items`字段来包含它们返回的对象数组。任何具有`items`字段的类型必须是 list kind。
     3. Simple: simple kind 用于对象和非持久性实体的特定操作
-* Resource: 表示系统实体，可以通过 http 以 JSON 的方式从服务器检索。resources 可以表示为 collections - 一组相同类型的 resources，或者 element - 一个可以通过URL访问的单独的 resource。
+* Resource: 表示系统实体，可以通过 http 以 JSON 的方式从服务器检索。resources 可以表示为 
+    1. collections: 一组相同类型的 resources
+    2. element: 一个可以通过URL访问的单独的 resource。
 * API Group: 一组公开在一起的 resources，在`apiVersion`中显示为`GROUP/VERSION`，例如`policy.k8s.io/v1`
 
 每个 kubernetes object 都包含两个嵌套对象字段，用于控制对象的配置：`对象规范(specification/spec)`和`对象状态`。规范用于描述对象所需状态(对象应该具有怎样的特征)，需要你规定一个规范，提交给 Kubernetes。而状态则是描述对象的实际状态，由 Kubernetes 系统提供和更新。Kubernetes 都时刻监控、管理对象的实际状态，以保证符合规范的所需状态。
