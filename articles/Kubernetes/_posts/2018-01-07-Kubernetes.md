@@ -718,7 +718,7 @@ default   1         48d
 ```
 
 ### Using RBAC Authorization
-[using RBAC authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+* [using RBAC authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
 在 kubernetes 1.6之前，主要的授权策略是 ABAC(Attribute-Based Access Control)。对于ABAC，其实是比较难用的，而且需要 Mastser Node 的 ssh 和 root 文件系统的访问权限，当授权策略发生变化的时候还需要重启 API Server。
 
 在 kubernetes 1.6+，RBAC(Role-based access control)进入 beta 阶段，RBAC 是一种基于用户角色来管理对计算/网络资源访问的方法。[official reference](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
@@ -768,6 +768,8 @@ rules:
 * cluster-scoped resources(like `nodes`)
 * non-resource endpoints(like `/healthz`)
 * namespaced resources(like `pods`) across all namespaces(need to run`kubectl get pods --all-namespace`, for example)
+
+* [What's apiGroups of kubernetes](https://stackoverflow.com/questions/57821065/which-api-group-in-k8s)
 
 下面是一个`ClusterRole`的示例，可用于授予对任何特定 namespace 或所有 namespaces 中`secrets`的读取权限(取决于它的绑定方式)：
 ```yaml
