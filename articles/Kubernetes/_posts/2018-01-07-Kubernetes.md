@@ -269,6 +269,9 @@ $ kubectl create configmap game-config-env-file \
 
 >Note:当使用多次 --from-env-file 指定多个 env 文件创建 configmap 时，只有最后一个 env 文件可以生效！
 
+### Secret
+* [Secret](https://kubernetes.io/docs/concepts/configuration/secret/): A Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key. 
+
 
 ### Service
 * 假设我们创建了一组 Pod 的副本，那么在这些副本上如何进行负载均衡？
