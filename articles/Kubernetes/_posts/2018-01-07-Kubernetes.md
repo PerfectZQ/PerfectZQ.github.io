@@ -769,7 +769,7 @@ rules:
 * non-resource endpoints(like `/healthz`)
 * namespaced resources(like `pods`) across all namespaces(need to run`kubectl get pods --all-namespace`, for example)
 
-* [What's apiGroups of kubernetes](https://stackoverflow.com/questions/57821065/which-api-group-in-k8s)
+* [What's apiGroups of kuber](https://stackoverflow.com/questions/57821065/which-api-group-in-k8s)
 
 下面是一个`ClusterRole`的示例，可用于授予对任何特定 namespace 或所有 namespaces 中`secrets`的读取权限(取决于它的绑定方式)：
 ```yaml
@@ -1099,3 +1099,11 @@ lrwxrwxrwx 1 root root 165 9月   5 17:05 /var/log/pods/7f3ce883-acc8-11e8-b97b-
 
 从上面可以看出最终实际的日志文件在`/var/lib/docker/containers`下面，实质还是 docker container 中的日志文件。
 
+## Scheduling and Eviction
+* [Scheduling and Eviction](https://kubernetes.io/docs/concepts/scheduling-eviction/)
+### Kubernetes Scheduler
+* [Kubernetes Scheduler](https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/)
+### Taints and Tolerations
+* [Taints and Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)
+### Assigning Pods to Nodes
+* [Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/)
