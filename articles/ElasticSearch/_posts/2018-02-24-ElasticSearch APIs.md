@@ -761,6 +761,7 @@ PUT _ilm/policy/logs_expire_policy
 
 [创建一个 index template](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html)，指定`index.lifecycle.name`
 ```
+// 对于 index name 为 logs-* 的索引，使用 logs_expire_policy ilm，优先级为 10
 PUT _template/logs_date_detection
 {
     "order" : 10,

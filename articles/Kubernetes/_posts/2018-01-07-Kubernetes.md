@@ -272,6 +272,41 @@ $ kubectl create configmap game-config-env-file \
 ### Secret
 * [Secret](https://kubernetes.io/docs/concepts/configuration/secret/): A Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key. 
 
+```shell
+# 直接创建 secret，这种方式下特殊字符，例如 $、\、! 需要转义例如 S!B\*d$zDsb 需要写为 --from-literal=password=S\!B\\*d\$zDsb
+$ kubectl create secret generic "db-user-pass" --from-literal=username=admin --from-literal=password=1f2d1e2e67df
+
+# 从文件创建 secrete，这种方式特殊字符不需要转义
+$ echo -n 'admin' > ./username.txt
+$ echo -n '1f2d1e2e67df' > ./password.txt
+$ kubectl create secret generic "db-user-pass" --from-file=./username.txt --from-file=./password.txt
+
+# 查看 secret
+$ kubectl get secrets
+NAME                  TYPE                                  DATA      AGE
+db-user-pass          Opaque                                2         51s
+
+$ kubectl describe secrets/db-user-pass
+Name:            db-user-pass
+Namespace:       default
+Labels:          <none>
+Annotations:     <none>
+
+Type:            Opaque
+
+Data
+====
+password.txt:    12 bytes
+username.txt:    5 bytes
+```
+
+base64 编码
+```shell
+# base64 编码
+$ echo -n 'admin' | base64
+# base64 解码
+$ echo 'MWYyZDFlMmU2N2Rm' | base64 --decode
+```
 
 ### Service
 * 假设我们创建了一组 Pod 的副本，那么在这些副本上如何进行负载均衡？
@@ -1110,3 +1145,9 @@ lrwxrwxrwx 1 root root 165 9月   5 17:05 /var/log/pods/7f3ce883-acc8-11e8-b97b-
 * [Taints and Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)
 ### Assigning Pods to Nodes
 * [Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/)
+
+
+## Extend the Kubernetes API with CustomResourceDefinitions
+* [Extend the Kubernetes API with CustomResourceDefinitions](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions)
+### Create a CustomResourceDefinition
+* [Create a CustomResourceDefinition](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#create-a-customresourcedefinition)
