@@ -254,17 +254,17 @@ elasticsearch.password: "<pwd>"
 
 ### X-Pack 的功能的启用与禁止
 X-Pack的功能默认是都启用的，可以在`$ES_HOME/config/elasticsearch.yml`完全禁用某些功能。
-* **Machine Learning：** `xpack.ml.enabled: false`。[详细配置项介绍](https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-settings.html)
-* **Monitoring：** `xpack.monitoring.enabled: false`。[详细配置项介绍](https://www.elastic.co/guide/en/elasticsearch/reference/current/monitoring-settings.html)
-* **Security：** `xpack.security.enabled: false`。[详细配置项介绍](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-settings.html)
-* **Watcher：** `xpack.watcher.enabled: false`。[详细配置项介绍](https://www.elastic.co/guide/en/elasticsearch/reference/current/notification-settings.html)
+* [Machine Learning](https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-settings.html)：`xpack.ml.enabled: false`。
+* [Monitoring](https://www.elastic.co/guide/en/elasticsearch/reference/current/monitoring-settings.html)：`xpack.monitoring.enabled: false`。
+* [Security](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-settings.html)：`xpack.security.enabled: false`。
+* [Watcher](https://www.elastic.co/guide/en/elasticsearch/reference/current/notification-settings.html)：`xpack.watcher.enabled: false`。
 
 下面这些功能可以在`$ES_HOME/config/kibana.yml`中禁止，kibana页面中不会显示这些功能，但并没有真正禁用。
-* **Reporting：** `xpack.reporting.enabled: false`。[详细配置项介绍](https://www.elastic.co/guide/en/kibana/current/reporting-settings-kb.html)
-* **Security：** `xpack.security.enabled: false`。[详细配置项介绍](https://www.elastic.co/guide/en/kibana/current/security-settings-kb.html)
-* **Development Tools** [详细配置项介绍](https://www.elastic.co/guide/en/kibana/current/dev-settings-kb.html)
-* **Graph** `xpack.graph.enabled: false`
-* **Machine Learning** `xpack.ml.enabled: false`
+* [Reporting](https://www.elastic.co/guide/en/kibana/current/reporting-settings-kb.html)： `xpack.reporting.enabled: false`。
+* [Security](https://www.elastic.co/guide/en/kibana/current/security-settings-kb.html)： `xpack.security.enabled: false`。
+* [Development Tools](https://www.elastic.co/guide/en/kibana/current/dev-settings-kb.html)
+* Graph: `xpack.graph.enabled: false`
+* Machine Learning: `xpack.ml.enabled: false`
 
 
 ## Secure Elasticsearch Cluster(7.0+)
