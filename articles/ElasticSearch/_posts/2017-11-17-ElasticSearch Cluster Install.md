@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ElasticSearch Install
+title: ElasticSearch Cluster Install
 tag: ElasticSearch
 ---
 
