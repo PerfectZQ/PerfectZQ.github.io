@@ -22,7 +22,7 @@ tag: Kafka
 ### 生成证书和密钥
 1. 开启 SSL 加密，首先需要为服务器生成**证书**和**密钥**，可以通过Java的`$JAVA_HOME/bin/keytool`(`Key and Certificate Management Tool`)命令生成。
 ```shell
-# `-alias` 对所有的 keystore(密钥和可信任的证书)的访问都要通过唯一的别名来进行，别名不区分大小写，即别名 Hugo 和 hugo 指的是同一密钥仓库项。
+# `-alias` 对 keystore 存储的 item(密钥/证书) 的访问都要通过唯一的别名来进行，例如删除某个证书。别名不区分大小写，即 caroot 和 CARoot 指的是同一个 item。
 $ keytool -keystore server.keystore.jks -alias kafkaserver -validity {validity} -genkey -keyalg RSA -destkeystoretype pkcs12 -ext SAN=DNS:{FQDN},IP:{IPADDRESS1}
 # 注意下面这项要与机器的完全限定域名（FQDN）相同，Client 会拿(CN)与(DNS)域名进行比较以确保它确实连接到所需的服务器，而不是恶意的服务器。
 # 因此需要保证公用名(CN)与服务器的完全限定域名(FQDN) 精确相匹配，
