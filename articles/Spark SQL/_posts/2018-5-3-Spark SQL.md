@@ -4,6 +4,12 @@ title: Spark SQL
 tag: Spark SQL
 ---
 
+## SQLConf 源码
+```scala
+// 定义了 SparkSQL 的配置属性
+org.apache.spark.sql.internal.SQLConf
+```
+
 ## Built-in Functions
 [Spark SQL, Built-in Functions](http://spark.apache.org/docs/latest/api/sql/index.html)
 
