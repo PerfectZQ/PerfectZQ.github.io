@@ -4,6 +4,12 @@ title: Spark Configuration
 tag: Spark
 ---
 
+## SparkCore Config 源码
+```scala
+// 定义了 Spark Core 的配置属性
+org.apache.spark.internal.config
+```
+
 ## 参考
 [Spark Configuration](http://spark.apache.org/docs/latest/configuration.html)
 
@@ -28,7 +34,7 @@ $ spark-submit \
     --class com.xxxx.xxx.xxxxxx \
     --master yarn \
     --deploy-mode client \
-    --conf spark.eventLog.enabled=false \
+    --conf "spark.eventLog.enabled=false" \
     --conf "spark.executor.extraJavaOptions=-XX:+PrintGCDetails -XX:+PrintGCTimeStamps" \
     app.jar
 ```
@@ -45,7 +51,9 @@ val sparkSession = SparkSession.builder.config(conf).getOrCreate
 ```
 
 ## 2 Kind of Spark Properties
-Spark Properties 主要分为两种，一种和 deploy 相关，比如`spark.driver.memory`、`spark.executor.instances`，像这种参数在 runtime(写在程序里面) 的时候已经无效了，因为要先分配总的资源(资源限定，已经分给你的资源具体怎么用，runtime 决定)，再启动程序。另一种主要是控制 runtime 行为，如`spark.task.maxFailures`，这种就可以在所有位置指定，只不过在优先级低的位置指定会被优先级高的覆盖掉(如果你在多个位置指定过相同 property 的话)。
+Spark Properties 主要分为两种
+1. 一种和 deploy 相关，比如`spark.driver.memory`、`spark.executor.instances`，像这种参数在 runtime(写在程序里面) 的时候已经无效了，因为要先分配总的资源(资源限定，已经分给你的资源具体怎么用，runtime 决定)，再启动程序。
+2. 另一种主要是控制 runtime 行为，如`spark.task.maxFailures`，这种就可以在所有位置指定，只不过在优先级低的位置指定会被优先级高的覆盖掉(如果你在多个位置指定过相同 property 的话)。
 
 ## View Spark Properties
 可以在`http://<driver>:4040`的`Environment`页查看，从这里可以确定之前指定的参数是否都生效了。

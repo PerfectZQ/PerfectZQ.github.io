@@ -8,6 +8,7 @@ tag: Spark SQL
 ```scala
 // 定义了 SparkSQL 的配置属性
 org.apache.spark.sql.internal.SQLConf
+org.apache.spark.sql.internal.StaticSQLConf
 ```
 
 ## Built-in Functions
