@@ -524,6 +524,18 @@ statefulSet 管理一组 pods 的部署和扩展，并提供这些 pods 排序�
 
 在上文中，稳定是指可跨 pod 持久性的调度/重新调度。如果应用程序不需要任何稳定标识符或者有序部署、删除或扩展，则应该使用一组无状态的副本的控制器来部署应用程序，例如 Deployment 或 ReplicaSet。 
 
+DNS Name 命名规则: `$podName.$headlessServiceName.$namespace.svc.$clusterDomain` e.g.: `clickhouse-{{$i}}.clickhouse.dlink-prod.svc.cluster.local` 最简单的方式是直接 exec 到 pod 中直接查看
+```shell
+$ cat /etc/hosts
+127.0.0.1       localhost
+::1     localhost ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+fe00::0 ip6-mcastprefix
+fe00::1 ip6-allnodes
+fe00::2 ip6-allrouters
+10.244.194.173  clickhouse-0.clickhouse.dlink-prod.svc.cluster.local    clickhouse-0
+```
+
 #### DaemonSet
 [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) 确保所有(或某些指定的) Node 会运行 Pod 的副本，随着 Node 添加到集群中，他会将 Pod 添加到新的 Node 中，当 Node 从集群中删除时，他也会确保 Pod 会被垃圾收集。删除 DaemonSet 会清除它所创建的 Pod。
 
