@@ -41,7 +41,7 @@ create mode 100644 reset_lifecycle_file
 ```
 
 ### The Working Directory
-Working Directory 与本地文件系统同步，代表对文件和目录中内容的立即更改。可以简单理解为本地文件存放的位置。
+Working Directory 与本地文件系统同步，代表对目录和文件中内容的立即更改，可以简单理解为本地项目代码文件的实时映射。
 
 ```shell
 # 修改 reset_lifecycle_file 文件内容
@@ -58,7 +58,7 @@ Changes not staged for commit:
 ```
 
 ### Staging Index
-Staging Index 用于跟踪由`git add`添加的 Working Directory 的变更，这些变更会在下一次`git commit`时被存储。Staging index 是一个复杂的内部缓存机制。 Git 通常试图向用户隐藏 Staging index 的实现细节。为了准确查看暂存索引的状态，我们必须利用鲜为人知的Git命令`git ls-files`。 `git ls-files`命令本质上是一个调试实用程序，用于检查暂存索引树的状态。
+Staging Index 用于跟踪在 Working Directory 中，由`git add`添加的变更，这些变更会在下一次`git commit`时被存储。Staging index 是一个复杂的内部缓存机制。 Git 通常试图向用户隐藏 Staging index 的实现细节。为了准确查看暂存索引的状态，我们必须利用鲜为人知的Git命令`git ls-files`。 `git ls-files`命令本质上是一个调试实用程序，用于检查暂存索引树的状态。
 
 ```shell
 # 查看处于 Staging Index 的文件列表，-s, --stage 展示额外的元数据信息。
