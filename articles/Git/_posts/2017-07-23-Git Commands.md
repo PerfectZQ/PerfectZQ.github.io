@@ -16,11 +16,14 @@ tag: Git
 $ git [command] -h,--help
 ```
 
+## Git 的大致流程
+![有帮助的截图]({{ site.url }}/assets/git_flow.image)
+
 ## Git 的三种内部状态管理机制
 要理解 Git 的原理，我们就需要了解 Git 的三种内部状态管理的机制
-* Commit Tree(Head)
-* The Staging Index
 * The Working Directory
+* The Staging Index
+* Commit Tree(Head)
 
 理解了这些，对于我们理解和使用命令有很大的帮助。首先我们先做一下准备工作
 ```shell
@@ -37,7 +40,7 @@ create mode 100644 reset_lifecycle_file
 ```
 
 ### The Working Directory
-Working Directory 与本地文件系统同步，代表对文件和目录中内容的立即更改。
+Working Directory 与本地文件系统同步，代表对文件和目录中内容的立即更改。可以简单理解为本地文件存放的位置。
 
 ```shell
 # 修改 reset_lifecycle_file 文件内容
@@ -75,7 +78,7 @@ $ git ls-files -s
 100644 d7d77c1b04b5edd5acfc85de0b592449e5303770 0 reset_lifecycle_file
 ```
 ### Commit History
-`git commit`命令把变更添加到 Commit History 中的永久快照，快照还包括提交时 Staging Index 的状态。
+`git commit`命令把变更添加到 Commit History 中的永久快照，快照还包括提交时 Staging Index 的状态。提交后，代码就保存到了`Local Repository`
 
 ```shell
 $ git commit -am"update content of reset_lifecycle_file"
