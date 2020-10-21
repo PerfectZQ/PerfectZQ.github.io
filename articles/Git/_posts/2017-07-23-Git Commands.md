@@ -22,9 +22,9 @@ $ git [command] -h,--help
 
 ## Git 的三种内部状态管理机制
 要理解 Git 的原理，我们就需要了解 Git 的三种内部状态管理的机制
-* The Working Directory
-* The Staging Index
-* Commit Tree(Head)
+* The Working Directory -> Workspace
+* The Staging Index -> Index
+* Commit Tree(Head) -> Local Repository
 
 理解了这些，对于我们理解和使用命令有很大的帮助。首先我们先做一下准备工作
 ```shell
