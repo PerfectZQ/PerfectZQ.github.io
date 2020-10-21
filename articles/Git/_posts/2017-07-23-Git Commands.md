@@ -9,6 +9,7 @@ tag: Git
 * [Pro Git -  Scott Chacon & Ben Straub](https://git-scm.com/book/en/v2)
 * [Become a git guru](https://www.atlassian.com/git/tutorials)
 * [Git scm](https://git-scm.com/book/zh/v2)
+* [一张脑图带你掌握Git命令](https://juejin.im/post/6869519303864123399#heading-2)
 
 ## 查看命令介绍
 ```shell
