@@ -23,8 +23,14 @@ $ PGPASSWORD=postgresadmin2020 psql -U postgres
 > \c exampledb
 # 列出表名 SELECT tablename FROM pg_tables WHERE tablename NOT LIKE 'pg%' AND tablename NOT LIKE 'sql_%' ORDER BY tablename;
 > \dt
-# 删除数据库
+# 删除数据库 https://www.postgresqltutorial.com/postgresql-drop-database/
 > DROP DATABASE exampledb;
+# Drop a database that has active connections:
+# First, find the activities associated with the database by querying the pg_stat_activity view:
+> SELECT * FROM pg_stat_activity WHERE datname = '<database_name>';
+# Second, terminate the active connections by issuing the following query:
+> SELECT pg_terminate_backend (pid) FROM pg_stat_activity WHERE	pg_stat_activity.datname = '<database_name>';
+> DROP DATABASE <database_name>;
 # 删除用户
 > DROP USER dbuser;
 # 修改用户密码
