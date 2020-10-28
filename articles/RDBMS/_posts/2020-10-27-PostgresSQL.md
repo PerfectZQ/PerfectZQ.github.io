@@ -17,12 +17,14 @@ $ PGPASSWORD=postgresadmin2020 psql -U postgres
 > CREATE DATABASE exampledb OWNER dbuser;
 # 将 exampledb 数据库的所有权限都赋予 dbuser，否则 dbuser 只能登录控制台，没有任何数据库操作权限。
 > GRANT ALL PRIVILEGES ON DATABASE exampledb to dbuser;
+
 # 列出数据库名 SELECT datname FROM pg_database;
 > \l
 # 切换数据库相当于 use dbname
 > \c exampledb
 # 列出表名 SELECT tablename FROM pg_tables WHERE tablename NOT LIKE 'pg%' AND tablename NOT LIKE 'sql_%' ORDER BY tablename;
 > \dt
+
 # 删除数据库 https://www.postgresqltutorial.com/postgresql-drop-database/
 > DROP DATABASE exampledb;
 # Drop a database that has active connections:
@@ -31,10 +33,12 @@ $ PGPASSWORD=postgresadmin2020 psql -U postgres
 # Second, terminate the active connections by issuing the following query:
 > SELECT pg_terminate_backend (pid) FROM pg_stat_activity WHERE	pg_stat_activity.datname = '<database_name>';
 > DROP DATABASE <database_name>;
+
 # 删除用户
 > DROP USER dbuser;
 # 修改用户密码
 > ALTER USRE dbuser PASSWORD '123456';
+
 # 退出 cli，或者 ctrl + d
 > \q
 
