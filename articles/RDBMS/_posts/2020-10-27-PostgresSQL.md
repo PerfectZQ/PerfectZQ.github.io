@@ -24,7 +24,7 @@ $ PGPASSWORD=postgresadmin2020 psql -U postgres
 # 删除用户
 > DROP USER dbuser;
 # 修改用户密码
-> ALTER USRE dbuser PSSWORD '123456';
+> ALTER USRE dbuser PASSWORD '123456';
 # 退出 cli，或者 ctrl + d
 > \q
 
