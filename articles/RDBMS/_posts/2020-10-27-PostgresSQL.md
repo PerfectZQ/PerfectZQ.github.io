@@ -17,8 +17,12 @@ $ PGPASSWORD=postgresadmin2020 psql -U postgres
 > CREATE DATABASE exampledb OWNER dbuser;
 # 将 exampledb 数据库的所有权限都赋予 dbuser，否则 dbuser 只能登录控制台，没有任何数据库操作权限。
 > GRANT ALL PRIVILEGES ON DATABASE exampledb to dbuser;
+# 列出数据库名 SELECT datname FROM pg_database;
+> \l
 # 切换数据库相当于 use dbname
-> \c dbname
+> \c exampledb
+# 列出表名 SELECT tablename FROM pg_tables WHERE tablename NOT LIKE 'pg%' AND tablename NOT LIKE 'sql_%' ORDER BY tablename;
+> \dt
 # 删除数据库
 > DROP DATABASE exampledb;
 # 删除用户
