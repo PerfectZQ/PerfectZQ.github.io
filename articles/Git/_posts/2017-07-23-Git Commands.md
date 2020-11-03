@@ -304,7 +304,7 @@ my version 1.4
 
 commit 024a6490b37326ab39ee0cbb88cc449f6ff6f6df (HEAD -> my_branch, tag: v1.4)
 
-# push tag
+# push 所有 tags 到远程库
 $ git push --tags
 ```
 
