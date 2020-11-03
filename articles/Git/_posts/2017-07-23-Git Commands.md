@@ -303,6 +303,9 @@ Date:   Fri Apr 26 19:39:51 2019 +0800
 my version 1.4
 
 commit 024a6490b37326ab39ee0cbb88cc449f6ff6f6df (HEAD -> my_branch, tag: v1.4)
+
+# push tag
+$ git push --tags
 ```
 
 ## 操作远程库
