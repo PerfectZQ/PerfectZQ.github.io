@@ -232,6 +232,9 @@ $ git add conflict_file
 $ git commit -m "fix conflicts"
 $ git push
 
+# 当遇到 conflicts，放弃 merging
+$ git reset --hard HEAD
+
 # 将 dev/zhangqiang 分支的所有 commits merge 到当前分支(master)，但合并的时候只保留一条 commit 记录
 $ git checkout master
 # --squash 会暂停 commits 提交，并将所有的 commits 压缩为一条 commit 不加 --squash 参数的话默认会自
