@@ -462,6 +462,9 @@ deployment.extensions "busybox" deleted
 container 中的文件是短暂的，当 container 崩溃后 kubelet 会重新启动它，但是文件会丢失。volume 用来持久化文件，并在 container 之间共享它们。
 
 kubernetes 支持很多类型的 volumes，如 configMap、hostPath、local、secret 等等。详细的说明可以参考[official reference](https://kubernetes.io/docs/concepts/storage/volumes/)
+#### storage class (sc)
+#### persist volume (pv)
+#### persist volume claim (pvc) 
 
 ### Namespace
 kubernetes 支持由统一物理集群支持的多个虚拟集群。这些虚拟集群就称为[Namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)。
