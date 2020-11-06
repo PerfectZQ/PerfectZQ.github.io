@@ -134,6 +134,16 @@ indices.breaker.request.limit + indices.breaker.fielddata.limit < indices.breake
 脚本编译断路器与前面的基于内存的断路器略有不同，它限制了一段时间内内联脚本编译的次数。See the "prefer-parameters" section of the [scripting](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-using.html) documentation for more information.
 * `script.max_compilations_rate`: Limit for the number of unique dynamic scripts within a certain interval that are allowed to be compiled. Defaults to 75/5m, meaning 75 every 5 minutes.
 
+### this action would add [6] total shards, but this cluster currently has [3000]/[3000] maximum shards open;
+```
+PUT _cluster/settings
+{
+  "transient":{
+    "cluster.max_shards_per_node": 65535
+  }
+}
+```
+
 ## Kibana
 ### 启动 Kibana 后无法正常访问页面
 
