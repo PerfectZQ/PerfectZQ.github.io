@@ -18,7 +18,6 @@ $ source ~/.zshrc
 
 # 彩色高亮 ls
 $ gem install colorls
-
 # 添加到 zsh plugins 
 $ [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 ```
