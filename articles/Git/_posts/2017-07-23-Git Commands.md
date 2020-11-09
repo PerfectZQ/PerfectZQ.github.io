@@ -158,6 +158,12 @@ $ cat ~/.gitconfig
 $ git config --system --unset credential.helper
 ```
 
+## 下载已有项目
+```shell
+# 克隆已有项目到本地，并重命名，不指定默认为 dataplat-meta
+$ git clone https://gitlab.bj.example.com/plat-bigdata/dataplat-meta.git dlink-metadata
+```
+
 ## 分支
 ### 查看分支
 ```shell
