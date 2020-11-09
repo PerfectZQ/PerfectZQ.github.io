@@ -5,6 +5,38 @@ tag: Linux
 ---
 
 ## OSX
+### install zsh
+```shell
+# 方式一:
+$ brew install zsh 
+# 切换默认 $SHELL
+$ chsh -s /bin/zsh
+# 切换回来
+$ chsh -s /bin/bash
+
+# 方式二: curl 代码库克隆到 ~/.oh-my-zsh 下
+$ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+### 安装 zsh 主题
+```shell
+# 下载主题
+$ git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+# 配置 zsh 
+$ vim ~/.zshrc
+# 配置主题
+ZSH_THEME="powerlevel9k/powerlevel9k"
+# 设置 powerlevel9k 的字体为之前下载的 non ascii 字体
+POWERLEVEL9K_MODE="nerdfont-complete"
+# 自定义命令行左边元素
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(ssh dir vcs newline status)
+# 删掉命令行右边元素
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
+# 命令前加换行，这样输入的命令就会在另一行
+POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+
+$ source ~/.zshrc
+```
 ### zsh plugins
 ```shell
 # 代码自动提示，当自动提示出现后，按 ➡ (右方向键)就能把自动提示的命令输入到当前的 Terminal
@@ -15,11 +47,13 @@ $ brew info zsh-autosuggestions
 $ echo  "source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc
 $ source ~/.zshrc
 
-
 # 彩色高亮 ls
 $ gem install colorls
-# 添加到 zsh plugins 
-$ [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+# 改别名
+$ echo "alias ls='colorls'" >> ~/.zshrc
+$ echo "alias ll='ls -l'" >> ~/.zshrc
+$ echo "alias grep='grep --color=auto'" >> ~/.zshrc
+$ source ~/.zshrc
 ```
 ### zsh common plugins enable
 ```shell
@@ -36,6 +70,36 @@ plugins=(
    git-open
 )
 $ source ~/.zshrc
+```
+
+### 安装 iterm2
+```shell
+# cask 安装第三方库中的软件
+$ brew cask install iterm2
+# 下载配色
+$ mkdir ~/.iterm2 && cd ~/.iterm2
+$ git clone https://github.com/mbadolato/iTerm2-Color-Schemes
+# 导入配色
+Preferences -> Profiles -> Color Presets -> Import -> ~/.iterm2/iTerm2-Color-Schemes/schemes
+# 选定配色
+Preferences -> Profiles -> Color Presets -> Batman
+```
+### 安装 Non ASCII 图标字体
+* [nerd-fonts](https://github.com/ryanoasis/nerd-fonts)
+```shell
+# 添加第三方字体库
+$ brew tap homebrew/cask-fonts
+# 安装字体
+$ brew cask install font-hack-nerd-font
+# 启用 non-ASCII text
+Iterm2 -> Preferences -> Profiles -> -> Text -> Font -> Use a different font for non-ASCII text
+# 设置字体
+Hack Nerd Font Mono
+```
+### VSCode Font
+```shell
+"terminal.integrated.fontFamily": "Hack Nerd Font Mono",
+"terminal.integrated.fontSize": 14,
 ```
 
 ## Ubutun
