@@ -5,7 +5,7 @@ tag: Linux
 ---
 
 ## OSX
-### install zsh
+### 安装 zsh
 ```shell
 # 方式一:
 $ brew install zsh 
@@ -16,6 +16,32 @@ $ chsh -s /bin/bash
 
 # 方式二: curl 代码库克隆到 ~/.oh-my-zsh 下
 $ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+### 安装 iterm2
+```shell
+# cask 安装第三方库中的软件
+$ brew cask install iterm2
+# 下载配色
+$ mkdir ~/.iterm2 && cd ~/.iterm2
+$ git clone https://github.com/mbadolato/iTerm2-Color-Schemes
+# 导入配色
+Preferences -> Profiles -> Color Presets -> Import -> ~/.iterm2/iTerm2-Color-Schemes/schemes
+# 选定配色
+Preferences -> Profiles -> Color Presets -> Batman
+```
+
+### 安装 Non ASCII 图标字体
+* [nerd-fonts](https://github.com/ryanoasis/nerd-fonts)
+```shell
+# 添加第三方字体库
+$ brew tap homebrew/cask-fonts
+# 安装字体
+$ brew cask install font-hack-nerd-font
+# 启用 non-ASCII text
+Iterm2 -> Preferences -> Profiles -> -> Text -> Font -> Use a different font for non-ASCII text
+# 设置字体
+Hack Nerd Font Mono / Italic / Font Size 13 / v|i 100 n|n 101
 ```
 
 ### 安装 zsh 主题
@@ -72,30 +98,7 @@ plugins=(
 $ source ~/.zshrc
 ```
 
-### 安装 iterm2
-```shell
-# cask 安装第三方库中的软件
-$ brew cask install iterm2
-# 下载配色
-$ mkdir ~/.iterm2 && cd ~/.iterm2
-$ git clone https://github.com/mbadolato/iTerm2-Color-Schemes
-# 导入配色
-Preferences -> Profiles -> Color Presets -> Import -> ~/.iterm2/iTerm2-Color-Schemes/schemes
-# 选定配色
-Preferences -> Profiles -> Color Presets -> Batman
-```
-### 安装 Non ASCII 图标字体
-* [nerd-fonts](https://github.com/ryanoasis/nerd-fonts)
-```shell
-# 添加第三方字体库
-$ brew tap homebrew/cask-fonts
-# 安装字体
-$ brew cask install font-hack-nerd-font
-# 启用 non-ASCII text
-Iterm2 -> Preferences -> Profiles -> -> Text -> Font -> Use a different font for non-ASCII text
-# 设置字体
-Hack Nerd Font Mono
-```
+
 ### VSCode Font
 ```shell
 "terminal.integrated.fontFamily": "Hack Nerd Font Mono",
