@@ -137,7 +137,9 @@ Query id: 4b2c4bbf-1cbe-4cfc-9801-b8b85c371fdf
 
 ### Reference
 * [ClickHouse 插入数据成功但是没有数据的问题](https://blog.csdn.net/cwg_1992/article/details/100691109)
+* [ClickHouse/issues#2712](https://github.com/ClickHouse/ClickHouse/issues/2712)
 * [ClickHouse settings-insert-deduplicate ](https://clickhouse.tech/docs/en/operations/settings/settings/#settings-insert-deduplicate)
+* [Data Replication](https://clickhouse.tech/docs/en/engines/table-engines/mergetree-family/replication/)
 
 ### Solved
 ```shell
