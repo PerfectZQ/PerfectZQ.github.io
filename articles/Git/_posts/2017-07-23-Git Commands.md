@@ -144,6 +144,15 @@ $ git config --global user.name "zhangqiang"
 $ git config --global user.email "inteli_zq@163.com"
 
 # 在 config 中配置用户名密码
+# ==== 方式1: 
+# 设置记住密码，长期
+$ git config --global credential.helper store
+# 下次输入用户名和密码的时候就会自动保存明文密码到 ~/.git-credentials
+# 设置记住密码，默认 15 分钟后失效
+$ git config --global credential.helper cache
+# 设置记住密码，一个小时之后失效
+$ git config credential.helper 'cache --timeout=3600'
+# ==== 方式2:
 $ echo "http://username:password@gitlab.com" > ~/.git-credentials
 $ git config --global credential.helper 'store --file ~/.git-credentials'
 # 看到如下信息表示成功
@@ -153,6 +162,9 @@ $ cat ~/.gitconfig
         email = zhangqiang@sensetime.com
 [credential]
         helper = store
+# ==== 方式3:
+# 访问远程库地址时带上认证信息，特殊字符可以用 URLEncode 代替，比如 @ 可以用 %40 表示
+http://yourname:password@github/name/project.git
 
 # 重置远程库登录凭证信息，这样在修改密码后就可以重新设置密码了
 $ git config --system --unset credential.helper
