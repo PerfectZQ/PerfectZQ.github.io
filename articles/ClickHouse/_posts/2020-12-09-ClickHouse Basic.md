@@ -37,7 +37,8 @@ $ clickhouse-client \
 $ clickhouse-client --host 172.16.105.16 --port 31234 \
 --user admin --password Dlink@2020 \
 --query "SELECT * FROM external_lineorder" \
---external --file="lineorder.tbl" \
+--external \
+--file=lineorder.tbl \
 --name=external_lineorder \
 –-format=CSV \
 --structure="LO_ORDERKEY UInt32, LO_LINENUMBER UInt8, LO_CUSTKEY UInt32, LO_PARTKEY UInt32, LO_SUPPKEY UInt32, LO_ORDERDATE Date, LO_ORDERPRIORITY LowCardinality(String), LO_SHIPPRIORITY UInt8, LO_QUANTITY UInt8, LO_EXTENDEDPRICE UInt32, LO_ORDTOTALPRICE UInt32, LO_DISCOUNT UInt8, LO_REVENUE UInt32, LO_SUPPLYCOST UInt32, LO_TAX UInt8, LO_COMMITDATE Date, LO_SHIPMODE LowCardinality(String)"
