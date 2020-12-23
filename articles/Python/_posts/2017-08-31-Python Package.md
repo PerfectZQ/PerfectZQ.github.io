@@ -6,12 +6,13 @@ tag: Python
 
 ## Create venv
 ```shell
-# 安装依赖
-$ sudo apt install python3-pip python3-dev build-essential libssl-dev libffi-dev python3-setuptools
-$ sudo apt install python3-venv
-$ mkdir ~/myproject
-$ cd ~/myproject
-# 创建一个 venv 到 myprojectenv 文件夹
+# 安装 python 开发依赖，避免安装依赖时出现类似 command 'x86_64-linux-gnu-gcc' failed 的错误
+$ sudo apt install python3.8-pip python3.8-dev build-essential libssl-dev libffi-dev python3.8-setuptools
+# 安装 venv 配置包
+$ sudo apt install python3.8-venv
+# 创建项目
+$ mkdir ~/myproject && cd ~/myproject
+# 初始化 venv 到 myprojectenv 文件夹
 $ python3.8 -m venv myprojectenv
 # 激活
 $ source myprojectenv/bin/activate
