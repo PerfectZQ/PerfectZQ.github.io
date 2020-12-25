@@ -66,6 +66,8 @@ which python
 
 ### 安装依赖
 ```shell
+# -i 指定镜像源
+# -t 指定安装路径
 $ pip install \
 -i https://pypi.tuna.tsinghua.edu.cn/simple \
 -t C:\Users\zhangqiang\IdeaProjects\airflow-dags-big\venv\Lib\site-packages \

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: logging 模块
+title: Python Logging
 tag: Python
 ---
 

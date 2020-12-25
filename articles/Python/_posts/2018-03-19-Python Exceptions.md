@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Python 异常列表
+title: Python Exceptions
 tag: Python
 ---
 
