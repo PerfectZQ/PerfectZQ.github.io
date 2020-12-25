@@ -22,4 +22,8 @@ WSGI(Web Server Gateway Interface)，Web 服务器网关接口，是 Python 特�
 
 常见基于 WSGI 的 Python Web 程序开发框架有`Flask`、`Django`，一般 Web 开发框架也有内置的 Http 服务器，但一般只限于本地开发使用，到了正是环境一般还是会运行在专业的服务器里面，例如`gunicorn`。
 
+既然定义了标准，那么 WSGI 的标准或规范是啥
+> Web 服务器在将请求转交给 Web 应用程序之前，需要先将 http 报文转换为 WSGI 规定的格式，WSGI 规定，Web 程序必须有一个可调用对象，且该可调用对象接收两个参数，并返回一个可迭代对象：
+* environ：字典，包含请求的所有信息
+* start_response：在可调用对象中调用的函数，用来发起响应，参数包括 status，headers 等
 
