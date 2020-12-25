@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Python安装(Linux)
+title: Python Install
 tag: Python
 ---
 
