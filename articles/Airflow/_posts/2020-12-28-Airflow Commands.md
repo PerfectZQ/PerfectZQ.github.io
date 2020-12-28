@@ -154,3 +154,40 @@ $ airflow backfill senselink-oss-download -s 2020-12-16 -e 2020-12-27 --donot_pi
 ```
 
 > [dagpickle](https://airflow.apache.org/docs/apache-airflow/stable/_api/airflow/models/dagpickle/index.html): Dags can originate from different places (user repos, master repo, ...) and also get executed in different places (different executors). This object represents a version of a DAG and becomes a source of truth for a BackfillJob execution. A pickle is a native python serialized object, and in this case gets stored in the database for the duration of the job. The executors pick up the DagPickle id and read the dag definition from the database.
+
+## clear
+```shell
+$ airflow clear --help
+usage: airflow clear [-h] [-t TASK_REGEX] [-s START_DATE] [-e END_DATE]
+                     [-sd SUBDIR] [-u] [-d] [-c] [-f] [-r] [-x] [-xp] [-dx]
+                     dag_id
+
+positional arguments:
+  dag_id                The id of the dag
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -t TASK_REGEX, --task_regex TASK_REGEX
+                        The regex to filter specific task_ids to backfill
+                        (optional)
+  -s START_DATE, --start_date START_DATE
+                        Override start_date YYYY-MM-DD
+  -e END_DATE, --end_date END_DATE
+                        Override end_date YYYY-MM-DD
+  -sd SUBDIR, --subdir SUBDIR
+                        File location or directory from which to look for the
+                        dag. Defaults to '[AIRFLOW_HOME]/dags' where
+                        [AIRFLOW_HOME] is the value you set for 'AIRFLOW_HOME'
+                        config you set in 'airflow.cfg'
+  -u, --upstream        Include upstream tasks
+  -d, --downstream      Include downstream tasks
+  -c, --no_confirm      Do not request confirmation
+  -f, --only_failed     Only failed jobs
+  -r, --only_running    Only running jobs
+  -x, --exclude_subdags
+                        Exclude subdags
+  -xp, --exclude_parentdag
+                        Exclude ParentDAGS if the task cleared is a part of a
+                        SubDAG
+  -dx, --dag_regex      Search dag_id as regex instead of exact string
+```
