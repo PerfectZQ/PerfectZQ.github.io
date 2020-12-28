@@ -245,12 +245,12 @@ $ kinit admin/admin
 ```shell
 # Close all Chrome windows
 $ vim /usr/bin/google-chrome
-# Replace
+# Replace the last code on bottom
 >>>>>>
 exec -a "$0" "$HERE/chrome" "$@"
 =======================
-# Make sure that the profile directory specified in the environment, if any,
-# overrides the default.
+# Make sure that the profile directory specified in the environment, 
+# if any, overrides the default.
 if [[ -n "$CHROME_USER_DATA_DIR" ]]; then
   # Note: exec -a below is a bashism.
   exec -a "$0" "$HERE/chrome"  \
