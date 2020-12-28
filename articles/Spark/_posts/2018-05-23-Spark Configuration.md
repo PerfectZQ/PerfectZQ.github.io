@@ -64,3 +64,13 @@ Spark Properties 主要分为两种
 spark.driver.cores	1	
 	
 ```
+
+## Spark Memory Management
+一个 Spark 任务提交后，申请的总内存大小为`(spark.driver.memory + spark.driver.memoryOverhead) + spark.executor.instances * (spark.executor.memory + spark.executor.memoryOverhead)`，其中：
+* `spark.executor.instances` <=> `--num-executors`
+* `spark.driver.memory` <=> `--driver-memory`
+* `spark.driver.memoryOverhead` := `spark.driver.memory * MEMORY_OVERHEAD_FACTOR, with minimum of 384`，`MEMORY_OVERHEAD_FACTOR = 0.1` 在 Spark 代码中写死了
+* `spark.executor.memory` <=> `--executor-memory`
+* `spark.executor.memoryOverhead` := `spark.executor.memory * MEMORY_OVERHEAD_FACTOR, with minimum of 384MiB`
+
+当执行`spark-submit`提交到 YARN 时，Executor 运行在 YARN Container，可申请的最大内存受限于`yarn.scheduler.maximum-allocation-mb`
