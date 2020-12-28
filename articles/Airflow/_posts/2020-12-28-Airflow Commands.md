@@ -138,18 +138,19 @@ optional arguments:
                         depend_on_past this option will throw an exception
 ```
 ### donot_pickle
-* [dagpickle](https://airflow.apache.org/docs/apache-airflow/stable/_api/airflow/models/dagpickle/index.html)
+当执行`airflow backfill senselink-oss-download -s 2020-12-16 -e 2020-12-27`报错如下:
+```console
+ERROR - Executor reports task instance <TaskInstance: senselink_oss_download.senselink_ods_mysql_ingestion 2020-12-18 05:00:00+00:00 [queued]> finished (failed) although the task says its queued. Was the task killed externally?
+```
+backfill 的任务直接变成`up_for_retry`状态，而其他的任务都是`scheduled`，但是一直不执行，查看`task_instance`表，`hostname`和`job_id`字段都为空
 
-Dags can originate from different places (user repos, master repo, ...) and also get executed in different places (different executors). This object represents a version of a DAG and becomes a source of truth for a BackfillJob execution. A pickle is a native python serialized object, and in this case gets stored in the database for the duration of the job.
-
-The executors pick up the DagPickle id and read the dag definition from the database.
-
+* [Apache Airflow: Executor reports task instance finished (failed) although the task says its queued](https://stackoverflow.com/questions/56119107/apache-airflow-executor-reports-task-instance-finished-failed-although-the-ta)
 ```shell
 # Pickle 是一个原生的 Python 序列化对象，表示某个版本的 DAG(可以理解为某个版本的 DAG 快照)，当执行 BackfillJob 时，
 # 实际运行的就是某个特定的序列化的 Pickle 对象
 # 指定 --donot_pickle，这样就不会把 airflow 序列化的 pickle 发送给 worker，而是使用 worker 节点自身版本的 DAG。
-# 当更新 DAG 代码时，执行 backfill 有时会出现莫名其妙的错误，大概就跟 pickle 有关，现象是导致 backfill 的任务直接变
-# 成 up_for_retry 状态，而其他的任务都是 scheduled，但是一直不执行，查看 task_instance 表，hostname 和 job_id 
-# 字段都为空
+# 当更新 DAG 代码时，执行 backfill 有时会出现莫名其妙的错误，大概就跟 pickle 有关，现象是
 $ airflow backfill senselink-oss-download -s 2020-12-16 -e 2020-12-27 --donot_pickle
 ```
+
+> [dagpickle](https://airflow.apache.org/docs/apache-airflow/stable/_api/airflow/models/dagpickle/index.html): Dags can originate from different places (user repos, master repo, ...) and also get executed in different places (different executors). This object represents a version of a DAG and becomes a source of truth for a BackfillJob execution. A pickle is a native python serialized object, and in this case gets stored in the database for the duration of the job. The executors pick up the DagPickle id and read the dag definition from the database.
