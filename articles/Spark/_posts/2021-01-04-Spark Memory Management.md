@@ -36,6 +36,21 @@ tag: Spark
 
 Spark Heap Memory 中有两个比较重要的参数
 
+<style>
+table th:first-of-type {
+    width: 30%;
+}
+table th:nth-of-type(2) {
+    width: 10%;
+}
+table th:nth-of-type(3) {
+    width: 50%;
+}
+table th:nth-of-type(4) {
+    width: 10%;
+}
+</style>
+
 | Property Name | Default | Meaning | Since Version |
 | :-------- | :-------- | :-------- | :-------- |
 | spark.memory.fraction | 0.6 | Fraction of (heap space - 300MB) used for execution and storage. The lower this is, the more frequently spills and cached data eviction occur. The purpose of this config is to set aside memory for internal metadata, user data structures, and imprecise size estimation in the case of sparse, unusually large records. Leaving this at the default value is recommended. For more detail, including important information about correctly tuning JVM garbage collection when increasing this value, see [this description](http://spark.apache.org/docs/latest/tuning.html#memory-management-overview). | 1.6.0 | 
