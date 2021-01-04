@@ -54,5 +54,4 @@ spark.streaming.concurrentJobs
 ```
 	
 ## Spark Streaming 运行速度突然下降，经常会有任务延迟和阻塞
-这是因为设置 job 启动i nterval 的时间间隔太短了，导致每次 job 在指定的时间无法正常执行完成，换句话说就是创建的 windows 窗口时间间隔太密集了
-```
+这是因为设置 job 启动 interval 的时间间隔太短了，导致每次 job 在指定的时间无法正常执行完成，换句话说就是创建的 windows 窗口时间间隔太密集了
