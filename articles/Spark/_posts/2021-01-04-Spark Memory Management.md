@@ -21,3 +21,4 @@ Spark 内存由两大部分构成
 * [Apache Spark and off-heap memory](https://www.waitingforcode.com/apache-spark/apache-spark-off-heap-memory/read)
 * [On-heap vs off-heap storage](https://www.waitingforcode.com/off-heap/on-heap-off-heap-storage/read)
 * [Spark Executor内存管理](http://arganzheng.life/spark-executor-memory-management.html)
+* [Spark Memory Management](https://0x0fff.com/spark-memory-management/)
