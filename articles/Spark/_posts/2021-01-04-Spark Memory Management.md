@@ -35,6 +35,7 @@ tag: Spark
 * Reserved Memory: `300MB`，在 Spark 中硬编码写死了，是为系统预留的内存，比如存储 Spark 内部对象。统一内存管理最初版本是没有固定 300M 的设置，但是如果给定的内存较低时，例如 `spark.executor.memory = 1G`，`spark.memory.fraction = 0.75`这样用于 non-storage、non-execution 的内存就只有 250MB，在启动时出现 OOM，因此，对于 Other/User Memory 这部分内存做了修改，先划出 300M 内存。具体可以参考 [SPARK-12081](https://issues.apache.org/jira/browse/SPARK-12081)。
 
 Spark Heap Memory 中有两个比较重要的参数
+
 | Property Name | Default | Meaning | Since Version |
 | :-------- | :-------- | :-------- | :-------- |
 | spark.memory.fraction | 0.6 | Fraction of (heap space - 300MB) used for execution and storage. The lower this is, the more frequently spills and cached data eviction occur. The purpose of this config is to set aside memory for internal metadata, user data structures, and imprecise size estimation in the case of sparse, unusually large records. Leaving this at the default value is recommended. For more detail, including important information about correctly tuning JVM garbage collection when increasing this value, see [this description](http://spark.apache.org/docs/latest/tuning.html#memory-management-overview). | 1.6.0 | 
