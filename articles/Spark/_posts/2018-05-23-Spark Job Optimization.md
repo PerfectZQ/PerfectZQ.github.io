@@ -5,7 +5,9 @@ tag: Spark
 ---
 
 ## References
-[Apache Spark 2.0 作业优化技巧](https://mp.weixin.qq.com/s/C94nFvrp9ALgKVsOmIX7Jw)
+* [Tuning Spark](https://spark.apache.org/docs/latest/tuning.html#tuning-spark)
+* [Apache Spark Memory Management](https://medium.com/analytics-vidhya/apache-spark-memory-management-49682ded3d42)
+* [Apache Spark 2.0 作业优化技巧](https://mp.weixin.qq.com/s/C94nFvrp9ALgKVsOmIX7Jw)
 
 ## reduce task 数目不合适
 调整分区数，设置为core数目的2-3倍，太少运行缓慢或者单个任务太大导致内存不足，数量太多，造成任务太小，增加启动任务的开销，因此需要合理的修改reduce task的数量
@@ -54,5 +56,4 @@ spark.streaming.concurrentJobs
 ```
 	
 ## Spark Streaming 运行速度突然下降，经常会有任务延迟和阻塞
-这是因为设置 job 启动i nterval 的时间间隔太短了，导致每次 job 在指定的时间无法正常执行完成，换句话说就是创建的 windows 窗口时间间隔太密集了
-```
+这是因为设置 job 启动 interval 的时间间隔太短了，导致每次 job 在指定的时间无法正常执行完成，换句话说就是创建的 windows 窗口时间间隔太密集了
