@@ -40,13 +40,6 @@ Spark Heap Memory 中有两个比较重要的参数
 | spark.memory.fraction | 0.6 | Fraction of (heap space - 300MB) used for execution and storage. The lower this is, the more frequently spills and cached data eviction occur. The purpose of this config is to set aside memory for internal metadata, user data structures, and imprecise size estimation in the case of sparse, unusually large records. Leaving this at the default value is recommended. For more detail, including important information about correctly tuning JVM garbage collection when increasing this value, see [this description](http://spark.apache.org/docs/latest/tuning.html#memory-management-overview). | 1.6.0 | 
 | spark.memory.storageFraction | 0.5 | Amount of storage memory immune to eviction, expressed as a fraction of the size of the region set aside by spark.memory.fraction. The higher this is, the less working memory may be available to execution and tasks may spill to disk more often. Leaving this at the default value is recommended. For more detail, see [this description](http://spark.apache.org/docs/latest/tuning.html#memory-management-overview). | 1.6.0 | 
 
-在 Spark 中，Storage 和 Execution 共享一个统一的区域（M）。当不使用 Execution 内存时，Storage 可以获取所有可用内存，反之亦然。如果有必要，Execution 可能会驱逐 Storage 占用的内存，但只有当总的 Storage Memory 使用量下降到某个阈值（R）以下时，才可以执行该操作。换句话说，R 描述了 M 内的一个子区域，在该子区域中，缓存的块从不会被驱逐（但是如果空闲，可以被 Execution 占用）。由于实现的复杂性，Storage 可能无法驱逐退出 Execution。
-
-这种设计确保了几种理想的情况。首先，不使用缓存的应用程序可以将整个空间用于执行，从而避免了不必要的磁盘溢出。其次，使用缓存的应用程序可以保留最小的存储空间（R），以免其数据块被逐出。最后，这种方法可为不同的负载场景提供开箱即用的配置，无需用户了解如何在内部划分内存，只要根据需要改变配置即可。
-
-* `M = (spark.executor.memory - 300MB) * spark.memory.fraction`
-* `R = M * spark.memory.stoargeFraction`
-
 ## Off-Heap Memroy
 对于运行在 JVM 上的数据密集型程序，不良的内存管理可能会增加 GC 的长时停顿，这部分开销也是相当大的。自从 Spark1.6，Spark 引入了 Off-Heap memory (详见[SPARK-11389](https://issues.apache.org/jira/browse/SPARK-11389))，通过编写内存优化的代码并使用堆外内存存储来减少这种影响，这种模式使用 Java 的 unsafe API 直接向操作系统申请内存，堆外内存可以被精确地申请和释放，这样就避免频繁的 GC 内存开销，提升了处理性能；对于序列化数据的占用空间，可以被精确计算，相比堆内内存来说降低了管理的难度。但缺点也很明显，就是要自己写代码管理内存的申请和释放。
 
@@ -54,13 +47,22 @@ Spark 堆外内存默认是关闭的，通过`spark.memory.offHeap.enabled=true`
 
 相比 On-Heap Memroy，Off-Heap Memroy 只包含 Off-Heap Storage Memory 和 Off-Heap Execution Memory，同样也由`spark.memory.storageFraction`控制，堆外内存被启用后，Executor 内将同时存在堆内和堆外内存，这时`Storage Memory = On-Heap Storage Memory + Off-Heap Storage Memory`，同理，`Execution Memory = On-Heap Execution Memory + Off-Heap Execution Memory`。
 
-## Storage Memory
+## Unified Memory Management
+在 Spark 统一内存管理机制中，Storage 和 Execution 共享一个统一的区域（M）。当不使用 Execution 内存时，Storage 可以获取所有可用内存，反之亦然。如果有必要，Execution 可能会驱逐 Storage 占用的内存，但只有当总的 Storage Memory 使用量下降到某个阈值（R）以下时，才可以执行该操作。换句话说，R 描述了 M 内的一个子区域，在该子区域中，缓存的块从不会被驱逐（但是如果空闲，可以被 Execution 占用）。Storage 可能无法驱逐 Execution 占用的内存，因为需要考虑 Shuffle 过程中的很多因素，实现起来较为复杂，而且 Shuffle 过程产生的文件在后面一定会被使用到，而 Cache 在内存的数据不一定在后面使用。详细可以参考 [Unified Memory Management in Spark 1.6](https://www.linuxprobe.com/wp-content/uploads/2017/04/unified-memory-management-spark-10000.pdf)
+
+这种设计确保了几种理想的情况。首先，不使用缓存的应用程序可以将整个空间用于执行，从而避免了不必要的磁盘溢出。其次，使用缓存的应用程序可以保留最小的存储空间（R），以免其数据块被逐出。最后，这种方法可为不同的负载场景提供开箱即用的配置，无需用户了解如何在内部划分内存，只要根据需要改变配置即可。
+
+* `M = (spark.executor.memory - 300MB) * spark.memory.fraction`
+* `R = M * spark.memory.stoargeFraction`
+
+> 上面说的借用对方的内存需要借用方和被借用方的内存类型都一样，都是堆内内存或者都是堆外内存，不存在堆内内存不够去借用堆外内存的空间。
+
+### Storage Memory
 ![有帮助的截图]({{ site.url }}/assets/spark_storage_memory.png)
 
 > Storage Memory = On Heap Storage Memory + Off Heap Storage Memory
-* On Heap Storage Memory = `(spark.executor.memory - 300M) * spark.storage.memoryFraction * spark.storage.safetyFraction`
-* Off Heap Storage Memory = `spark.memory.offHeap.size`
-
+* On-Heap Storage Memory = `(spark.executor.memory - 300M) * spark.memory.fraction * spark.memory.storageFraction`
+* Off-Heap Storage Memory = `spark.memory.offHeap.size * spark.memory.storageFraction`
 
 
 ## Reference
