@@ -59,3 +59,73 @@ $ vim /etc/security/limits.conf
 
 ### Broken pipe
 [从tcp原理角度理解Broken pipe和Connection Reset by Peer的区别](http://lovestblog.cn/blog/2014/05/20/tcp-broken-pipe/)
+
+## 504 Gateway Time-out
+504 错误代表网关超时(Gateway timeout)，是指服务器作为网关或代理将请求转发到下游服务器后没有在规定时间内返回响应。nginx 做反向代理，默认请求是有一个 60 秒的超时，如果 http 请求超过了60秒还没有返回响应，连接就会被 Nginx 中断，客户端就会得到 504 的错误：gateway time-out。
+
+客户端异常信息
+```console
+scalaj.http.HttpStatusException: 504 Error: HTTP/1.1 504 Gateway Time-out
+	at scalaj.http.HttpResponse.throwIf(Http.scala:156) ~[hdfs-download-client-1.1.jar:?]
+	at scalaj.http.HttpResponse.throwError(Http.scala:168) ~[hdfs-download-client-1.1.jar:?]
+	at com.sensetime.hdfs.request.TaskService.parseResponse(TaskService.scala:281) ~[hdfs-download-client-1.1.jar:?]
+	at com.sensetime.hdfs.request.TaskService$$anonfun$1.apply(TaskService.scala:70) ~[hdfs-download-client-1.1.jar:?]
+	at com.sensetime.hdfs.request.TaskService$$anonfun$1.apply(TaskService.scala:70) ~[hdfs-download-client-1.1.jar:?]
+	at com.sensetime.hdfs.tools.Retry$.recursiveAction$1(Retry.scala:25) [hdfs-download-client-1.1.jar:?]
+	at com.sensetime.hdfs.tools.Retry$.retry(Retry.scala:36) [hdfs-download-client-1.1.jar:?]
+	at com.sensetime.hdfs.request.TaskService.createTask(TaskService.scala:69) [hdfs-download-client-1.1.jar:?]
+	at com.sensetime.hdfs.client.DownloadV2$.process(DownloadV2.scala:67) [hdfs-download-client-1.1.jar:?]
+	at com.sensetime.hdfs.client.DownloadV2$.main(DownloadV2.scala:31) [hdfs-download-client-1.1.jar:?]
+	at com.sensetime.hdfs.client.DownloadV2.main(DownloadV2.scala) [hdfs-download-client-1.1.jar:?]
+```
+
+客户端请求
+```scala
+/**
+   * Create a new download task, and return the taskId
+   *
+   * @param token
+   * @param taskName
+   * @param username
+   * @param downloadIp
+   * @param itemList
+   * @return
+   */
+  def createTask(taskName: String, username: String, downloadIp: String, itemList: List[Item])
+                (implicit token: String): String = {
+
+    val req = Http(s"$httpAddress/download_task/createDownloadTask")
+      .header("Authorization", token)
+      .header("Content-Type", "application/json")
+      .header("Charset", "UTF-8")
+      .cookie("login_opencloud_id", username)
+      .option(HttpOptions.connTimeout(connTimeout))
+      // 这里定义了客户端读取超时时间，504 是 Nginx 网关中断的连接，需要修改 Nginx 网关的超时时间
+      .option(HttpOptions.readTimeout(readTimeout))
+      .postData(
+        s"""
+           |{
+           |  "taskName": "$taskName",
+           |  "username": "$username",
+           |  "downloadIp": "$downloadIp",
+           |  "items": ${new GsonBuilder().create().toJson(itemList.asJava)}
+           |}
+           |""".stripMargin)
+    val resp = Retry.retry(maxRetry) {
+      parseResponse(req.asString)
+    }
+    val taskId = resp.body
+    logger.info(s"createTask: TaskId = ${resp.body}")
+    taskId
+
+  }
+```
+
+修改 Nginx 网关 read Timeout
+```shell
+location ~ /arch-long {
+    proxy_pass  http://127.0.0.1:8080;
+    # 设置代理读取超时时间为 3600s，即一个小时
+    proxy_read_timeout  3600;
+}
+```
