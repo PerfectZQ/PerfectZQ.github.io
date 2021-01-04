@@ -60,7 +60,7 @@ Spark 堆外内存默认是关闭的，通过`spark.memory.offHeap.enabled=true`
 ### Storage Memory
 ![有帮助的截图]({{ site.url }}/assets/spark_storage_memory.png)
 
-> Storage Memory = On Heap Storage Memory + Off Heap Storage Memory
+Storage Memory = On Heap Storage Memory + Off Heap Storage Memory
 * On-Heap Storage Memory = `(spark.executor.memory - 300M) * spark.memory.fraction * spark.memory.storageFraction`
 * Off-Heap Storage Memory = `spark.memory.offHeap.size * spark.memory.storageFraction`
 
