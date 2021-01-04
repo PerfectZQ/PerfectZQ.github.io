@@ -11,7 +11,7 @@ org.apache.spark.internal.config
 ```
 
 ## 参考
-* [Spark Configuration](http://spark.apache.org/docs/latest/configuration.html)
+* [Spark Configuration](https://spark.apache.org/docs/latest/configuration.html)
 
 ## 指定 Spark Configuration
 Spark Configuration Properties 可以在三个地方进行配置，优先级依次增加。
