@@ -7,7 +7,7 @@ tag: Spark
 
 每个Spark程序(SparkContext实例)运行一个独立的执行进程，集群管理器提供了应用程序间的调度处理措施。其次，在每个Spark应用程序中，不同线程提交的多个Job作业(Spark Actions)可以同时运行。
 
-### 作业调度
+## 作业调度
 常见作业调度的基本概念：
 * **Job** : 作业，一次Action生成的一个或多个Stage组成的一次计算作业。
 * **Stage** : 调度阶段，不存在shuffle操作的调度过程，一个Stage中都是窄依赖，一个调度阶段对应一个任务集。
@@ -16,7 +16,7 @@ tag: Spark
 
 >　　一个Job就对应一个DAG图，划分DAG图时，首先将整个Job划分成一个FinalStage，从后往前回溯，每遇到shuffle操作就划分一个新的Stage出来。
 
-### 应用程序间的调度
+## 应用程序间的调度
 每个运行在集群上的Spark应用程序都能得到一个独立的，仅用于运行任务和存储数据的JVM。
 如果用户需要共享集群资源，可以通过集群管理器配置不同的选项来分配集群资源。
 1. **静态资源分配**
@@ -65,7 +65,7 @@ Spark在资源空闲时释放Executors，在需要时重新获取Executors。由
 保留shuffle文件需要使用外部Shuffle服务，这些服务是指长时间独立运行在集群每个节点的Spark应用程序以及Executors进程。启用该服务时，Spark的Executors将会从服务中获取shuffle文件以替代从备份中获取。这样任何一个Executor写得shuffle状态都可以超出Executor的生命周期继续服务。
 
 除了保留shuffle文件，Executor还可以将数据缓存在内存或者硬盘中，但是当Executor被删除后，这些缓存的数据就不能被访问了。
-### 应用程序中的调度
+## 应用程序中的调度
 
 在一个Spark应用程序中，如果在不同的线程中，多个并行的Job可以同时运行。因为Spark的任务调度是线程安全的，同时支持应用程序使用Case服务多个请求（多用户查询）。
 
@@ -78,7 +78,7 @@ Spark调度还支持以轮询的方式让不同的Job共享集群资源，此种
 val conf = new SparkConf()
 conf.set("spark.scheduler.mode","FAIR")
 ```
-#### 公平调度池
+### 公平调度池
 Spark的公平调度器参考Hadoop的公平调度器，支持Job分组进入调度池，每个调度池可以设置不同的调度参数，同一分组内部按照用户均等分配资源，而不是按照Job平均共享资源。
 
 新提交的任务通过下面的方式配置调度池
@@ -94,7 +94,7 @@ sc.setLocalProperty("spark.scheduler.pool","poolname")
 ```scala
 sc.setLocalProperty("spark.scheduler.pool",null)
 ```
-#### 配置公平调度池属性
+### 配置公平调度池属性
 默认情况下，每个池获得相同份额的集群资源，但是每个池中，Jobs以FIFO的方式运行。
 
 池属性可以通过配置文件进行修改。
@@ -119,11 +119,11 @@ XML文件格式如下：
   </pool>
 </allocations>
 ```
-### 调度器
+## 调度器
 DAGScheduler负责构建具有依赖关系的任务集TaskSet，TaskScheduler负责将TaskSet资源提供给TaskSetManager供其作为调度任务的依据，TaskSetManager负责在具体任务集的内部调度任务。
 
 每一个SparkContext可能同时存在多个可运行的任务集（没有依赖关系），这些任务集之间的调度是由调度池Pool对象决定的，调度池Pool管理的对象是下一级的Pool或者TaskSetManager对象。
-#### 调度池
+### 调度池
 TaskSchedulerImpl在初始化时会根据用户设定的SchedulingMode（默认为FIFO）创建一个rootPool根调度池，之后根据具体的调度模式再进一步创建SchedulableBuilder对象，具体的SchedulableBuilder对象中的BuildPool方法将在rootPool的基础上完成整个Pool的构建工作。
 
 调度池是在SparkContext内部的调度，多个Spark应用程序之间在调度池层面是没有调度优先级关系的。
