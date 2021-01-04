@@ -46,7 +46,7 @@ todo
 todo
 ## 可视化工作室
 ### Airflow 使用
-用户可以将自定义的 Airflow DAG 代码推送到初始化产品线时指定的 Git Repo 地址，例如
+除了使用**数据连接器**启动固定的数据处理任务之外，用户还可以编写自定义的调度逻辑与组件完成更复杂的数据处理工作流。用户只需将自定义的 Airflow DAG 代码推送到初始化产品线时指定的 Git Repo 地址，例如
 ```shell
 vim test_dag.py
 #!/usr/bin/python
