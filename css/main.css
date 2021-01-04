@@ -616,8 +616,16 @@ hr {
     margin: 0 0 1.0em 2.0em;
 }
 
-.post ol {
+.post ul ul {
     margin: 0 0 0 2.0em;
+}
+
+.post ol {
+    margin: 0 0 1.0em 2.0em;
+}
+
+.post ol ol {
+    margin: 0 0 0em 2.0em;
 }
 
 .panel {
