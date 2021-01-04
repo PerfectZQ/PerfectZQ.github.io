@@ -19,52 +19,24 @@ tag: Spark
 ## 应用程序间的调度
 每个运行在集群上的Spark应用程序都能得到一个独立的，仅用于运行任务和存储数据的JVM。
 如果用户需要共享集群资源，可以通过集群管理器配置不同的选项来分配集群资源。
-1. **静态资源分配**
+### 静态资源分配
 
 在集群中最简单最有效的方式就是静态资源分配，每个应用程序在整个生命周期中都可以得到一个最大数量的资源。此方式被用于Spark的Standalone和YARN模式中。
-* **Standalone模式资源分配** 
+* Standalone模式资源分配：Spark应用程序按照FIFO顺序执行，每个应用程序都会尝试使用使用所有可用的节点。通过设置内核数目可以限制Spark应用程序资源的使用情况。`spark.deploy.defalutCores`配置通用资源使用。单个应用程序特殊资源使用可以通过spark.cores.max修改配置。除了控制cpu cores之外，每个应用程序的`spark.executor.memory`配置可以控制每个Executor内存的使用。
+* YARN模式的资源分配：在Spark YARN提交的客户端(spark-submit)配置参数。`--num-executors`控制在集群上分配的Executors数量。`--executor-memory`控制Executor的内存分配。`--executor-cores`控制Executor的cpu分配。
 
-Spark应用程序按照FIFO顺序执行，每个应用程序都会尝试使用使用所有可用的节点。
-
-通过设置内核数目可以限制Spark应用程序资源的使用情况。`spark.deploy.defalutCores`配置通用资源使用。单个应用程序特殊资源使用可以通过spark.cores.max修改配置
-
-除了控制cpu cores之外，每个应用程序的`spark.executor.memory`配置可以控制每个Executor内存的使用。
-* **YARN模式的资源分配** 
-
-在Spark YARN提交的客户端(spark-submit)配置参数。`--num-executors`控制在集群上分配的Executors数量。`--executor-memory`控制Executor的内存分配。`--executor-cores`控制Executor的cpu分配。
-2. **动态资源分配**
+### 动态资源分配
 
 根据工作负载动态分配集群资源。在应用程序资源空闲时及时释放回集群，应用程序资源紧张时及时向集群申请空闲资源。这在集群中存在多个Spark应用程序同时运行时尤为重要。
 
 使用动态资源分配时，必须要保存Executors在执行过程中写得shuffle文件，使Executors能够顺利释放，应用程序必须使用外部的shuffle服务。
 
-**配置外部shuffle服务的方式：**
+* 配置外部shuffle服务的方式：在Spark YARN集群模式下，配置`spark.dynamicAllocation.enabled`为true启用动态资源分配，并通过`*.minExecutors`和`*.maxExecutors`提供Executors的上下限。通过`spark.shuffle.service.enabled`为true启用外部shuffle服务，并在集群所有nodemanager上配置shuffle服务。
+* 资源分配策略：Spark在资源空闲时释放Executors，在需要时重新获取Executors。由于没有一个明确的方法去预测一个将要释放资源的Executor是否将要运行一个新的任务，也没有办法预测当前的任务是否需要申请新增Executor，所以需要一组策略来决定什么时候释放或者申请Executors。
+* 请求策略：当一个能动态分配资源的Spark应用程序有任务等待分配时，能够请求额外的Executors，这种情况意味着现有Executors不足以完成所有已经提交但是尚未完成的Task。Spark以轮询的方式申请Executors资源。当任务等待的时间超过`*.schedulerBacklogTimeout`设定的时间，并且再次触发`*.sustainedSchedulerBacklogTimeout`延时之后，如果队列中处于等待的任务依然存在，申请额外Executors资源的请求就会被触发。而且每次轮询请求的Executors数目成倍增加。例如一个应用程序在第一次请求的时候会得到一个Executor，之后每轮会申请2，4，8，16……个Executors。这样做的动机有两个。一是一个应用程序在开始的时候应该谨慎的申请资源，避免一次申请过多造成资源浪费；二是应用程序能够及时的提供其资源使用情况，避免资源浪费。
+* 删除策略：当Executor的空闲时间超过`*.executorIdleTimeout`设定的值时，一个Spark应用程序将释放此Executor。删除策略和请求策略是互斥的，因为如果有等待的Executor资源的任务存在，就不会存在空闲的Executor。
+* Executors优雅的退出机制：资源动态分配之前，当Executor执行失败，或Executor相关联应用程序退出时，一个Spark的Executor会退出，在这两种场景中，与Executor相关联的所有状态都不需要，可以安全的丢弃。但是，当一个Executor被显示删除时，应用程序仍然在运行。此时，应用程序试图访问Executor存储或写的状态，只能重新计算。为避免重新计算，需要在删除一个Executor之前保留状态。例如在shuffle期间，Spark的Executor会将自己的Map本地输出到磁盘。对于一些比较慢的事件，任务运行的时间比其他的时间更久，动态分配可能会在shuffle完成之前将空间的Executor删除掉，因为已经将状态保存在磁盘中，就不需要再重新计算了。保留shuffle文件需要使用外部Shuffle服务，这些服务是指长时间独立运行在集群每个节点的Spark应用程序以及Executors进程。启用该服务时，Spark的Executors将会从服务中获取shuffle文件以替代从备份中获取。这样任何一个Executor写得shuffle状态都可以超出Executor的生命周期继续服务。除了保留shuffle文件，Executor还可以将数据缓存在内存或者硬盘中，但是当Executor被删除后，这些缓存的数据就不能被访问了。
 
-在Spark YARN集群模式下，配置`spark.dynamicAllocation.enabled`为true启用动态资源分配，并通过`*.minExecutors`和`*.maxExecutors`提供Executors的上下限。
-
-通过`spark.shuffle.service.enabled`为true启用外部shuffle服务，并在集群所有nodemanager上配置shuffle服务。
-**资源分配策略**
-
-Spark在资源空闲时释放Executors，在需要时重新获取Executors。由于没有一个明确的方法去预测一个将要释放资源的Executor是否将要运行一个新的任务，也没有办法预测当前的任务是否需要申请新增Executor，所以需要一组策略来决定什么时候释放或者申请Executors。
-* **请求策略 ** 
-
-当一个能动态分配资源的Spark应用程序有任务等待分配时，能够请求额外的Executors，这种情况意味着现有Executors不足以完成所有已经提交但是尚未完成的Task。Spark以轮询的方式申请Executors资源。当任务等待的时间超过`*.schedulerBacklogTimeout`设定的时间，并且再次触发`*.sustainedSchedulerBacklogTimeout`延时之后，如果队列中处于等待的任务依然存在，申请额外Executors资源的请求就会被触发。而且每次轮询请求的Executors数目成倍增加。例如一个应用程序在第一次请求的时候会得到一个Executor，之后每轮会申请2，4，8，16……个Executors。
-
-这样做的动机有两个。一是一个应用程序在开始的时候应该谨慎的申请资源，避免一次申请过多造成资源浪费；二是应用程序能够及时的提供其资源使用情况，避免资源浪费。
-* **删除策略 ** 
-
-当Executor的空闲时间超过`*.executorIdleTimeout`设定的值时，一个Spark应用程序将释放此Executor。删除策略和请求策略是互斥的，因为如果有等待的Executor资源的任务存在，就不会存在空闲的Executor。
-* **Executors优雅的退出机制 **
-
-资源动态分配之前，当Executor执行失败，或Executor相关联应用程序退出时，一个Spark的Executor会退出，在这两种场景中，与Executor相关联的所有状态都不需要，可以安全的丢弃。
-
-但是，当一个Executor被显示删除时，应用程序仍然在运行。此时，应用程序试图访问Executor存储或写的状态，只能重新计算。为避免重新计算，需要在删除一个Executor之前保留状态。
-
-例如在shuffle期间，Spark的Executor会将自己的Map本地输出到磁盘。对于一些比较慢的事件，任务运行的时间比其他的时间更久，动态分配可能会在shuffle完成之前将空间的Executor删除掉，因为已经将状态保存在磁盘中，就不需要再重新计算了。
-
-保留shuffle文件需要使用外部Shuffle服务，这些服务是指长时间独立运行在集群每个节点的Spark应用程序以及Executors进程。启用该服务时，Spark的Executors将会从服务中获取shuffle文件以替代从备份中获取。这样任何一个Executor写得shuffle状态都可以超出Executor的生命周期继续服务。
-
-除了保留shuffle文件，Executor还可以将数据缓存在内存或者硬盘中，但是当Executor被删除后，这些缓存的数据就不能被访问了。
 ## 应用程序中的调度
 
 在一个Spark应用程序中，如果在不同的线程中，多个并行的Job可以同时运行。因为Spark的任务调度是线程安全的，同时支持应用程序使用Case服务多个请求（多用户查询）。
