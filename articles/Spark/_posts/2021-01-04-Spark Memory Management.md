@@ -32,9 +32,13 @@ Spark 内存由两大部分构成
 ## Off-Heap Memroy
 
 ## Storage Memory
+![有帮助的截图]({{ site.url }}/assets/spark_storage_memory.png)
+
 > Storage Memory = On Heap Storage Memory + Off Heap Storage Memory
 * On Heap Storage Memory = `(spark.executor.memory - 300M) * spark.storage.memoryFraction * spark.storage.safetyFraction`
 * Off Heap Storage Memory = `spark.memory.offHeap.size`
+
+
 
 ## Reference
 * [Memory Management Overview](https://spark.apache.org/docs/latest/tuning.html#memory-management-overview)
