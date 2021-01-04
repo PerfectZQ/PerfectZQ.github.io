@@ -184,6 +184,10 @@ p {
     margin-inline-end: 0px;
 }
 
+blockquote p {
+    margin-block-start: 0em;
+}
+
 li p {
     padding-left: 0px;
 }
