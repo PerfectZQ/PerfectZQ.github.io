@@ -545,7 +545,7 @@ $ git reset --hard 0b4e1e2
 ```shell
 # 删除指定文件本地所有历史提交记录
 # 注意文件必须使用相对路径，使用绝对路径会出现 xxx is outside repository 的 fatal
-# 遍历 branch 所有的 commits，执行 git rm --cached 操作
+# 遍历本地所有 branch 所有的 commits，执行 git rm --cached 操作
 $ git filter-branch --force --index-filter \
 'git rm --cached --ignore-unmatch articles/Java/_posts/2017-07-20-split\(\)和replace\(\)方法特殊字符的处理.md' \
 --prune-empty --tag-name-filter cat -- --all
