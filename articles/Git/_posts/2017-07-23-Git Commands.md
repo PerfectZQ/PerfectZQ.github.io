@@ -116,10 +116,10 @@ $ git commit -a -m "commit comment"
 
 ## 删除
 ```shell
-# 删除磁盘文件，并删除本地库中的文件
+# 删除磁盘文件，并删除已经提交到本地库中的文件
 $ git rm -r target/
 
-# 只删除存储库中的文件，保留磁盘上的文件(即取消 git add)
+# 只删除已经提交到本地存储库中的文件，保留磁盘上的文件(即取消 git add)
 $ git rm --cached -r target/
 ```
 
