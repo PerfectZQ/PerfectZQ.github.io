@@ -564,7 +564,7 @@ $ git push origin --force --all
 # 同步到所有 tags
 $ git push origin --force --tags
 
-# 强制解除对 local repository 所有对象的引用，这样 git ref
+# 强制解除对 local repository 所有对象的引用
 $ git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin
 $ git reflog expire --expire=now --all
 
