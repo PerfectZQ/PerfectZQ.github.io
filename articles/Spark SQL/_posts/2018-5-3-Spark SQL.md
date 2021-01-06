@@ -4,6 +4,9 @@ title: Spark SQL
 tag: Spark SQL
 ---
 
+## Refercence
+* [Spark SQL, DataFrames and Datasets Guide](https://spark.apache.org/docs/latest/sql-programming-guide.html)
+
 ## SQLConf 源码
 ```scala
 // 定义了 SparkSQL 的配置属性
