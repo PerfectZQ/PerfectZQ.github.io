@@ -290,6 +290,9 @@ $ git commit .gitattributes -m "init .gitattributes"
 # 文件上的修改时间必须在 test 的修改时间之后，否则忽略不成功。以后 test 再对该文件的修改就
 # 不会合并到 master 上了。
 ```
+当你仅仅需要另一个分支的某几个 commits 时，并非全部的代码变更，可以使用`Cherry pick`
+* [git cherry-pick](https://www.ruanyifeng.com/blog/2020/04/git-cherry-pick.html)
+
 
 ### 恢复删除的分支
 ```
