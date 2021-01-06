@@ -541,7 +541,9 @@ $ git reset --hard 0b4e1e2
 * [Removing sensitive data from a repository](https://help.github.com/en/github/authenticating-to-github/removing-sensitive-data-from-a-repository)
 
 ```shell
-# 删除指定文件本地所有历史提交记录，注意文件必须使用相对路径，使用绝对路径会出现 xxx is outside repository 的 fatal
+# 删除指定文件本地所有历史提交记录
+# 注意文件必须使用相对路径，使用绝对路径会出现 xxx is outside repository 的 fatal
+# 遍历 branch 所有的 commits，执行 git rm --cached 操作
 $ git filter-branch --force --index-filter \
 'git rm --cached --ignore-unmatch articles/Java/_posts/2017-07-20-split\(\)和replace\(\)方法特殊字符的处理.md' \
 --prune-empty --tag-name-filter cat -- --all
@@ -560,7 +562,7 @@ $ git push origin --force --all
 # 同步到所有 tags
 $ git push origin --force --tags
 
-# 强制解除对local repository所有对象的引用
+# 强制解除对 local repository 所有对象的引用，这样 git ref
 $ git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin
 $ git reflog expire --expire=now --all
 
