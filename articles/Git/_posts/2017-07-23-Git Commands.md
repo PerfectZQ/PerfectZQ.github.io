@@ -528,6 +528,9 @@ Could not apply 0b4e1e2... add senselink oss download task
 $ (master|REBASE-i 2/2) git cherry-pick --skip
 $ (master|REBASE-i 2/2) git rebase --continue
 
+# 查看之后的 commit 已经都没了，但是 git ref 中还可以看到，并不是真正的把文件都删除了，只是删除了提交记录
+$ git log
+
 $ git reset --hard 0b4e1e2
 ```
 
