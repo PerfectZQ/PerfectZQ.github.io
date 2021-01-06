@@ -422,7 +422,7 @@ Applying: modify
 # 每个 commit 指定了命令，Git 就开始回放 commits，从上到下一次执行每条 rebase 命令
 # 使用 -i,--interactive  进入交互模式
 
-$ git rebase -i
+$ git rebase -i [base]
 pick 826ad2a modify
 
 # Rebase 6fa5c6f..826ad2a onto 6fa5c6f (1 command)
@@ -467,11 +467,74 @@ You can amend the commit now, with
 git commit --amend
 Once you are satisfied with your changes, run
 git rebase --continue
+
+
+
+# ------------------ Example -----------------
+# 刪除某次已提交的 commit，假设我要删除 4886a61
+# 查看 commitId
+$ git log
+commit 0b4e1e22646604a4e8e2497af5650d3de60c8920 (HEAD -> master)
+Author: zhangqiang <zhangqiang@sensetime.com>
+Date:   Wed Jan 6 19:48:51 2021 +0800
+
+    add senselink oss download task
+
+commit 4886a61c2ea51cc3c95aca754c8bcd01b91e316f
+Author: zhangqiang <zhangqiang@sensetime.com>
+Date:   Wed Jan 6 19:41:28 2021 +0800
+
+    add senselink oss download task
+
+commit 6c65510d3ce98677e7ab9817e696177e619a0501 (gitlab/master)
+Author: zhangqiang <zhangqiang@sensetime.com>
+Date:   Tue Jan 5 17:42:46 2021 +0800
+
+    add security test scanner
+...
+
+# 对 commit id 前几位为 6c65510 的 commit 之后的 commit 进行 rebase
+$ git rebase -i 6c65510
+# 可以看到之后的 6c65510 之后的 commits 4886a61，0b4e1e2
+pick 4886a61 add senselink oss download task
+pick 0b4e1e2 add senselink oss download task
+# Rebase 6c65510..0b4e1e2 onto 6c65510 (2 commands)
+#
+...
+# 按 i 进入编辑模式后，输入 drop [commitId]，这里的 commitId 就是你要删除的 commitId
+# 将 4886a61 前的 pick 修改为 drop
+drop 4886a61 add senselink oss download task
+pick 0b4e1e2 add senselink oss download task
+...
+# 按 esc 退出编辑模式 :wq 保存退出
+
+interactive rebase in progress; onto 6c65510
+Last commands done (2 commands done):
+   drop 4886a61 add senselink oss download task
+   pick 0b4e1e2 add senselink oss download task
+No commands remaining.
+You are currently rebasing branch 'master' on '6c65510'.
+
+nothing to commit, working tree clean
+# 6c65510 这个分支已经之前提交过，如果要重复提交，需要做空提交 git commit --allow-empty
+The previous cherry-pick is now empty, possibly due to conflict resolution.
+If you wish to commit it anyway, use:
+
+    git commit --allow-empty
+# 跳过
+Otherwise, please use 'git cherry-pick --skip'
+Could not apply 0b4e1e2... add senselink oss download task
+
+$ (master|REBASE-i 2/2) git cherry-pick --skip
+$ (master|REBASE-i 2/2) git rebase --continue
+
+$ git reset --hard 0b4e1e2
 ```
 
 >由于新 commit 将替换掉旧的 commit，因此不要在已公开的 commit 中使用 git rebase，否则项目历史记录将会消失。
 
 ### 删除某个文件的所有 git 提交记录
+当不小心 commit 了某个超大文件，在 push 的时候会出现 `remote: fatal: pack exceeds maximum allowed size`
 * [Removing sensitive data from a repository](https://help.github.com/en/github/authenticating-to-github/removing-sensitive-data-from-a-repository)
 
 ```shell
