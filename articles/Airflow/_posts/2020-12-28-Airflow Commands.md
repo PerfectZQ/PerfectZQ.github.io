@@ -149,7 +149,8 @@ backfill 的任务直接变成`up_for_retry`状态，而其他的任务都是`sc
 # Pickle 是一个原生的 Python 序列化对象，表示某个版本的 DAG(可以理解为某个版本的 DAG 快照)，当执行 BackfillJob 时，
 # 实际运行的就是某个特定的序列化的 Pickle 对象
 # 指定 -x, --donot_pickle，这样就不会把 airflow 序列化的 pickle 发送给 worker，而是使用 worker 节点自身版本的 DAG。
-# 当更新 DAG 代码时，执行 backfill 有时会出现莫名其妙的错误，大概就跟 pickle 有关，现象是
+# 当你 Backfill 一个不存在的 DagRun，就会出现问题，假设 2020-10-01 号的 DagRun 不存在，也就是说没跑过，你执行
+# Backfill 2020-10-01 就会出现上面的现象，因为 Pickle 不存在
 $ airflow backfill senselink-oss-download -s 2020-12-16 -e 2020-12-27 --donot_pickle
 ```
 
