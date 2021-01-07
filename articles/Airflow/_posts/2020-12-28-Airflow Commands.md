@@ -145,6 +145,7 @@ ERROR - Executor reports task instance <TaskInstance: senselink_oss_download.sen
 backfill 的任务直接变成`up_for_retry`状态，而其他的任务都是`scheduled`，但是一直不执行，查看`task_instance`表，`hostname`和`job_id`字段都为空
 
 * [Apache Airflow: Executor reports task instance finished (failed) although the task says its queued](https://stackoverflow.com/questions/56119107/apache-airflow-executor-reports-task-instance-finished-failed-although-the-ta)
+
 ```shell
 # Pickle 是一个原生的 Python 序列化对象，表示某个版本的 DAG(可以理解为某个版本的 DAG 快照)，当执行 BackfillJob 时，
 # 实际运行的就是某个特定的序列化的 Pickle 对象
