@@ -28,12 +28,16 @@ $ git [command] -h,--help
 
 理解了这些，对于我们理解和使用命令有很大的帮助。首先我们先做一下准备工作
 ```shell
+# 创建一个用于 Working Directory 映射的本地文件夹
 $ mkdir git_reset_test
 $ cd git_reset_test/
+# 初始化本地 Git 库，会在当前文件夹加生成 .git 文件夹
 $ git init .
 Initialized empty Git repository in /git_reset_test/.git/
 $ touch reset_lifecycle_file
+# 将 Working Directory 中的 reset_lifecycle_file 添加到 Staging Index
 $ git add reset_lifecycle_file
+# 将 Staging Index 中的变更(添加了一个文件)提交到 Commit Tree
 $ git commit -m"initial commit"
 [master (root-commit) d386d86] initial commit
 1 file changed, 0 insertions(+), 0 deletions(-)
