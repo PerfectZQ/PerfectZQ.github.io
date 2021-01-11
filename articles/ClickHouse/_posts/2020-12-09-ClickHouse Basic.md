@@ -5,11 +5,28 @@ tag:  ClickHouse
 ---
 
 ## Install Command-line Client
+* [Install ClickHouse](https://clickhouse.tech/docs/en/getting-started/install/)
 * [Command-line Client](https://clickhouse.tech/docs/en/interfaces/cli/)
+
+```shell
+$ sudo apt-get install apt-transport-https ca-certificates dirmngr
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv E0C56BD4
+
+$ echo "deb https://repo.clickhouse.tech/deb/stable/ main/" | sudo tee \
+    /etc/apt/sources.list.d/clickhouse.list
+$ sudo apt-get update
+
+$ sudo apt-get install -y clickhouse-server clickhouse-client
+
+$ sudo service clickhouse-server start
+$ clickhouse-client
+```
+
 
 ## External Data
 * [External Data for Query Processing](https://clickhouse.tech/docs/en/engines/table-engines/special/external-data/)
 ClickHouse 可以在查询(External tables could be sent only with select query)的时候加载外部数据，例如使用 Command-line Client 的时候可以使用如下参数
+
 ```shell
 $ clickhouse-client --help
 ...
