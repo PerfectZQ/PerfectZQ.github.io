@@ -10,6 +10,7 @@ tag:  ClickHouse
 ## External Data
 * [External Data for Query Processing](https://clickhouse.tech/docs/en/engines/table-engines/special/external-data/)
 ClickHouse 可以在查询(External tables could be sent only with select query)的时候加载外部数据，例如使用 Command-line Client 的时候可以使用如下参数
+
 ```shell
 $ clickhouse-client --help
 ...
