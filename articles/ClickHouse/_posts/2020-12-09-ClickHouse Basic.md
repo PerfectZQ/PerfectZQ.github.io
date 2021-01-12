@@ -52,7 +52,7 @@ $ clickhouse-client \
 # examples
 
 $ clickhouse-client --host 172.16.105.16 --port 31234 \
---user admin --password Dlink@2020 \
+--user admin --password xxxxxxxx \
 --query "SELECT * FROM external_lineorder" \
 --external \
 --file=lineorder.tbl \
