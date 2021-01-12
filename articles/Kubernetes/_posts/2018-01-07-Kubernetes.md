@@ -126,7 +126,7 @@ spec:
 ```
 关于`metadata`的详细说明会可以参考[api-conventions-metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)
 
->不同类型 object 的规范在定义上是有区别的，比如有些 object 会包含特有的字段，**所有类型的 object 的 spec 使用说明都可以通过[kubernetes-api](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/)找到**
+>不同类型 object 的规范在定义上是有区别的，比如有些 object 会包含特有的字段，<font style="color: indianred;">**所有类型的 object 的 spec 使用说明都可以通过[kubernetes-api](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/)找到**</font>
 
 可以通过下面的命令来将`.yaml`作为参数传递
 ```shell
@@ -145,7 +145,7 @@ name 用于引用资源 URL 中的对象，例如`/api/v1/pods/some-name`，只�
 kubernetes 系统生成的字符串，用于唯一标识 object。在 Kubernetes 集群的整个生命周期中创建的每个对象都具有不同的UID。它旨在区分类似实体的历史事件。
 
 ### Pod
-[Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/) 是 kubernetes 最基本的构建块 - 你在 kubernetes object model 中能够创建或者发布的最小、最简单的单元。它是一个在你的集群上运行的一个进程。
+[Pod](https://kubernetes.io/docs/concepts/workloads/pods/) 是 kubernetes 最基本的构建块 - 你在 kubernetes object model 中能够创建或者发布的最小、最简单的单元。它是一个在你的集群上运行的一个进程。
 
 Pod 封装了单个 container 或者多个紧密耦合的 containers、存储资源(a set of shared storage volumes)、一个唯一的 IP 地址和一些控制 containers 应该怎么运行的 options。启动一个 Pod，可以将其理解为：为一个给定的 Application 启动一个实例。同一个 Pod 里的多个 container 共享存储资源、共享同一个 Network Namespace，可以使用 localhost 互相通信。很少会直接在 kubernetes 中创建 Pod 实例，因为 Pod 被设计为相对短暂的一次性实体。当Pod（由您直接创建或由Controller间接创建）时，它将被安排在群集中的 Node 上运行。 Pod 保留在该节点上，除非进程终止，Pod 对象被删除，Pod 因资源不足而被驱逐，或者 Node 挂掉。
 
@@ -156,6 +156,13 @@ Pod 本身不会自我修复，尽管可以直接使用 Pod，但在 kubernetes 
 * 如果 Pod 是短暂的，那么重启时IP地址可能会改变，那么怎么才能从前端容器正确可靠地指向后台容器呢？这时可以使用 Service，下文会详细介绍。
 
 对于 pod 的一些配置可以参考：[configure-pod-container](https://kubernetes.io/docs/tasks/configure-pod-container/)
+
+#### InitContainer
+#### PauseContainer
+#### Pod Lifecycle
+* [Pod Lifecycle](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/)
+
+* [Kubernetes 之 Pod 学习](https://www.cnblogs.com/kevingrace/p/11309409.html)
 
 ### ConfigMaps
 * [Configure a pod to use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)
@@ -608,7 +615,7 @@ spec:
 Label 是 attach 到 Pod 的一个键/值对，用来传递用户定义的属性。比如，你可能创建了一个`tier`和`app`标签，通过Label（tier=frontend, app=myapp）来标记前端Pod容器，Label（tier=backend, app=myapp）标记后台Pod。然后可以使用 Selectors 选择带有特定 Label 的一组 Pods，并且将 Service 或者 Replication Controller 应用到匹配到的这组 Pods 上面。
 
 ## Using kubectl
-### 使用 kubectl 与kubernetes 集群交互
+### 使用 kubectl 与 kubernetes 集群交互
 * [install-kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl)
 
 ### kubectl-commands
