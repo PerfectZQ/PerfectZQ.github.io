@@ -9,14 +9,15 @@ tag:  Kubernetes
 * [kubernetes.io](https://kubernetes.io/docs/)
 
 ### Useful Reference
-* [Kubernetes API Reference](https://kubernetes.io/docs/reference/kubernetes-api/)，包含了 APIServer 可操作的所有 API
-
+* [Kubernetes API Reference Index](https://kubernetes.io/docs/reference/kubernetes-api/api-index/)，包含了 apiserver 可操作的所有 API 介绍
+  * [kubernetes-api/v1.20](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/)
+  
 ## Overview
 * [Overview](https://kubernetes.io/docs/concepts/overview/)
-    * [what is kubernetes?](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/)
-    * [Kubernetes Components](https://kubernetes.io/docs/concepts/overview/components/)
-    * [The Kubernetes API](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)
-    * [Working with Kubernetes Objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/)
+  * [what is kubernetes?](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/)
+  * [Kubernetes Components](https://kubernetes.io/docs/concepts/overview/components/)
+  * [The Kubernetes API](https://kubernetes.io/docs/concepts/overview/kubernetes-api/)
+  * [Working with Kubernetes Objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/)
 
 Kubernetes（k8s）是自动化容器操作的开源平台，包括部署、调度和集群扩展。如果你曾经用过 Docker 容器技术部署容器，那么可以将 Docker 看成 Kubernetes 内部使用的低级别组件。Kubernetes 不仅仅支持 Docker，还支持 Rocket，这是另一种容器技术。
 
