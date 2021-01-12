@@ -1165,16 +1165,18 @@ lrwxrwxrwx 1 root root 165 9月   5 17:05 /var/log/pods/7f3ce883-acc8-11e8-b97b-
 从上面可以看出最终实际的日志文件在`/var/lib/docker/containers`下面，实质还是 docker container 中的日志文件。
 
 ## Scheduling and Eviction
-* [Scheduling and Eviction](https://kubernetes.io/docs/concepts/scheduling-eviction/)
+[Scheduling and Eviction](https://kubernetes.io/docs/concepts/scheduling-eviction/)
+
 ### Kubernetes Scheduler
-* [Kubernetes Scheduler](https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/)
+[Kubernetes Scheduler](https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/)
+
 ### Taints and Tolerations
 [Taints and Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)，翻译过来就是`污点`和`容忍`，Taints 是对于 Node 来说的，而 Tolerations 是对于 Pod 来说的。对于他们的关系也非常简单，举个比较简单的例子，如果你女朋友长得非常好看但是常常内裤和袜子一起洗（Taints），你能不能容忍？在这个例子当中，你女朋友就是 Node，而你就是个 Pod，能容忍你就可以和她在一起，反之就不行。
 
 ### Assigning Pods to Nodes
-* [Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/)
+[Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/)
 
 ## Extend the Kubernetes API with CustomResourceDefinitions
-* [Extend the Kubernetes API with CustomResourceDefinitions](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions)
+[Extend the Kubernetes API with CustomResourceDefinitions](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions)
 ### Create a CustomResourceDefinition
-* [Create a CustomResourceDefinition](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#create-a-customresourcedefinition)
+[Create a CustomResourceDefinition](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#create-a-customresourcedefinition)
