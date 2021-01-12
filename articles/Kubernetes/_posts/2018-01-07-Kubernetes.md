@@ -9,9 +9,9 @@ tag:  Kubernetes
 * [kubernetes.io](https://kubernetes.io/docs/)
 
 ### Useful Reference
-* [Kubernetes API Reference Index](https://kubernetes.io/docs/reference/kubernetes-api/api-index/)，包含了 apiserver 可操作的所有 API 介绍
+* [Kubernetes API Reference Index](https://kubernetes.io/docs/reference/kubernetes-api/api-index/)，包含了`apiserver`可操作的所有 API 介绍
   * [kubernetes-api/v1.20](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/)
-  
+
 ## Overview
 * [Overview](https://kubernetes.io/docs/concepts/overview/)
   * [what is kubernetes?](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/)
@@ -41,7 +41,7 @@ $ kubectl create -f just-single-config-file.yaml
 
 ![有帮助的截图]({{ site.url }}/assets/kubernetes-cluster.png)
 
-从上图可以看到一些比较关键的组件
+从上图可以看到一些比较关键的组件或属性
 * Kubernetes Master
 * Replication Controller
 * Service
@@ -60,13 +60,13 @@ Kubernetes Master 是在集群中的单个节点(Node)上运行的三个进程�
 1. 从 API Server 到每个 Node 上都会运行的 kubelet 进程。
 2. 通过 API Server 的代理功能 kube-proxy 连到集群的任何 Node、Pod、Service。
 
-#### APIServer to Kubelet
+#### apiserver to kubelet
 主要用于：
 * 获取 pods 的日志
 * attach(通过 kubectl) 到正在运行的 pods 上
 * 提供 kubelet 的端口转发功能
 
-#### APIServer to nodes, pods and services
+#### apiserver to nodes, pods and services
 apiserver 通过 http 连接与 nodes, pods and services 交互
 
 ### Node
@@ -89,12 +89,12 @@ kubernetes object 可以理解为`record of intent`，即一旦你创建了一�
 
 Kubernetes API is RESTful - 客户端通过标准 http 谓词(POST、PUT、DELETE、GET)创建、更新、删除或者检索对象的描述，这些 API 优先接收 JSON 并返回 JSON。kubernetes 还为其他非标准动词公开了额外的端点，并允许其他的内容类型。服务器接收或返回的 JSON 都有一个 Schema，由`kind`和`apiVersion`标识。另外所有的 API 公约在[API conventions doc](https://git.k8s.io/community/contributors/devel/api-conventions.md)中有详细的描述。例如：
 * Kind: kind 是表示特定对象的名称，例如`cat`和`dog`kind就会包含不同的字段属性，它又可以分为三种：
-    1. Objects: object kind 是意图记录，一旦创建，系统将确保该资源会存在。一个 object 可能具有多个资源，client 可以对这些资源执行增删改查操作。
-    2. Lists: list kind 是一种或更多种类资源的集合。List kind 的 name 必须以`List`结尾。所有 list 都需要`items`字段来包含它们返回的对象数组。任何具有`items`字段的类型必须是 list kind。
-    3. Simple: simple kind 用于对象和非持久性实体的特定操作
+  * Objects: object kind 是意图记录，一旦创建，系统将确保该资源会存在。一个 object 可能具有多个资源，client 可以对这些资源执行增删改查操作。
+  * Lists: list kind 是一种或更多种类资源的集合。List kind 的 name 必须以`List`结尾。所有 list 都需要`items`字段来包含它们返回的对象数组。任何具有`items`字段的类型必须是 list kind。
+  * Simple: simple kind 用于对象和非持久性实体的特定操作
 * Resource: 表示系统实体，可以通过 http 以 JSON 的方式从服务器检索。resources 可以表示为 
-    1. collections: 一组相同类型的 resources
-    2. element: 一个可以通过URL访问的单独的 resource。
+  * collections: 一组相同类型的 resources
+  * element: 一个可以通过URL访问的单独的 resource。
 * API Group: 一组公开在一起的 resources，在`apiVersion`中显示为`GROUP/VERSION`，例如`policy.k8s.io/v1`
 
 每个 kubernetes object 都包含两个嵌套对象字段，用于控制对象的配置：`对象规范(specification/spec)`和`对象状态`。规范用于描述对象所需状态(对象应该具有怎样的特征)，需要你规定一个规范，提交给 Kubernetes。而状态则是描述对象的实际状态，由 Kubernetes 系统提供和更新。Kubernetes 都时刻监控、管理对象的实际状态，以保证符合规范的所需状态。
@@ -130,7 +130,7 @@ spec:
 ```
 关于`metadata`的详细说明会可以参考[api-conventions-metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)
 
->不同类型 object 的规范在定义上是有区别的，比如有些 object 会包含特有的字段，<font style="color: indianred;">**所有类型的 object 的 spec 使用说明都可以通过[kubernetes-api](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/)找到**</font>
+>不同类型 object 的规范在定义上是有区别的，比如有些 object 会包含特有的字段，**所有类型的 object 的 spec 使用说明都可以通过<font style="color: indianred;">[kubernetes-api](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/)</font>找到**
 
 可以通过下面的命令来将`.yaml`作为参数传递
 ```shell
