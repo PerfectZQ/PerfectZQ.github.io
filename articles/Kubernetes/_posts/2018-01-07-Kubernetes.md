@@ -356,9 +356,9 @@ spec:
   - name: servi 
     # UDP/TCP/SCTP(kubernetes1.12+)，默认 TCP
     protocol: TCP 
-    # 当前 Service 向外暴露的接口
+    # 当前 service 向外暴露的端口
     port: 80 
-    # service 对应的目标 pod 的访问端口信息，可以是端口号(1~65536),或者端口名称(IANA_SVC_NAME)
+    # service 对应的目标 pod 的访问端口信息，可以是端口号(1~65536)，或者端口名称(IANA_SVC_NAME)
     targetPort: 9376 
 ```
 
@@ -374,8 +374,8 @@ Service 可以将`port`映射到任意`targetPort`。如果给`targetPort`一个
 
 根据创建Service的`type`类型不同，可分成几种种模式：
 * `ClusterIP`： 默认方式。根据是否生成`ClusterIP`又可分为普通`Service`和`Headless Service`两类:
-    1. `普通Service`：通过为 Kubernetes 的 Service 分配一个集群内部可访问的固定虚拟IP（`Cluster IP`），实现集群内的访问。为最常见的方式。
-    2. `Headless Service`：该服务不会分配`Cluster IP`，也不通过`kube-proxy`做反向代理和负载均衡。而是通过DNS提供稳定的网络ID来访问，DNS会将`headless service`的后端直接解析为`podIP`列表。主要供`StatefulSet`使用。
+  * `普通Service`：通过为 Kubernetes 的 Service 分配一个集群内部可访问的固定虚拟IP（`Cluster IP`），实现集群内的访问。为最常见的方式。
+  * `Headless Service`：该服务不会分配`Cluster IP`，也不通过`kube-proxy`做反向代理和负载均衡。而是通过DNS提供稳定的网络ID来访问，DNS会将`headless service`的后端直接解析为`podIP`列表。主要供`StatefulSet`使用。
 * `NodePort`：除了使用`Cluster IP`之外，还通过将`Service`的`port`映射到集群内每个节点的相同一个端口，实现通过`nodeIP:nodePort`从集群外部访问服务。
 * `LoadBalancer`：和`NodePort`类似，不过除了使用一个`Cluster IP`和`NodePort`之外，还会向所使用的公有云申请一个负载均衡器(负载均衡器后端映射到各节点的NodePort)，实现从集群外通过LB访问服务。
 * `ExternalName`：是 Service 的特例。此模式主要面向运行在集群外部的服务，通过它可以将外部服务映射进k8s集群，且具备k8s内服务的一些特征（如具备namespace等属性），来为集群内部提供服务。此模式要求`kube-dns`的版本为1.7或以上。这种模式和前三种模式（除headless service）最大的不同是重定向依赖的是 dns 层次，而不是通过 kube-proxy。
@@ -714,21 +714,21 @@ Kubernetes 支持多种授权模块，例如`ABAC`模式，`RBAC`模式和`Webho
 上面提到的适用于发送到 API server`secure port`的请求。API server 实际上可以在两个端口上提供服务，默认为`Localhost Port`和`Secure Port`。
 
 * Localhost Port(本地端口)
-    1. 主要用于测试和引导，以及主节点的其他组件(scheduler,container-manager)与API通信。
-    2. no TLS
-    3. 默认端口`8080`，可以用`--insecure-port`修改
-    4. 默认IP是`localhost`，可以用`--insecure-bind-address`修改
-    5. 请求会**绕过(bypass)** authentication 和 authorization 模块
-    6. 请求由 admission control 模块处理
-    7. 需要拥有主机的访问权限
+  1. 主要用于测试和引导，以及主节点的其他组件(scheduler,container-manager)与API通信。
+  2. no TLS
+  3. 默认端口`8080`，可以用`--insecure-port`修改
+  4. 默认IP是`localhost`，可以用`--insecure-bind-address`修改
+  5. 请求会**绕过(bypass)** authentication 和 authorization 模块
+  6. 请求由 admission control 模块处理
+  7. 需要拥有主机的访问权限
 * Secure Port(安全端口)
-    1. 尽可能使用安全端口。
-    2. 使用 TLS。使用`--tls-cer-file`设置证书，使用`--tls-private-key-file`设置密钥。
-    3. 默认端口`6443`，可以用`--secure-port`修改
-    4. 默认IP是第一个非`localhost`网络接口，可以用`--bind-address`修改
-    5. 请求由 authentication 和 authorization 模块处理
-    6. 请求由 admission control 模块处理
-    7. authentication and authorization modules run.
+  1. 尽可能使用安全端口。
+  2. 使用 TLS。使用`--tls-cer-file`设置证书，使用`--tls-private-key-file`设置密钥。
+  3. 默认端口`6443`，可以用`--secure-port`修改
+  4. 默认IP是第一个非`localhost`网络接口，可以用`--bind-address`修改
+  5. 请求由 authentication 和 authorization 模块处理
+  6. 请求由 admission control 模块处理
+  7. authentication and authorization modules run.
 
 当群集由`kube-up.sh`，Google Compute Engine（GCE）以及其他几个云提供商创建时，API server 在端口`443`上运行。在GCE上，在项目上配置防火墙规则以允许外部HTTPS访问API。其他群集设置方法各不相同
 
@@ -943,7 +943,7 @@ rules:
 >Note:如果设置了resourceNames，则verbs不能是`list`、`watch`、`create`或`deletecollection`。由于这些 verbs 的 API 请求的 URL 中不存在资源名称，所以 resourceNames 不允许使用这些 verbs，因为规则的 resourceNames 部分与请求不匹配。
 
 ## Kubernetes logging architecture
-[kubernetes logging architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
+* [kubernetes logging architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
 
 ### logging at the node level
 所有容器化应用程序写入`stderr`和`stdout`的所有内容都会被容器引擎处理并重定向到某个地方。例如: Docker 就会将这两个streams重定向到[logging-driver](https://docs.docker.com/config/containers/logging/configure/)，`logging-driver=json-file`将会把日志以 JSON 的格式写到`/var/lib/docker/containers`下。
@@ -1169,10 +1169,10 @@ lrwxrwxrwx 1 root root 165 9月   5 17:05 /var/log/pods/7f3ce883-acc8-11e8-b97b-
 ### Kubernetes Scheduler
 * [Kubernetes Scheduler](https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/)
 ### Taints and Tolerations
-* [Taints and Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)
+[Taints and Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)，翻译过来就是`污点`和`容忍`，Taints 是对于 Node 来说的，而 Tolerations 是对于 Pod 来说的。对于他们的关系也非常简单，举个比较简单的例子，如果你女朋友长得非常好看但是常常内裤和袜子一起洗（Taints），你能不能容忍？在这个例子当中，你女朋友就是 Node，而你就是个 Pod，能容忍你就可以和她在一起，反之就不行。
+
 ### Assigning Pods to Nodes
 * [Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/)
-
 
 ## Extend the Kubernetes API with CustomResourceDefinitions
 * [Extend the Kubernetes API with CustomResourceDefinitions](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions)
