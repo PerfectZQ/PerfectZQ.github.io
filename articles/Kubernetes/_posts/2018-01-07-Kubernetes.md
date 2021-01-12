@@ -8,9 +8,8 @@ tag:  Kubernetes
 * [dockone.io](http://www.dockone.io/article/932)
 * [kubernetes.io](https://kubernetes.io/docs/)
 
-比较重要的参考链接
+### Useful Reference
 * [Kubernetes API Reference](https://kubernetes.io/docs/reference/kubernetes-api/)，包含了 APIServer 可操作的所有 API
-
 
 ## Overview
 * [Overview](https://kubernetes.io/docs/concepts/overview/)
