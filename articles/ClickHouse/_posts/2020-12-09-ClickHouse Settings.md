@@ -7,6 +7,7 @@ tag:  ClickHouse
 
 ## Settings Introduction
 * [Command-line Client](https://clickhouse.tech/docs/en/interfaces/cli/)
+
 ```shell
 # 查看配置项
 $ clickhouse-client --help
