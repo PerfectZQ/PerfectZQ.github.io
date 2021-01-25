@@ -289,6 +289,7 @@ $ bin/elasticsearch-certutil cert --ca elastic-stack-ca.p12
 
 # 配置 yml
 $ vim /etc/elasticsearch/elasticsearch.yml
+xpack.security.enabled: true
 xpack.security.transport.ssl.enabled: true
 xpack.security.transport.ssl.verification_mode: certificate 
 xpack.security.transport.ssl.keystore.path: elastic-certificates.p12 
