@@ -60,6 +60,9 @@ $ vim /etc/security/limits.conf
 ### Broken pipe
 [从tcp原理角度理解Broken pipe和Connection Reset by Peer的区别](http://lovestblog.cn/blog/2014/05/20/tcp-broken-pipe/)
 
+## 502 Bad Gateway
+要么是网关代理服务器太忙了，要么就是挂了，要么就是在重启，要么你请求到了错误的网关地址(DNS 配置一个错误的地址)，总之它现在不可用
+
 ## 504 Gateway Time-out
 504 错误代表网关超时(Gateway timeout)，是指服务器作为网关或代理将请求转发到下游服务器后没有在规定时间内返回响应。nginx 做反向代理，默认请求是有一个 60 秒的超时，如果 http 请求超过了60秒还没有返回响应，连接就会被 Nginx 中断，客户端就会得到 504 的错误：gateway time-out。
 
