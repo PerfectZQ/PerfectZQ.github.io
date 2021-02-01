@@ -1171,7 +1171,7 @@ lrwxrwxrwx 1 root root 165 9月   5 17:05 /var/log/pods/7f3ce883-acc8-11e8-b97b-
 [Kubernetes Scheduler](https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/)
 
 ### Taints and Tolerations
-[Taints and Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)，翻译过来就是`污点`和`容忍`，Taints 是对于 Node 来说的，而 Tolerations 是对于 Pod 来说的。对于他们的关系也非常简单，举个比较简单的例子，如果你女朋友长得非常好看但是常常内裤和袜子一起洗（Taints），现在我要向你发出灵魂拷问，你，能不能容忍？在这个例子当中，你女朋友就是 Node，而你就是个 Pod，能容忍你就可以被调度到她那儿（Scheduling），反之就会被驱逐（Eviction）。
+[Taints and Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)，翻译过来就是`污点`和`容忍`，Taints 是对于 Node 来说的，而 Tolerations 是对于 Pod 来说的。对于他们的关系也非常简单，举个比较简单的例子，如果你女朋友长得非常好看但是常常内裤和袜子一起洗（Taints），并且她也不可能听你的，现在我要向你发出灵魂拷问，你，能不能容忍？在这个例子当中，你女朋友就是 Node，而你就是个 Pod，能容忍你就可以被调度到她那儿（Scheduling），反之就会被驱逐（Eviction）。
 
 ### Assigning Pods to Nodes
 [Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/)
