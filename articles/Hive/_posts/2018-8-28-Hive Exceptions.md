@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Hive 异常
+title: Hive Exceptions
 tag: Hive
 ---
 ## HDFS 对应分区目录下有数据文件，但是 Hive 查不到数据

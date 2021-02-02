@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Hive 安装
+title: Hive Install
 tag: Hive
 ---
 
@@ -9,31 +9,26 @@ tag: Hive
 
 Hive版本：apache-hive-2.3.2-bin.tar.gz。[点击下载](http://mirrors.tuna.tsinghua.edu.cn/apache/hive/)。
 
-官方手册[清单(目录)](https://cwiki.apache.org/confluence/display/Hive/Home)
-
-官方手册[开始Hive安装和配置](https://cwiki.apache.org/confluence/display/Hive/GettingStarted#GettingStarted-InstallationandConfiguration)
-
-官方手册[LanguageManual 语法](https://cwiki.apache.org/confluence/display/Hive/LanguageManual)
-
-参考博客[Hive的几种内置服务](http://blog.csdn.net/gamer_gyt/article/details/52062460)
-
-参考博客[Hive-Metastore及其配置管理](http://blog.csdn.net/skywalker_only/article/details/26219619)
-    
-参考博客[Hive metastore三种配置方式](http://blog.csdn.net/reesun/article/details/8556078)
+* 官方手册[清单(目录)](https://cwiki.apache.org/confluence/display/Hive/Home)
+* 官方手册[开始 Hive 安装和配置](https://cwiki.apache.org/confluence/display/Hive/GettingStarted#GettingStarted-InstallationandConfiguration)
+* 官方手册[LanguageManual 语法](https://cwiki.apache.org/confluence/display/Hive/LanguageManual)
+* 参考博客[Hive 的几种内置服务](http://blog.csdn.net/gamer_gyt/article/details/52062460)
+* 参考博客[Hive-Metastore 及其配置管理](http://blog.csdn.net/skywalker_only/article/details/26219619)
+* 参考博客[Hive metastore 三种配置方式](http://blog.csdn.net/reesun/article/details/8556078)
 
 ## 安装过程
 
 ### 解压
 ```shell
-tar -xzvf hive-2.3.2.tar.gz -C /home/hadoop/
+$ tar -xzvf hive-2.3.2.tar.gz -C /home/hadoop/
 ```
 ### 配置环境变量
 PATH 环境变量中必须有 HADOOP_HOME
 ```shell
-vim ~/.bash_profile
-export HIVE_HOME=/home/hadoop/apache-hive-2.3.2
-export PATH=$HIVE_HOME/bin:$PATH
-source ~/.bash_profile
+$ vim ~/.bash_profile
+$ export HIVE_HOME=/home/hadoop/apache-hive-2.3.2
+$ export PATH=$HIVE_HOME/bin:$PATH
+$ source ~/.bash_profile
 ```
 ### 安装 mysql
 如果不使用内嵌的 derby 管理 Metastore，可以配置 mysql 来管理 Metastore。 
@@ -49,7 +44,7 @@ mysql> grant all privileges on hive.* to hive@"%" identified by 'hive';
 ```
 添加 mysql 驱动包，去 mvn [下载](http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar) mysql 驱动包
 ```shell
-mv mysql-connector-java-5.1.38.jar $HIVE_HOME/lib
+$ mv mysql-connector-java-5.1.38.jar $HIVE_HOME/lib
 ```
 
 ### 修改配置文件
@@ -57,8 +52,8 @@ mv mysql-connector-java-5.1.38.jar $HIVE_HOME/lib
 你可以在`conf/hive-env.sh`里添加额外的环境变量。
 
 ```shell
-cd $HIVE_HOME/conf/
-cp hive-env.sh.template hive-env.sh
+$ cd $HIVE_HOME/conf/
+$ cp hive-env.sh.template hive-env.sh
 ```
 
 Hive 配置是Hadoop之上的一个覆盖，它默认继承了Hadoop配置变量，并默认从`conf/hive-default.xml`中读取配置项，用户可以通过`conf/hive-site.xml`覆盖默认的配置。
@@ -67,22 +62,22 @@ Hive 配置文件夹可以通过`$HIVE_CONF_DIR`来修改，默认是`$HIVE_HOME
 
 ```shell
 # === 方式1 ===
-cp hive-default.xml.template hive-default.xml
+$ cp hive-default.xml.template hive-default.xml
 # 但是这样做会出现问题：
 # java.lang.IllegalArgumentException:java.net.URISyntaxException: 
 # Relative path in absolute URI:${system:java.io.tmpdir%7D/$%7Bsystem:user.name%7D
 # 原因: Hive 找不到 ${system:java.io.tmpdir}，${system:user.name}
 # 解决方案:
 # 创建本地临时文件夹
-mkdir /home/hadoop/hive-2.3.2/temp
-vim hive-default.xml
+$ mkdir /home/hadoop/hive-2.3.2/temp
+$ vim hive-default.xml
 # 将所有 ${system:java.io.tmpdir} 替换成 /home/hadoop/hive-2.3.2/temp
 :%s/\${system:java.io.tmpdir}/\/home\/hadoop\/hive-2.3.2\/temp/g
 # 将所有 ${system:user.name} 改成 ${user.name}
 :%s/\${system:user.name}/${user.name}/g
 # === 方式2 ===
 # 新建新的 hive-site.xml，当然需要包含 xml 命名空间和 configuration 标签
-vim hive-site.xml
+$ vim hive-site.xml
 ```
 
 方式1需要修改，方式2需要添加如下内容
@@ -138,33 +133,33 @@ vim hive-site.xml
 
 ```shell
 # hive 的数据结构目录
-bin/hadoop fs -mkdir -p /user/hive/warehouse  
-bin/hadoop fs -mkdir -p /tmp/hive
-bin/hadoop fs -mkdir -p /user/hive/log  
-bin/hadoop fs -chmod -R 777 /user/hive/warehouse  
-bin/hadoop fs -chmod -R 777 /tmp/hive
-bin/hadoop fs -chmod -R 777 /user/hive/log  
+$ bin/hadoop fs -mkdir -p /user/hive/warehouse  
+$ bin/hadoop fs -mkdir -p /tmp/hive
+$ bin/hadoop fs -mkdir -p /user/hive/log  
+$ bin/hadoop fs -chmod -R 777 /user/hive/warehouse  
+$ bin/hadoop fs -chmod -R 777 /tmp/hive
+$ bin/hadoop fs -chmod -R 777 /user/hive/log  
 ```
 
 ### 初始化
 使用 derby 进行初始化
 
 ```shell
-schematool -dbType derby -initSchema
 # 在当前目录下 会看到一个文件 derby.log 和一个文件夹 metastore_db
+$ schematool -dbType derby -initSchema
 ```
 
 使用 mysql 进行初始化
 
 ```shell
-schematool -dbType mysql -initSchema
+$ schematool -dbType mysql -initSchema
 ```
 
 ## Hive 的内置服务
 
 ```shell
 # 查看 hive 内置服务
-hive --service help
+$ hive --service help
 ```
 
 显示如下：
@@ -195,77 +190,33 @@ Debug help:  ./hive --debug --help
 
 ## 启动
 Hive 的启用方式大概可以分为三类：CLI(Command Line Interface)、HWI(Hive Web Interface)、HiveServer
+
 ### CLI
 启动 hive-cli 
-
 ```shell
-hive
+$ hive
 ```
 
-开启hive的log4j日志，运行hive cli 的日志信息会在配置的目录下生成
-
+开启 hive 的 log4j 日志，运行 hive-cli 的日志信息会在配置的目录下生成
 ```shell
-mkdir /home/hadoop/apache-hive-2.3.2/logs
-cd $HIVE_HOME/conf
-cp hive-log4j2.properties.template hive-log4j2.properties
-vim hive-log4j2.properties
-property.hive.log.dir = /home/hadoop/apache-hive-2.3.2/logs
+$ mkdir /home/hadoop/apache-hive-2.3.2/logs
+$ cd $HIVE_HOME/conf
+$ cp hive-log4j2.properties.template hive-log4j2.properties
+$ vim hive-log4j2.properties
+property.hive.log.dir=/home/hadoop/apache-hive-2.3.2/logs
 ```
-
 
 ### HWI
-启动 HWI，用于通过浏览器来访问hive，浏览器访问地址是：127.0.0.1:9999/hwi。注意：该组件在Hive2.2.0开始被移除了。
-
+启动 HWI，用于通过浏览器来访问hive，浏览器访问地址是：127.0.0.1:9999/hwi。注意：该组件在 Hive2.2.0 开始被移除了。
 ```shell
-bin/hive --service hwi &
+$ bin/hive --service hwi &
 ```
+
 ### HiveServer
 启动 HiveServer2，用java、python等程序实现通过 jdbc 等驱动访问 hive 就需要这种启动方式。
-
 ```shell
-hiveserver2 &
 # 默认地址:`jdbc:hive2://localhost:10000`
-```
-
-使用beeline 连接 hiveserver2
-
-```shell
-beeline -u jdbc:hive2://localhost:10000/
-```
-
-通过 zookeeper 发现 hiveserver2 JDBC URL
-```shell
-jdbc:hive2://ambari3:2181,ambari1:2181,ambari2:2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2
-```
-
-如果出现以下异常：
-
-```console
-Error: 
-Could not open client transport with JDBC Uri: jdbc:hive2://localhost:10000/: 
-Failed to open new session: 
-java.lang.RuntimeException: 
-org.apache.hadoop.ipc.RemoteException(org.apache.hadoop.security.authorize.AuthorizationException): 
-User: despacito is not allowed to impersonate anonymous (state=08S01,code=0)
-```
-
-是因为hadoop引入了一个安全伪装机制，使得hadoop不允许上层系统直接将实际用户传递到hadoop层，而是将实际用户传递给一个超级代理，由此代理在hadoop上执行操作，避免任意客户端随意操作hadoop。
-
-解决方法：在hadoop的配置文件core-site.xml增加如下配置，并重启hdfs。
-
-```xml
-<property>
-    <!-- 需要将 xxx 换成你的超级代理的用户名，说明请求将由 xxx 用户代执行 -->
-    <name>hadoop.proxyuser.xxx.hosts</name>
-    <!-- 哪些 hosts 的请求要走超级代理，逗号分割，* 代表所有-->
-    <value>*</value>
-</property>
-<property>
-    <!-- 同上 -->
-    <name>hadoop.proxyuser.xxx.groups</name>
-    <!-- 哪些 gorup 的请求要走超级代理，同上 -->
-    <value>*</value>
-</property>
+$ hiveserver2 &
 ```
 
 在`$HIVE_HOME/conf/hive-site.xml`中配置Hiveserver2的相关配置。
@@ -294,3 +245,45 @@ hive.server2.thrift.http.max.worker.threads
 # 如果设置为 false，则会以起 hive server daemon 的 admin user 来执行语句。
 hive.server2.enable.doAs
 ```
+
+### HiveClients
+* [HiveServer2 Clients](https://cwiki.apache.org/confluence/display/Hive/HiveServer2+Clients)
+
+使用 beeline 连接 hiveserver2，[HiveServer2 Clients, Beeline – Command Line Shell](https://cwiki.apache.org/confluence/display/Hive/HiveServer2+Clients#HiveServer2Clients-Beeline%E2%80%93CommandLineShell)
+```shell
+$ beeline -u "jdbc:hive2://localhost:10000/"
+# 对于启用了 Kerberos 的 Hive 需要加上 principal 信息
+$ beeline --verbose=true -u "jdbc:hive2://node-04.hadoop.data.sensetime.com:10000/default;principal=hive/node-04.hadoop.data.sensetime.com@HADOOP.DATA.SENSETIME.COM"
+# 通过 zookeeper 发现 hiveserver2 JDBC URL
+$ beeline --verbose=true -u "jdbc:hive2://ambari3:2181,ambari1:2181,ambari2:2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2"
+```
+
+如果出现以下异常：
+```console
+Error: 
+Could not open client transport with JDBC Uri: jdbc:hive2://localhost:10000/: 
+Failed to open new session: 
+java.lang.RuntimeException: 
+org.apache.hadoop.ipc.RemoteException(org.apache.hadoop.security.authorize.AuthorizationException): 
+User: despacito is not allowed to impersonate anonymous (state=08S01,code=0)
+```
+
+是因为 hadoop 引入了一个安全伪装机制，使得 hadoop 不允许上层系统直接将实际用户传递到 hadoop 层，而是将实际用户传递给一个超级代理，由此代理在 hadoop 上执行操作，避免任意客户端随意操作 hadoop。
+
+解决方法：在hadoop的配置文件core-site.xml增加如下配置，并重启hdfs。
+
+```xml
+<property>
+    <!-- 需要将 xxx 换成你的超级代理的用户名，说明请求将由 xxx 用户代执行 -->
+    <name>hadoop.proxyuser.xxx.hosts</name>
+    <!-- 哪些 hosts 的请求要走超级代理，逗号分割，* 代表所有-->
+    <value>*</value>
+</property>
+<property>
+    <!-- 同上 -->
+    <name>hadoop.proxyuser.xxx.groups</name>
+    <!-- 哪些 gorup 的请求要走超级代理，同上 -->
+    <value>*</value>
+</property>
+```
+

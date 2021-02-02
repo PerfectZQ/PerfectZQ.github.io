@@ -1,12 +1,11 @@
 ---
 layout: post
-title: Hive 基础
+title: Hive Basic
 tag: Hive
 ---
 ## 参考
-官方手册[Hive Tutorial](https://cwiki.apache.org/confluence/display/Hive/Tutorial)
-
-官方手册[Hive LanguageManual](https://cwiki.apache.org/confluence/display/Hive/LanguageManual)
+* 官方手册[Hive Tutorial](https://cwiki.apache.org/confluence/display/Hive/Tutorial)
+* 官方手册[Hive LanguageManual](https://cwiki.apache.org/confluence/display/Hive/LanguageManual)
 
 ## 数据单位
 按粒度从大大到小
