@@ -7,6 +7,18 @@ tag: Java
 ## Introduction
 本篇主要整理 Java 初级的一些知识点
 
+## Install JDK
+```shell
+# Ubuntu
+$ apt-get install -y openjdk-8-jdk
+$ vim ~/.bashrc
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export JRE_HOME=$JAVA_HOME/jre
+export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib
+export PATH=$PATH:$JAVA_HOME/bin
+$ source ~/.bashrc
+```
+
 ## JDK 环境变量
 ```shell
 # OSX 查找 JAVA_HOME 的方法
