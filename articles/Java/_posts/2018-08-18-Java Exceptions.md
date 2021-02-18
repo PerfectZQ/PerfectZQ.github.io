@@ -41,10 +41,16 @@ $ vim /etc/security/limits.conf
 ```
 
 ## java.net.SocketException
-### Connect reset by peer
+### Connection reset by peer
 * [When is "java.io.IOException:Connection reset by peer" thrown?](https://stackoverflow.com/questions/8658118/when-is-java-io-ioexceptionconnection-reset-by-peer-thrown)
 
-`peer` 翻译过来是对端、对等连接的意思，如果一端的 Socket 被关闭（主动关闭，或因为异常退出而引起的关闭），但另一端并不知道，仍向一个已经关闭的 Socket 发送数据，发送的第一个数据包引发该异常。
+>`Connection reset by peer` is typically a result of your peer sending a TCP `RST` to you. 
+
+* [TCP RST 产生的几种情况](https://zhuanlan.zhihu.com/p/30791159)
+
+在 TCP 协议中，`RST`(Reset)段标识复位，用来异常的关闭连接。在 TCP 的设计中它是不可或缺的，发送`RST`段关闭连接时，不必等缓冲区的数据都发送出去，直接丢弃缓冲区中的数据。而接收端收到`RST`段后，也不必发送`ACK`来确认。
+
+TCP 是全双工的数据通信，也就是说任意一端的连接都可以主动的向对端发送数据。`peer`翻译过来是对端、对等连接的意思，如果一端的 Socket 被关闭（主动关闭，或因为异常退出而引起的关闭），但另一端并不知道，仍向一个已经关闭的 Socket 发送数据，发送的第一个数据包引发该异常。
 
 常见原因：
 * 比如 Socket 默认空闲超时时间为 60s，即当超过 60s 没有数据读写操作就会自动关闭连接。
