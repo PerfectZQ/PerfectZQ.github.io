@@ -42,15 +42,18 @@ $ vim /etc/security/limits.conf
 
 ## java.net.SocketException
 ### Connect reset by peer
-如果一端的 Socket 被关闭(或主动关闭，或因为异常退出而引起的关闭)，另一端仍发送数据，发送的第一个数据包引发该异常。
+* [When is "java.io.IOException:Connection reset by peer" thrown?](https://stackoverflow.com/questions/8658118/when-is-java-io-ioexceptionconnection-reset-by-peer-thrown)
 
-常见原因
+`peer` 翻译过来是对端、对等连接的意思，如果一端的 Socket 被关闭（主动关闭，或因为异常退出而引起的关闭），但另一端并不知道，仍向一个已经关闭的 Socket 发送数据，发送的第一个数据包引发该异常。
+
+常见原因：
 * 比如 Socket 默认空闲超时时间为 60s，即当超过 60s 没有数据读写操作就会自动关闭连接。
-* 客户关掉了浏览器(或者按了 stop)，而服务器还在给客户端发送数据
+* 客户端关掉了浏览器（或者按了 Stop），而服务器还在给客户端发送数据
 * 服务器的并发连接数超过了其承载量，服务器会将其中一些连接关闭
 
 ### Connection reset
-[Socket java.net.SocketException: Connection reset](https://blog.csdn.net/xc_zhou/article/details/80950753)
+* [Socket java.net.SocketException: Connection reset](https://blog.csdn.net/xc_zhou/article/details/80950753)
+
 一端退出，但退出时并未关闭该连接，另一端如果在从连接中读数据则抛出该异常。简单的说就是在连接断开后的读和写操作引起的
 
 ### Connection refused: connect
@@ -58,7 +61,7 @@ $ vim /etc/security/limits.conf
 ### Socket is closed
 
 ### Broken pipe
-[从tcp原理角度理解Broken pipe和Connection Reset by Peer的区别](http://lovestblog.cn/blog/2014/05/20/tcp-broken-pipe/)
+* [从tcp原理角度理解Broken pipe和Connection Reset by Peer的区别](http://lovestblog.cn/blog/2014/05/20/tcp-broken-pipe/)
 
 ## 502 Bad Gateway
 要么是网关代理服务器太忙了，要么就是挂了，要么就是在重启，要么你请求到了错误的网关地址(DNS 配置一个错误的地址)，总之它现在不可用
