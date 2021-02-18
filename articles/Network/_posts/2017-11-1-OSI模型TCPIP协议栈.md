@@ -8,7 +8,6 @@ tag: 计算机网络
 OSI(Open System Interconnection，开放式通信互联) 是由 ISO(International Organization for Standardization，国际标准化组织) 制定的标准模型。旨在将世界各地的各种计算机互联。然而，OSI 模型过于庞大、复杂。参照此模型，技术人员开发了 TCP/IP 协议栈，简化 OSI 七层模型为 TCP/IP 四层模型。获得了更广泛的使用。
 
 OSI 模型和 TCP/IP 模型对比：
-
 ![有帮助的截图]({{ site.url }}/assets/tcp_ip.png)
 
 从上图可以看到，TCP/IP 模型合并了 OSI 模型的应用层、表示层和会话层，将 OSI 模型的数据链路层和物理层合并为网络访问层。
