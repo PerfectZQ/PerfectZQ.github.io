@@ -74,3 +74,10 @@ spark.driver.cores	1
 * `spark.executor.memoryOverhead`，默认`spark.executor.memory * MEMORY_OVERHEAD_FACTOR, with minimum of 384MiB`
 
 当执行`spark-submit`提交到 YARN 时，Executor 运行在 YARN Container，可申请的最大内存受限于`yarn.scheduler.maximum-allocation-mb`
+
+## Spark Streaming Kafka
+```shell
+# Spark Streaming Consumer 每个分区每秒最大消费记录条数
+# Max Throughput of a Batch = maxRatePerPartition * batchWindowTime(second) * topicPartitions
+spark.streaming.kafka.maxRatePerPartition 1000
+```
