@@ -1,6 +1,6 @@
 ---
 layout: post
-title: OSI模型、TCP/IP协议栈
+title: OSI 模型、TCP/IP 协议栈
 tag: 计算机网络
 ---
 
