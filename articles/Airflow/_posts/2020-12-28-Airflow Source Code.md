@@ -21,20 +21,6 @@ import java.util.Arrays;
 public class CommonUtil {
 
     /**
-     * Byte Array to HexString
-     *
-     * @param b
-     * @return
-     */
-    public static String byteArrayToHexString(byte[] b) {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < b.length; i++) {
-            result.append(Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1));
-        }
-        return result.toString();
-    }
-
-    /**
      * Python 的 Java 实现
      *
      * <code>
@@ -67,7 +53,7 @@ public class CommonUtil {
      * 反码：反码的表示方法是：正数的反码是其本身，负数的反码是在其原码的基础上, 符号位不变，其余各个位取反.
      * <li>
      * 补码：补码的表示方法是：正数的补码就是其本身，负数的补码是在其原码的基础上, 符号位不变, 其余各位取反,
-     * 最后 +1. (即在反码的基础上 +1)
+     * 最后 +1 (即在反码的基础上 +1)，或者负数绝对值原码按位取反。
      *
      * <p>
      * 在 Java 中，是采用补码来表示数据的，但是由于 Java byte 的范围是 [-128, 127]，所以对于 128+ 的数会变
@@ -90,4 +76,34 @@ public class CommonUtil {
 
 }
 
+
+    /**
+     * Byte Array to HexString
+     * 
+     * (b[i] & 0xff) 的含义：
+     * Java Byte 的范围是 [-128, 127]，当你想表示 244 时会变成 -12
+     *
+     * 计算机中都是用补码表示数值，正数的补码是原码，而负数的补码是反码加 1，例如`(Byte) -12`
+     * 的原码表示为`1000 1100`,反码为`1111 0011`，补码为`1111 0100`，
+     * 当 byte -> int 就由 8 位变成 32 位，JVM 会做一个补位处理，补位是补 1 还是补 0，取决于 byte 的最高位是 1 还是 0，
+     * `1111 0100`高位是 1，为了保证补位后数值不变高位补 1，补位后变成`1111 1111 1111 1111 1111 1111 1111 0100`，
+     * `1111 1111 1111 1111 1111 1111 1111 0100` - 1 = 
+     * `1111 1111 1111 1111 1111 1111 1111 0011`，最高位不变按位取反
+     * `1000 0000 0000 0000 0000 0000 0000 1100` = -12，虽然这两个的补码不同，但是代表的原码都是 -12。
+     * 而 244 的补码应该是 `0000 0000 0000 0000 0000 0000 0000 1111 0100`，
+     * `0xff`在 32 位情况下表示为
+     * `0000 0000 0000 0000 0000 0000 1111 1111`
+     * `1111 1111 1111 1111 1111 1111 1111 0100`，与 -12 的补码做`&`操作后得出
+     * `0000 0000 0000 0000 0000 0000 1111 0100`，正数的补码就是原码，这个补码代表的数正是 244
+     *
+     * @param b
+     * @return
+     */
+    public static String byteArrayToHexString(byte[] b) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < b.length; i++) {
+            result.append(Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1));
+        }
+        return result.toString();
+    }
 ```
