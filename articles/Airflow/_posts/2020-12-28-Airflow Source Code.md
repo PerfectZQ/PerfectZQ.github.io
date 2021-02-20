@@ -57,11 +57,11 @@ public class CommonUtil {
      *
      * <p>
      * 在 Java 中，是采用补码来表示数据的，但是由于 Java byte 的范围是 [-128, 127]，所以对于 128+ 的数会变
-     * 成负数，BigInteger 可以有无限多个 bit，按 big-endian 字节序去解析 byte[]，当你的补码的第一个字节是
-     * 128，在 Java 用 byte 表示会变成 -128，本来是个正整数，现在被误认为负的了，导致错误的解析，正常可以用
-     * int a = ((byte) 128) & 0xff 解决这个问题。在 {@link BigInteger#BigInteger(int, byte[])} )}，第一
-     * 个参数 signum 代表改对象的符号，signum = 1，代表当前的数应该是个正数，-1 代表是负数，0 就是 0。这样
-     * BigInteger 就能正确的解析当前的数了。
+     * 成负数，BigInteger 可以有无限多个 bit，按 big-endian 字节序去解析 byte[]，当你的补码的第一个字节本应
+     * 是 128，在 Java 用 byte 表示会变成 -128，本来是个正整数，现在被误认为负的了，导致错误的解析，正常可以
+     * 用 int a = ((byte) 128) & 0xff 解决这个问题。在 {@link BigInteger#BigInteger(int, byte[])} )}，
+     * 第一个参数 signum 代表改对象的符号，signum = 1，代表当前的数应该是个正数，-1 代表是负数，0 就是 0
+     * 这样 BigInteger 就能正确的解析当前的数了。
      *
      * @param fileLoc
      * @return
