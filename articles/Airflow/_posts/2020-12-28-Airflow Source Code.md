@@ -104,7 +104,7 @@ public class CommonUtil {
      * BigInteger 可以有无限多个 bit，它按 big-endian 字节序去解析 byte[]，即 byte[0] 代表高 8 位，依次类
      * 推，当你的补码数组的第一个字节本应是 128，在 Java 用 byte 表示会变成 -128，本来是个正整数，现在被误认
      * 为负的了，导致错误的解析，正常可以用 int a = ((byte) 128) & 0xff 解决这个问题。
-     * 在 {@link BigInteger#BigInteger(int, byte[])} )}，第一个参数 signum 代表改对象的符号，signum = 1，
+     * 在 {@link BigInteger#BigInteger(int, byte[])}，第一个参数 signum 代表改对象的符号，signum = 1，
      * 代表当前的数应该是个正数，-1 代表是负数，0 就是 0 这样 BigInteger 就能正确的解析当前的数了。
      *
      * @param fileLoc
