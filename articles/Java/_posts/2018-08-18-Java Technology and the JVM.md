@@ -47,6 +47,9 @@ JDK 和 JRE 共享 Java 应用程序编程接口（Java API 是开发人员用�
 * [**HotSpot Virtual Machine Garbage Collection Tuning Guide Java SE 8**](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/)
 * [Sizing the Generations of JVM](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/sizing.html#sizing_generations)
 
+### G1
+* [Java Hotspot G1 GC的一些关键技术](https://tech.meituan.com/2016/09/23/g1.html)
+
 ## Tools and Commands Reference
 Mac 各版本的 JDK 默认安装路径`/Library/Java/JavaVirtualMachines/`，`/usr/libexec/java_home -V`查看已安装JDK。
 
