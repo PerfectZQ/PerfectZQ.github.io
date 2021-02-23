@@ -223,3 +223,35 @@ FROM(
   ) t 
 WHERE t.num = 1; 
 ```
+
+## Common Operations
+### 小文件合并
+将小文件合并成每个 150M 的 gz 文件
+```shell
+set hive.hadoop.supports.splittable.combineinputformat=true;
+set mapred.max.split.size=150000000;
+set mapred.min.split.size.per.node=150000000;
+set mapred.min.split.size.per.rack=150000000;
+set mapred.max.split.size.per.node=150000000;
+set mapred.max.split.size.per.rack=150000000;
+set hive.exec.compress.output=true;
+set mapred.output.compression.codec=org.apache.hadoop.io.compress.GzipCodec;
+
+insert overwrite table t_temp partition(date_partition='${v_day}')
+select a, b, ... from t where date_partition='${v_day}' ;
+
+load data inpath 'hdfs:///user/hive/warehouse/mydb.db/t_temp/date_partition=${v_day}' OVERWRITE into table t partition(date_partition='${v_day}');
+```
+
+### 大文件拆分
+用`distribute by rand()`强制 shuffle 数据，通过 reduce 将文件分割成 150M 大小。
+```shell
+set hive.exec.reducers.bytes.per.reducer=150000000;
+set hive.exec.compress.output=true;
+set mapred.output.compression.codec=org.apache.hadoop.io.compress.GzipCodec;
+
+insert overwrite table t_temp partition(date_partition='${v_day}')
+select a, b, ...  from t where date_partition='${v_day}' distribute by rand();
+
+load data inpath 'hdfs:///user/hive/warehouse/mydb.db/t_temp/date_partition=${v_day}' OVERWRITE into table t partition(date_partition='${v_day}');
+```
