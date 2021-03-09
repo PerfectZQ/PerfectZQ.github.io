@@ -192,9 +192,17 @@ TCP 数据包和 UDP 一样，都是由首部和数据两部分组成，唯一�
 
 OSI 的应用层协议包括文件的传输、访问及管理协议（FTAM） ，以及文件虚拟终端协议（VIP）和公用管理系统信息（CMIP）等。
 
+## 常见网络设备
+* 集线器(Hub): 从一个设备端口接收信号，原封不动的分发给所有其他的设备端口，由其他端口上的设备决定是否接收，类似广播。工作在物理层(L1)。
+* 网桥(Bridge): Bridge 是一个虚拟网络设备，是 Linux 上用来做 TCP/IP 二层协议交换的，与现实世界中的交换机功能相似，具有网络设备的特征，可以配置 IP、MAC 地址等。Bridge 设备实例可以和 Linux 上其他网络设备实例连接，类似于在现实世界中的交换机和一个用户终端设备之间连接一根网线，当有数据到达时，Bridge 会根据报文中的 MAC 信息进行广播、单播(转发)、丢弃处理。工作在数据链路层(L2)。
+* 交换机(Switch): 一个 N 口的交换机，可以建立`AN2 = N * (N - 1)`条通信链路，交换机会判断数据包的类别（广播/单点），查找内部 MAC 端口映射表，定位目标端口号，将数据转发到目标端口或丢弃，自动更新内部 MAC 端口映射表以自我学习。最开始的交换机是二层交换机，工作在数据链路层(L2)，但后来根据市场需要，有了三层、四层、七层交换机，分别用于处理不同层的协议。
+* 路由器(Router): 根据 IP 地址做数据包的转发。工作在网络层(L3)。
+
 
 
 ## Reference
 * [TCP/IP 四层协议模型与 OSI 七层模型](http://blog.csdn.net/jesons_/article/details/51872307)
 * [TCP 协议与 UDP 协议的区别](http://www.cnblogs.com/bizhu/archive/2012/05/12/2497493.html)
 * [TCP 三次握手和四次挥手详解](http://blog.csdn.net/vivid_110/article/details/50705572)
+* [Linux 虚拟网络设备之 Bridge(桥)](https://segmentfault.com/a/1190000009491002)
+* [Linux 上的基础网络设备详解](https://www.ibm.com/developerworks/cn/linux/1310_xiawc_networkdevice/)
