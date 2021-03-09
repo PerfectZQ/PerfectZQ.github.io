@@ -198,6 +198,40 @@ OSI 的应用层协议包括文件的传输、访问及管理协议（FTAM） �
 * 交换机(Switch): 一个 N 口的交换机，可以建立`AN2 = N * (N - 1)`条通信链路，交换机会判断数据包的类别（广播/单点），查找内部 MAC 端口映射表，定位目标端口号，将数据转发到目标端口或丢弃，自动更新内部 MAC 端口映射表以自我学习。最开始的交换机是二层交换机，工作在数据链路层(L2)，但后来根据市场需要，有了三层、四层、七层交换机，分别用于处理不同层的协议。
 * 路由器(Router): 根据 IP 地址做数据包的转发。工作在网络层(L3)。
 
+## 网络常用命令
+```shell
+# OSX 查看本机所有网络设备信息，包括物理的(网卡)，虚拟的(网桥)等等。
+$ ifconfig
+lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> mtu 16384
+	options=1203<RXCSUM,TXCSUM,TXSTATUS,SW_TIMESTAMP>
+	inet 127.0.0.1 netmask 0xff000000
+	inet6 ::1 prefixlen 128
+	inet6 fe80::1%lo0 prefixlen 64 scopeid 0x1
+	nd6 options=201<PERFORMNUD,DAD>
+......
+en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+	options=400<CHANNEL_IO>
+	ether 3c:22:fb:0c:6f:52
+	inet6 fe80::103f:2585:4804:e5c9%en0 prefixlen 64 secured scopeid 0x6
+	inet 192.168.8.174 netmask 0xffffff00 broadcast 192.168.8.255
+	nd6 options=201<PERFORMNUD,DAD>
+	media: autoselect
+	status: active
+......
+
+# 抓取指定网络设备的数据包
+$ sudo tcpdump -n -i en0
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on en0, link-type EN10MB (Ethernet), capture size 262144 bytes
+01:52:40.322300 IP 192.168.8.182.49155 > 255.255.255.255.6667: UDP, length 172
+01:52:41.043087 IP 17.137.166.35.443 > 192.168.8.174.55832: Flags [P.], seq 1370391690:1370391721, ack 4290356911, win 66, options [nop,nop,TS val 1599036143 ecr 98461104], length 31
+01:52:41.043100 IP 17.137.166.35.443 > 192.168.8.174.55832: Flags [F.], seq 31, ack 1, win 66, options [nop,nop,TS val 1599036143 ecr 98461104], length 0
+01:52:41.043228 IP 192.168.8.174.55832 > 17.137.166.35.443: Flags [.], ack 31, win 2047, options [nop,nop,TS val 98491147 ecr 1599036143], length 0
+01:52:41.043229 IP 192.168.8.174.55832 > 17.137.166.35.443: Flags [.], ack 32, win 2047, options [nop,nop,TS val 98491147 ecr 1599036143], length 0
+01:52:41.043856 IP 192.168.8.174.55832 > 17.137.166.35.443: Flags [P.], seq 1:32, ack 32, win 2048, options [nop,nop,TS val 98491147 ecr 1599036143], length 31
+01:52:41.044556 IP 192.168.8.174.55832 > 17.137.166.35.443: Flags [F.], seq 32, ack 32, win 2048, options [nop,nop,TS val 98491148 ecr 1599036143], length 0
+......
+```
 
 ## Reference
 * [TCP/IP 四层协议模型与 OSI 七层模型](http://blog.csdn.net/jesons_/article/details/51872307)
