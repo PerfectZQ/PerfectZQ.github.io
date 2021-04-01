@@ -5,14 +5,14 @@ tag: Java
 ---
 
 ## Official References
-* [**Java Platform, Standard Edition Documentation - Multiple Releases Portal\(JDK 7 - 13\)**](https://docs.oracle.com/en/java/javase/index.html)
-* [**Java Language and Virtual Machine Specifications - Multiple Releases Portal\(Java SE 6 - 13\)**](https://docs.oracle.com/javase/specs/index.html)
 * [The Java® Language Specification - Java SE 8 Edition](https://docs.oracle.com/javase/specs/jls/se8/html/index.html)
 * [The Java® Virtual Machine Specification Java SE 8 Edition](https://docs.oracle.com/javase/specs/jvms/se8/html/index.html)
+* [**Java Platform, Standard Edition Documentation - Multiple Releases Portal\(JDK 7 - 13\)**](https://docs.oracle.com/en/java/javase/index.html)
+* [**Java Language and Virtual Machine Specifications - Multiple Releases Portal\(Java SE 6 - 13\)**](https://docs.oracle.com/javase/specs/index.html)
 
 ## Interesting Common References
 * [Java 堆外内存](https://www.cnblogs.com/duanxz/p/6089485.html)
-* [JVM: 能不能在 16G 机器上设置17G的堆?](https://www.jianshu.com/p/11ae309ab078)
+* [JVM: 能不能在 16G 机器上设置 17G 的堆?](https://www.jianshu.com/p/11ae309ab078)
 * [JVM 与 Linux 的内存关系详解](https://zhuanlan.zhihu.com/p/64737522)
 
 ## Terminology
@@ -25,33 +25,19 @@ Java 是一门面向对象的编程语言并有以下特性：
 * **丰富的标准库**: Java 提供了很多标准库如 IO、网络、日期操作等等。
 
 ### Java Runtime Edition(JRE)
-JRE 包含 Java Virtual Machine(JVM)，Java platform core classes，和 supporting Java platform libraries。
+JRE includes Java Virtual Machine(JVM), Java platform core classes and supporting Java platform libraries。
+
+* **Java Virtual Machine**: Java 虚拟机，为了实现跨平台/操作系统，Java 使用 JVM 屏蔽了与具体平台相关的信息(JVM 对不同操作系统有不同的实现，将字节码转换成对应平台的机器码)，这样 Java 的编译程序只需生成在 JVM 上运行的目标代码（字节码），就可以在多种平台上不加修改地运行。
+* **Java API**: 应用程序编程接口，是开发人员用于创建 Java 应用程序的预打包库的集合。Java API 通过提供工具类来完成许多常见的编程任务，比如字符串操作，日期/时间处理，网络和实现数据结构(列表，映射，堆栈和队列)，使开发更容易
+* [Java SE Platform at a Glance](https://www.oracle.com/technetwork/java/javase/tech/index.html): ![有帮助的截图]({{ site.url }}/assets/java-se-platform.jpg)
 
 ### Java Development Kit
-JDK 是一组用于开发 Java 应用程序的工具(如`javac`、`javap`、`java`、`jar`、`jps`...)。使用 JDK，可以编译 Java 程序并在 JVM 中运行，还提供了用于打包和分发应用程序的一组工具。
+JDK 是一组用于开发 Java 应用程序的工具(如`javac`、`javap`、`java`、`jar`、`jps`...)，使用 JDK，可以编译 Java 程序并在 JVM 中运行，还提供了用于打包和分发应用程序的一组工具。JDK 和 JRE 共享 Java API
 
-JDK 和 JRE 共享 Java 应用程序编程接口（Java API 是开发人员用于创建 Java 应用程序的预打包库的集合。 Java API 通过提供工具类来完成许多常见的编程任务（包括字符串操作，日期/时间处理，网络和实现数据结构（例如，列表，映射，堆栈和队列）），使开发更容易。
+>JDK = JRE + A collection of tools for developing Java applications
 
-`JDK = JRE + A collection of tools for developing Java applications`
-
-### Java Virtual Machine
-
-
-### Java SE Platform at a Glance
-![有帮助的截图]({{ site.url }}/assets/java-se-platform.jpg)
-
-* [Java SE Platform at a Glance](https://www.oracle.com/technetwork/java/javase/tech/index.html)
-
-## Java Garbage Collection
-* [Java Garbage Collection Basics](https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html#overview)
-* [**HotSpot Virtual Machine Garbage Collection Tuning Guide Java SE 8**](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/)
-* [Sizing the Generations of JVM](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/sizing.html#sizing_generations)
-
-### G1
-* [Java Hotspot G1 GC的一些关键技术](https://tech.meituan.com/2016/09/23/g1.html)
-
-## Tools and Commands Reference
-Mac 各版本的 JDK 默认安装路径`/Library/Java/JavaVirtualMachines/`，`/usr/libexec/java_home -V`查看已安装JDK。
+## Java Tools and Commands Reference
+Mac 各版本的 JDK 默认安装路径`/Library/Java/JavaVirtualMachines/`，执行`/usr/libexec/java_home -V`可以查看已安装JDK。
 
 JVM 相关命令在`/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands`可以找到(当然在 JDK 的默认安装目录也能找到)，有很多命令和工具。
 
@@ -911,3 +897,13 @@ $ jmc --launcher.appendVmargs -vmarg [args]
 ```
 
 默认连接本地 JVM 应用，如果要连接远程 JVM 应用，类似`jvisualvm`需要保证远程 JVM 应用启用了 JMX。
+
+
+## JVM
+### Java Garbage Collection
+* [Java Garbage Collection Basics](https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html#overview)
+* [**HotSpot Virtual Machine Garbage Collection Tuning Guide Java SE 8**](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/)
+* [Sizing the Generations of JVM](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/sizing.html#sizing_generations)
+
+### G1
+* [Java Hotspot G1 GC的一些关键技术](https://tech.meituan.com/2016/09/23/g1.html)
