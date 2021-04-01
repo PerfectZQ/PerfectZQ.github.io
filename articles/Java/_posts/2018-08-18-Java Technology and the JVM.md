@@ -10,11 +10,6 @@ tag: Java
 * [**Java Platform, Standard Edition Documentation - Multiple Releases Portal\(JDK 7 - 13\)**](https://docs.oracle.com/en/java/javase/index.html)
 * [**Java Language and Virtual Machine Specifications - Multiple Releases Portal\(Java SE 6 - 13\)**](https://docs.oracle.com/javase/specs/index.html)
 
-## Interesting Common References
-* [Java 堆外内存](https://www.cnblogs.com/duanxz/p/6089485.html)
-* [JVM: 能不能在 16G 机器上设置 17G 的堆?](https://www.jianshu.com/p/11ae309ab078)
-* [JVM 与 Linux 的内存关系详解](https://zhuanlan.zhihu.com/p/64737522)
-
 ## Terminology
 ### Java Programming Language
 Java 是一门面向对象的编程语言并有以下特性：
@@ -907,3 +902,8 @@ $ jmc --launcher.appendVmargs -vmarg [args]
 
 ### G1
 * [Java Hotspot G1 GC的一些关键技术](https://tech.meituan.com/2016/09/23/g1.html)
+
+## Interesting Common References
+* [Java 堆外内存](https://www.cnblogs.com/duanxz/p/6089485.html)
+* [JVM: 能不能在 16G 机器上设置 17G 的堆?](https://www.jianshu.com/p/11ae309ab078)
+* [JVM 与 Linux 的内存关系详解](https://zhuanlan.zhihu.com/p/64737522)
