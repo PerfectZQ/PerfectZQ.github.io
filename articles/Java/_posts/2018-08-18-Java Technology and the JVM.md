@@ -4,13 +4,14 @@ title: Java Technology and the JVM
 tag: Java
 ---
 
-## Official References
+## References
+### Official
 * [The Java® Language Specification - Java SE 8 Edition](https://docs.oracle.com/javase/specs/jls/se8/html/index.html)
 * [The Java® Virtual Machine Specification Java SE 8 Edition](https://docs.oracle.com/javase/specs/jvms/se8/html/index.html)
 * [**Java Platform, Standard Edition Documentation - Multiple Releases Portal\(JDK 7 - 13\)**](https://docs.oracle.com/en/java/javase/index.html)
 * [**Java Language and Virtual Machine Specifications - Multiple Releases Portal\(Java SE 6 - 13\)**](https://docs.oracle.com/javase/specs/index.html)
-
-* [Java 全栈知识体系](https://www.pdai.tech/)
+### Excellent
+* [**Java 全栈知识体系**](https://www.pdai.tech/)
 
 ## Terminology
 ### Java Programming Language
