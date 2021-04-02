@@ -3,24 +3,22 @@ layout: post
 title: Spark Scheduler
 tag: Spark
 ---
-类似MapReduce的任务调度，Spark也有自身的资源调度方式，包含**应用程序间**和**应用程序中**两个层面的策略调度。
+类似 MapReduce 的任务调度，Spark 也有自身的资源调度方式，包含**应用程序间**和**应用程序中**两个层面的策略调度。
 
-每个Spark程序(SparkContext实例)运行一个独立的执行进程，集群管理器提供了应用程序间的调度处理措施。其次，在每个Spark应用程序中，不同线程提交的多个Job作业(Spark Actions)可以同时运行。
+每个 Spark 程序(SparkContext 实例)运行一个独立的执行进程，集群管理器提供了应用程序间的调度处理措施。其次，在每个 Spark 应用程序中，不同线程提交的多个 Job 作业(Spark Actions)可以同时运行。
 
 ## 作业调度
 常见作业调度的基本概念：
-* **Job** : 作业，一次Action生成的一个或多个Stage组成的一次计算作业。
-* **Stage** : 调度阶段，不存在shuffle操作的调度过程，一个Stage中都是窄依赖，一个调度阶段对应一个任务集。
-* **TaskSet** : 任务集，一组互相关联的，且没有shuffle依赖关系的任务组成的集合。TaskSet的大小和Partition大小有关。
-* **Task** : 任务，单个分区数据集上的最小处理单元。根据Stage有多少个分区决定将Stage划分成多少个Task，然后生成TaskSet放到TaskScheduler。如果 Spark 为任务指定了20个cores，Spark 就可以并发处理 20 个task。
+* **Job** : 作业，一次 Action 生成一个 Job，一个 Job 是由一个或多个 Stage 组成的一次计算作业。
+* **Stage** : 调度阶段，不存在 Shuffle 操作的调度过程，一个 Stage 各个算子之间都是窄依赖，一个 Stage 对应一个 TaskSet。
+* **TaskSet** : 任务集，一组互相关联的，且没有 Shuffle 依赖关系的任务组成的集合。TaskSet 的大小和 Partition 大小有关。
+* **Task** : 任务，单个分区数据集上的最小处理单元。根据 Stage 有多少个分区决定将 Stage 划分成多少个 Task，然后生成 TaskSet 放到 TaskScheduler。如果 Spark 为任务指定了 20 个 cores，Spark 就可以并发处理 20 个 Task。
 
->　　一个Job就对应一个DAG图，划分DAG图时，首先将整个Job划分成一个FinalStage，从后往前回溯，每遇到shuffle操作就划分一个新的Stage出来。
+>　一个 Job 就对应一个 DAG 图，划分 DAG 图时，首先将整个 Job 划分成一个 FinalStage，从后往前回溯，每遇到 Shuffle 操作就划分一个新的 Stage 出来。
 
 ## 应用程序间的调度
-每个运行在集群上的Spark应用程序都能得到一个独立的，仅用于运行任务和存储数据的JVM。
-如果用户需要共享集群资源，可以通过集群管理器配置不同的选项来分配集群资源。
+每个运行在集群上的 Spark 应用程序都能得到一个独立的，仅用于运行任务和存储数据的 JVM。如果用户需要共享集群资源，可以通过集群管理器配置不同的选项来分配集群资源。
 ### 静态资源分配
-
 在集群中最简单最有效的方式就是静态资源分配，每个应用程序在整个生命周期中都可以得到一个最大数量的资源。此方式被用于Spark的Standalone和YARN模式中。
 * Standalone模式资源分配：Spark应用程序按照FIFO顺序执行，每个应用程序都会尝试使用使用所有可用的节点。通过设置内核数目可以限制Spark应用程序资源的使用情况。`spark.deploy.defalutCores`配置通用资源使用。单个应用程序特殊资源使用可以通过spark.cores.max修改配置。除了控制cpu cores之外，每个应用程序的`spark.executor.memory`配置可以控制每个Executor内存的使用。
 * YARN模式的资源分配：在Spark YARN提交的客户端(spark-submit)配置参数。`--num-executors`控制在集群上分配的Executors数量。`--executor-memory`控制Executor的内存分配。`--executor-cores`控制Executor的cpu分配。
@@ -92,9 +90,9 @@ XML文件格式如下：
 </allocations>
 ```
 ## 调度器
-DAGScheduler负责构建具有依赖关系的任务集TaskSet，TaskScheduler负责将TaskSet资源提供给TaskSetManager供其作为调度任务的依据，TaskSetManager负责在具体任务集的内部调度任务。
+DAGScheduler 负责构建具有依赖关系的任务集 TaskSet，TaskScheduler 负责将 TaskSet 资源提供给 TaskSetManager 供其作为调度任务的依据，TaskSetManager 负责在具体任务集的内部调度任务。
 
-每一个SparkContext可能同时存在多个可运行的任务集（没有依赖关系），这些任务集之间的调度是由调度池Pool对象决定的，调度池Pool管理的对象是下一级的Pool或者TaskSetManager对象。
+每一个 SparkContext 可能同时存在多个可运行的任务集（没有依赖关系），这些任务集之间的调度是由调度池 Pool 对象决定的，调度池 Pool 管理的对象是下一级的 Pool 或者 TaskSetManager 对象。
 ### 调度池
 TaskSchedulerImpl在初始化时会根据用户设定的SchedulingMode（默认为FIFO）创建一个rootPool根调度池，之后根据具体的调度模式再进一步创建SchedulableBuilder对象，具体的SchedulableBuilder对象中的BuildPool方法将在rootPool的基础上完成整个Pool的构建工作。
 
@@ -103,3 +101,6 @@ TaskSchedulerImpl在初始化时会根据用户设定的SchedulingMode（默认�
 两种调度模式，对应了两种类型的Pool
 * FIFO：FIFO Pool直接管理TaskSetManager，每个TaskSetManager创建时都存储了其对应的StageID，FIFO Pool根据StageID的顺序调度TaskSetManager
 * FAIR：FAIR Pool直接管理的对象是下一级的Pool，或者TaskSetManager，公平调度的基本原则是根据所管理的Pool/TaskSetManager中正在运行的任务的数量判断优先级，用户可以设置minShare最小任务数和weight任务权重调整对应Pool中任务集的优先程度。公平调度模式下构建的调度池是两级结构，根调度池管理一组子调度池，子调度池进一步管理属于该调度池的TaskSetManager。
+
+## Reference
+* []()
