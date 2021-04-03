@@ -871,6 +871,18 @@ $ jmap -dump:format=b,file=java_pid3742.hprof $JAVA_HOME/bin/java core.3742
 $ jmap -dump:format=b,file=java_pid3742.hprof $JAVA_HOME/bin/java 3742
 ```
 
+### jcmd
+* [3.4 Diagnose Leaks in Java Language Code](https://docs.oracle.com/javase/8/docs/technotes/guides/troubleshoot/memleaks004.html#CIHJIIBA)
+
+> It is recommended to use the latest utility, `jcmd` instead of `jmap` utility for enhanced diagnostics and reduced performance overhead. See [Useful Commands for jcmd Utility](https://docs.oracle.com/javase/8/docs/technotes/guides/troubleshoot/tooldescr006.html#BABEJDGE). 
+
+```shell
+# 生成 pid=3742 的 java 进程的 heap dump 文件
+$ jcmd 3742 GC.heap_dump filename=java_pid3742.hprof
+```
+
+
+
 ### jhat
 虚拟机堆转储快照分析工具：用于分析 heap dump 文件，它会建立一个 HTTP/HTML 服务器，让用户可以在浏览器上查看分析结果
 
