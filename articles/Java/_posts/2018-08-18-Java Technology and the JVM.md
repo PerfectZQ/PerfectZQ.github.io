@@ -44,6 +44,8 @@ JVM 相关命令在`/System/Library/Frameworks/JavaVM.framework/Versions/Current
 * [JDK Tools and Utilities - 11](https://docs.oracle.com/en/java/javase/11/tools/tools-and-command-reference.html)
 * [JDK Tools and Utilities - 13](https://docs.oracle.com/en/java/javase/13/docs/specs/man/index.html)
 
+## 
+
 下面介绍一些比较有用的命令。
 
 ### java
@@ -677,7 +679,7 @@ $ java \
 ### jinfo
 Java 配置信息工具：显示虚拟机配置信息，比如给 main 方法的提交参数等
 
->JVM 在发生 crash 的时候一般会生成两个文件`hs_err_pid3742.log`和`core.3742`，`3742`是`pid`，`hs_err_pid3742.log`通过 JVM 参数`-XX:ErrorFile=./hs_err_pid<pid>.log`配置，`core.3742`是 core dump 文件，它的命名规则通过`/proc/sys/kernel/core_pattern`的值控制，因此你生成的 core dump 文件不一定和我的命名规则一样。注意，需要保证`ulimit -c unlimited`才会在系统崩溃的时候生成`core.xxx`，默认`ulimit -c`是`0`，不生成。除了系统崩溃时生成 core dump，在系统卡住或者 cpu 使用率很高的时候也可以手动触发`kill -3 pid`吓唬下 JVM 生成 core dump 文件。下面的`<core>`即指的 core dump 文件。
+>当 JVM 由于自身异常 Crashed 的时候，往往没有`*.hprof`文件，而是生成类似`core.3742`的文件，`core.3742`是 core dump 文件，当程序运行的过程中异常终止或崩溃，操作系统会将程序当时的内存状态记录下来，保存在一个文件中，这种行为就叫做 core dump，可以理解为是操作系统在程序崩溃时为其保存的内存快照，其中`3742`是`pid`，它的命名规则通过`/proc/sys/kernel/core_pattern`的值控制，因此你生成的 core dump 文件不一定和我的命名规则一样。注意，**需要保证`ulimit -c unlimited`才会在系统崩溃的时候生成`core.xxx`，默认`ulimit -c`是`0`，不生成**。除了系统崩溃时生成 core dump，在系统卡住或者 cpu 使用率很高的时候也可以手动触发`kill -3 <pid>`吓唬下 JVM 生成 core dump 文件。Mac core dump 文件默认生成到`/cores/core.pid`
 
 ```shell
 $ jinfo
@@ -769,7 +771,9 @@ Thread 28312: (state = BLOCKED)
 ```
 
 ### jmap
-Java 内存映像工具：生成虚拟机的内存转储快照(heapdump文件)
+Java 内存映像工具
+* 查看 JVM 堆内存划分与使用情况
+* 生成虚拟机的堆内存转储快照(heap dump)
 
 ```shell
 # 查看使用方法
@@ -804,8 +808,8 @@ where <option> is one of:
     -J<flag>             to pass <flag> directly to the runtime system
 ```
 
-查看指定进程堆内存分配情况
 ```shell
+# 查看指定 java 进程堆内存分配情况
 $ jmap -heap 8357
 Attaching to process ID 8357, please wait...
 Debugger attached successfully.
@@ -853,16 +857,18 @@ PS Old Generation
  0.0% used
 
 4277 interned Strings occupying 340832 bytes.
-```
 
-分析 core dump
-```shell
+
+# 从 core dump 中分析 java 堆内存分配情况
 $ jmap -heap $JAVA_HOME/bin/java core.3742
-```
 
-从 core dump 中抽取 hprof 类型的 heap dump 文件
-```shell
-$ jmap -dump:format=b,file=3742.bin $JAVA_HOME/bin/java core.3742
+
+# 从 core dump 中抽取`hprof`类型的 heap dump 文件，可以丢给 JProfiler 做更详细的分析
+$ jmap -dump:format=b,file=java_pid3742.hprof $JAVA_HOME/bin/java core.3742
+
+
+# 生成 pid=3742 的 java 进程的 heap dump 文件
+$ jmap -dump:format=b,file=java_pid3742.hprof $JAVA_HOME/bin/java 3742
 ```
 
 ### jhat
@@ -882,6 +888,21 @@ $ jvisualvm
 * [Java Platform, Standard Edition Java Mission Control User's Guide](https://docs.oracle.com/javacomponents/jmc-5-5/jmc-user-guide/intro.htm#JMCCI109)
 
 使用 Java Mission Control 监控和管理 Java 程序，它使用 JVM 的常规自适应动态收集数据，能够最小化额外的性能开销，并且消除了观察器效应的问题，JMC由客户端和一些插件组成。
+
+>Note: [JMC 5.5 no longer bundled with JDK 7 and JDK 8.](https://www.oracle.com/javase/jmc/)
+
+* [JDK Mission Control (JMC) 8 Downloads](https://www.oracle.com/java/technologies/javase/products-jmc8-downloads.html)
+
+```shell
+# Install jmc
+$ tar -zxvf jmc-8.0.0_osx-x64.tar.gz && cd jmc-8.0.0_osx-x64
+$ sudo mv JDK\ Mission\ Control.app /Library/Java/JavaVirtualMachines/
+$ vim ~/.zshrc
+export PATH="/Library/Java/JavaVirtualMachines/JDK Mission Control.app/Contents/MacOS":$PATH
+$ source ~/.zshrc
+$ which jmc
+/Library/Java/JavaVirtualMachines/JDK Mission Control.app/Contents/MacOS/jmc
+```
 
 ```shell
 # 启动

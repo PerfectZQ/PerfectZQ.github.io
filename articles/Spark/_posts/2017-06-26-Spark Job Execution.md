@@ -4,9 +4,9 @@ title: Spark Job Execution
 tag: Spark
 ---
 ## 划分 Stage
-当某个Action操作触发计算，向DAGScheduler提交作业时，DAGScheduler需要从RDD依赖链的末端出发，遍历整个RDD依赖链，划分Stage，并且决定Stage之间的依赖关系。
+当某个 Action 操作触发计算，向 DAGScheduler 提交作业时，DAGScheduler 需要从 RDD 依赖链的末端出发，遍历整个 RDD 依赖链，划分 Stage，并且决定 Stage 之间的依赖关系。
 
-Stage划分是以Shuffle依赖为依据，当某个RDD运算需要将数据进行Shuffle时，这个包含了Shuffle依赖关系的RDD将被用来作为输入信息，构建一个新的Stage，由此为依据划分Stage，可以确保有依赖关系的数据能够按照正确的顺序得到处理和运算。
+Stage 划分是以 Shuffle 依赖为依据，当某个 RDD 运算需要将数据进行 Shuffle 时，这个包含了 Shuffle 依赖关系的 RDD 将被用来作为输入信息，构建一个新的 Stage，由此为依据划分 Stage，可以确保有依赖关系的数据能够按照正确的顺序得到处理和运算。
 
 ![有帮助的截图]({{ site.url }}/assets/6_26_DAG.png)
 
