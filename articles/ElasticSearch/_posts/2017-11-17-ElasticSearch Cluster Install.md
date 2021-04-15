@@ -214,7 +214,7 @@ fuser -n tcp 5601
 ```
 知道进程号后kill即可。
 
-## Secure Elasticsearch Cluster(6.0+)
+## Secure Elasticsearch Cluster (6.0+)
 * x-pack 产品介绍：[https://www.elastic.co/products/x-pack](https://www.elastic.co/products/x-pack)
 * x-pack 安装说明：[https://www.elastic.co/guide/en/elasticsearch/reference/current/installing-xpack-es.html](https://www.elastic.co/guide/en/elasticsearch/reference/current/installing-xpack-es.html)
 
@@ -267,14 +267,14 @@ X-Pack的功能默认是都启用的，可以在`$ES_HOME/config/elasticsearch.y
 * Machine Learning: `xpack.ml.enabled: false`
 
 
-## Secure Elasticsearch Cluster(7.0+)
+## Secure Elasticsearch Cluster (7.0+)
 > Note: elasticsearch-oss 版本是不带 x-pack 的，下载的时候需要注意，不要下载 oss 版本的
 
 ### configuring-security
 * [Encrypting communications in Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/configuring-tls.html)
 * [configuring security](https://www.elastic.co/guide/en/elasticsearch/reference/current/configuring-security.html)
 
-对于 7.0+ 的 Elasticsearch 自带 X-pack(非 oss 版本)，所以直接配置即可
+对于 7.0+ 的 Elasticsearch 自带 X-pack(非 OSS 版本)，所以直接配置即可
 
 ```shell
 # rpm 默认安装目录
