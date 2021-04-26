@@ -98,7 +98,7 @@ POST _reindex?slices=5&refresh
 ```
 
 ## Search APIs
-条件查询，根据字段的值查询满足条件的文档
+根据字段的值查询满足条件的文档，相对于 Get API，可以简单理解为条件查询。
 ### Preparation before search
 方便演示，首先添加几条数据，其中`1`是特定雇员的 ID，ElasticSearch 中的每个文档有默认属性`_id`作为唯一键，不写的话会默认生成一个`uuid`作为唯一键，这里设置`_id = 1`
 ```javascript
@@ -300,190 +300,184 @@ GET /secisland/_search
 
 >**Context 的使用原则**：将影响文档匹配程度的查询子句放在`query context`中，其他的查询子句放在`filter context`中。
 
-按照文档内容（各字段的值），以及该值是否需要分词（analyse），可以将查询子句分为`Full text queries`和`Term level queries`。
+按照查询字段的类型(`text`,`keyword`)，以及字段的值是否被分词，可以将查询子句分为`Full text queries`和`Term level queries`。
 ### Full text queries
-首先了解下 Analysis 阶段，它会按照设定的分词器(analyser)对文本(text)进行分词，分词器可以是 elasticsearch 内置的，也可以是自定义的。分词发生在下面的两种情况下：
-* index time analysis: 在索引的时候对`text type fileds`进行分词。每个`text`类型的字段都可以指定一个`analyser`。例如：
-
-```javascript
-// 为字段配置单独的分词器
-PUT my_index
-{
-  "mappings": {
-    "_doc": {
-      "properties": {
-        "title": {
-          "type": "text",
-          // 在索引阶段，text类型的字段如果没有指定analyser，它会在
-          // index settings中查找名为`default`分词器，如果没找到
-          // 则默认使用`standard`分词器
-          "analyzer": "standard"
+首先了解下 Analysis 阶段，它会按照设定的分词器(Analyser)，对类型为`text`的字段内容进行分词，分词器可以是 Elasticsearch 内置的，也可以是自定义的。分词发生在下面的两种情况下：
+* Index Time Analysis: 在建立索引的时候对字段类型为`text`的字段进行分词，每个`text`类型的字段都可以指定一个`analyser`，例如：
+  ```javascript
+  // 为字段 title 配置单独的分词器
+  PUT my_index
+  {
+    "mappings": {
+      "_doc": {
+        "properties": {
+          "title": {
+            "type": "text",
+            // 在索引阶段，text 类型的字段如果没有指定 analyser，它会在 Index Settings 中
+            // 查找名为 default 的 analyzer，如果没找到则默认使用 standard 分词器
+            "analyzer": "standard"
+          }
         }
       }
     }
   }
-}
-// 为index设置全局的分词器
-PUT my_index
-{
+  // 为 index 设置全局的分词器
+  PUT my_index
+  {
+      "settings": {
+          "analysis": {
+              "analyzer": {
+                  "default": {
+                      "type": "ik_max_word"
+                  }
+              }
+          }
+      }
+  }
+  // 与上面的等价
+  PUT my_index
+  {
     "settings": {
-        "analysis": {
-            "analyzer": {
-                "default": {
-                    "type": "ik_max_word"
-                }
-            }
-        }
-    }
-}
-// 与上面的等价
-PUT my_index
-{
-  "settings": {
-        "index.analysis.analyzer.default.type": "ik_max_word"
-    }
-}
-```
-
-* search time analysis: 在搜索的时候对`query string`进行分词。
-
-`search time analysis`默认会按照下面的优先级来选择应该使用哪一个分词器
-
-1. An `analyzer` specified in the full-text query itself.
-```javascript
-GET /my_index/_search
-{
-    "query": {
-        "match" : {
-            "message": "身份证",
-            "analyser": "ik_smart" 
-        }
-    }
-}
-```
-2. The `search_analyzer` defined in the field mapping.
-```javascript
-PUT my_index
-{
-  "settings": {
-    "analysis": {
-      "analyzer": {
-        "my_ngram_analyzer": {
-          "tokenizer": "my_ngram_tokenizer"
-        }
-      },
-      "tokenizer": {
-        "my_ngram_tokenizer": {
-          "type": "ngram",
-          "min_gram": 3,
-          "max_gram": 3,
-          "token_chars": [
-            "letter",
-            "digit"
-          ]
-        }
+          "index.analysis.analyzer.default.type": "ik_max_word"
       }
-    }
   }
-}
-PUT my_index
-{
-  "mappings": {
-    "_doc": {
-      "properties": {
-        "title": {
-          "type": "text",
-          "search_analyzer": "my_ngram_analyzer"
-        }
+  ```
+* Search Time Analysis: 在搜索的时候对`query string`进行分词。默认会按照下面的优先级来选择应该使用哪一个分词器
+  1. An `analyzer` specified in the full-text query itself.
+  ```javascript
+  GET /my_index/_search
+  {
+      "query": {
+          "match" : {
+              "message": "身份证",
+              "analyser": "ik_smart" 
+          }
       }
-    }
   }
-}
-```
-3. The `analyzer` defined in the field mapping.
-```javascript
-PUT my_index
-{
-  "settings": {
-    "analysis": {
-      "analyzer": {
-        "my_ngram_analyzer": {
-          "tokenizer": "my_ngram_tokenizer"
-        }
-      },
-      "tokenizer": {
-        "my_ngram_tokenizer": {
-          "type": "ngram",
-          "min_gram": 3,
-          "max_gram": 3,
-          "token_chars": [
-            "letter",
-            "digit"
-          ]
-        }
-      }
-    }
-  }
-}
-PUT my_index
-{
-  "mappings": {
-    "_doc": {
-      "properties": {
-        "title": {
-          "type": "text",
-          "analyzer": "my_ngram_analyzer"
-        }
-      }
-    }
-  }
-}
-```
-4. An analyzer named `default_search` in the index settings.
-```javascript
-PUT my_index
-{
+  ```
+  2. The `search_analyzer` defined in the field mapping.
+  ```javascript
+  PUT my_index
+  {
     "settings": {
-        "analysis": {
-            "analyzer": {
-                "default_search": {
-                    "type": "ik_max_word"
-                }
-            }
+      "analysis": {
+        "analyzer": {
+          "my_ngram_analyzer": {
+            "tokenizer": "my_ngram_tokenizer"
+          }
+        },
+        "tokenizer": {
+          "my_ngram_tokenizer": {
+            "type": "ngram",
+            "min_gram": 3,
+            "max_gram": 3,
+            "token_chars": [
+              "letter",
+              "digit"
+            ]
+          }
         }
+      }
     }
-}
-// 或者下面的写法
-PUT my_index
-{
-  "settings": {
-        "index.analysis.analyzer.default_search.type": "ik_max_word"
+  }
+  PUT my_index
+  {
+    "mappings": {
+      "_doc": {
+        "properties": {
+          "title": {
+            "type": "text",
+            "search_analyzer": "my_ngram_analyzer"
+          }
+        }
+      }
     }
-}
-```
-5. An analyzer named `default` in the index settings.
-```javascript
-PUT my_index
-{
+  }
+  ```
+  3. The `analyzer` defined in the field mapping.
+  ```javascript
+  PUT my_index
+  {
     "settings": {
-        "analysis": {
-            "analyzer": {
-                "default": {
-                    "type": "ik_max_word"
-                }
-            }
+      "analysis": {
+        "analyzer": {
+          "my_ngram_analyzer": {
+            "tokenizer": "my_ngram_tokenizer"
+          }
+        },
+        "tokenizer": {
+          "my_ngram_tokenizer": {
+            "type": "ngram",
+            "min_gram": 3,
+            "max_gram": 3,
+            "token_chars": [
+              "letter",
+              "digit"
+            ]
+          }
         }
+      }
     }
-}
-// 或者下面的写法
-PUT my_index
-{
-  "settings": {
-        "index.analysis.analyzer.default.type": "ik_max_word"
+  }
+  PUT my_index
+  {
+    "mappings": {
+      "_doc": {
+        "properties": {
+          "title": {
+            "type": "text",
+            "analyzer": "my_ngram_analyzer"
+          }
+        }
+      }
     }
-}
-```
-6. The `standard` analyzer.
+  }
+  ```
+  4. An analyzer named `default_search` in the index settings.
+  ```javascript
+  PUT my_index
+  {
+      "settings": {
+          "analysis": {
+              "analyzer": {
+                  "default_search": {
+                      "type": "ik_max_word"
+                  }
+              }
+          }
+      }
+  }
+  // 或者下面的写法
+  PUT my_index
+  {
+    "settings": {
+          "index.analysis.analyzer.default_search.type": "ik_max_word"
+      }
+  }
+  ```
+  5. An analyzer named `default` in the index settings.
+  ```javascript
+  PUT my_index
+  {
+      "settings": {
+          "analysis": {
+              "analyzer": {
+                  "default": {
+                      "type": "ik_max_word"
+                  }
+              }
+          }
+      }
+  }
+  // 或者下面的写法
+  PUT my_index
+  {
+    "settings": {
+          "index.analysis.analyzer.default.type": "ik_max_word"
+      }
+  }
+  ```
+  6. The `standard` analyzer.
 
 #### match
 `match query`可以查询`text/numric/dates`类型的字段，`match`实质上是`bool`查询，也就是说它是对分词后的文本构造`bool query`，`operator`可以设置为`or(default)`或`and`，来控制匹配结果。下面举个例子
@@ -658,7 +652,7 @@ GET hsyk_diseases_info/_search
 ## Indices APIs
 
 ## cat APIs
-* [cat APIs](https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html)，主要用于集群维护，用来查看集群相关的一些信息，例如节点信息，索引状态等
+[cat APIs](https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html)，主要用于集群维护，用来查看集群相关的一些信息，例如节点信息，索引状态等
 
 ```shell
 # 查看主节点信息
@@ -718,7 +712,7 @@ $curl 'localhost:9200/_cat/indices?format=json&pretty'
 ### 定期删除过期的 Indices
 `_ttl`属性在`5.0+`弃用了，`7.0+`出现`ilm`的概念，即`Index lifecycle management`
 
-* [定义一个 policy](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-put-lifecycle.html)，超过30天删除。
+* [define policy](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-put-lifecycle.html)，超过 30 天删除。
 ```
 PUT _ilm/policy/logs_expire_policy   
 {
@@ -734,8 +728,7 @@ PUT _ilm/policy/logs_expire_policy
   }
 }
 ```
-
-* [创建一个 index template](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html)，指定`index.lifecycle.name`
+* [create index template](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html)，指定`index.lifecycle.name`
 ```
 // 对于 index name 为 logs-* 的索引，使用 logs_expire_policy ilm，优先级为 10
 PUT _template/logs_date_detection
