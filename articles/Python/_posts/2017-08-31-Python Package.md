@@ -82,4 +82,6 @@ apache-airflow==1.10.5
 $ python -m pip install --upgrade build
 # 会在 dist 目录下生成 .tar 和 .whl 文件
 $ python -m build
+# 安装 whl 文件
+$ pip install *.whl
 ```
