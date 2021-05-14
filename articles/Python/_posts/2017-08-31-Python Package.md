@@ -73,3 +73,7 @@ $ pip install \
 -t C:\Users\zhangqiang\IdeaProjects\airflow-dags-big\venv\Lib\site-packages \
 apache-airflow==1.10.5
 ```
+
+
+## 打包
+* [Packaging Python Projects](https://packaging.python.org/tutorials/packaging-projects/)
