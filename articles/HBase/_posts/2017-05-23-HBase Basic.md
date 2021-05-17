@@ -5,8 +5,8 @@ tag: HBase
 ---
 
 ## 参考
-[HBase原理 - HBase内部探险](https://mp.weixin.qq.com/s/37xUpZi13rysjzoylVC03A)
-[HBase学习](https://www.csdn.net/gather_25/MtTaEg0sMjk0NC1ibG9n.html)
+* [HBase原理 - HBase内部探险](https://mp.weixin.qq.com/s/37xUpZi13rysjzoylVC03A)
+* [HBase学习](https://www.csdn.net/gather_25/MtTaEg0sMjk0NC1ibG9n.html)
 
 ## HBase 应用场景
 * 推荐画像：特别是用户的画像，是一个比较大的稀疏矩阵，蚂蚁的风控就是构建在HBase之上
@@ -34,7 +34,7 @@ HMaster的作用：
 * 处理 Schema 更新请求
 
 ## HRegionServer
-[http://hbase.apache.org/book.html#regionserver.arch](http://hbase.apache.org/book.html#regionserver.arch)
+* [http://hbase.apache.org/book.html#regionserver.arch](http://hbase.apache.org/book.html#regionserver.arch)
 
 HRegionServer作用：
 
@@ -52,10 +52,10 @@ HRegionServer 存取一个子表时，会创建一个 HRegion 对象，然后对
 当 HRegionServer 意外终止后，HMaster 会通过 Zookeeper感知到。
 
 
-[RegionSever 详解](https://blog.csdn.net/u011812294/article/details/53944628)
+* [RegionSever 详解](https://blog.csdn.net/u011812294/article/details/53944628)
 
 ### Region 详解
-[Region 详解](https://www.jianshu.com/p/84bf8c907c6b)
+* [Region 详解](https://www.jianshu.com/p/84bf8c907c6b)
 
 一张 HBase 表会纵向分为多个`region`，`region`是按大小分割的，每个表开始只有一个`region`，随着数据增多，`region`不断增大，当增大到一个阀值的时候，`region`就会等分会两个新的`region`，之后会有越来越多的`region`。`region`是 HBase 中分布式存储和负载均衡的最小单元，不同`region`分布到不同 RegionServer 上。
 
@@ -69,14 +69,14 @@ Zookeeper作用在于:
 * HMaster启动时候会将 HBase 系统表`-ROOT-`加载到 Zookeeper，这样通过 Zookeeper 就可以获取当前系统表`.META.`的存储所对应的 RegionServer 信息。1.0+ 之后系统表变成了`hbase:meta`和`hbase:namespace`。
 
 ## HBase DataModel
-[http://hbase.apache.org/book.html#datamodel](http://hbase.apache.org/book.html#datamodel)
+* [http://hbase.apache.org/book.html#datamodel](http://hbase.apache.org/book.html#datamodel)
 
 ## HBase 强一致性详解
-[HBase — 强一致性详解](https://www.cnblogs.com/captainlucky/p/4720986.html)
+* [HBase — 强一致性详解](https://www.cnblogs.com/captainlucky/p/4720986.html)
 
 
 ## HBase connection and connection pool
-[http://techmango.org/2017/07/18/hbase-connection-connection-pool/](http://techmango.org/2017/07/18/hbase-connection-connection-pool/)
+* [HBase connection and connection pool](http://techmango.org/2017/07/18/hbase-connection-connection-pool/)
 
 ## HBase 存储原理
 ![有帮助的截图]({{ site.url }}/assets/hbase_store.png)
