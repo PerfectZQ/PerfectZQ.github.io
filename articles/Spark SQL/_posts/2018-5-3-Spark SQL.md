@@ -15,6 +15,7 @@ org.apache.spark.sql.internal.StaticSQLConf
 ```
 
 ## Built-in Functions
+* [Spark SQL, Built-in Functions](https://spark.apache.org/docs/latest/sql-ref-functions-builtin.html)
 * [Spark SQL, Built-in Functions](http://spark.apache.org/docs/latest/api/sql/index.html)
 
 ## UDF
