@@ -73,3 +73,15 @@ $ pip install \
 -t C:\Users\zhangqiang\IdeaProjects\airflow-dags-big\venv\Lib\site-packages \
 apache-airflow==1.10.5
 ```
+
+
+## 打包
+* [Packaging Python Projects](https://packaging.python.org/tutorials/packaging-projects/)
+
+```shell
+$ python -m pip install --upgrade build
+# 会在 dist 目录下生成 .tar 和 .whl 文件
+$ python -m build
+# 安装 whl 文件
+$ pip install *.whl
+```
