@@ -465,18 +465,18 @@ deployment.extensions "busybox" deleted
 ```
 
 #### Ingress
-* [K8s 工程师必懂的 10 种 Ingress 控制器](https://zhuanlan.zhihu.com/p/88123412)                                                                                                                                                                                                                                                                                                                                                                      
+* [K8s 工程师必懂的 10 种 Ingress 控制器](https://zhuanlan.zhihu.com/p/88123412)                
 
 [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) is an [API object](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.17/#ingress-v1beta1-networking-k8s-io) that manages external access to the services in a cluster, typically HTTP. Ingress can provide load balancing, SSL termination and name-based virtual hosting. Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. Traffic routing is controlled by rules defined on the Ingress resource.
 
 
 ### Volume
-container 中的文件是短暂的，当 container 崩溃后 kubelet 会重新启动它，但是文件会丢失。volume 用来持久化文件，并在 container 之间共享它们。
+Container 中的文件是短暂的，当 Container 崩溃后 kubelet 会重新启动它，但是文件会丢失。Volume 用来持久化文件，并在 Container 之间共享它们。kubernetes 支持很多类型的 [Volumes](https://kubernetes.io/docs/concepts/storage/volumes/)，如 configMap、hostPath、local、secret 等等。
+#### Persist Volume (PV) & Persist Volume Claim (PVC) 
+* [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
+#### Storage Class (SC)
+* [Storage Classes](https://kubernetes.io/docs/concepts/storage/storage-classes/)
 
-kubernetes 支持很多类型的 volumes，如 configMap、hostPath、local、secret 等等。详细的说明可以参考[official reference](https://kubernetes.io/docs/concepts/storage/volumes/)
-#### storage class (sc)
-#### persist volume (pv)
-#### persist volume claim (pvc) 
 
 ### Namespace
 kubernetes 支持由统一物理集群支持的多个虚拟集群。这些虚拟集群就称为[Namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)。

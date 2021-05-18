@@ -62,3 +62,6 @@ $ clickhouse-client --host 172.16.105.16 --port 31234 \
 ```
 
 > 对于`--format`,详细的可以参考[Formats for Input and Output Data](https://clickhouse.tech/docs/en/interfaces/formats/)
+
+## Common Comands
+* [ClickHouse 之 DBA 运维宝典](https://cloud.tencent.com/developer/article/1654602)
