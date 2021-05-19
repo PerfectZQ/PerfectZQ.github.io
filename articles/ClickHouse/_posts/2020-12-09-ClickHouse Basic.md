@@ -277,5 +277,4 @@ ENGINE = Distributed('cat', 'dlink', 'avro_schemas_shard', rand())
 # Import tsv data
 $ nohup  /usr/bin/clickhouse-client --host clickhouse-5.clickhouse -u admin --password Dlink@2020 --query 'INSERT INTO dlink.avro_schemas FORMAT TabSeparated' --max_insert_block_size=100000 < /tmp/hdfs_avro_schemas.txt >import.log 2>&1 &
 
-# 查看集群查询队列
 ```
