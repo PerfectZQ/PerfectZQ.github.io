@@ -4,12 +4,12 @@ title: Spark Job Submit
 tag: Spark
 ---
 
-## spark各种模式下的提交方式以及配置参数说明
+## Spark 各种模式下的提交方式以及配置参数说明
 使用下面的命令查看对应版本的提交参数详细说明
 ```shell
 spark-submit --help
 ```
-### local模式下的提交模板
+### local 模式下的提交模板
 ```shell
 SPARK_HOME/bin/spark-submit \ # 执行spark-submit脚本
 		# 指定提交jar包的主类
@@ -40,7 +40,7 @@ SPARK_HOME/bin/spark-submit \ # 执行spark-submit脚本
 		# main
 		test.py
 ```
-### standalone模式提交模板
+### Standalone 模式提交模板
 ```shell
 # 在环境变量中配置了SPARK_HOME/bin后就可以直接调用此脚本
 spark-submit \ 
@@ -54,7 +54,7 @@ spark-submit \
 		/usr/zhangqiang/xxxx.jar
 		[application-arguments]
 ```
-### yarn模式提交模板
+### YARN 模式提交模板
 ```shell
 # 与standalone一一对应
 spark-submit \
@@ -66,7 +66,7 @@ spark-submit \
 		/usr/zhangqiang/xxxx.jar
 		[applications-arguments]
 ```
-### yarn模式提交的两种方式
+### YARN 模式提交的两种方式
 ```shell
 # 提交到yarn，默认以client模式提交
 	# 客户端方式提交
@@ -119,7 +119,7 @@ spark-submit --driver-class-path /somepath/project/mysql-connector-java-5.1.30-b
 
 **上面所说的所有路径，集群所有节点都需要复制一份完全相同jar文件。**
 
-### Spark On Yarn
+### Spark On YARN
 * 方式1：YARN Application 依赖的路径在 YARN 中的`yarn.application.classpath`配置。将 jar 包放在该配置项指定的路径下即可。
 * 方式2：在`conf/spark-defaults.conf`配置`spark.yarn.archive`或`spark.yarn.jars`。[详细介绍](http://spark.apache.org/docs/latest/running-on-yarn.html#preparations)
 
@@ -146,7 +146,7 @@ cluster模式下，driver向yarn请求资源，并监督作业运行，所以spa
 17/04/07 18:27:15 INFO yarn.Client: Application report for application_1491557185266_0001 (state: RUNNING)
 ```
 
-## spark 指定执行用户
+## Spark 指定执行用户
 在shell中指定环境变量
 ```shell
 export HADOOP_USER_NAME=hdfs
@@ -165,3 +165,27 @@ sparkConf.set("HADOOP_USER_NAME", "hdfs")
 
 ## SparkSubmit 源码
 `spark-submit`具体的执行逻辑都在`spark-core org.apache.spark.deploy.SparkSubmit`的`main`方法中。
+
+## SparkShell
+* [What do the numbers on the progress bar mean in spark-shell?](https://stackoverflow.com/questions/30245180/what-do-the-numbers-on-the-progress-bar-mean-in-spark-shell)
+```console
+[Stage7:===========>                              (14174 + 5) / 62500]
+```
+> What you get is a Console Progress Bar, `[Stage 7: shows the stage you are in now, and (14174 + 5) / 62500]` is `(numCompletedTasks + numActiveTasks) / totalNumOfTasksInThisStage]`. The progress bar shows `numCompletedTasks / totalNumOfTasksInThisStage`.
+
+> It will be shown when both `spark.ui.showConsoleProgress` is true (by default) and log level in `conf/log4j.properties` is ERROR or WARN (!log.isInfoEnabled is true).
+
+```shell
+# Help
+$ spark-shell -h
+
+$ spark-shell \
+    --master yarn \
+    --driver-cores 4 \
+    --driver-memory 8G \
+    --num-executors 40 \
+    --executor-memory 30G \
+    --executor-cores 4 \
+    --conf "spark.yarn.maxAppAttempts=1" \
+    --packages com.databricks:spark-avro_2.11:4.0.0
+```
