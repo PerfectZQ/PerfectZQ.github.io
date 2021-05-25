@@ -3,7 +3,7 @@
 ## Log
 * [Log Engine Family](https://clickhouse.tech/docs/en/engines/table-engines/log-family/)
 ```sql
-CREATE TABLE dlink.bj_all_file_uid
+CREATE TABLE IF NOT EXISTS dlink.bj_all_file_uid
 (
     md5 String,
     filePath String,
@@ -11,7 +11,7 @@ CREATE TABLE dlink.bj_all_file_uid
 )
 ENGINE = Log
 
-CREATE TABLE dlink.bj_avro_inner_file_uid
+CREATE TABLE IF NOT EXISTS dlink.bj_avro_inner_file_uid
 (
     md5 String,
     filePath String,
@@ -20,6 +20,9 @@ CREATE TABLE dlink.bj_avro_inner_file_uid
 	bytesFieldName Nullable(String)
 )
 ENGINE = Log
+
+CREATE TABLE IF NOT EXISTS dlink.sh_avro_inner_file_uid AS dlink.bj_avro_inner_file_uid ENGINE = Log
+
 ```
 
 写数据
