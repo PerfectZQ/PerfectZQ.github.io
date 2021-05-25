@@ -45,7 +45,7 @@ External tables options:
 # –-format      Data format in the file. If omitted, `TabSeparated` is used. (Optional)
 # 下面两个参数必须指定一个
 # -–types       A list of comma-separated column types. For example: UInt64,String. The columns will be named _1, _2, …
-# -–structure   The table structure in the formatUserID UInt64, URL String. Defines the column names and types.
+# -–structure   The table structure in the format UserID UInt64, URL String. Defines the column names and types.
 $ clickhouse-client \
 --external --file=... [--name=...] [--format=...] [--types=...|--structure=...]
 
@@ -135,9 +135,9 @@ CREATE TABLE dlink.hdfs_bj_avro_inner_file_uid
 (
     md5 String,
     filePath String,
-	  fileSize Nullable(UInt64),
-	  rowNumber Nullable(UInt32),
-	  bytesFieldName Nullable(String)
+	fileSize Nullable(UInt64),
+    rowNumber Nullable(UInt32),
+	bytesFieldName Nullable(String)
 )
 ENGINE = HDFS('hdfs://sensetime-data-hadoop/user/sre.bigdata/avro_file_uniqueId_parquet', 'Parquet')
 
@@ -145,7 +145,7 @@ CREATE TABLE dlink.hdfs_bj_all_file_uid
 (
     md5 String,
     filePath String,
-	  fileSize Nullable(UInt64)
+	fileSize Nullable(UInt64)
 )
 ENGINE = HDFS('hdfs://sensetime-data-hadoop/user/sre.bigdata/all_file_uniqueId.parquet', 'Parquet')
 
@@ -178,5 +178,8 @@ INSERT INTO dlink.file_uid_info SELECT *, "hadoop" as cluster, 0 as isInnerAvro 
 * [Table Engines - File](https://clickhouse.tech/docs/en/engines/table-engines/special/file/)
 
 ```sql
-INSERT INTO dlink.file_uid_info SELECT *, "hadoop" as cluster, 1 as isInnerAvro FROM file("/data/*.paquet", "PARQUET")
+INSERT INTO dlink.file_uid_info (md5, filePath, fileSize, cluster, isInnerAvro) SELECT *, 'hadoop', 1 FROM file(
+    "/data/analysis/hadoop/user/sre.bigdata/all_file_uniqueId.parquet/*", "PARQUET", 
+    "md5 String, filePath String, fileSize Nullable(UInt64)"
+)
 ```
