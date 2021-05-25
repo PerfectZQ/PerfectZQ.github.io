@@ -98,7 +98,7 @@ n the number of simultaneously running queries. May include internal queries ini
 77 rows in set. Elapsed: 0.003 sec.
 
 ```
-## Common
+## Import Data
 ### Import TSV
 ```shell
 # Connect to clickhouse container
@@ -168,7 +168,7 @@ CREATE TABLE dlink.file_uid_info ON CLUSTER cat AS dlink.file_uid_info_shard
 ENGINE = Distributed('cat', 'dlink', 'file_uid_info_shard', rand())
 
 -- 导入本地表
-INSERT INTO dlink.file_uid_info SELECT *, "hadoop" as cluster, 1 as isInnerAvro FROM dlink.hdfs_bj_avro_inner_file_uid;
+INSERT INTO dlink.file_uid_info (md5, filePath, fileSize, cluster, isInnerAvro) SELECT *, 'hadoop', 1 FROM dlink.hdfs_bj_avro_inner_file_uid;
 INSERT INTO dlink.file_uid_info SELECT *, "hadoop" as cluster, 0 as isInnerAvro FROM dlink.hdfs_bj_all_file_uid;
 
 ```
@@ -190,8 +190,43 @@ ENGINE = File(TabSeparated)
 * [Table Functions - file](https://clickhouse.tech/docs/en/sql-reference/table-functions/file/)
 > Note: file 只能读到 [user_files_path](https://clickhouse.tech/docs/en/operations/server-configuration-parameters/settings/#server_configuration_parameters-user_files_path) 下的文件
 ```sql
-INSERT INTO dlink.file_uid_info (md5, filePath, fileSize, cluster, isInnerAvro) SELECT *, 'hadoop', 1 FROM file(
+INSERT INTO dlink.file_uid_info (md5, filePath, fileSize, cluster, isInnerAvro) SELECT md5, filePath, fileSize, 'hadoop', 1 FROM file(
     "/var/lib/clickhouse/user_files/sre.bigdata/all_file_uniqueId.parquet/*", "PARQUET", 
     "md5 String, filePath String, fileSize Nullable(UInt64)"
 )
 ```
+
+## Practices
+### Execute sql file
+```shell
+# 初始化表
+clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 --multiquery < init_table.sql
+
+cluster="hadoop"
+prefix="bj"
+
+clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 --query "truncate table dlink.${prefix}_all_file_uid"
+# 遍历文件夹中的文件
+for FILENAME in /data/analysis/$cluster/user/sre.bigdata/all_file_uniqueId.parquet/*.parquet; do
+    # Log Engine 写入的时候整个表会锁住，任何读取操作会被阻塞，当没有写操作的时候支持并发读
+    cat $FILENAME | clickhouse-client \
+          --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 \
+          --query "INSERT INTO dlink.${prefix}_all_file_uid FORMAT Parquet" \
+          --max_insert_block_size=100000
+done
+clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 \
+	--query "INSERT INTO dlink.file_uid_info(md5, filePath, fileSize, cluster, isInnerAvro) SELECT md5, filePath, fileSize, '$cluster', 0 FROM  FROM dlink.${prefix}_all_file_uid"
+clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 --query "drop table dlink.${prefix}_all_file_uid"
+
+
+clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 --query "truncate table dlink.${prefix}_avro_inner_file_uid"
+for FILENAME in /data/analysis/$cluster/user/sre.bigdata/avro_file_uniqueId_parquet/*.parquet; do
+    # Log Engine 写入的时候整个表会锁住，任何读取操作会被阻塞，当没有写操作的时候支持并发读
+    cat $FILENAME | clickhouse-client \
+          --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 \
+          --query "INSERT INTO dlink.${prefix}_avro_inner_file_uid FORMAT Parquet" \
+          --max_insert_block_size=100000
+done
+clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 \
+        --query "INSERT INTO dlink.file_uid_info(md5, filePath, fileSize, rowNumber, bytesFieldName, cluster, isInnerAvro) SELECT md5, filePath, fileSize, rowNumber, bytesFieldName, '$cluster', 1 FROM  FROM dlink.${prefix}_avro_inner_file_uid"
+clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 --query "drop table dlink.${prefix}_avro_inner_file_uid"```
