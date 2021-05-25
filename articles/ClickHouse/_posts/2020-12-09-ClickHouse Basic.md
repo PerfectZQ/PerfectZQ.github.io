@@ -278,3 +278,48 @@ ENGINE = Distributed('cat', 'dlink', 'avro_schemas_shard', rand())
 $ nohup  /usr/bin/clickhouse-client --host clickhouse-5.clickhouse -u admin --password xxxxxxxx --query 'INSERT INTO dlink.avro_schemas FORMAT TabSeparated' --max_insert_block_size=100000 < /tmp/hdfs_avro_schemas.txt >import.log 2>&1 &
 
 ```
+
+### Import Data from HDFS
+```sql
+-- 关联 hdfs 目录
+CREATE TABLE dlink.hdfs_bj_avro_inner_file_uid
+(
+    md5 String,
+    filePath String,
+	  fileSize Nullable(UInt64),
+	  rowNumber Nullable(UInt32),
+	  bytesFieldName Nullable(String)
+)
+ENGINE = HDFS('hdfs://sensetime-data-hadoop/user/sre.bigdata/avro_file_uniqueId_parquet', 'Parquet')
+
+CREATE TABLE dlink.hdfs_bj_all_file_uid
+(
+    md5 String,
+    filePath String,
+	  fileSize Nullable(UInt64)
+)
+ENGINE = HDFS('hdfs://sensetime-data-hadoop/user/sre.bigdata/all_file_uniqueId.parquet', 'Parquet')
+
+-- 创建本地表
+CREATE TABLE IF NOT EXISTS dlink.file_uid_info_shard ON CLUSTER cat
+(
+	md5 String,
+	cluster LowCardinality(String),
+	isInnerAvro UInt8, -- Boolean Type
+	filePath String,
+	fileSize Nullable(UInt64),
+	rowNumber Nullable(UInt32),
+	bytesFieldName Nullable(String)
+)
+ENGINE = ReplicatedMergeTree('/clickhouse/tables/{shard_cat}/dlink.file_uid_info_shard', '{replica_cat}')
+ORDER BY (md5)
+
+-- 创建分布式表
+CREATE TABLE dlink.file_uid_info ON CLUSTER cat AS dlink.file_uid_info_shard 
+ENGINE = Distributed('cat', 'dlink', 'file_uid_info_shard', rand())
+
+-- 导入本地表
+INSERT INTO dlink.file_uid_info SELECT *, "hadoop" as cluster, 1 as isInnerAvro FROM dlink.hdfs_bj_avro_inner_file_uid;
+INSERT INTO dlink.file_uid_info SELECT *, "hadoop" as cluster, 0 as isInnerAvro FROM dlink.hdfs_bj_all_file_uid;
+
+```
