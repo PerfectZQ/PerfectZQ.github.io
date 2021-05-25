@@ -325,6 +325,9 @@ INSERT INTO dlink.file_uid_info SELECT *, "hadoop" as cluster, 0 as isInnerAvro 
 ```
 
 ### Import Data from Local File
+* [Table Functions - file](https://clickhouse.tech/docs/en/sql-reference/table-functions/file/)
+* [Table Engines - File](https://clickhouse.tech/docs/en/engines/table-engines/special/file/)
+
 ```sql
 INSERT INTO dlink.file_uid_info SELECT *, "hadoop" as cluster, 1 as isInnerAvro FROM file("/data/*.paquet", "PARQUET")
 ```
