@@ -215,7 +215,7 @@ for FILENAME in /data/analysis/$cluster/user/sre.bigdata/all_file_uniqueId.parqu
           --max_insert_block_size=100000
 done
 clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 \
-	--query "INSERT INTO dlink.file_uid_info(md5, filePath, fileSize, cluster, isInnerAvro) SELECT md5, filePath, fileSize, '$cluster', 0 FROM  FROM dlink.${prefix}_all_file_uid"
+	--query "INSERT INTO dlink.file_uid_info(md5, filePath, fileSize, cluster, isInnerAvro) SELECT md5, filePath, fileSize, '$cluster', 0 FROM dlink.${prefix}_all_file_uid"
 clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 --query "drop table dlink.${prefix}_all_file_uid"
 
 
@@ -228,5 +228,6 @@ for FILENAME in /data/analysis/$cluster/user/sre.bigdata/avro_file_uniqueId_parq
           --max_insert_block_size=100000
 done
 clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 \
-        --query "INSERT INTO dlink.file_uid_info(md5, filePath, fileSize, rowNumber, bytesFieldName, cluster, isInnerAvro) SELECT md5, filePath, fileSize, rowNumber, bytesFieldName, '$cluster', 1 FROM  FROM dlink.${prefix}_avro_inner_file_uid"
-clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 --query "drop table dlink.${prefix}_avro_inner_file_uid"```
+        --query "INSERT INTO dlink.file_uid_info(md5, filePath, fileSize, rowNumber, bytesFieldName, cluster, isInnerAvro) SELECT md5, filePath, fileSize, rowNumber, bytesFieldName, '$cluster', 1 FROM dlink.${prefix}_avro_inner_file_uid"
+clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 --query "drop table dlink.${prefix}_avro_inner_file_uid"
+```
