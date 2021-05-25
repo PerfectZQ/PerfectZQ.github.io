@@ -25,7 +25,7 @@ $ clickhouse-client
 
 ## External Data
 * [External Data for Query Processing](https://clickhouse.tech/docs/en/engines/table-engines/special/external-data/)
-ClickHouse 可以在查询(External tables could be sent only with select query)的时候加载外部数据，例如使用 Command-line Client 的时候可以使用如下参数
+ClickHouse 可以在查询(**External tables could be sent only with select query**)的时候加载外部数据，例如使用 Command-line Client 的时候可以使用如下参数
 
 ```shell
 $ clickhouse-client --help
@@ -173,13 +173,25 @@ INSERT INTO dlink.file_uid_info SELECT *, "hadoop" as cluster, 0 as isInnerAvro 
 
 ```
 
-### Import Data from Local File
-* [Table Functions - file](https://clickhouse.tech/docs/en/sql-reference/table-functions/file/)
+### Import Data from File
 * [Table Engines - File](https://clickhouse.tech/docs/en/engines/table-engines/special/file/)
+```sql
+CREATE TABLE dlink.bj_avro_inner_file_uid
+(
+    md5 String,
+    filePath String,
+	fileSize Nullable(UInt64),
+    rowNumber Nullable(UInt32),
+	bytesFieldName Nullable(String)
+)
+ENGINE = File(TabSeparated)
+```
 
+* [Table Functions - file](https://clickhouse.tech/docs/en/sql-reference/table-functions/file/)
+> Note: file 只能读到 [user_files_path](https://clickhouse.tech/docs/en/operations/server-configuration-parameters/settings/#server_configuration_parameters-user_files_path) 下的文件
 ```sql
 INSERT INTO dlink.file_uid_info (md5, filePath, fileSize, cluster, isInnerAvro) SELECT *, 'hadoop', 1 FROM file(
-    "/data/analysis/hadoop/user/sre.bigdata/all_file_uniqueId.parquet/*", "PARQUET", 
+    "/var/lib/clickhouse/user_files/sre.bigdata/all_file_uniqueId.parquet/*", "PARQUET", 
     "md5 String, filePath String, fileSize Nullable(UInt64)"
 )
 ```
