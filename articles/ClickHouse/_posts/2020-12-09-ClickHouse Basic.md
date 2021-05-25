@@ -323,3 +323,8 @@ INSERT INTO dlink.file_uid_info SELECT *, "hadoop" as cluster, 1 as isInnerAvro 
 INSERT INTO dlink.file_uid_info SELECT *, "hadoop" as cluster, 0 as isInnerAvro FROM dlink.hdfs_bj_all_file_uid;
 
 ```
+
+### Import Data from Local File
+```sql
+INSERT INTO dlink.file_uid_info SELECT *, "hadoop" as cluster, 1 as isInnerAvro FROM file("/data/*.paquet", "PARQUET")
+```
