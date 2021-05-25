@@ -256,7 +256,7 @@ s, branch mispredictions, hyper-threading, etc.                               â”
 $ kubectl.exe exec -it clickhouse-5 -- bash
 
 # Connect to clickhouse cli
-$ /usr/bin/clickhouse-client --host clickhouse-5.clickhouse -u admin --password Dlink@2020
+$ /usr/bin/clickhouse-client --host clickhouse-5.clickhouse -u admin --password xxxxxxxx
 
 CREATE DATABASE dlink ON CLUSTER cat
 
@@ -275,6 +275,6 @@ CREATE TABLE dlink.avro_schemas ON CLUSTER cat AS dlink.avro_schemas_shard
 ENGINE = Distributed('cat', 'dlink', 'avro_schemas_shard', rand())
 
 # Import tsv data
-$ nohup  /usr/bin/clickhouse-client --host clickhouse-5.clickhouse -u admin --password Dlink@2020 --query 'INSERT INTO dlink.avro_schemas FORMAT TabSeparated' --max_insert_block_size=100000 < /tmp/hdfs_avro_schemas.txt >import.log 2>&1 &
+$ nohup  /usr/bin/clickhouse-client --host clickhouse-5.clickhouse -u admin --password xxxxxxxx --query 'INSERT INTO dlink.avro_schemas FORMAT TabSeparated' --max_insert_block_size=100000 < /tmp/hdfs_avro_schemas.txt >import.log 2>&1 &
 
 ```
