@@ -14,7 +14,7 @@ tag: Hadoop
 2019-11-26 22:17:04.013 INFO [main] Extract2JsonFiles$: ===> hadoop-sz : begin extract
 2019-11-26 22:17:04.086 WARN [main] Client: Exception encountered while connecting to the server : org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]
 2019-11-26 22:17:04.093 WARN [main] Client: Exception encountered while connecting to the server : org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]
-2019-11-26 22:17:04.094 INFO [main] RetryInvocationHandler: Exception while invoking getFileInfo of class ClientNamenodeProtocolTranslatorPB over master001.hadoop-sz.data.example.com/172.20.22.61:8020 after 1 fail over attempts. Trying to fail over immediately.
+2019-11-26 22:17:04.094 INFO [main] RetryInvocationHandler: Exception while invoking getFileInfo of class ClientNameNodeProtocolTranslatorPB over master001.hadoop-sz.data.example.com/172.20.22.61:8020 after 1 fail over attempts. Trying to fail over immediately.
 # 但下面的异常又拒绝了我的认证，一头雾水。
 java.io.IOException: Failed on local exception: java.io.IOException: org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]; Host Details : local host is: "adm001.hadoop-sz.data.example.com/172.20.52.58"; destination host is: "master001.hadoop-sz.data.example.com":8020; 
         at org.apache.hadoop.net.NetUtils.wrapException(NetUtils.java:776) ~[myutils-1.0-SNAPSHOT.jar:?]
@@ -22,7 +22,7 @@ java.io.IOException: Failed on local exception: java.io.IOException: org.apache.
         at org.apache.hadoop.ipc.Client.call(Client.java:1412) ~[myutils-1.0-SNAPSHOT.jar:?]
         at org.apache.hadoop.ipc.ProtobufRpcEngine$Invoker.invoke(ProtobufRpcEngine.java:229) ~[myutils-1.0-SNAPSHOT.jar:?]
         at com.sun.proxy.$Proxy26.getFileInfo(Unknown Source) ~[?:?]
-        at org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolTranslatorPB.getFileInfo(ClientNamenodeProtocolTranslatorPB.java:771) ~[myutils-1.0-SNAPSHOT.jar:?]
+        at org.apache.hadoop.hdfs.protocolPB.ClientNameNodeProtocolTranslatorPB.getFileInfo(ClientNameNodeProtocolTranslatorPB.java:771) ~[myutils-1.0-SNAPSHOT.jar:?]
         at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_77]
         at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_77]
         at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_77]
@@ -112,8 +112,8 @@ auths {
 }
 
 # 下面这两行，非常奇怪，返回了两个 null，接着下面就出上面显示的异常了
-2019-11-27 18:19:36.715 DEBUG [main] SaslRpcClient: Get token info proto:interface org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolPB info:null
-2019-11-27 18:19:36.715 DEBUG [main] SaslRpcClient: Get kerberos info proto:interface org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolPB info:null
+2019-11-27 18:19:36.715 DEBUG [main] SaslRpcClient: Get token info proto:interface org.apache.hadoop.hdfs.protocolPB.ClientNameNodeProtocolPB info:null
+2019-11-27 18:19:36.715 DEBUG [main] SaslRpcClient: Get kerberos info proto:interface org.apache.hadoop.hdfs.protocolPB.ClientNameNodeProtocolPB info:null
 2019-11-27 18:19:36.716 DEBUG [main] UserGroupInformation: PrivilegedActionException as:robot_data@HADOOP-SZ.DATA.example.COM (auth:KERBEROS) cause:org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]
 2019-11-27 18:19:36.716 DEBUG [main] UserGroupInformation: PrivilegedAction as:robot_data@HADOOP-SZ.DATA.example.COM (auth:KERBEROS) from:org.apache.hadoop.ipc.Client$Connection.handleSaslConnectionFailure(Client.java:645)
 2019-11-27 18:19:36.717 WARN [main] Client: Exception encountered while connecting to the server : org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]

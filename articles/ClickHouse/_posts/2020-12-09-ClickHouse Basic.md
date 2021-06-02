@@ -98,8 +98,34 @@ n the number of simultaneously running queries. May include internal queries ini
 77 rows in set. Elapsed: 0.003 sec.
 
 ```
-## Import Data
-### Import TSV
+
+
+## Practices
+### Execute sql file
+```shell
+# 初始化表
+clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password xxxxxx --multiquery < init_table.sql
+
+cluster="hadoop"
+prefix="bj"
+
+clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password xxxxxx --query "truncate table dlink.${prefix}_all_file_uid"
+# 遍历文件夹中的文件
+for FILENAME in /data/analysis/$cluster/user/sre.bigdata/all_file_uniqueId.parquet/*.parquet; do
+    # Log Engine 写入的时候整个表会锁住，任何读取操作会被阻塞，当没有写操作的时候支持并发读
+    cat $FILENAME | clickhouse-client \
+          --host 10.53.26.177 --port 31234 -u admin --password xxxxxx \
+          --query "INSERT INTO dlink.${prefix}_all_file_uid FORMAT Parquet" \
+          --max_insert_block_size=100000
+done
+clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password xxxxxx \
+	--query "INSERT INTO dlink.file_uid_info(md5, filePath, fileSize, cluster, isInnerAvro) SELECT md5, filePath, fileSize, '$cluster', 0 FROM dlink.${prefix}_all_file_uid"
+clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password xxxxxx --query "drop table dlink.${prefix}_all_file_uid"
+
+```
+
+### Import Data
+#### Import TSV
 ```shell
 # Connect to clickhouse container
 $ kubectl.exe exec -it clickhouse-5 -- bash
@@ -128,7 +154,7 @@ $ nohup  /usr/bin/clickhouse-client --host clickhouse-5.clickhouse -u admin --pa
 
 ```
 
-### Import Data from HDFS
+#### Import Data from HDFS
 ```sql
 -- 关联 hdfs 目录
 CREATE TABLE dlink.hdfs_bj_avro_inner_file_uid
@@ -173,7 +199,7 @@ INSERT INTO dlink.file_uid_info SELECT *, "hadoop" as cluster, 0 as isInnerAvro 
 
 ```
 
-### Import Data from File
+#### Import Data from File
 * [Table Engines - File](https://clickhouse.tech/docs/en/engines/table-engines/special/file/)
 ```sql
 CREATE TABLE dlink.bj_avro_inner_file_uid
@@ -196,38 +222,43 @@ INSERT INTO dlink.file_uid_info (md5, filePath, fileSize, cluster, isInnerAvro) 
 )
 ```
 
-## Practices
-### Execute sql file
-```shell
-# 初始化表
-clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 --multiquery < init_table.sql
+### 查询数据库和表容量
+```sql
+-- 查看数据库容量
+select
+    sum(rows) as "总行数",
+    formatReadableSize(sum(data_uncompressed_bytes)) as "原始大小",
+    formatReadableSize(sum(data_compressed_bytes)) as "压缩大小",
+    round(sum(data_compressed_bytes) / sum(data_uncompressed_bytes) * 100, 0) "压缩率"
+from system.parts;
 
-cluster="hadoop"
-prefix="bj"
+-- 查询 test 表，2019年10月份的数据容量
+select
+    table as "表名",
+    sum(rows) as "总行数",
+    formatReadableSize(sum(data_uncompressed_bytes)) as "原始大小",
+    formatReadableSize(sum(data_compressed_bytes)) as "压缩大小",
+    round(sum(data_compressed_bytes) / sum(data_uncompressed_bytes) * 100, 0) "压缩率"
+from system.parts
+	-- 根据实际情况加查询条件
+    where table in('test')
+        and partition like '2019-10-%'
+    group by table;		
+```
 
-clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 --query "truncate table dlink.${prefix}_all_file_uid"
-# 遍历文件夹中的文件
-for FILENAME in /data/analysis/$cluster/user/sre.bigdata/all_file_uniqueId.parquet/*.parquet; do
-    # Log Engine 写入的时候整个表会锁住，任何读取操作会被阻塞，当没有写操作的时候支持并发读
-    cat $FILENAME | clickhouse-client \
-          --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 \
-          --query "INSERT INTO dlink.${prefix}_all_file_uid FORMAT Parquet" \
-          --max_insert_block_size=100000
-done
-clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 \
-	--query "INSERT INTO dlink.file_uid_info(md5, filePath, fileSize, cluster, isInnerAvro) SELECT md5, filePath, fileSize, '$cluster', 0 FROM dlink.${prefix}_all_file_uid"
-clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 --query "drop table dlink.${prefix}_all_file_uid"
+### 查看和删除任务
+```sql
+-- 这个命令和mysql是一样的
+show processlist；
+-- 如果进程太多，也可用通过查询系统表 processes，
+select * from system.processes;
+-- 指定主要关心字段
+select 
+  user,query_id,query,elapsed,memory_usage
+from system.processes;
 
-
-clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 --query "truncate table dlink.${prefix}_avro_inner_file_uid"
-for FILENAME in /data/analysis/$cluster/user/sre.bigdata/avro_file_uniqueId_parquet/*.parquet; do
-    # Log Engine 写入的时候整个表会锁住，任何读取操作会被阻塞，当没有写操作的时候支持并发读
-    cat $FILENAME | clickhouse-client \
-          --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 \
-          --query "INSERT INTO dlink.${prefix}_avro_inner_file_uid FORMAT Parquet" \
-          --max_insert_block_size=100000
-done
-clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 \
-        --query "INSERT INTO dlink.file_uid_info(md5, filePath, fileSize, rowNumber, bytesFieldName, cluster, isInnerAvro) SELECT md5, filePath, fileSize, rowNumber, bytesFieldName, '$cluster', 1 FROM dlink.${prefix}_avro_inner_file_uid"
-clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password Dlink@2020 --query "drop table dlink.${prefix}_avro_inner_file_uid"
+--  通过上面指令获取到进程相关信息后，可以用query_id条件kill进程
+KILL QUERY WHERE query_id='2-857d-4a57-9ee0-327da5d60a90' 
+-- 杀死default用户下的所有进程
+KILL QUERY WHERE user='default'
 ```
