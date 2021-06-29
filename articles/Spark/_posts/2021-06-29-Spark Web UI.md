@@ -5,6 +5,6 @@ tag: Spark
 ---
 
 ## Spark Web UI
-Spark 任务的 Web UI 各部分介绍和说明，很详细
+Apache Spark 提供了一套 Web UI，用于监控集群状态和资源消耗，下面的文档介绍了各个页面和参数的含义，很详细
 
 * [Spark Web UI](https://spark.apache.org/docs/latest/web-ui.html)
