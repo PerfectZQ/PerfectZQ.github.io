@@ -5,7 +5,7 @@ tag: Spark
 ---
 
 ## Reference
-* [Monitoring](http://spark.apache.org/docs/latest/monitoring.html)
+* [Monitoring and Instrumentation](http://spark.apache.org/docs/latest/monitoring.html)
 * [Web UI](https://spark.apache.org/docs/latest/web-ui.html)
 
 ## Spark Cluster Monitor
