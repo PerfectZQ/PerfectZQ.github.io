@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Hadoop 集群搭建
+title: Hadoop Install
 tag: Hadoop
 ---
 
 ## 搭建前的准备
-本次搭建Hadoop版本是hadoop2.7.6-release，[点击下载安装包](http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.7.6/hadoop-2.7.6.tar.gz)。
+本次搭建 Hadoop 版本是 hadoop2.7.7-release，[点击下载安装包](http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.7.7/hadoop-2.7.7.tar.gz)。
 
 伪分布式集群搭建参考，[官方文档](http://hadoop.apache.org/docs/r3.0.0/hadoop-project-dist/hadoop-common/SingleCluster.html)
 
@@ -20,15 +20,15 @@ hadoop ALL=(ALL)       NOPASSWD: ALL
 # 设置hadoop密码
 passwd hadoop
 ```
-### 将下载好的hadoop-2.7.6.tar.gz包解压到`/home/hadoop/`。
+### 将下载好的hadoop-2.7.7.tar.gz包解压到`/home/hadoop/`。
 ```shell
 su - hadoop 
-tar -zxvf hadoop-2.7.6.tar.gz -C /home/hadoop/
+tar -zxvf hadoop-2.7.7.tar.gz -C /home/hadoop/
 ```
 ### 配置环境变量。
 ```shell
 vim ~/.bash_profile
-export HADOOP_HOME=/home/hadoop/hadoop-2.7.6
+export HADOOP_HOME=/home/hadoop/hadoop-2.7.7
 export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 source ~/.bash_profile
 
@@ -49,7 +49,7 @@ export JAVA_HOME=/usr/java/jdk1.8.0_111/
     <!-- 指定hadoop运行时产生的临时文件的存放路径 -->
     <property>
         <name>hadoop.tmp.dir</name>
-        <value>/home/hadoop/hadoop-2.7.6/tmp</value>
+        <value>/home/hadoop/hadoop-2.7.7/tmp</value>
     </property>
 </configuration>
 ```
@@ -58,27 +58,27 @@ export JAVA_HOME=/usr/java/jdk1.8.0_111/
 
 ```xml
 <configuration>
-    <!-- 设置 namenode 的 http 通讯地址 -->
+    <!-- 设置 NameNode 的 http 通讯地址 -->
     <property>
         <name>dfs.namenode.http-address</name>
         <value>192.168.10.145:50070</value>
     </property>
-    <!-- 设置 secondarynamenode 的 http 通讯地址 -->
+    <!-- 设置 secondaryNameNode 的 http 通讯地址 -->
     <property>
         <name>dfs.namenode.secondary.http-address</name>
         <value>192.168.10.146:50070</value>
     </property>
-    <!-- 设置 namenode 元数据的存放路径 -->
+    <!-- 设置 NameNode 元数据的存放路径 -->
     <property>
         <name>dfs.namenode.name.dir</name>
-        <value>/home/hadoop/hadoop-2.7.6/namenode</value>
+        <value>/home/hadoop/hadoop-2.7.7/namenode</value>
     </property>
      <!-- 设置 datanode 数据的存放路径 -->
     <property>
         <name>dfs.datanode.data.dir</name>
-        <value>/home/hadoop/hadoop-2.7.6/datanode</value>
+        <value>/home/hadoop/hadoop-2.7.7/datanode</value>
     </property>
-    <!-- 设置 hdfs 副本数量 -->
+    <!-- 设置 hdfs 副本数量，如果是但节点的伪集群记得改成 1，不然会报错 -->
     <property>
         <name>dfs.replication</name>
         <value>2</value>
@@ -92,7 +92,7 @@ export JAVA_HOME=/usr/java/jdk1.8.0_111/
 
 ```xml
 <configuration>
-    <!-- 通知框架MR使用YARN -->
+    <!-- 通知框架 MR 使用 YARN -->
     <property>
         <name>mapreduce.framework.name</name>
         <value>yarn</value>
@@ -142,7 +142,7 @@ vim slaves
 
 ### 创建刚才配置文件中提到的文件夹
 ```shell
-mkdir /home/hadoop/hadoop-2.7.6/tmp /home/hadoop/hadoop-2.7.6/namenode /home/hadoop/hadoop-2.7.6/datanode
+mkdir /home/hadoop/hadoop-2.7.7/tmp /home/hadoop/hadoop-2.7.7/namenode /home/hadoop/hadoop-2.7.7/datanode
 ```
 
 ### 配置到各个节点的 ssh。
@@ -164,7 +164,7 @@ scp ~/.bash_profile hadoop@192.168.10.146:~
 source ~/.bash_profile
 
 # 发送将配置完的Hadoop文件发送到各个节点
-scp -rp /home/hadoop/hadoop-2.7.6 hadoop@192.168.10.146:~
+scp -rp /home/hadoop/hadoop-2.7.7 hadoop@192.168.10.146:~
 ```
 
 ### 格式化 FileSystem 并启动
@@ -199,14 +199,14 @@ http://localhost:8088/
 ## 安装中出现的问题
 ### 在更换版本时 Incompatible clusterIDs
 ```console
-java.io.IOException: Incompatible clusterIDs in /tmp/hadoop-hadoop/dfs/data: namenode clusterID = CID-2814bb5f-3867-4f19-bc67-d0f3c3ca784e; datanode clusterID = CID-1bded296-4e6e-473c-91b6-6d3174f98926
+java.io.IOException: Incompatible clusterIDs in /tmp/hadoop-hadoop/dfs/data: NameNode clusterID = CID-2814bb5f-3867-4f19-bc67-d0f3c3ca784e; datanode clusterID = CID-1bded296-4e6e-473c-91b6-6d3174f98926
 ```
-很明显意思是namenode的clusterID和dataNode的clusterID不一致导致的。可能是格式化namenode之后master上的CLUSTERID变了，没有同步到datanode上。
+很明显意思是 NameNode 的 clusterID 和 DataNode 的 clusterID 不一致导致的。可能是格式化 NameNode 之后master 上的 CLUSTERID 变了，没有同步到 DataNode 上。
 
 ```shell
 # 关掉dfs
 stop-dfs.sh
-# 查看 namenode clusterId
+# 查看 NameNode clusterId
 cat /tmp/hadoop-hadoop/dfs/namenode/current/VERSION
 # 修改 datanode clusterId
 vim /tmp/hadoop-hadoop/dfs/data/current/VERSION
@@ -238,6 +238,6 @@ storage directory does not exist or is not accessible.
 </property>
 ```
 
-如果tmp文件夹中的内容被清理，Hadoop启动的时候不会恢复`${hadoop.tmp.dir}/dfs/name`这个文件夹，因此需要执行`hdfs namenode -format`重新生成这个文件夹就可以了。
-><p><font style="color: indianred;">WARNING: hdfs namenode -format 会重置 namenode 保存的所有元数据，这意味着，即便你的数据存储在 datanode 中，如果没有 namenode 中的元数据信息，hdfs 就无法找到真实数据的存放地址，这和删掉所有数据没什么区别。如果你处于生产环境，千万不要使用该命令！</font></p>
+如果tmp文件夹中的内容被清理，Hadoop启动的时候不会恢复`${hadoop.tmp.dir}/dfs/name`这个文件夹，因此需要执行`hdfs NameNode -format`重新生成这个文件夹就可以了。
+><p><font style="color: indianred;">WARNING: hdfs NameNode -format 会重置 NameNode 保存的所有元数据，这意味着，即便你的数据存储在 datanode 中，如果没有 NameNode 中的元数据信息，hdfs 就无法找到真实数据的存放地址，这和删掉所有数据没什么区别。如果你处于生产环境，千万不要使用该命令！</font></p>
 

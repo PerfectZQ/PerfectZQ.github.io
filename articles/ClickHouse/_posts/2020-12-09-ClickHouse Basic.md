@@ -25,7 +25,7 @@ $ clickhouse-client
 
 ## External Data
 * [External Data for Query Processing](https://clickhouse.tech/docs/en/engines/table-engines/special/external-data/)
-ClickHouse 可以在查询(External tables could be sent only with select query)的时候加载外部数据，例如使用 Command-line Client 的时候可以使用如下参数
+ClickHouse 可以在查询(**External tables could be sent only with select query**)的时候加载外部数据，例如使用 Command-line Client 的时候可以使用如下参数
 
 ```shell
 $ clickhouse-client --help
@@ -45,7 +45,7 @@ External tables options:
 # –-format      Data format in the file. If omitted, `TabSeparated` is used. (Optional)
 # 下面两个参数必须指定一个
 # -–types       A list of comma-separated column types. For example: UInt64,String. The columns will be named _1, _2, …
-# -–structure   The table structure in the formatUserID UInt64, URL String. Defines the column names and types.
+# -–structure   The table structure in the format UserID UInt64, URL String. Defines the column names and types.
 $ clickhouse-client \
 --external --file=... [--name=...] [--format=...] [--types=...|--structure=...]
 
@@ -94,163 +94,38 @@ n the number of simultaneously running queries. May include internal queries ini
 │ SelectQuery                             │          150 │ Same as Query, but only for SELECT queries.
                                                                               │
 │ InsertQuery                             │           76 │ Same as Query, but only for INSERT queries.
-                                                                              │
-│ FailedQuery                             │           39 │ Number of failed queries.
-                                                                              │
-│ FailedInsertQuery                       │           32 │ Same as FailedQuery, but only for INSERT queries.
-                                                                              │
-│ QueryTimeMicroseconds                   │    382148412 │ Total time of all queries.
-                                                                              │
-│ SelectQueryTimeMicroseconds             │       672996 │ Total time of SELECT queries.
-                                                                              │
-│ InsertQueryTimeMicroseconds             │    377959654 │ Total time of INSERT queries.
-                                                                              │
-│ FileOpen                                │       129880 │ Number of files opened.
-                                                                              │
-│ Seek                                    │        25713 │ Number of times the 'lseek' function was called.
-                                                                              │
-│ ReadBufferFromFileDescriptorRead        │       267578 │ Number of reads (read/pread) from a file descriptor. Does not include sockets.
-                                                                              │
-│ ReadBufferFromFileDescriptorReadBytes   │   5180584898 │ Number of bytes read from file descriptors. If the file is compressed, this will show the compressed data size.
-                                                                              │
-│ WriteBufferFromFileDescriptorWrite      │        90375 │ Number of writes (write/pwrite) to a file descriptor. Does not include sockets.
-                                                                              │
-│ WriteBufferFromFileDescriptorWriteBytes │   9812029421 │ Number of bytes written to file descriptors. If the file is compressed, this will show compressed data size.
-                                                                              │
-│ ReadCompressedBytes                     │   9155637184 │ Number of bytes (the number of bytes before decompression) read from compressed sources (files, network).
-                                                                              │
-│ CompressedReadBufferBlocks              │       465059 │ Number of compressed blocks (the blocks of data that are compressed independent of each other) read from compressed sources (files, network).
-                                                                              │
-│ CompressedReadBufferBytes               │ 103040420282 │ Number of uncompressed bytes (the number of bytes after decompression) read from compressed sources (files, network).
-                                                                              │
-│ IOBufferAllocs                          │       280048 │
-                                                                              │
-│ IOBufferAllocBytes                      │  71824624609 │
-                                                                              │
-│ ArenaAllocChunks                        │          429 │
-                                                                              │
-│ ArenaAllocBytes                         │      2658304 │
-                                                                              │
-│ FunctionExecute                         │         3266 │
-                                                                              │
-│ MarkCacheHits                           │           56 │
-                                                                              │
-│ MarkCacheMisses                         │           56 │
-                                                                              │
-│ CreatedReadBufferOrdinary               │        52836 │
-                                                                              │
-│ CreatedWriteBufferOrdinary              │        75726 │
-                                                                              │
-│ DiskReadElapsedMicroseconds             │   8094087848 │ Total time spent waiting for read syscall. This include reads from page cache.
-                                                                              │
-│ DiskWriteElapsedMicroseconds            │      6575044 │ Total time spent waiting for write syscall. This include writes to page cache.
-                                                                              │
-│ NetworkReceiveElapsedMicroseconds       │     66101609 │
-                                                                              │
-│ NetworkSendElapsedMicroseconds          │     68596716 │
-                                                                              │
-│ ReplicatedPartFetches                   │           23 │ Number of times a data part was downloaded from replica of a ReplicatedMergeTree table.
-                                                                              │
-│ ReplicatedPartMerges                    │            8 │ Number of times data parts of ReplicatedMergeTree tables were successfully merged.
-                                                                              │
-│ InsertedRows                            │    196383451 │ Number of rows INSERTed to all tables.
-                                                                              │
-│ InsertedBytes                           │  94201262046 │ Number of bytes (uncompressed; for columns as they stored in memory) INSERTed to all tables.
-                                                                              │
-│ ZooKeeperInit                           │            2 │
-                                                                              │
-│ ZooKeeperTransactions                   │        12074 │
-                                                                              │
-│ ZooKeeperList                           │         5530 │
-                                                                              │
-│ ZooKeeperCreate                         │          108 │
-                                                                              │
-│ ZooKeeperRemove                         │           65 │
-                                                                              │
-│ ZooKeeperExists                         │          577 │
-                                                                              │
-│ ZooKeeperGet                            │         5489 │
-                                                                              │
-│ ZooKeeperSet                            │            1 │
-                                                                              │
-│ ZooKeeperMulti                          │          304 │
-                                                                              │
-│ ZooKeeperWatchResponse                  │           83 │
-                                                                              │
-│ ZooKeeperWaitMicroseconds               │     61965394 │
-                                                                              │
-│ ZooKeeperBytesSent                      │      1160930 │
-                                                                              │
-│ ZooKeeperBytesReceived                  │      1273914 │
-                                                                              │
-│ SelectedParts                           │            8 │ Number of data parts selected to read from a MergeTree table.
-                                                                              │
-│ SelectedRanges                          │            8 │ Number of (non-adjacent) ranges in all data parts selected to read from a MergeTree table.
-                                                                              │
-│ SelectedMarks                           │          705 │ Number of marks (index granules) selected to read from a MergeTree table.
-                                                                              │
-│ SelectedRows                            │    224702412 │ Number of rows SELECTed from all tables.
-                                                                              │
-│ SelectedBytes                           │ 108749449316 │ Number of bytes (uncompressed; for columns as they stored in memory) SELECTed from all tables.
-                                                                              │
-│ Merge                                   │         8150 │ Number of launched background merges.
-                                                                              │
-│ MergedRows                              │     14032395 │ Rows read for background merges. This is the number of rows before merge.
-                                                                              │
-│ MergedUncompressedBytes                 │   7221384757 │ Uncompressed bytes (for columns as they stored in memory) that was read for background merges. This is the number before merge.
-                                                                              │
-│ MergesTimeMilliseconds                  │        19897 │ Total time spent for background merges.
-                                                                              │
-│ MergeTreeDataWriterRows                 │      6791323 │ Number of rows INSERTed to MergeTree tables.
-                                                                              │
-│ MergeTreeDataWriterUncompressedBytes    │   3246545607 │ Uncompressed bytes (for columns as they stored in memory) INSERTed to MergeTree tables.
-                                                                              │
-│ MergeTreeDataWriterCompressedBytes      │    331091320 │ Bytes written to filesystem for data INSERTed to MergeTree tables.
-                                                                              │
-│ MergeTreeDataWriterBlocks               │         2550 │ Number of blocks INSERTed to MergeTree tables. Each block forms a data part of level zero.
-                                                                              │
-│ MergeTreeDataWriterBlocksAlreadySorted  │         2550 │ Number of blocks INSERTed to MergeTree tables that appeared to be already sorted.
-                                                                              │
-│ RegexpCreated                           │            5 │ Compiled regular expressions. Identical regular expressions compiled just once and cached forever.
-                                                                              │
-│ ContextLock                             │        64992 │ Number of times the lock of Context was acquired or tried to acquire. This is global lock.
-                                                                              │
-│ RWLockAcquiredReadLocks                 │       139460 │
-                                                                              │
-│ RWLockAcquiredWriteLocks                │            4 │
-                                                                              │
-│ RWLockReadersWaitMilliseconds           │          394 │
-                                                                              │
-│ RealTimeMicroseconds                    │  64625405286 │ Total (wall clock) time spent in processing (queries and other tasks) threads (not that this is a sum).
-                                                                              │
-│ UserTimeMicroseconds                    │    219720000 │ Total time spent in processing (queries and other tasks) threads executing CPU instructions in user space. This include time CPU pipeline was stalled due to cache misses, br
-anch mispredictions, hyper-threading, etc.                                    │
-│ SystemTimeMicroseconds                  │    149552000 │ Total time spent in processing (queries and other tasks) threads executing CPU instructions in OS kernel space. This include time CPU pipeline was stalled due to cache misse
-s, branch mispredictions, hyper-threading, etc.                               │
-│ SoftPageFaults                          │     51247799 │
-                                                                              │
-│ OSCPUWaitMicroseconds                   │      1074854 │ Total time a thread was ready for execution but waiting to be scheduled by OS, from the OS point of view.
-                                                                              │
-│ OSCPUVirtualTimeMicroseconds            │    369316548 │ CPU time spent seen by OS. Does not include involuntary waits due to virtualization.
-                                                                              │
-│ OSWriteBytes                            │   8950669312 │ Number of bytes written to disks or block devices. Doesn't include bytes that are in page cache dirty pages. May not include data that was written by OS asynchronously.
-                                                                              │
-│ OSReadChars                             │     55428460 │ Number of bytes read from filesystem, including page cache.
-                                                                              │
-│ OSWriteChars                            │   8947226703 │ Number of bytes written to filesystem, including page cache.
-                                                                              │
-│ CreatedHTTPConnections                  │            1 │ Total amount of created HTTP connections (closed or opened).
-                                                                              │
-│ CreatedLogEntryForMerge                 │            3 │ Successfully created log entry to merge parts in ReplicatedMergeTree.
-                                                                              │
-└─────────────────────────────────────────┴──────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-──────────────────────────────────────────────────────────────────────────────┘
-
+...
 77 rows in set. Elapsed: 0.003 sec.
 
 ```
-## Common
-### Import TSV
+
+
+## Practices
+### Execute sql file
+```shell
+# 初始化表
+clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password xxxxxx --multiquery < init_table.sql
+
+cluster="hadoop"
+prefix="bj"
+
+clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password xxxxxx --query "truncate table dlink.${prefix}_all_file_uid"
+# 遍历文件夹中的文件
+for FILENAME in /data/analysis/$cluster/user/sre.bigdata/all_file_uniqueId.parquet/*.parquet; do
+    # Log Engine 写入的时候整个表会锁住，任何读取操作会被阻塞，当没有写操作的时候支持并发读
+    cat $FILENAME | clickhouse-client \
+          --host 10.53.26.177 --port 31234 -u admin --password xxxxxx \
+          --query "INSERT INTO dlink.${prefix}_all_file_uid FORMAT Parquet" \
+          --max_insert_block_size=100000
+done
+clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password xxxxxx \
+	--query "INSERT INTO dlink.file_uid_info(md5, filePath, fileSize, cluster, isInnerAvro) SELECT md5, filePath, fileSize, '$cluster', 0 FROM dlink.${prefix}_all_file_uid"
+clickhouse-client --host 10.53.26.177 --port 31234 -u admin --password xxxxxx --query "drop table dlink.${prefix}_all_file_uid"
+
+```
+
+### Import Data
+#### Import TSV
 ```shell
 # Connect to clickhouse container
 $ kubectl.exe exec -it clickhouse-5 -- bash
@@ -279,16 +154,16 @@ $ nohup  /usr/bin/clickhouse-client --host clickhouse-5.clickhouse -u admin --pa
 
 ```
 
-### Import Data from HDFS
+#### Import Data from HDFS
 ```sql
 -- 关联 hdfs 目录
 CREATE TABLE dlink.hdfs_bj_avro_inner_file_uid
 (
     md5 String,
     filePath String,
-	  fileSize Nullable(UInt64),
-	  rowNumber Nullable(UInt32),
-	  bytesFieldName Nullable(String)
+	fileSize Nullable(UInt64),
+    rowNumber Nullable(UInt32),
+	bytesFieldName Nullable(String)
 )
 ENGINE = HDFS('hdfs://sensetime-data-hadoop/user/sre.bigdata/avro_file_uniqueId_parquet', 'Parquet')
 
@@ -296,7 +171,7 @@ CREATE TABLE dlink.hdfs_bj_all_file_uid
 (
     md5 String,
     filePath String,
-	  fileSize Nullable(UInt64)
+	fileSize Nullable(UInt64)
 )
 ENGINE = HDFS('hdfs://sensetime-data-hadoop/user/sre.bigdata/all_file_uniqueId.parquet', 'Parquet')
 
@@ -319,15 +194,71 @@ CREATE TABLE dlink.file_uid_info ON CLUSTER cat AS dlink.file_uid_info_shard
 ENGINE = Distributed('cat', 'dlink', 'file_uid_info_shard', rand())
 
 -- 导入本地表
-INSERT INTO dlink.file_uid_info SELECT *, "hadoop" as cluster, 1 as isInnerAvro FROM dlink.hdfs_bj_avro_inner_file_uid;
+INSERT INTO dlink.file_uid_info (md5, filePath, fileSize, cluster, isInnerAvro) SELECT *, 'hadoop', 1 FROM dlink.hdfs_bj_avro_inner_file_uid;
 INSERT INTO dlink.file_uid_info SELECT *, "hadoop" as cluster, 0 as isInnerAvro FROM dlink.hdfs_bj_all_file_uid;
 
 ```
 
-### Import Data from Local File
-* [Table Functions - file](https://clickhouse.tech/docs/en/sql-reference/table-functions/file/)
+#### Import Data from File
 * [Table Engines - File](https://clickhouse.tech/docs/en/engines/table-engines/special/file/)
-
 ```sql
-INSERT INTO dlink.file_uid_info SELECT *, "hadoop" as cluster, 1 as isInnerAvro FROM file("/data/*.paquet", "PARQUET")
+CREATE TABLE dlink.bj_avro_inner_file_uid
+(
+    md5 String,
+    filePath String,
+	fileSize Nullable(UInt64),
+    rowNumber Nullable(UInt32),
+	bytesFieldName Nullable(String)
+)
+ENGINE = File(TabSeparated)
+```
+
+* [Table Functions - file](https://clickhouse.tech/docs/en/sql-reference/table-functions/file/)
+> Note: file 只能读到 [user_files_path](https://clickhouse.tech/docs/en/operations/server-configuration-parameters/settings/#server_configuration_parameters-user_files_path) 下的文件
+```sql
+INSERT INTO dlink.file_uid_info (md5, filePath, fileSize, cluster, isInnerAvro) SELECT md5, filePath, fileSize, 'hadoop', 1 FROM file(
+    "/var/lib/clickhouse/user_files/sre.bigdata/all_file_uniqueId.parquet/*", "PARQUET", 
+    "md5 String, filePath String, fileSize Nullable(UInt64)"
+)
+```
+
+### 查询数据库和表容量
+```sql
+-- 查看数据库容量
+select
+    sum(rows) as "总行数",
+    formatReadableSize(sum(data_uncompressed_bytes)) as "原始大小",
+    formatReadableSize(sum(data_compressed_bytes)) as "压缩大小",
+    round(sum(data_compressed_bytes) / sum(data_uncompressed_bytes) * 100, 0) "压缩率"
+from system.parts;
+
+-- 查询 test 表，2019年10月份的数据容量
+select
+    table as "表名",
+    sum(rows) as "总行数",
+    formatReadableSize(sum(data_uncompressed_bytes)) as "原始大小",
+    formatReadableSize(sum(data_compressed_bytes)) as "压缩大小",
+    round(sum(data_compressed_bytes) / sum(data_uncompressed_bytes) * 100, 0) "压缩率"
+from system.parts
+	-- 根据实际情况加查询条件
+    where table in('test')
+        and partition like '2019-10-%'
+    group by table;		
+```
+
+### 查看和删除任务
+```sql
+-- 这个命令和mysql是一样的
+show processlist；
+-- 如果进程太多，也可用通过查询系统表 processes，
+select * from system.processes;
+-- 指定主要关心字段
+select 
+  user,query_id,query,elapsed,memory_usage
+from system.processes;
+
+--  通过上面指令获取到进程相关信息后，可以用query_id条件kill进程
+KILL QUERY WHERE query_id='2-857d-4a57-9ee0-327da5d60a90' 
+-- 杀死default用户下的所有进程
+KILL QUERY WHERE user='default'
 ```
