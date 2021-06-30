@@ -81,12 +81,66 @@ Storage Memory = On Heap Storage Memory + Off Heap Storage Memory
 * Off-Heap Storage Memory = `spark.memory.offHeap.size * spark.memory.storageFraction`
 
 
+## Practice
+### Spark JMX
+```shell
+$ vim $SPARK_HOME/conf/metrics.properties
+# *.sink.jmx.class=org.apache.spark.metrics.sink.JmxSink
+executor.sink.jmx.class=org.apache.spark.metrics.sink.JmxSink
+# master, worker, driver, executor
+executor.source.jvm.class=org.apache.spark.metrics.source.JvmSource
+
+# 开启 JMX 端口
+$ vim $SPARK_HOME/conf/spark-defaults.conf
+# port=0 表示随机取端口，否则可能会由于同一节点调度两个 Executor 造成端口冲突
+spark.executor.extraJavaOptions         -Dcom.sun.management.jmxremote \
+                                        -Dcom.sun.management.jmxremote.authenticate=false \
+                                        -Dcom.sun.management.jmxremote.ssl=false \
+                                        -Dcom.sun.management.jmxremote.port=0
+```
+
+### 定位 JMX 端口
+#### 方式一
+```shell
+# 获取 Application-Id
+$ yarn application -list
+Total number of applications (application-types: [] and states: [SUBMITTED, ACCEPTED, RUNNING]):4
+                Application-Id	    Application-Name	    Application-Type	      User	     Queue	             State	       Final-State	       Progress	                       Tracking-URL
+application_1620462634102_0480	Bigdata - One Data Storage Metadata Extractor	               SPARK	sre.bigdata	     other	           RUNNING	         UNDEFINED	            10%	http://slave007.hadoop-shnew.data.sensetime.com:34050
+# 通过 Application-Id 获取 ApplicationAttempt-Id
+$ yarn applicationattempt -list application_1620462634102_0480
+Total number of application attempts :1
+         ApplicationAttempt-Id	               State	                    AM-Container-Id	                       Tracking-URL
+appattempt_1620462634102_0480_000001	             RUNNING	container_e09_1620462634102_0480_01_000001	https://master001.hadoop-shnew.data.sensetime.com:8090/proxy/application_1620462634102_0480/
+# 通过 ApplicationAttempt-Id 获取 Container-Id
+$ yarn container -list appattempt_1620462634102_0480_000001
+Total number of containers :81
+                  Container-Id	          Start Time	         Finish Time	               State	                Host	   Node Http Address	                            LOG-URL
+container_e09_1620462634102_0480_01_000066	Wed Jun 30 15:18:16 +0800 2021	                 N/A	             RUNNING	slave020.hadoop-shnew.data.sensetime.com:45454	https://slave020.hadoop-shnew.data.sensetime.com:8044	https://slave020.hadoop-shnew.data.sensetime.com:8044/node/containerlogs/container_e09_1620462634102_0480_01_000066/sre.bigdata
+...
+# 去对应节点上查看进程找到 pid
+$ ps -aux | grep container_e09_1620462634102_0480_01_000066
+yarn      21218  0.0  0.0   2376   600 ?        S    15:18   0:00 /opt/hadoop-2.7.7/bin/container-executor sre.bigdata sre.bigdata 1 application_1620462634102_0480 container_e09_1620462634102_0480_01_000066 /hadoop-data/nm-local-dir/usercache/sre.bigdata/appcache/application_1620462634102_0480/container_e09_1620462634102_0480_01_000066 /hadoop-data/nm-local-dir/nmPrivate/application_1620462634102_0480/container_e09_1620462634102_0480_01_000066/launch_container.sh /hadoop-data/nm-local-dir/nmPrivate/application_1620462634102_0480/container_e09_1620462634102_0480_01_000066/container_e09_1620462634102_0480_01_000066.tokens /hadoop-data/nm-local-dir/nmPrivate/application_1620462634102_0480/container_e09_1620462634102_0480_01_000066/container_e09_1620462634102_0480_01_000066.pid /hadoop-data/nm-local-dir /hadoop-data/logs/userlogs cgroups=none
+sre.big+  21224  0.0  0.0   5396   856 ?        Ss   15:18   0:00 /bin/bash -c /usr/local/openjdk-8//bin/java -server -Xmx20480m '-Dcom.sun.management.jmxremote' '-Dcom.sun.management.jmxremote.authenticate=false' '-Dcom.sun.management.jmxremote.ssl=false' '-Dcom.sun.management.jmxremote.port=0' -Djava.io.tmpdir=/hadoop-data/nm-local-dir/usercache/sre.bigdata/appcache/application_1620462634102_0480/container_e09_1620462634102_0480_01_000066/tmp '-Dspark.history.ui.port=18080' '-Dspark.ui.port=0' '-Dspark.driver.port=42416' -Dspark.yarn.app.container.log.dir=/hadoop-data/logs/userlogs/application_1620462634102_0480/container_e09_1620462634102_0480_01_000066 -XX:OnOutOfMemoryError='kill %p' org.apache.spark.executor.YarnCoarseGrainedExecutorBackend --driver-url spark://CoarseGrainedScheduler@slave007.hadoop-shnew.data.sensetime.com:42416 --executor-id 65 --hostname slave020.hadoop-shnew.data.sensetime.com --cores 2 --app-id application_1620462634102_0480 --resourceProfileId 0 --user-class-path file:/hadoop-data/nm-local-dir/usercache/sre.bigdata/appcache/application_1620462634102_0480/container_e09_1620462634102_0480_01_000066/__app__.jar 1>/hadoop-data/logs/userlogs/application_1620462634102_0480/container_e09_1620462634102_0480_01_000066/stdout 2>/hadoop-data/logs/userlogs/application_1620462634102_0480/container_e09_1620462634102_0480_01_000066/stderr
+sre.big+  21236  163  2.2 23220828 5860980 ?    Sl   15:18 114:44 /usr/local/openjdk-8//bin/java -server -Xmx20480m -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=0 -Djava.io.tmpdir=/hadoop-data/nm-local-dir/usercache/sre.bigdata/appcache/application_1620462634102_0480/container_e09_1620462634102_0480_01_000066/tmp -Dspark.history.ui.port=18080 -Dspark.ui.port=0 -Dspark.driver.port=42416 -Dspark.yarn.app.container.log.dir=/hadoop-data/logs/userlogs/application_1620462634102_0480/container_e09_1620462634102_0480_01_000066 -XX:OnOutOfMemoryError=kill %p org.apache.spark.executor.YarnCoarseGrainedExecutorBackend --driver-url spark://CoarseGrainedScheduler@slave007.hadoop-shnew.data.sensetime.com:42416 --executor-id 65 --hostname slave020.hadoop-shnew.data.sensetime.com --cores 2 --app-id application_1620462634102_0480 --resourceProfileId 0 --user-class-path file:/hadoop-data/nm-local-dir/usercache/sre.bigdata/appcache/application_1620462634102_0480/container_e09_1620462634102_0480_01_000066/__app__.jar
+
+$ sudo netstat -antp | grep 21224
+```
+#### 方式二
+```scala
+fileRdd.foreachPartition { iterator =>
+      val executorJMX = sun.management.ConnectorAddressLink.importRemoteFrom(0).get("sun.management.JMXConnectorServer.0.remoteAddress")
+      // ====> JMX Address: service:jmx:rmi:///jndi/rmi://slave023.hadoop-shnew.data.example.com:37806/jmxrmi
+      println(s"====> JMX Address: $executorJMX")
+      ...
+}
+```
 ## Reference
 * [Memory Management Overview](https://spark.apache.org/docs/latest/tuning.html#memory-management-overview)
 * [Apache Spark Memory Management](https://medium.com/analytics-vidhya/apache-spark-memory-management-49682ded3d42)
 * [Apache Spark and off-heap memory](https://www.waitingforcode.com/apache-spark/apache-spark-off-heap-memory/read)
 * [On-heap vs off-heap storage](https://www.waitingforcode.com/off-heap/on-heap-off-heap-storage/read)
-* [Spark Executor 内存管理](http://arganzheng.life/spark-executor-memory-management.html)
+* [Spark Executor Memory Management](http://arganzheng.life/spark-executor-memory-management.html)
 * [Spark Memory Management](https://0x0fff.com/spark-memory-management/)
-* [Spark on Yarn 之 Executor 内存管理](https://www.jianshu.com/p/10e91ace3378)
-* [Spark 参数 spark.executor.memoryOverhead 与 spark.memory.offHeap.size 的区别](https://blog.csdn.net/lquarius/article/details/106698097)
+* [Spark On YARN Executor Memory Management](https://www.jianshu.com/p/10e91ace3378)
+* [Difference between spark.executor.memoryOverhead and spark.memory.offHeap.size](https://blog.csdn.net/lquarius/article/details/106698097)
