@@ -44,10 +44,54 @@ JVM 相关命令在`/System/Library/Frameworks/JavaVM.framework/Versions/Current
 * [JDK Tools and Utilities - 11](https://docs.oracle.com/en/java/javase/11/tools/tools-and-command-reference.html)
 * [JDK Tools and Utilities - 13](https://docs.oracle.com/en/java/javase/13/docs/specs/man/index.html)
 
-## 
+## JMX
+JMX(Java Management Extensions)是管理 Java 的一些扩展。这种机制可以方便的管理、监控正在运行中的 Java 程序。常用于管理线程，内存，日志 Level，服务重启，系统环境等。jdk6+，Java 程序启动时都会在 JVM 内部启动一个 JMX Agent，JMX Agent 会启动一个 MBean Server 组件，把 MBeans(Java 平台标准的 MBean + 你自己创建的 MBean)注册到它里面，然后暴露给 JMX Client 管理。简单来说就是每个 Java 程序都可以通过 JMX 来被 JMX Client 管理，而且这一切都是自动发生的。而 VisualVm 就是一个JMX Client。
 
-下面介绍一些比较有用的命令。
+要启用 JMX，需要在 Java 进程启动的时候指定几个参数
+* `com.sun.management.jmxremote`: 开启 JMX
+* `com.sun.management.jmxremote.port`: 指定 JMX 暴露的端口。
+* `com.sun.management.jmxremote.rmi.port`: 指定 RMI Connector 端口，可以和`com.sun.management.jmxremote.port`保持一致。
+* `com.sun.management.jmxremote.ssl`: 指定是否使用 SSL，在开发环境下可以是`false`，但是在生产环境下强烈建议为`true`。
+* `com.sun.management.jmxremote.authenticate`: 指定是否需要密码才能够创建 JMX 连接。
+* `com.sun.management.jmxremote.local.only`: 是否只能本地访问
 
+启动我们要被监控的 Java 程序
+```shell
+$ java \
+-Dcom.sun.management.jmxremote \
+-Dcom.sun.management.jmxremote.authenticate=false \
+-Dcom.sun.management.jmxremote.ssl=false \
+-Dcom.sun.management.jmxremote.port=1100 \
+-Dcom.sun.management.jmxremote.rmi.port=1100 \
+-Dcom.sun.management.jmxremote.local.only=false \
+-Djava.rmi.server.hostname=192.168.51.82 \
+-XX:+PrintGCDetails \
+-XX:+PrintGCDateStamps  \
+-Xloggc:/var/log/rockfs/gc.log  \
+-XX:+UseConcMarkSweepGC \
+-XX:+UseParNewGC \
+-XX:MaxTenuringThreshold=15 \
+-XX:+ExplicitGCInvokesConcurrent \
+-XX:+CMSParallelRemarkEnabled \
+-XX:+HeapDumpOnOutOfMemoryError \
+-XX:HeapDumpPath=/var/log/rockfs \
+-Xmx3g \
+-Xms3g \
+-jar target/rockfs-server-1.0-SNAPSHOT.jar \
+>rockfs.log 2>&1 &
+```
+
+然后在`jvisualvm`界面`jstatd`已经建立的`远程`服务器上右键，`添加 JMX 连接...`，输入`192.168.51.82:1100`，`不要求SSL连接(N)`钩上，`确定`即可。
+
+> -Dcom.sun.management.jmxremote.port=0 表示随机找一个可用的端口，可以使用下面的方式在程序执行时输出实际生成的端口地址
+
+```scala
+val executorJMX = sun.management.ConnectorAddressLink.importRemoteFrom(0).get("sun.management.JMXConnectorServer.0.remoteAddress")
+// ====> JMX Address: service:jmx:rmi:///jndi/rmi://slave023.hadoop-shnew.data.example.com:37806/jmxrmi
+println(s"====> JMX Address: $executorJMX")
+```
+
+## Java Commands
 ### java
 运行已经编译好的 java 程序，[Java Options Details](https://arch-long.cn/articles/java/Java-Options.html)
 ```shell
@@ -641,39 +685,6 @@ $ jstatd -J-Djava.security.policy=./jstatd.all.policy -J-Djava.rmi.server.hostna
 
 当使用`jstatd + jvisualvm`监控远程 JVM 的时候，你会发现无法获得 JVM 的 Cpu、Thread、MBean 等信息，它会提示你使用`JMX`连接。[参考连接](https://segmentfault.com/a/1190000016636787)
 
-JMX(Java Management Extensions)是管理 Java 的一些扩展。这种机制可以方便的管理、监控正在运行中的 Java 程序。常用于管理线程，内存，日志 Level，服务重启，系统环境等。jdk6+，Java 程序启动时都会在 JVM 内部启动一个 JMX Agent，JMX Agent 会启动一个 MBean Server 组件，把 MBeans(Java 平台标准的 MBean + 你自己创建的 MBean)注册到它里面，然后暴露给 JMX Client 管理。简单来说就是每个 Java 程序都可以通过 JMX 来被 JMX Client 管理，而且这一切都是自动发生的。而 VisualVm 就是一个JMX Client。
-
-要启用 JMX，需要在 Java 进程启动的时候指定几个参数
-* `com.sun.management.jmxremote.port`: 指定 JMX 暴露的端口。
-* `com.sun.management.jmxremote.rmi.port`: 指定 RMI Connector 端口，可以和`com.sun.management.jmxremote.port`保持一致。
-* `com.sun.management.jmxremote.ssl`: 指定是否使用 SSL，在开发环境下可以是`false`，但是在生产环境下强烈建议为`true`。
-* `com.sun.management.jmxremote.authenticate`: 指定是否需要密码才能够创建 JMX 连接。
-
-启动我们要被监控的 Java 程序
-```shell
-$ java \
--Dcom.sun.management.jmxremote.authenticate=false \
--Dcom.sun.management.jmxremote.ssl=false \
--Dcom.sun.management.jmxremote.port=1100 \
--Dcom.sun.management.jmxremote.rmi.port=1100 \
--Djava.rmi.server.hostname=192.168.51.82 \
--XX:+PrintGCDetails \
--XX:+PrintGCDateStamps  \
--Xloggc:/var/log/rockfs/gc.log  \
--XX:+UseConcMarkSweepGC \
--XX:+UseParNewGC \
--XX:MaxTenuringThreshold=15 \
--XX:+ExplicitGCInvokesConcurrent \
--XX:+CMSParallelRemarkEnabled \
--XX:+HeapDumpOnOutOfMemoryError \
--XX:HeapDumpPath=/var/log/rockfs \
--Xmx3g \
--Xms3g \
--jar target/rockfs-server-1.0-SNAPSHOT.jar \
->rockfs.log 2>&1 &
-```
-
-然后在`jvisualvm`界面`jstatd`已经建立的`远程`服务器上右键，`添加 JMX 连接...`，输入`192.168.51.82:1100`，`不要求SSL连接(N)`钩上，`确定`即可。
 
 
 ### jinfo
