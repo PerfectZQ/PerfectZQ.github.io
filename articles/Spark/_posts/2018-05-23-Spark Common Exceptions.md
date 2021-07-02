@@ -4,32 +4,29 @@ title: Spark Common Exceptions
 tag: Spark
 ---
 
-## spark 运行空指针异常的原因
-1. 嵌套使用了RDD操作，比如在一个RDD map中又对另一个RDD进行了map操作。主要原因在于spark不支持RDD的嵌套操作。
-2. 在RDD的算子操作中引用了object非原始类型(非int long等简单类型)的成员变量。是由于object的成员变量默认是无法序列化的。解决方法：可以先将成员变量赋值给一个临时变量，然后使用该临时变量即可
-3. spark 2.0.0对kryo序列化的依赖有bug，到SPARK_HOME/conf/spark-defaults.conf
-将默认： spark.serializer     org.apache.spark.serializer.KryoSerializer
-改为： spark.serializer 	  org.apache.spark.serializer.JavaSerializer
+## Spark NPE
+1. 嵌套使用了 RDD 操作，比如在一个 RDD.map 中又对另一个 RDD 进行了 map 操作。主要原因在于 Spark 不支持 RDD 的嵌套操作。
+2. 在 RDD 的算子操作中引用了 Scala object 的非原始类型(非`int`、`long`等简单类型)的成员变量。Scala object 的成员变量默认是无法序列化的。解决方法：可以先将成员变量赋值给一个临时变量，然后使用该临时变量即可
 
 ## Task not serializable
-[https://stackoverflow.com/questions/28006517/redis-on-sparktask-not-serializable](https://stackoverflow.com/questions/28006517/redis-on-sparktask-not-serializable)
+* [redis-on-sparktask-not-serializable](https://stackoverflow.com/questions/28006517/redis-on-sparktask-not-serializable)
+* [task-not-serializable-java-io-notserializableexception-when-calling-function-ou](https://stackoverflow.com/questions/22592811/task-not-serializable-java-io-notserializableexception-when-calling-function-ou)
 
-[https://stackoverflow.com/questions/22592811/task-not-serializable-java-io-notserializableexception-when-calling-function-ou](https://stackoverflow.com/questions/22592811/task-not-serializable-java-io-notserializableexception-when-calling-function-ou)
+Spark 划分好 DAG 图后，会把各个 Stage 转换成 TaskSet，然后将各个 Task 分发到不同的 Executor 上去计算。分发时，Task 中包含的算子(窄依赖)例如`map()`中的所有引用对象，需要被序列化后才能发送到各 Executor。所以，在`map`等算子内部使用外部定义的函数和变量时，如果这个外部定义的变量不能被序列化，就会出现这种问题。
 
-Spark划分好DAG图后，会把各个stage转换成taskSet，然后将各个task分发到不同的executor上去计算。分发时，task中包含的算子(窄依赖)例如`map()`中的所有引用对象，需要被序列化后才能发送到各executor。所以，在`map`等算子内部使用外部定义的函数和变量时，如果这个外部定义的变量不能被序列化，就会出现这种问题。
+但是在算子的计算过程中难免需要使用外部变量，要使用这些外部变量，就需要对这些外部变量做好序列化工作。最普遍的情形是：当引用了某个类（绝大多数是当前`class`或者`object`）的某个成员变量或者成员函数的时候，将导致这个类的所有的成员都需要支持序列化。即便这个类`extends`了`Serializable`，声明支持序列化，如果某些字段(成员对象，object)不支持序列化，仍然会导致这个类在序列化的时候出现问题。
 
-但是在算子的计算过程中难免需要使用外部变量，要使用这些外部变量，就需要对这些外部变量做好序列化工作。最普遍的情形是：当引用了某个类（绝大多数是当前class或者object）的某个成员变量或者成员函数的时候，将导致这个类的所有的成员都需要支持序列化。即便这个类extends了Serializable，声明支持序列化，如果某些字段(成员对象，Object)不支持序列化，仍然会导致这个类在序列化的时候出现问题。这种情况可以将类中不能被序列化的成员变量标注为`@transient`，表示不对其进行序列化。
+解决`Task not serializable`的常用方法：
+* 将类中不能被序列化的成员变量标注为`@transient`，表示不对其进行序列化。
+* 在条件允许的情况下，不要引用外部声明的对象，而是在`map`算子内部创建对象。
+* 如果必须引用`map`算子外部的对象，可以使用懒加载。在 Executor 真正去执行的时候去初始化对象。
 
-解决Task not serializable的方法，按情况使用：
-
-* 在条件允许的情况下，不要引用外部声明的对象，在 map 算子内部创建对象。
-* 如果必须引用`map`算子外部的对象，不要在类加载的时候就初始化对象，而是在 executor 真正去执行的时候去初始化对象。例如创建一个 redis 的 client，该对象就没有实现`Serializable`接口。
-
+例如创建一个 Redis 的 client，该对象就没有实现`Serializable`接口。
 ```scala
 /**
  *  第一种：使用 rdd.mapPartitions
  *  
- *  一个partition就对应着一个task，一个分区中的数据共用一个对象
+ *  一个 Partition 就对应着一个 Task，一个分区中的数据共用一个对象，这种情况是在 Executor 内部执行的不需要序列化
  */
 resultRDD.mapPartitions {
   partition => {
@@ -115,10 +112,10 @@ val broadcastJedisCluster = sparkContext.broadcast(new JedisCluster(jedisCluster
 ```
 
 ## java.io.NotSerializableException: org.apache.spark.SparkContext
-sparkContext、sparkConf、sparkSession都是不能被序列化的对象，所以他们不能出现在map等算子中。
+`SparkContext`、`SparkConf`、`SparkSession` 都是不能被序列化的对象，所以他们不能出现在`map`等算子中。
 
 ## object not serializable(class:org.apache.hadoop.hbase.io.ImmutableBytesWritable)
-Spark操作HBase返回的是`RDD[ImmutableWritable,Result]`类型，当在集群上对此RDD进行操作的时候。（比如`join`、`repartition`等进行shuffle），就会产生此异常，因为`org.apache.hadoop.hbase.io.ImmutableBytesWritable`和`org.apache.hadoop.hbase.client.Result`并没有实现`java.io.Serializable`接口
+Spark 操作 HBase返回的是`RDD[ImmutableWritable,Result]`类型，当在集群上对此RDD进行操作的时候。（比如`join`、`repartition`等进行shuffle），就会产生此异常，因为`org.apache.hadoop.hbase.io.ImmutableBytesWritable`和`org.apache.hadoop.hbase.client.Result`并没有实现`java.io.Serializable`接口
 
 解决方式：
 
