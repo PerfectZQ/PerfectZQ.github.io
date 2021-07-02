@@ -91,3 +91,6 @@ HBase 底层使用 LSM Tree 进行存储，HBase会将最近的修改写入`Mems
 
 ## Extended Reading
 * [HBASE-4676 Prefix Compression - Trie data block encoding](https://issues.apache.org/jira/browse/HBASE-4676)
+
+## HBase Region Splits
+* [HBase 自动拆分和预分区](https://www.jianshu.com/p/cb92b61f66fc)
