@@ -252,3 +252,21 @@ object Spark_HBase_Read {
   
 }
 ```
+
+## HBase MOB
+### Preparation
+使用 MOB，需要确保 HFile 的版本为 3
+```shell
+<property>
+  <name>hfile.format.version</name>
+  <value>3</value>
+</property>
+
+```
+
+```shell
+# NAME: 列族名称
+# IS_MO: 是一个 Boolean 值选项，指定当前列族是否启用 MOB 功能
+# MOB_THRESHOLD: 指定多大的对象当做 MOB 来存储，单位为字节。如果你没有指定 MOB_THRESHOLD 的值，默认是 100KB。也就是说如果你在 HBase 中写入的对象大于这个尺寸，这个对象就会被当做 MOB 来处理。
+hbase> create 'BIGDATA:mob_test', {NAME => 'mob_family', IS_MOB => true, MOB_THRESHOLD => 102400}
+```

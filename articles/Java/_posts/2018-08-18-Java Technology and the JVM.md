@@ -936,8 +936,21 @@ $ jmc --launcher.appendVmargs -vmarg [args]
 * [**HotSpot Virtual Machine Garbage Collection Tuning Guide Java SE 8**](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/)
 * [Sizing the Generations of JVM](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/sizing.html#sizing_generations)
 
-### G1
+#### CMS
+延迟低，吞吐小
+
+#### ParallelGC
+延迟高，吞吐大
+
+```shell
+-XX:+UseParallelGC
+-XX:+UseParallelOldGC
+```
+> 对 ParallelGC 吞吐调优的目标是尽可能避免发生 Full GC，这就需要优化对象老化频率，可以调整 Survivor 空间实现对对象老化的优化。 使用 ParallelGC 时，垃圾收集的开销应小于 5%，如果已经减少到 1% 甚至更少，那基本上就已经达到了极限。
+#### G1
 * [Java Hotspot G1 GC的一些关键技术](https://tech.meituan.com/2016/09/23/g1.html)
+
+延迟和吞吐比较均衡
 
 ## Interesting Common References
 * [Java 堆外内存](https://www.cnblogs.com/duanxz/p/6089485.html)
