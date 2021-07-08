@@ -1,5 +1,7 @@
 ---
-layout: post title: Kerberos Authentication tag: Hadoop
+layout: post
+title: Kerberos Authentication 
+tag: Hadoop
 ---
 
 ## 前要
