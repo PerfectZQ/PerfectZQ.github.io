@@ -232,6 +232,7 @@ Cglib 包的底层是通过使用一个小而快的字节码处理框架 ASM 来
 
 实现 Cglib 子类代理:
 * 需要引入 cglib 的依赖，`cglib-nodep`包含`cglib`、`asm`和`asm-util`
+
 ```xml
 <!-- Cglib -->
 <dependency>
@@ -240,6 +241,7 @@ Cglib 包的底层是通过使用一个小而快的字节码处理框架 ASM 来
     <version>3.3.0</version>
 </dependency>
 ```
+
 * 代理类不能为`final`，否则报错
 * 被代理的类必须有无参构造函数，否则需要在创建的时候指定构造参数
 * 目标对象的方法如果为`final/static`，方法就不会被拦截，因此就不会执行目标对象额外的业务逻辑。
