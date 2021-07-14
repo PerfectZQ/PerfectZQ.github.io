@@ -112,3 +112,6 @@ def main(args: Array[String]): Unit = {
        """.stripMargin)
 }
 ```
+
+## SQL Set Operations
+![有帮助的截图]({{ site.url }}/assets/sql/sql_set_operations.png)
