@@ -61,7 +61,8 @@ object Test {
 }
 ```
 
-## spark sql 创建表时指定 location 会默认删除该目录下的 db 文件夹，导致整个 hive 中的数据全部被清空。
+## SparkSQL Exceptions
+### SparkSQL 创建表时指定 location 会默认删除该目录下的 db 文件夹，导致整个 hive 中的数据全部被清空。
 ```scala
 def main(args: Array[String]): Unit = {
 
@@ -113,5 +114,22 @@ def main(args: Array[String]): Unit = {
 }
 ```
 
-## SQL Set Operations
+## SparkSQL Join Operations
+
+### MySQL Join 示意图
 ![有帮助的截图]({{ site.url }}/assets/sql/sql_set_operations.png)
+
+### SparkSQL Join
+* [SparkSQL 中支持的七种 Join 类型简介](https://blog.csdn.net/wypblog/article/details/109281755)
+
+## Spark SQL DataFrame Common Operators
+* [Untyped Dataset Operations](https://spark.apache.org/docs/latest/sql-getting-started.html#untyped-dataset-operations-aka-dataframe-operations)
+* [Dataset](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Dataset.html)
+
+> DataFrame 是一种泛型类型为 Row 的 Dataset，即`type DataFrame = Dataset[Row]`
+
+### Aggregations
+```scala
+// 一般
+agg(expers:column*) 
+```
