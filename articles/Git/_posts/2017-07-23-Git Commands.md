@@ -560,8 +560,11 @@ $ git checkout feat02
 $ git rebase feat01
 ```
 ![有帮助的截图]({{ site.url }}/assets/git/git_rebase_1.jpg)
+将 feat02 的两个改动，以续的方式添加到 feat01 的尾部
 ```shell
+# 返回 feat01 
 $ git checkout feat01
+# 合并 feat02
 $ git merge feat02
 ```
 ![有帮助的截图]({{ site.url }}/assets/git/git_rebase_2.jpg)
