@@ -731,7 +731,7 @@ $ git commit
 ## 拉取远程代码
 ```shell
 # 可以 master 分支在本地库有 2 个分支 master，remotes/origin/master
-# remotes/origin/master 是远程分支在本地的映射分支
+# remotes/origin/master 是远程分支在本地的映射分支，可以简单理解为是远程仓库在本地的缓存
 $ git branch -a
 * master
   remotes/origin/HEAD -> origin/master
