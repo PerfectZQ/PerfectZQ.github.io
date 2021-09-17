@@ -544,14 +544,14 @@ $ git reset --hard 0b4e1e2
 
 #### Merge 和 Rebase 合并分支的区别
 假设当前提交记录如下
-![有帮助的截图]({{ site.url }}/assets/git/git_example.jpg){:width="1000px" height="400px"}
+![有帮助的截图]({{ site.url }}/assets/git/git_example.jpg){:width="500px" height="300px"}
 
 使用 merge 的方式把`feat02`合并到`feat01`分支
 ```shell
 $ git checkout feat01
 $ git merge feat01
 ```
-![有帮助的截图]({{ site.url }}/assets/git/git_merge.jpg){:width="1000px" height="400px"}
+![有帮助的截图]({{ site.url }}/assets/git/git_merge.jpg){:width="600px" height="300px"}
 其中的虚线表示 feat01 包含上面 feat02 分支当中的两次 commits
 
 使用 rebase 的方式把`feat02`合并到`feat01`分支
@@ -559,7 +559,7 @@ $ git merge feat01
 $ git checkout feat02
 $ git rebase feat01
 ```
-![有帮助的截图]({{ site.url }}/assets/git/git_rebase_1.jpg){:width="1000px" height="400px"}
+![有帮助的截图]({{ site.url }}/assets/git/git_rebase_1.jpg){:width="700px" height="300px"}
 将 feat02 的两个改动，以续的方式添加到 feat01 的尾部
 ```shell
 # 返回 feat01 
@@ -567,7 +567,7 @@ $ git checkout feat01
 # 合并 feat02
 $ git merge feat02
 ```
-![有帮助的截图]({{ site.url }}/assets/git/git_rebase_2.jpg){:width="1000px" height="400px"}
+![有帮助的截图]({{ site.url }}/assets/git/git_rebase_2.jpg){:width="700px" height="300px"}
 可以看到提交历史是非常线性的
 
 
