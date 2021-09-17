@@ -402,26 +402,23 @@ Rebasing 是集成上游变更到本地库的常用方式，当使用`git merge`
 ```shell
 # 将一系列 commits 组合成一个新的 commit
 $ git rebase --help
+```
 
-# 准备工作
-# 基于 master 分支创建一个新分支 feature
-$ git checkout -b feature master
-# 修改文件，然后提交
-$ git commit -a -m "Adds new feature"
+> 使用`rebase`之前保证当前分支所有处于`staging area`的文件都已 commit
 
-# 使用 rebase 之前保证当前分支所有处于 staging area 的文件都已 commit
-
+```shell
 # 标准模式: rebase 会自动将当前分支中的所有新的 commits(不包括和 <base> 中相同的 commits)添加
 # 到 <base> 之上，然后将 <base> 中的变更合并到 <current branch>，这个过程可能会发生合并冲突。
 # 换句话说，rebase 就是把我的变更 <current branch> 建立在所有其他人 <base> 已做过的变更之上，
 # 当然如果 <current branch> 没有任何新的变更操作，就会单纯的把 <base> 的变更合并进 <current 
 # branch>。
 # <base> 可以是任何类型的 commit reference(e.g.: commit id、branch name、a tag or a
-# relativereference to HEAD)
+# relative reference to HEAD)
 
 $ git rebase <base>
 First, rewinding head to replay your work on top of it...
 Applying: modify
+
 
 # 交互模式: 通过删除、拆分和更改现有的一系列提交来清理历史记录，可以更改流程中的单个 commit，而不是
 # 盲目的移动所有的 commits，交互模式会打开一个编辑器，可以输入命令为每个要 rebase 的 commit 进行
@@ -544,6 +541,34 @@ $ git reset --hard 0b4e1e2
 ```
 
 >由于新 commit 将替换掉旧的 commit，因此不要在已公开的 commit 中使用 git rebase，否则项目历史记录将会消失。
+
+#### Merge 和 Rebase 合并分支的区别
+假设当前提交记录如下
+![有帮助的截图]({{ site.url }}/assets/git/git_example.jpg)
+
+使用 merge 的方式把`feat02`合并到`feat01`分支
+```shell
+$ git checkout feat01
+$ git merge feat01
+```
+![有帮助的截图]({{ site.url }}/assets/git/git_merge.jpg)
+其中的虚线表示 feat01 包含上面 feat02 分支当中的两次 commits
+
+使用 rebase 的方式把`feat02`合并到`feat01`分支
+```shell
+$ git checkout feat02
+$ git rebase feat01
+```
+![有帮助的截图]({{ site.url }}/assets/git/git_rebase_1.jpg)
+```shell
+$ git checkout feat01
+$ git merge feat02
+```
+![有帮助的截图]({{ site.url }}/assets/git/git_rebase_2.jpg)
+可以看到提交历史是非常线性的
+
+
+
 
 ### 删除某个文件的所有 git 提交记录
 当不小心 commit 了某个超大文件，在 push 的时候会出现 `remote: fatal: pack exceeds maximum allowed size`
