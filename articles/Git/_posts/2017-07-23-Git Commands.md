@@ -568,7 +568,7 @@ $ git checkout feat01
 $ git merge feat02
 ```
 ![有帮助的截图]({{ site.url }}/assets/git/git_rebase_2.jpg){:width="700px" height="300px"}
-可以看到提交历史是非常线性的
+可以看到提交历史是非常线性的，而且拥有完整的提交记录
 
 
 
