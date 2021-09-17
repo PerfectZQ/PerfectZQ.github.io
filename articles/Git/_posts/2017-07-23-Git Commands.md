@@ -549,7 +549,7 @@ $ git reset --hard 0b4e1e2
 使用 merge 的方式把`feat02`合并到`feat01`分支
 ```shell
 $ git checkout feat01
-$ git merge feat01
+$ git merge feat02
 ```
 ![有帮助的截图]({{ site.url }}/assets/git/git_merge.jpg){:width="600px" height="300px"}
 其中的虚线表示 feat01 包含上面 feat02 分支当中的两次 commits
