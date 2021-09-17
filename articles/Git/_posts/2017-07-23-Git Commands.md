@@ -743,4 +743,11 @@ $ git fetch
 $ git merge 
 # 根据配置不同 git pull = git fetch + git merge 或者 git fetch + git rebase
 $ git pull
+
+# 修改 pull 默认配置为 rebase
+$ git config --global --add pull.rebase true
+# 查看是否修改成功
+$ git config --global -l
+# 删除配置
+git config --global --unset pull.rebase
 ```
