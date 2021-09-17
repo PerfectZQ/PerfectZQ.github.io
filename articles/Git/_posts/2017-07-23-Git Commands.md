@@ -727,3 +727,20 @@ $ git rm --cached submodule_dir_name
 # 完成删除后提交到仓库即可
 $ git commit
 ```
+
+## 拉取远程代码
+```shell
+# 可以 master 分支在本地库有 2 个分支 master，remotes/origin/master
+# remotes/origin/master 是远程分支在本地的映射分支
+$ git branch -a
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+
+# 同步远程库代码到本地 remotes/origin/master
+$ git fetch
+# 将本地 remotes/origin/master 合并到 master 分支
+$ git merge 
+# 根据配置不同 git pull = git fetch + git merge 或者 git fetch + git rebase
+$ git pull
+```
