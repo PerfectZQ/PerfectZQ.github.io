@@ -749,5 +749,5 @@ $ git config --global --add pull.rebase true
 # 查看是否修改成功
 $ git config --global -l
 # 删除配置
-git config --global --unset pull.rebase
+$ git config --global --unset pull.rebase
 ```
