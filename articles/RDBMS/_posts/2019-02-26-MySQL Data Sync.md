@@ -1,6 +1,6 @@
 ---
 layout: post
-title: MySQL数据同步
+title: MySQL Data Sync
 tag: RDBMS
 ---
 
