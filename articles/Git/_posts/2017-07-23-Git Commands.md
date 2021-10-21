@@ -334,6 +334,11 @@ commit 024a6490b37326ab39ee0cbb88cc449f6ff6f6df (HEAD -> my_branch, tag: v1.4)
 
 # push 所有 tags 到远程库
 $ git push --tags
+
+# 删除本地标签
+$ git tag -d v1.4
+# 删除远程标签
+$ git push origin :refs/tags/v1.4
 ```
 
 ## 操作远程库
