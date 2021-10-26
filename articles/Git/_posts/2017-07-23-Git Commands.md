@@ -231,7 +231,8 @@ $ git checkout -b dev/zhangqaing origin/remotebranch
 # 查看所有有差异的文件列表
 $ git diff branch1 branch2 --stat
 
-# 显示指定文件的详细差异，以 branch1 为基准，branch2 添加了新代码显示为 +，branch2 删除的代码显示为 -
+# 显示指定文件的详细差异
+# 以 branch1 为基准，branch2 有而 branch1 没有的代码显示为 +，branch2 没有而 branch1 有的的代码显示为 -。
 $ diff branch1 branch2 filePath
 
 # 查看所有有差异的文件的详细差异
