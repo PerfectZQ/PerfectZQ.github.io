@@ -5,6 +5,14 @@ tag: RDBMS
 ---
 
 ## 参考
+* [InnoDB Locking and Transaction Model](https://dev.mysql.com/doc/refman/8.0/en/)
+  * [InnoDB Locking](https://dev.mysql.com/doc/refman/8.0/en/innodb-locking.html)
+  * [InnoDB Transaction Model](https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-model.html)
+  * [Locks Set by Different SQL Statements in InnoDB](https://dev.mysql.com/doc/refman/8.0/en/innodb-locks-set.html)
+  * [Phantom Rows](https://dev.mysql.com/doc/refman/8.0/en/innodb-next-key-locking.html)
+  * [Deadlocks in InnoDB](https://dev.mysql.com/doc/refman/8.0/en/innodb-deadlocks.html)
+  * [Transaction Scheduling](https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-scheduling.html)
+* [Optimizing Locking Operations](https://dev.mysql.com/doc/refman/8.0/en/locking-issues.html)
 * [史上最全的 select 加锁分析](https://www.cnblogs.com/rjzheng/p/9950951.html)
 
 ## 事务
