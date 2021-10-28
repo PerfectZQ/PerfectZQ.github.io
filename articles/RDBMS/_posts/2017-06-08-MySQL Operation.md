@@ -54,9 +54,46 @@ $ rm -rf /usr/my.cnf
 ```
 
 ## 安装 MySQL
+### apt 
+```shell
+$ apt-get install -y mysql-server
+$ systemctl status mysql
+● mariadb.service - MariaDB 10.1.48 database server
+   Loaded: loaded (/lib/systemd/system/mariadb.service; enabled; vendor preset: enabled)
+   Active: active (running) since Thu 2021-10-28 12:06:30 CST; 2h 10min ago
+     Docs: man:mysqld(8)
+           https://mariadb.com/kb/en/library/systemd/
+ Main PID: 3507596 (mysqld)
+   Status: "Taking your SQL requests now..."
+    Tasks: 27 (limit: 4915)
+   Memory: 62.5M
+      CPU: 3.906s
+   CGroup: /system.slice/mariadb.service
+           └─3507596 /usr/sbin/mysqld
+           
+# # Mysql 新版本默认使用了认证插件 unix_socket plugin，直接用 root 登陆会报错
+$ mysql -u root -p
+ERROR 1698 (28000): Access denied for user 'root'@'localhost'
+# 使用 unix socket 认证方式登陆，注意这种认证方法不需要密码
+$ sudo mysql -u root
+mysql> select user, plugin from mysql.user;
++------+-------------+
+| user | plugin      |
++------+-------------+
+| root | unix_socket |
++------+-------------+
+# 修改认证插件
+mysql> update mysql.user set plugin = 'mysql_native_password' where user = 'root';
+mysql> flush privileges;
+mysql> exit;
+# 接下来就可以正常登陆了
+$ mysql -u root -p'password'
+# 注意修改了认证插件之后，就不能使用 `sudo mysql -u root` 登陆了，需要密码了
+$ sudo mysql -u root
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+```
 
 ### rpm 包安装
-建议安装 rpm 包，省时省力，只需要指定root密码，不需要额外配置什么东西就可以启动了。
 ```shell
 $ rpm -ivh mysql-community-client-5.7.22-1.el7.x86_64.rpm \
            mysql-community-common-5.7.22-1.el7.x86_64.rpm \
@@ -64,7 +101,7 @@ $ rpm -ivh mysql-community-client-5.7.22-1.el7.x86_64.rpm \
            mysql-community-server-5.7.22-1.el7.x86_64.rpm
 ```
   
-对于 Mysql5.7+ 的版本，为了加强安全性，为自动为 root 用户随机生成了一个密码，对于 RPM 安装的 Mysql，默认是/var/log/mysqld.log。并且只有在第一次启动 Mysql 才可以在日志中查看临时密码!
+对于 Mysql5.7+ 的版本，为了加强安全性，为自动为 root 用户随机生成了一个密码，对于 RPM 安装的 Mysql，默认是`/var/log/mysqld.log`。并且只有在第一次启动 Mysql 才可以在日志中查看临时密码!
 
 如果很不幸你忘记了密码，可以在`/etc/my.cnf`中添加`skip-grant-tables`，然后重启 Mysql，直接进入 Mysql 控制台，然后修改密码就可以了。
 
