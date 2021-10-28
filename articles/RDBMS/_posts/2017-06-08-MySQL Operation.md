@@ -71,7 +71,7 @@ $ systemctl status mysql
    CGroup: /system.slice/mariadb.service
            └─3507596 /usr/sbin/mysqld
            
-# # Mysql 新版本默认使用了认证插件 unix_socket plugin，直接用 root 登陆会报错
+# Mysql 新版本默认使用了认证插件 unix_socket plugin，直接用 root 登陆会报错
 $ mysql -u root -p
 ERROR 1698 (28000): Access denied for user 'root'@'localhost'
 # 使用 unix socket 认证方式登陆，注意这种认证方法不需要密码
@@ -91,6 +91,13 @@ $ mysql -u root -p'password'
 # 注意修改了认证插件之后，就不能使用 `sudo mysql -u root` 登陆了，需要密码了
 $ sudo mysql -u root
 ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+# 修改监听
+$ vim /etc/mysql/my.cnf
+[mysqld]
+bind-address=0.0.0.0
+$ systemctl restart mysql
+# 如果出现 The name org.freedesktop.PolicyKit1 was not provided by any .service files
+$ sudo apt install policykit-1
 ```
 
 ### rpm 包安装
