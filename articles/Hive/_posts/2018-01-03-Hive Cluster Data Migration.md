@@ -79,7 +79,7 @@ $ hive -f schema.sql
 ### 全库迁移
 [hadoop跨集群之间迁移hive数据](https://blog.csdn.net/levy_cui/article/details/70156682)
 
-#### bechmark
+#### benchmark
 750g 80m
 
 #### 元数据迁移

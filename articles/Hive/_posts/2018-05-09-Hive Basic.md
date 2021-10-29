@@ -15,6 +15,88 @@ tag: Hive
 具有相同模式(Schema)的同类数据构成的集合，存储到一张表中。例如一张表的模式包含`userid`、`username`、`password`、`datetime`等列。
 ### Partitions
 表可以用一到多个`partitionKeys`决定数据的存储方式。Partition 除了作为存储单元之外，还允许用户高效的识别满足特定标准的行(记录)，例如有两个类型为`STRING`的`partitionKey`，`date_partiton`和`counrty_partiton`，每一个唯一的`partitionKey`值，如`date_partition=2018-05-09`都对应了表中的一个`partition`。另外需要注意的是，`date_partiton=2018-05-09`的数据并不一定就是`2018-05-09`这一天的全部数据，他不能代替`select * from table.t where t.datetime = '2018-05-09'`，只要你将一条数据的`date_partiton`指定为`2018-05-09`，不管它的`datetime`列实际上是哪一天的，他都会被分到`date_partition=2018-05-09`这个分区。指定`partitionKey`只是为了方便查询、加快分析速度，并且**分区列是虚拟列，它们不是数据本身的一部分，而是在加载时派生的。**
+```sql
+-- 创建一个分区表
+CREATE TABLE `eps_volc_sla.ods_cloud_sla_sli_rds_hf`(
+  `id` bigint COMMENT 'ID',
+  `status` bigint COMMENT '状态',
+  `sli_key` string COMMENT '唯一SLI名',
+  `product` string COMMENT '售卖产品',
+  `functions` string COMMENT '计算方式'
+)
+PARTITIONED BY (
+  `date` string COMMENT '日期分区，yyyyMMdd',
+  `hour` string COMMENT '小时分区，HH'
+)
+ROW FORMAT SERDE
+  'org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe'
+STORED AS INPUTFORMAT
+  'org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat'
+OUTPUTFORMAT
+  'org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat'
+LOCATION
+  'hdfs://westeros/user/tiger/warehouse/eps_volc_sla.db/ods_cloud_sla_sli_rds_hf'
+TBLPROPERTIES (
+  'is_core'='true',
+  'is_starred'='false',
+  'primary_key'='',
+  'source_from'='coral_ng',
+  'status'='3',
+  'transient_lastDdlTime'='1633758742',
+  'ttl'='0',
+  'ttl_extension'='{\"type\":\"mtime\"}')
+```
+
+分区的物理存储结构
+```shell
+$ hadoop fs -ls -R hdfs://westeros/user/tiger/warehouse/eps_volc_sla.db/ods_cloud_sla_sli_rds_hf/date=20211029/hour=16
+-rw-r--r--   3 zhangqiang supergroup          0 2021-10-29 17:02 hdfs://westeros/user/tiger/warehouse/eps_volc_sla.db/ods_cloud_sla_sli_rds_hf/date=20211029/hour=16/_SUCCESS
+-rw-r--r--   3 zhangqiang supergroup       3828 2021-10-29 17:02 hdfs://westeros/user/tiger/warehouse/eps_volc_sla.db/ods_cloud_sla_sli_rds_hf/date=20211029/hour=16/dts-hive-100009146-202473139-0
+-rw-r--r--   3 zhangqiang supergroup        369 2021-10-29 17:02 hdfs://westeros/user/tiger/warehouse/eps_volc_sla.db/ods_cloud_sla_sli_rds_hf/date=20211029/hour=16/dts-hive-100009146-202473139-1
+```
+#### 静态分区
+在执行插入操作的时候指定分区字段的值，就是静态分区。例如:
+```sql
+-- 其中 date, hour 都是动态分区
+INSERT OVERWRITE TABLE eps_volc_sla.dim_sla_sli_hf PARTITION (date = '20211029', hour = '04')
+SELECT  id, --	ID
+        status, --	状态
+        sli_key, --	产品唯一 SLI Key
+        product, --	售卖产品
+        `functions` --	计算方式
+FROM    eps_volc_sla.ods_cloud_sla_sli_rds_hf
+WHERE   date = '20211029'
+AND     hour = '04';
+```
+#### 动态分区
+在执行插入操作的时候动态计算分区字段的值
+```sql
+-- 使用动态分区需要先打开动态分区的开关
+hive> set hive.exec.dynamic.partition=true; 
+-- 其中 date 是静态分区， hour 是动态分区，会根据 ods_cloud_sla_sli_rds_hf 表 hour 字段的值决定 dim_sla_sli_hf 的 hour 分区
+INSERT OVERWRITE TABLE eps_volc_sla.dim_sla_sli_hf PARTITION (date = '20211029', hour)
+SELECT  id, --	ID
+        status, --	状态
+        sli_key, --	唯一SLO名
+        product, --	售卖产品
+        `functions` --	计算方式
+FROM    eps_volc_sla.ods_cloud_sla_sli_rds_hf
+WHERE   date = '20211029';
+```
+> Note: 动态分区不允许主分区(date)采用动态列而副分区(hour)采用静态列，这样将导致所有的主分区都要创建副分区静态列所定义的分区。
+
+```sql
+-- 动态分区可以允许所有的分区列都是动态分区列，但是需要设置参数，默认是 strict
+hive> set hive.exec.dynamic.partition.mode=nonstrict;
+-- 在每个执行 MR 的节点上，最大可以创建多少个动态分区。
+-- 例如源数据共有 24 个 hour 分区，共 2 个 MR 计算节点， hive.exec.max.dynamic.partitions.pernode=10 就会有问题
+hive> set hive.exec.max.dynamic.partitions.pernode=100
+-- 在所有执行 MR 的节点上，最大一共可以创建多少个动态分区。
+hive> set hive.exec.max.dynamic.partitions=1000
+-- 整个 MR Job 中，最大可以创建多少个 HDFS 文件
+hive> set hive.exec.max.created.files=100000
+```
+
 ### Buckets(or Clusters)
 每个分区的数据可以根据表中的实际列的Hash值进行分段(簇)。注意是表中的实列，而不是分区列。这样可以针对数据集执行高效的采样查询。
 
