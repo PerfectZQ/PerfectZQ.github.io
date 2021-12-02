@@ -9,3 +9,7 @@ tag: ElasticSearch
 
 ## Near real-time search
 * [Near real-time search](https://www.elastic.co/guide/en/elasticsearch/reference/current/near-real-time.html)
+
+
+## Reference
+* [万字长文，理解 Elasticsearch 和面试总结](https://cloud.tencent.com/developer/article/1750615)
