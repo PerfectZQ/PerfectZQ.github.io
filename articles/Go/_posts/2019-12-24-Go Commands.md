@@ -1,10 +1,9 @@
 ---
-layout: post
-title: Go Commands
-tag: Go
+layout: post title: Go Commands tag: Go
 ---
 
 ## Usage
+
 ```shell
 $ go
 Go is a tool for managing Go source code.
@@ -58,5 +57,13 @@ Additional help topics:
 Use "go help <topic>" for more information about that topic.
 ```
 
+## 常用命令
+
+```shell
+# 更新最新版本
+$ go get -u github.com/pkg/errors
+```
+
 ## Go 的编译命令执行过程
+
 * [初探 Go 的编译命令执行过程](https://halfrost.com/go_command/)
