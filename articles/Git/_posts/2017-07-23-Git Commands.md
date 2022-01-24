@@ -597,7 +597,8 @@ $ git merge feat02
 
 ### 删除某个文件的所有 git 提交记录
 当不小心 commit 了某个超大文件，在 push 的时候会出现 `remote: fatal: pack exceeds maximum allowed size`
-* [Removing sensitive data from a repository](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)
+* [removing sensitive data from a repository](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)
+* [git-filter-repo](https://github.com/newren/git-filter-repo/)
 
 ```shell
 # 删除指定文件本地所有历史提交记录
