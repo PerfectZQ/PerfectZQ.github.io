@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Spark SQL
+title: Spark SQL Exceptions
 tag: Spark SQL
 ---
 
