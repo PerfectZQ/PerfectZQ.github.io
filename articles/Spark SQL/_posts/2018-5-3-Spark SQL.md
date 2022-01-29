@@ -42,6 +42,10 @@ SparkSQL 的函数类型结构如下:
 #### Aggregate Functions
 * [Aggregate Functions](https://spark.apache.org/docs/latest/sql-ref-functions-builtin.html#aggregate-functions)
 
+```sql
+-- Examples
+
+```
 
 #### Window Functions
 * [Window Functions](https://spark.apache.org/docs/latest/sql-ref-functions-builtin.html#window-functions)
@@ -54,10 +58,7 @@ SparkSQL 的函数类型结构如下:
 
 ### User Defined Functions
 #### UDF
-
 注册 SparkSQL UDF 有两种方式`sparkSession.udf.register()`和`org.apache.spark.sql.function.udf()`
-
-这种方式注册的 udf 方法，只能在`selectExpr`中可见，而对于`DataFrame API`是不可见的
 
 ```scala
 object Test {
@@ -89,10 +90,12 @@ object Test {
     val myConcatFunc = (cols: Seq[Any], sep: String) => cols.filterNot(_ == null).mkString(sep)
 
     // 使用 register() 方法
+    // 这种方式注册的 udf 方法，只能在`selectExpr`中可见，而对于`DataFrame API`是不可见的
     sparkSession.udf.register("myConcat", myConcatFunc)
     catDF.selectExpr("myConcat(array(name, age, sex), '-') as concat").show()
 
     // 使用 udf()
+    // DataFrame API
     import org.apache.spark.sql.functions.udf
     import org.apache.spark.sql.functions.array
     import org.apache.spark.sql.functions.lit
