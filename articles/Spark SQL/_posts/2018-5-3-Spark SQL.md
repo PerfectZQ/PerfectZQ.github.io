@@ -44,7 +44,8 @@ SparkSQL 的函数类型结构如下:
 
 ```sql
 -- Examples
-
+SELECT  bool_and(col) AS result
+FROM    (VALUES (false), (false), (NULL)) AS tab(col);
 ```
 
 #### Window Functions
