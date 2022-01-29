@@ -1,5 +1,7 @@
 ---
-layout: post title: MySQL Index tag: RDBMS
+layout: post 
+title: MySQL Index
+tag: RDBMS
 ---
 
 ## Commands
