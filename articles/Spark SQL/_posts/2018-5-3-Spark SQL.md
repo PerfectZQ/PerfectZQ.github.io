@@ -28,7 +28,10 @@ SparkSQL 的函数类型结构如下:
     * [Date and Timestamp Functions](https://spark.apache.org/docs/latest/sql-ref-functions-builtin.html#date-and-timestamp-functions)
     * [JSON Functions](https://spark.apache.org/docs/latest/sql-ref-functions-builtin.html#json-functions)
   * Aggregate-like Functions
-    * [Aggregate Functions](https://spark.apache.org/docs/latest/sql-ref-functions-builtin.html#aggregate-functions): 作用于一组记录，对这一组的数据的列进行聚合计算得出一个值，做聚合后结果表的总记录数通常会减少，例如`select max(age) from person group by sex`。
+    * [Aggregate Functions](https://spark.apache.org/docs/latest/sql-ref-functions-builtin.html#aggregate-functions): 作用于一组记录，对这一组的数据的列进行聚合计算得出一个值，做聚合后结果表的总记录数通常会减少，例如
+    ```sql
+    select max(age) from person group by sex
+    ```
     * [Window Functions](https://spark.apache.org/docs/latest/sql-ref-functions-builtin.html#window-functions): 窗口函数有别于聚合函数，聚合函数分组中的所有记录都会参与计算，最终每个分组得出一条结果记录。而窗口函数只是限定一个窗口范围，窗口内的每一条记录都会进行计算，计算的过程会涉及到窗口内的其他数据参与计算，并且得出的最终记录数不会减少。例如窗口内有5条记录，计算完的结果表依然还有5条记录。
 * UDFs (User-Defined Functions)
   * [Scalar User-Defined Functions (UDFs)](https://spark.apache.org/docs/latest/sql-ref-functions-udf-scalar.html)
