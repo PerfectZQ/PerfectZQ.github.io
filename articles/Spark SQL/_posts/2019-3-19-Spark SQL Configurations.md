@@ -30,7 +30,13 @@ log4j.logger.org.apache.spark.repl.SparkILoop$SparkILoopInterpreter=WARN
 $ spark-sql \
 --hiveconf hive.cli.print.header=true \
 --driver-java-options "-Dlog4j.debug -Dlog4j.configuration=file:///home/zhangqiang.volcano/spark-sql-log4j.properties" \
-...
+--master yarn \
+--name spark_shell_zhangqiang.volcano \
+--deploy-mode client \
+--queue root.boe_flink_online \
+--num-executors 4 \
+--executor-memory 4g \
+--executor-cores 2 
 ```
 
 ## Spark SQL 2.2.2
