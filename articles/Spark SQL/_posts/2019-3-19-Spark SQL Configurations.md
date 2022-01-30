@@ -10,6 +10,29 @@ val sparkSession = SparkSession.builder.getOrCreate
 sparkSession.sql("set -v").show(1000, truncate=false)
 ```
 
+## 关闭 spark-sql cli console 日志
+```shell
+$ vim ~/spark-sql-log4j.properties
+# Set everything to be logged to the console
+log4j.rootCategory=WARN, console
+log4j.appender.console=org.apache.log4j.ConsoleAppender
+log4j.appender.console.target=System.err
+log4j.appender.console.layout=org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern=%d{yy/MM/dd HH:mm:ss} %p %c{1}: %m%n
+
+# Settings to quiet third party logs that are too verbose
+log4j.logger.org.eclipse.jetty=WARN
+log4j.logger.org.eclipse.jetty.util.component.AbstractLifeCycle=ERROR
+# spark.repl 的 log 等级修改为 WARN
+log4j.logger.org.apache.spark.repl.SparkIMain$exprTyper=WARN
+log4j.logger.org.apache.spark.repl.SparkILoop$SparkILoopInterpreter=WARN
+
+$ spark-sql \
+--hiveconf hive.cli.print.header=true \
+--driver-java-options "-Dlog4j.debug -Dlog4j.configuration=file:///home/zhangqiang.volcano/spark-sql-log4j.properties" \
+...
+```
+
 ## Spark SQL 2.2.2
 
 <style>
