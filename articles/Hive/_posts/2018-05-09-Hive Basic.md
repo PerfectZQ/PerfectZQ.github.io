@@ -222,7 +222,7 @@ SHOW TABLES;
 SHOW TABLES 'page.*';
 
 -- 查看指定数据库中的表
-SHOW TABLES IN/FROM database;
+SHOW VIEWS [in/from <dbName>] [<pattern>];
 
 -- hive 2.0+ / spark-sql 支持单独查看视图
 SHOW VIEWS;
