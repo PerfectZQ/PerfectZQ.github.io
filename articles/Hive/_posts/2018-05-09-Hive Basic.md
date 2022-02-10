@@ -221,6 +221,12 @@ SHOW TABLES;
 -- 可以使用正则表达式
 SHOW TABLES 'page.*';
 
+-- 查看指定数据库中的表
+SHOW TABLES IN/FROM database;
+
+-- hive 2.0+ / spark-sql 支持单独查看视图
+SHOW VIEWS;
+
 -- 查看表的分区字段，如果表没有被分区则抛出错误信息
 SHOW PARTITIONS page_view;
 
