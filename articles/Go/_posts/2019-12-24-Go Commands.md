@@ -63,7 +63,7 @@ Use "go help <topic>" for more information about that topic.
 
 ```shell
 # 初始化生成 go.mod 和 go.sum 文件
-$ go mod init
+$ go mod init github.com/xxx/xxx
 
 # 添加需要用到但 go.mod 中查不到的模块，删除未使用的模块
 $ go mod tidy
