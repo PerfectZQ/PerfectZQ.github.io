@@ -60,12 +60,23 @@ Use "go help <topic>" for more information about that topic.
 ```
 
 ## 常用命令
-
 ```shell
-# 更新最新版本
+# 会更新指定的包版本和所有依赖该包的版本
 $ go get -u github.com/pkg/errors
+
+# 更新 go.mod 中依赖的所有的包
+$ go get -u
+
+# 更新指定包到特定的版本
+$ go get package@[@version]
+# version支持的格式:
+# 1. vx.y.z
+$ go get -u xxx/pkg/xxx@v1.0.0
+# 2. commit的checksum
+$ go get xxx/pkg/xxx@fe21520c75483fa7e6acfcfce9827785121652ba
+# 3. master, latest
+$ go get  xxx/pkg/xxx@latest
 ```
 
 ## Go 的编译命令执行过程
-
 * [初探 Go 的编译命令执行过程](https://halfrost.com/go_command/)
