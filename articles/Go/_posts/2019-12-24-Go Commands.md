@@ -1,7 +1,5 @@
 ---
-layout: post 
-title: Go Commands 
-tag: Go
+layout: post title: Go Commands tag: Go
 ---
 
 ## Usage
@@ -60,6 +58,22 @@ Use "go help <topic>" for more information about that topic.
 ```
 
 ## 常用命令
+
+### mod
+
+```shell
+# 初始化生成 go.mod 和 go.sum 文件
+$ go mod init
+
+# 添加需要用到但 go.mod 中查不到的模块，删除未使用的模块
+$ go mod tidy
+
+# 修改包版本
+$ go mod edit -replace xxx/xxx/xxx=xxx/xxx/xxx@v0.1.1
+```
+
+### get
+
 ```shell
 # 会更新指定的包版本和所有依赖该包的版本
 $ go get -u github.com/pkg/errors
@@ -79,4 +93,5 @@ $ go get  xxx/pkg/xxx@latest
 ```
 
 ## Go 的编译命令执行过程
+
 * [初探 Go 的编译命令执行过程](https://halfrost.com/go_command/)
