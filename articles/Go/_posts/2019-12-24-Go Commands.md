@@ -68,8 +68,10 @@ $ go mod init github.com/xxx/xxx
 # 添加需要用到但 go.mod 中查不到的模块，删除未使用的模块
 $ go mod tidy
 
-# 修改包版本
+# 强制将包替换成指定版本
 $ go mod edit -replace xxx/xxx/xxx=xxx/xxx/xxx@v0.1.1
+# 会在 go.mod 生成如下语句
+$ replace xxx/xxx/xxx => xxx/xxx/xxx v0.1.1
 ```
 
 ### get
