@@ -212,6 +212,36 @@ TBLPROPERTIES (
   'transient_lastDdlTime'='1555657655')
 ```
 
+### Create View
+```sql
+-- 创建带分区的视图
+CREATE VIEW IF NOT EXISTS {{ .ViewName }}(
+    viewTime INT,
+    userid BIGINT,
+    page_url STRING,
+    referrer_url STRING,
+    friends ARRAY<BIGINT>,
+    properties MAP<STRING, STRING>,
+    ip STRING COMMENT '字段注释',
+    date STRING COMMENT '字段注释',
+    hour STRING COMMENT '字段注释'
+) PARTITIONED ON (date, hour) AS
+SELECT
+    viewTime INT,
+    userid BIGINT,
+    page_url STRING,
+    referrer_url STRING,
+    friends ARRAY<BIGINT>,
+    properties MAP<STRING, STRING>,
+    ip STRING COMMENT '字段注释',
+    date,
+    hour
+FROM
+    {{ .OpenTable }}
+WHERE
+    {{ .Where }}
+```
+
 ### Browsing Tables and Partitions
 
 ```sql
