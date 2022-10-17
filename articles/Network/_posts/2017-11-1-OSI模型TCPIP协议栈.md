@@ -12,7 +12,7 @@ OSI(Open System Interconnection，开放式通信互联) 是由 ISO(Internationa
 OSI 模型和 TCP/IP 模型对比：
 ![有帮助的截图]({{ site.url }}/assets/tcp_ip.png)
 
-![img.png](img.png)
+![有帮助的截图]({{ site.url }}/assets/tcp_ip_2.png)
 
 从上图可以看到，TCP/IP 模型合并了 OSI 模型的应用层、表示层和会话层，将 OSI 模型的数据链路层和物理层合并为网络访问层。
 
