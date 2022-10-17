@@ -12,6 +12,8 @@ OSI(Open System Interconnection，开放式通信互联) 是由 ISO(Internationa
 OSI 模型和 TCP/IP 模型对比：
 ![有帮助的截图]({{ site.url }}/assets/tcp_ip.png)
 
+![img.png](img.png)
+
 从上图可以看到，TCP/IP 模型合并了 OSI 模型的应用层、表示层和会话层，将 OSI 模型的数据链路层和物理层合并为网络访问层。
 
 上图还列出了各层模型对应TCP/IP协议栈中的协议以及各层协议之间的关系。比如 DNS 协议是建立在 TCP 和 UDP 协议的基础上，FTP、HTTP、TELNET 协议建立在 TCP 协议的基础上，NTP、TFTP、SNMP 建立在 UDP 协议的基础上，而 TCP、UDP 协议又建立在 IP 协议的基础上，以此类推.....
