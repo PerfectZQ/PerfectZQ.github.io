@@ -16,6 +16,8 @@ OSI 模型和 TCP/IP 模型对比：
 
 上图还列出了各层模型对应TCP/IP协议栈中的协议以及各层协议之间的关系。比如 DNS 协议是建立在 TCP 和 UDP 协议的基础上，FTP、HTTP、TELNET 协议建立在 TCP 协议的基础上，NTP、TFTP、SNMP 建立在 UDP 协议的基础上，而 TCP、UDP 协议又建立在 IP 协议的基础上，以此类推.....
 
+
+
 ## TCP/IP 四层模型的意义
 数据在网络中传输最终一定是通过物理介质传输。物理介质就是把电脑连接起来的物理手段，常见的有光纤、双绞线，以及无线电波，它决定了电信号(0和1)的传输方式，物理介质的不同决定了电信号的传输带宽、速率、传输距离以及抗干扰性等等。网络数据传输就像快递邮寄，数据就是快件。只有路打通了，你的"快递"才能送到，因此物理介质是网络通信的基石。
 
@@ -262,6 +264,7 @@ listening on en0, link-type EN10MB (Ethernet), capture size 262144 bytes
 ```
 
 ## Reference
+* [一文读懂OSI七层模型与TCP/IP四层的区别/联系](https://blog.csdn.net/qq_39521554/article/details/79894501)
 * [TCP/IP 四层协议模型与 OSI 七层模型](http://blog.csdn.net/jesons_/article/details/51872307)
 * [TCP 协议与 UDP 协议的区别](http://www.cnblogs.com/bizhu/archive/2012/05/12/2497493.html)
 * [TCP 三次握手和四次挥手详解](http://blog.csdn.net/vivid_110/article/details/50705572)
