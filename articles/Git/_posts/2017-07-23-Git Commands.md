@@ -95,6 +95,14 @@ On branch master
 nothing to commit, working tree clean
 ```
 
+```
+# 空提交，适用于通过 commit message 触发流水线的场景
+$ git commit --allow-empty -m "Empty"
+
+# 实现只修改提交作者，无需提交代码
+$ git commit --amend --author='Your Name <you@example.com>'
+```
+
 ## 初始化本地库
 ```shell
 # 创建一个本地库，在当前文件夹下生成 .git 文件夹，用于 trace 当前文件夹下和子文件夹下的所有文件
