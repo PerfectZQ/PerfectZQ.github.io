@@ -12,6 +12,13 @@ Java 管理依赖的工具有 Maven、Gradle，而对于 Go，以前(1.13之前)
 
 自 1.13 之后[Go Modules](https://blog.golang.org/using-go-modules)正式成为默认依赖管理方式。项目也不必一定要在`$GOPATH/src`中了，现在 Go 允许在`$GOPATH/src`外的任何目录使用`go.mod`创建项目
 
+```
+# GOROOT 就是 Go 的安装目录，类似于 Java 的 JDK
+export GOROOT=/usr/local/go1.16.7
+# GOPATH 是我们的工作空间，保存 Go 项目代码和第三方依赖包
+export GOPATH=/Users/zhangqiang/go
+```
+
 ### Global Caching
 Go modules 的全局数据缓存
 * 同一个模块版本的数据只缓存一份，所有其他模块共享使用。
