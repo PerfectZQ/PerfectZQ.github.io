@@ -5,12 +5,20 @@ tag: Go
 ---
 
 ## 介绍
+```
+# GOROOT 就是 Go 的安装目录，类似于 Java 的 JDK
+export GOROOT=/usr/local/go1.16.7
+# GOPATH 是我们的工作空间，保存 Go 项目代码和第三方依赖包
+export GOPATH=/Users/zhangqiang/go
+```
+
 Java 管理依赖的工具有 Maven、Gradle，而对于 Go，以前(1.13之前)则是依赖`GOPATH`，`GOPATH`下有三个目录
 * `$GOPATH/src`: go 编译时查找代码的地方，例如`import (k8s.io/kubernetes/cmd/kubectl/app)`，就需要将`k8s.io/kubernetes/cmd/kubectl/app`放在`src`目录下
 * `$GOPATH/bin`: `go get`、`godep` 这种 bin 工具包的时候，二进制文件下载的目的地
 * `$GOPATH/pkg`: 编译生成的 lib 文件存储的地方
 
 自 1.13 之后[Go Modules](https://blog.golang.org/using-go-modules)正式成为默认依赖管理方式。项目也不必一定要在`$GOPATH/src`中了，现在 Go 允许在`$GOPATH/src`外的任何目录使用`go.mod`创建项目
+
 
 ### Global Caching
 Go modules 的全局数据缓存
