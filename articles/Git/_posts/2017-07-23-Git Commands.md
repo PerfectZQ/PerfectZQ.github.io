@@ -249,7 +249,7 @@ $ git checkout -b dev/zhangqaing origin/remotebranch
 # 查看所有有差异的文件列表
 $ git diff branch1 branch2 --stat
 
-# 查看所有有差异的文件的详细差异
+# 查看所有有差异的文件的详细差异，branch2 相较于 branch1 新增的用 +++ 标识，branch2 相较于 branch1 减少的用 --- 标识
 $ git diff branch1 branch2
 # a 代表 branch1, b 代表 branch2
 diff --git a/test/jwt_test.go b/test/jwt_test.go 
