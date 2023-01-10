@@ -6,6 +6,7 @@ tag: Go
 
 ## Reference
 * [Go pprof性能调优](https://www.cnblogs.com/nickchen121/p/11517452.html)
+* [gopherchina-2019 profiling](https://dave.cheney.net/high-performance-go-workshop/gopherchina-2019.html#profiling)
 
 ## 采集性能数据
 GoLang 内置了获取程序运行时数据的标准库[pprof](https://pkg.go.dev/runtime/pprof#hdr-Profiling_a_Go_program)，每隔一段时间(10ms)就会收集程序的堆栈数据，记录各个函数占用内存和CPU情况，最后对这些采样数据进行分析生成报告
@@ -149,4 +150,7 @@ Go1.11+ 之后`pprof`支持火焰图了
 $ go tool pprof -http=":8081" [binary] [profile]
 # 访问 http://localhost:8081/ui/flamegraph 即可看到火焰图
 $ go tool pprof -http=":8081" test/cpu_pprof
+
+# 每隔 10s 输出一次采样 http://127.0.0.1:9999/ui/flamegraph
+$ go tool pprof -seconds=10 -http=:9999 http://10.23.72.26:6790/debug/pprof/heap
 ```
