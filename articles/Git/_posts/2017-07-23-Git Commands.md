@@ -136,6 +136,7 @@ $ git rm --cached -r target/
 ```
 
 >WARNING: it will delete untracked files, so it's not a great answer to the question being posed.
+
 ```shell
 # 删除 untracked files，比如 git merge 了一些其他文件，然后 rollback 导致产生大量 untracked files，影响执行 checkout 操作 
 # git 2.11+
