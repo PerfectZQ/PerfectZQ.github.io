@@ -291,6 +291,17 @@ DROP TABLE pv_users;
 ALTER TABLE pv_users DROP PARTITION (ds='2008-08-08')
 ```
 
+### Add Partition
+```sql
+-- 重新刷新 Hive 分区数据，比如通过 HDFS 文件直接写入 Hive Warehouse 的场景
+ALTER TABLE
+        eps_tech_test.ods_stable_trade_bill_center_split_bill_detail_rds_df
+ADD     PARTITION (date = '20230208');
+
+-- 当导入分区比较多的时候可以通过 MSCK 直接修复整个表
+MSCK REPAIR TABLE eps_tech_test.ods_stable_trade_bill_center_split_bill_detail_rds_df;
+```
+
 ### Load datafile
 ```sql
 CREATE TABLE IF NOT EXISTS test_zq.full_dimension
