@@ -14,3 +14,6 @@ tag: Flink
 ![有帮助的截图]({{ site.url }}/assets/flink/flink_memory_model.png)
 
 * [Flink JVM 内存超限的分析方法总结](https://blog.csdn.net/rlnLo2pNEfx9c/article/details/120806252)
+
+
+* [RocksDB state backend](https://www.liaojiayi.com/rocket-memory/)
