@@ -6,3 +6,6 @@ tag: Flink
 
 ## 参考
 * [Performance Tuning](https://nightlies.apache.org/flink/flink-docs-release-1.16/docs/dev/table/tuning/)
+
+### MiniBatch Aggregation
+* [MiniBatch Aggregation](https://nightlies.apache.org/flink/flink-docs-release-1.16/docs/dev/table/tuning/#minibatch-aggregation)
