@@ -81,7 +81,33 @@ Document APIs 是对 ElasticSearch Document 的`CRUD`操作，即`增查改删`�
 #### Delete By Query API
 
 #### Update By Query API
+```json
+// 插入一条数
+POST eps_data_test/_doc/1
+{
+  "a":"a"
+}
+// 查看是否插入成功
+GET eps_data_test/_search
 
+// 将字段a="a"的记录的值，统一更新成"change_to_b"
+POST eps_data_test/_update_by_query
+{
+  "script": {
+     "source": "ctx._source['a'] = 'change_to_b'"
+  },
+  "query": {
+    "term": {
+      "a": "a"
+    }
+  }
+}
+// 查看是否更新成功，由于是异步操作，可能会有一定的延迟
+GET eps_data_test/_search
+```
+
+* [scripts-and-search-speed](https://www.elastic.co/guide/en/elasticsearch/reference/current/scripts-and-search-speed.html#scripts-and-search-speed)
+* [Painless Scripting Language API Reference](https://www.elastic.co/guide/en/elasticsearch/painless/8.6/painless-api-reference.html)
 #### Reindex API
 * [Reindex](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-reindex.html): 复制一个 Index 的 Documents 到另一个 Index
 
