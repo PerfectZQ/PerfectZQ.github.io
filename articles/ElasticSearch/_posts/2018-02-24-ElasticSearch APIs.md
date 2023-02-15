@@ -217,7 +217,7 @@ Result:
 * Query-String: 更轻量的查询字符串，语法简洁（但这并不意味着易读）
 * DSL(Domain Specific Language): 使用领域特定语言，使用一个 JSON 请求体作为参数进行搜索，适用于条件复杂的查询与分析，例如聚合计算
 
-### Query-String
+#### Query-String
 搜索姓氏为 Smith 的雇员
 ```console
 GET /megacorp/employee/_search?q=last_name:Smith
@@ -258,7 +258,7 @@ Result:
 
 使用`?q=`查询字符串参数，通过命令进行临时性的即时搜索非常方便，但是还是有局限性，比如查询参数会被 URL 编码(% 编码)，可读性差、更加难懂，不利于调试，而且还有可能暴露隐私信息。因此不推荐直接向用户暴露此功能（有点像 Get 请求）。因此生产环境更推荐 RequestBody（Post 请求）。
 
-### DSL
+#### DSL
 使用 DSL，需指定使用一个 JSON 请求体作为参数，替代 Query-String，这种方式支持构建更复杂和健壮的查询，同样搜索姓氏为 Smith 的雇员。
 ```javascript
 GET /megacorp/employee/_search
@@ -301,7 +301,7 @@ GET /secisland/_search
 >**Context 的使用原则**：将影响文档匹配程度的查询子句放在`query context`中，其他的查询子句放在`filter context`中。
 
 按照查询字段的类型(`text`,`keyword`)，以及字段的值是否被分词，可以将查询子句分为`Full text queries`和`Term level queries`。
-### Full text queries
+##### Full text queries
 首先了解下 Analysis 阶段，它会按照设定的分词器(Analyser)，对类型为`text`的字段内容进行分词，分词器可以是 Elasticsearch 内置的，也可以是自定义的。分词发生在下面的两种情况下：
 * Index Time Analysis: 在建立索引的时候对字段类型为`text`的字段进行分词，每个`text`类型的字段都可以指定一个`analyser`，例如：
   ```javascript
@@ -479,7 +479,7 @@ GET /secisland/_search
   ```
   6. The `standard` analyzer.
 
-#### match
+###### match
 `match query`可以查询`text/numric/dates`类型的字段，`match`实质上是`bool`查询，也就是说它是对分词后的文本构造`bool query`，`operator`可以设置为`or(default)`或`and`，来控制匹配结果。下面举个例子
 
 ```javascript
@@ -575,7 +575,7 @@ GET /my_index/_search
 
 >Note: 如果`index time analysis`和`search time analysis`指定了不同分词器，有可能会匹配不到，比如对于`身份证`：`index time analysis`指定为`standard`，会分词为`身、份、证`，而`search time analysis`指定为`ik_smart`会分词为`身份证`，这样就没有能正确匹配上的term项，从而导致没有查询结果。
 
-### Term level queries
+#### Term level queries
 
 
 ### 组合查询：bool
@@ -608,7 +608,7 @@ GET hsyk_diseases_info/_search
 }
 ```
 
-### 组合查询:bool嵌套
+#### 组合查询:bool嵌套
 ```javascript
 GET hsyk_diseases_info/_search
 {
