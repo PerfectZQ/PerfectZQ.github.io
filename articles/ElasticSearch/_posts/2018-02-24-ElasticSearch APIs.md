@@ -106,8 +106,10 @@ POST eps_data_test/_update_by_query
 GET eps_data_test/_search
 ```
 
-* [scripts-and-search-speed](https://www.elastic.co/guide/en/elasticsearch/reference/current/scripts-and-search-speed.html#scripts-and-search-speed)
+* [Painless scripting language](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-painless.html)
 * [Painless Scripting Language API Reference](https://www.elastic.co/guide/en/elasticsearch/painless/8.6/painless-api-reference.html)
+* [Update by query context](https://www.elastic.co/guide/en/elasticsearch/painless/8.6/painless-update-by-query-context.html)
+
 #### Reindex API
 * [Reindex](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-reindex.html): 复制一个 Index 的 Documents 到另一个 Index
 
