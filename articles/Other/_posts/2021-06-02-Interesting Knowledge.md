@@ -20,7 +20,8 @@ MD5 是一种经典的信息摘要算法，由 32 个 十六进制(2^4)的数字
 * [生日攻击是什么，有什么用？](https://www.zhihu.com/question/54307104/answer/141282747)
 
 ## 延迟时间
-![有帮助的截图]({{ site.url }}/assets/computer/latency_numbers_every_programmer_should_know_2009.jpg)
+![有帮助的截图]({{ site.url }}/assets/computer/latency_numbers_every_programmer_should_know_2009.jpg =600x700)
+
 ### 延伸阅读
 * [小林coding - 磁盘比内存慢几万倍？](https://xiaolincoding.com/os/1_hardware/storage.html#%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84)
 * [磁盘 IO 真的比网络 IO 快吗？](https://zhuanlan.zhihu.com/p/415617776)
