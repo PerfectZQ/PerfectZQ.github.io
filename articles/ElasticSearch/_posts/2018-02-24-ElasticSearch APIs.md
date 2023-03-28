@@ -774,4 +774,19 @@ PUT _template/logs_date_detection
 
 >Note：指定`min_age=30d`并不是恰巧在过了`30d`整的时候删除，而是需要等到 ILM 去检查的时候发现已经过了`30d`才会删除，如果对时间要求严格，还是自己写`crontab`吧
 
+## 复制索引
+```console
+# clone 索引，index `source_index` must be read-only to resize index. use `index.blocks.write=true`
+POST /source_index/_clone/dest_index
 
+# 重建索引
+POST /_reindex
+{
+	"source": {
+		"index": "source_index"
+	},
+	"dest": {
+		"index": "dest_index"
+	}
+}
+```
