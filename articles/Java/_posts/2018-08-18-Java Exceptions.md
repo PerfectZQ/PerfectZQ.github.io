@@ -98,17 +98,7 @@ Socket 被关闭（主动关闭，或因为异常退出而引起的关闭），�
 
 ```console
 scalaj.http.HttpStatusException: 504 Error: HTTP/1.1 504 Gateway Time-out
-	at scalaj.http.HttpResponse.throwIf(Http.scala:156) ~[hdfs-download-client-1.1.jar:?]
-	at scalaj.http.HttpResponse.throwError(Http.scala:168) ~[hdfs-download-client-1.1.jar:?]
-	at com.sensetime.hdfs.request.TaskService.parseResponse(TaskService.scala:281) ~[hdfs-download-client-1.1.jar:?]
-	at com.sensetime.hdfs.request.TaskService$$anonfun$1.apply(TaskService.scala:70) ~[hdfs-download-client-1.1.jar:?]
-	at com.sensetime.hdfs.request.TaskService$$anonfun$1.apply(TaskService.scala:70) ~[hdfs-download-client-1.1.jar:?]
-	at com.sensetime.hdfs.tools.Retry$.recursiveAction$1(Retry.scala:25) [hdfs-download-client-1.1.jar:?]
-	at com.sensetime.hdfs.tools.Retry$.retry(Retry.scala:36) [hdfs-download-client-1.1.jar:?]
-	at com.sensetime.hdfs.request.TaskService.createTask(TaskService.scala:69) [hdfs-download-client-1.1.jar:?]
-	at com.sensetime.hdfs.client.DownloadV2$.process(DownloadV2.scala:67) [hdfs-download-client-1.1.jar:?]
-	at com.sensetime.hdfs.client.DownloadV2$.main(DownloadV2.scala:31) [hdfs-download-client-1.1.jar:?]
-	at com.sensetime.hdfs.client.DownloadV2.main(DownloadV2.scala) [hdfs-download-client-1.1.jar:?]
+	......
 ```
 
 客户端请求
@@ -169,8 +159,6 @@ location ~ /arch-long {
 [Nginx Http Proxy Module Configurations](http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_read_timeout)
 
 ![有帮助的截图]({{ site.url }}/assets/nginx/nginx_http.jpg)
-
-![nginx_http.jpg](..%2F..%2F..%2Fassets%2Fnginx%2Fnginx_http.jpg)
 
 * `proxy_send_timeout 300`: 设置 Nginx 发送给请求 Upstream Proxied Server 的超时时间
   > Sets a timeout for transmitting a request to the proxied server. The timeout is set only between two successive
