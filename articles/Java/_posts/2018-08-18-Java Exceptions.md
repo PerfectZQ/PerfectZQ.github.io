@@ -168,7 +168,11 @@ location ~ /arch-long {
 
 [Nginx Http Proxy Module Configurations](http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_read_timeout)
 
-* `proxy_send_timeout 300`: 设置 Nginx 发送给请求 upstream 服务器的超时时间
+![有帮助的截图]({{ site.url }}/assets/nginx/nginx_http.jpg)
+
+![nginx_http.jpg](..%2F..%2F..%2Fassets%2Fnginx%2Fnginx_http.jpg)
+
+* `proxy_send_timeout 300`: 设置 Nginx 发送给请求 Upstream Proxied Server 的超时时间
   > Sets a timeout for transmitting a request to the proxied server. The timeout is set only between two successive
   write operations, not for the transmission of the whole request. If the proxied server does not receive anything
   within this time, the connection is closed.
