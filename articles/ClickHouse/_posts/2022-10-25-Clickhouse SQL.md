@@ -146,7 +146,7 @@ where
 and     bill_owner_id = 2100215562
 and     uid in (
             select  uid -- 其中 uid 为排序键
-            from    eps_data_bc_lf.app_trade_bc_bill_rf
+            from    data_bc_lf.app_trade_bc_bill_rf
             where   accounting_period = '2023-05-01'
             and     bill_owner_id = 2100215562
             and     bill_type = 'normal'
