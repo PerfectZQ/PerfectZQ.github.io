@@ -117,6 +117,8 @@ from    (
 ```
 
 ## SQL Optimization
+### distributed_product_mode
+distributed_product_mode ，适用于分布式表子查询，且有分片键保证数据可以在 Local 节点完成计算的情况，优化效果很好，减少数据的 shuffle
 ### IN 子查询优化
 ```sql
 -- 用 IN 子查询（排序键）加速查询
