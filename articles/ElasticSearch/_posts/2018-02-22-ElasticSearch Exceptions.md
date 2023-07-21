@@ -192,7 +192,9 @@ curl -XPUT 'localhost:9200/.kibana/_settings' -d '
 GET xxxx_index/_search?preference=_primary
 ```
 
-[ES 分片查询策略](https://www.elastic.co/guide/en/elasticsearch/reference/7.2/search-request-preference.html)
+ES 分片查询策略
+* [ES 2.x](https://www.elastic.co/guide/en/elasticsearch/guide/2.x/_search_options.html)
+* [ES 7.2](https://www.elastic.co/guide/en/elasticsearch/reference/7.2/search-request-preference.html)
 1. `_primary`: 指查询只在主分片中查询
 2. `_primary_first`: 指查询会先在主分片中查询，如果主分片找不到（挂了），就会在副本中查询
 3. `_only_local`: 查询操作只会在本地节点的查询
