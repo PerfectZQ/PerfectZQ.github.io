@@ -191,3 +191,13 @@ curl -XPUT 'localhost:9200/.kibana/_settings' -d '
 //  可以通过 preference=_primary 强制只查询主分片来保证
 GET xxxx_index/_search?preference=_primary
 ```
+
+[ES 分片查询策略](https://www.elastic.co/guide/en/elasticsearch/reference/7.2/search-request-preference.html)
+1. `_primary`: 指查询只在主分片中查询
+2. `_primary_first`: 指查询会先在主分片中查询，如果主分片找不到（挂了），就会在副本中查询
+3. `_only_local`: 查询操作只会在本地节点的查询
+4. `_local`: 指查询操作会优先在本地节点有的分片中查询，没有的话再在其它节点查询
+5. `_only_nodes:node_id1,node_id2`: 指在指定 id 的节点里面进行查询，如果该节点只有要查询索引的部分分片，就只在这部分分片中查找，所以查询结果可能不完整。如`_only_node:xyz`在节点 id 为 xyz 的节点中查询。
+6. `_prefer_nodes:node_id1,node_id2`: 优先在指定的节点上执行查询，没有的话再取其他节点查
+7. `_shards:0,1,2,3,4`: 值查询指定分片的数据
+8. `Custom Value(String)`: 用户自定义值，指在参数`cluster.routing.allocation.awareness.attributes`指定的值，如这个值设置为了`zone`，那么`preference=zone`的话就在`awareness.attributes=zone*`这样的节点搜索，如 zone1、zone2。
