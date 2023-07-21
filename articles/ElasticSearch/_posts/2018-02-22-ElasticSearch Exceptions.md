@@ -182,3 +182,12 @@ curl -XPUT 'localhost:9200/.kibana/_settings' -d '
     }
 }'
 ```
+
+## 执行同样查询返回结果不一致
+官方文档有介绍: [consistent-scoring](https://www.elastic.co/guide/en/elasticsearch/reference/current/consistent-scoring.html)
+
+再开启多副本的情况下，ES 查询主分片/副本的策略是`round-robin`轮询，主分片和副本数据不一致时就会导致相同查询会返回不一样结果的情况
+```
+//  可以通过 preference=_primary 强制只查询主分片来保证
+GET xxxx_index/_search?preference=_primary
+```
