@@ -117,7 +117,7 @@ from    (
 ```
 
 ## ClickHouse Join 查询模型原理
-[Colocate Join: ClickHouse的一种高性能分布式join查询模型](https://z.itpub.net/article/detail/1DD8359632F35B4F76EA6F08294C6D14)Ï
+[Colocate Join: ClickHouse的一种高性能分布式join查询模型](https://www.cnblogs.com/huaweiyun/p/16572471.html)
 
 ## SQL Optimization
 ### distributed_product_mode
@@ -131,7 +131,7 @@ from    (
 
 可选参数值
 * `deny` — 默认值，禁止使用两个分布式表 IN/JOIN 类型的子查询 (返回 `Double-distributed in/JOIN subqueries is denied` 异常)
-* `local` — 将子查询中的分布式数据库和表替换成远程分片的本地数据库和表，只在每个远程节点本地进行 IN/JOIN 计算(Normal IN/JOIN)。**需要分片键保证参与 JOIN 的数据都分布在一个 Shard 节点上才可以，否则会得出错误的结果。例如涉及的表都按 bill_owner_id 作为分片键存储，IN/JOIN 条件包含 bill_owner_id 字段，保证相关联的两条数据都在一个节点上，就可以进行本地计算**
+* `local` — 将子查询中的分布式数据库和表替换成远程分片的本地数据库和表，只在每个远程节点本地进行 IN/JOIN 计算(Normal IN/JOIN)。**`Colocate/Local Join`需要分片键保证参与 JOIN 的数据都分布在一个 Shard 节点上才可以，否则会得出错误的结果。例如涉及 JOIN 的几张表都按 bill_owner_id 作为分片键存储，IN/JOIN 条件包含 bill_owner_id 字段，保证相关联的两条数据都在一个节点上，就可以进行本地计算**
 * `global` — 将 IN/JOIN 替换成 `GLOBAL IN` 或 `GLOBAL JOIN`
 * `allow` — 允许使用这些类型的子查询
 
