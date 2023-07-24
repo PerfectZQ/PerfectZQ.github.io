@@ -117,7 +117,8 @@ from    (
 ```
 
 ## ClickHouse Join 查询模型原理
-[Colocate Join: ClickHouse的一种高性能分布式join查询模型](https://www.cnblogs.com/huaweiyun/p/16572471.html)
+* [Colocate Join: ClickHouse的一种高性能分布式join查询模型](https://www.cnblogs.com/huaweiyun/p/16572471.html)
+* [基于ClickHouse的复杂查询实现与优化](https://developer.volcengine.com/articles/7176266450804408377)
 
 ## SQL Optimization
 ### distributed_product_mode
