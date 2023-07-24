@@ -116,6 +116,9 @@ from    (
         );
 ```
 
+## ClickHouse Join 查询模型原理
+[Colocate Join: ClickHouse的一种高性能分布式join查询模型](https://z.itpub.net/article/detail/1DD8359632F35B4F76EA6F08294C6D14)Ï
+
 ## SQL Optimization
 ### distributed_product_mode
 distributed_product_mode ，适用于分布式表子查询，且有分片键保证数据可以在 Local 节点完成计算的情况，优化效果很好，减少数据的 shuffle
