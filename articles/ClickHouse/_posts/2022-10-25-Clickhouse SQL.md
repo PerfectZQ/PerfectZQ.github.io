@@ -183,7 +183,7 @@ join    (
                     -- 这里不能开 no_merge 否则数据排序会有问题，必须全局排序
                     SETTINGS distributed_group_by_no_merge = 0
         ) as dim
-        -- 和分组字段一致，切包含分片键 owner_id
+        -- 和分组字段一致，且包含分片键 owner_id
 on      main.accounting_period = dim.accounting_period
 and     main.owner_id = dim.owner_id
 and     ......
