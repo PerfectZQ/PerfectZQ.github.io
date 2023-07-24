@@ -532,8 +532,8 @@ order by
         `bill_type`,
         `data_display_rule`
 limit   10, 10 SETTINGS enable_optimize_predicate_expression = 0,
-        -- Only applied for IN and JOIN subqueries.
-        -- Only if the FROM section uses a distributed table containing more than one shard.
+        -- 1. Only applied for IN and JOIN subqueries.
+        -- 2. Only if the FROM section uses a distributed table containing more than one shard.
         -- Join 只做本地节点的关联聚合，不做全局的关联聚合，需要保证相关联的数据在分布在一个节点上
         distributed_product_mode = 'local', prefer_localhost_replica = 0;
 ```
