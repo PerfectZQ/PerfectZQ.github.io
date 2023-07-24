@@ -227,7 +227,7 @@ join    (
                 accounting_period desc,
                 ......           
             -- 取第 10-20 条时，也把每个节点的 0-20 条全部查出来排序，保证数据全局有序
-            -- Offset 永远是 0， 类似 ES 的分页查询
+            -- Offset 永远是 0，类似 ES 的分页查询，但会随着分页的增加，这里需要查询排序的数据会越来越大
             limit   0, 20 
         ) as dim
 on      main.accounting_period = dim.accounting_period
