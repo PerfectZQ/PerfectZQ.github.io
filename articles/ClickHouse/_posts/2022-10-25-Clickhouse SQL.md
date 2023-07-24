@@ -175,7 +175,7 @@ join    (
                     accounting_period,
                     owner_id
                     ......
-            having  sum(original_bill_amount) != 0
+            having  sum(original_bill_amount) != 0 -- 这个条件就会增加 2-4s 的查询时长
             order by
                     accounting_period desc,
                     ......
