@@ -180,7 +180,7 @@ join    (
                     accounting_period desc,
                     ......
             limit   10, 10
-                    -- 这里不能开 no_merge 否则数据排序会有问题，必须全局排序
+                    -- 这里不能开 no_merge 否则数据排序会有问题，必须全局排序，开的话就成每个节点单独排序了，会返回 50 条数据
                     SETTINGS distributed_group_by_no_merge = 0
         ) as dim
         -- 和分组字段一致，且包含分片键 owner_id
