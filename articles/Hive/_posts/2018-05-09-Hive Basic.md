@@ -216,24 +216,24 @@ TBLPROPERTIES (
 ```sql
 -- 创建带分区的视图
 CREATE VIEW IF NOT EXISTS {{ .ViewName }}(
-    viewTime INT,
-    userid BIGINT,
-    page_url STRING,
-    referrer_url STRING,
-    friends ARRAY<BIGINT>,
-    properties MAP<STRING, STRING>,
-    ip STRING COMMENT '字段注释',
-    date STRING COMMENT '字段注释',
-    hour STRING COMMENT '字段注释'
+    viewTime,
+    userid,
+    page_url,
+    referrer_url,
+    friends,
+    properties,
+    ip COMMENT '字段注释',
+    date  COMMENT '字段注释',
+    hour COMMENT '字段注释'
 ) PARTITIONED ON (date, hour) AS
 SELECT
-    viewTime INT,
-    userid BIGINT,
-    page_url STRING,
-    referrer_url STRING,
-    friends ARRAY<BIGINT>,
-    properties MAP<STRING, STRING>,
-    ip STRING COMMENT '字段注释',
+    viewTime,
+    userid,
+    page_url,
+    referrer_url,
+    friends,
+    properties,
+    ip,
     date,
     hour
 FROM
