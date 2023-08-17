@@ -34,3 +34,19 @@ spark.sql.adaptive.skewedPartitionRowCountThreshold	10000000
 spark.sql.adaptive.skewedPartitionSizeThreshold	67108864
 spark.sql.adaptiveBroadcastJoinThreshold	-1
 ```
+
+```
+建议将 spark.executor.memory 设置为 8g
+建议将 spark.vcore.boost.ratio 设置为 2
+建议将 spark.driver.cores 设置为 1
+建议将 spark.yarn.batch.smart.heuristic 设置为 138040435
+建议将 spark.sql.files.maxPartitionBytes 设置为 1073741824
+建议将 spark.dynamicAllocation.maxExecutors 设置为 41
+建议将 spark.sql.parquet.adaptiveFileSplit 设置为 true
+建议将 spark.sql.adaptive.maxNumPostShufflePartitions 设置为 80
+建议将 spark.sql.orc.adaptiveFileSplit 设置为 true
+建议将 spark.dynamicAllocation.minExecutors 设置为 1
+建议将 spark.executor.memoryOverhead 设置为 4096
+建议将 spark.dynamicAllocation.initialExecutors 设置为 1
+建议将 spark.executor.instances 设置为 1
+```
