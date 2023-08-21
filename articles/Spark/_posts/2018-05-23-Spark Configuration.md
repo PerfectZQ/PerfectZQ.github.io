@@ -78,6 +78,8 @@ Spark App 提交后，申请的总内存大小为`(spark.driver.memory + spark.d
 
 当执行`spark-submit`提交到 YARN 时，Executor 运行在 YARN Container，可申请的最大内存受限于`yarn.scheduler.maximum-allocation-mb`
 
+[最强Spark内存管理剖析](https://bbs.huaweicloud.com/blogs/325349)
+
 ### Spark Parallels Management
 Spark App 的最大任务并行度为`spark.executor.instances * spark.executor.cores * spark.vcore.boost.ratio`，其中
 * `spark.executor.instances` <=> `--num-executors`，默认`2`
