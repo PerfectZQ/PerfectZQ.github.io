@@ -144,3 +144,4 @@ fileRdd.foreachPartition { iterator =>
 * [Spark Memory Management](https://0x0fff.com/spark-memory-management/)
 * [Spark On YARN Executor Memory Management](https://www.jianshu.com/p/10e91ace3378)
 * [Difference between spark.executor.memoryOverhead and spark.memory.offHeap.size](https://blog.csdn.net/lquarius/article/details/106698097)
+* [最强 Spark 内存管理剖析](https://bbs.huaweicloud.com/blogs/325349)
