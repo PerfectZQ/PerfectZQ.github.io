@@ -36,17 +36,19 @@ spark.sql.adaptiveBroadcastJoinThreshold	-1
 ```
 
 ```
-建议将 spark.executor.memory 设置为 8g
-建议将 spark.vcore.boost.ratio 设置为 2
-建议将 spark.driver.cores 设置为 1
-建议将 spark.yarn.batch.smart.heuristic 设置为 138040435
-建议将 spark.sql.files.maxPartitionBytes 设置为 1073741824
-建议将 spark.dynamicAllocation.maxExecutors 设置为 41
-建议将 spark.sql.parquet.adaptiveFileSplit 设置为 true
-建议将 spark.sql.adaptive.maxNumPostShufflePartitions 设置为 80
-建议将 spark.sql.orc.adaptiveFileSplit 设置为 true
-建议将 spark.dynamicAllocation.minExecutors 设置为 1
-建议将 spark.executor.memoryOverhead 设置为 4096
-建议将 spark.dynamicAllocation.initialExecutors 设置为 1
-建议将 spark.executor.instances 设置为 1
+-- Executor 的总内存
+spark.executor.memory 8g
+-- 
+spark.vcore.boost.ratio 2
+spark.driver.cores 1
+spark.yarn.batch.smart.heuristic 138040435
+spark.sql.files.maxPartitionBytes 1073741824
+spark.dynamicAllocation.maxExecutors 41
+spark.sql.parquet.adaptiveFileSplit true
+spark.sql.adaptive.maxNumPostShufflePartitions 80
+spark.sql.orc.adaptiveFileSplit true
+spark.dynamicAllocation.minExecutors 1
+spark.executor.memoryOverhead 4096
+spark.dynamicAllocation.initialExecutors 1
+spark.executor.instances 1
 ```
