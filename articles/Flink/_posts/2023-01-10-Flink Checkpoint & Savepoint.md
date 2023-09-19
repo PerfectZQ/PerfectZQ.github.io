@@ -4,11 +4,28 @@ title: Flink Checkpoint & Savepoint
 tag: Flink
 ---
 
-## 参考
-### 官方文档
-* [Fault Tolerance via State Snapshots](https://nightlies.apache.org/flink/flink-docs-release-1.16/docs/learn-flink/fault_tolerance/)
-* [Checkpoints](https://nightlies.apache.org/flink/flink-docs-release-1.16/docs/ops/state/checkpoints/)
 
+
+## Checkpoints
+Flink 是有状态的流式计算引擎，因此需要定期将状态保存到文件系统，这样在任务重启和 Failover 的时候就可以从最近一次成功的 Checkpoint 中恢复，达到数据处理的 Exactly Once 语义
+
+> Flink 通过 CheckpointingMode.AT_LEAST_ONCE、CheckpointingMode.EXACTLY_ONCE 控制具体的语义实现方式
+
+### Checkpoints 如何保证 Exactly Once 语义
+> 结论：Checkpoint Barrier 对齐机制实现 Exactly-Once 语义。如果 Barrier 不对齐，即 At Least Once 语义。
+
+### Checkpoint barrier 在单条数据流中下发
+
+![img_2.png](img_2.png)
+
+
+### Checkpoint barrier 在多条数据流之间对齐
+
+![img_3.png](img_3.png)
+
+当 ExecutionGraph 物理执行图中的 subtask 算子实例接收到 barrier 的时候，subtask 会记录它的状态数据。如果 subtask 有 2 个上游（例如 KeyedProcessFunction、CoProcessFunction 等)，subtask 会等待上游 2 个 barrier 对齐之后再进行 Checkpoint
+
+## Savepoints
 
 Flink Savepoint 流程
 RocksdbStateBackend 在触发 Savepoint 之后的主要流程，主要分为以下几个步骤
@@ -95,6 +112,9 @@ Task 制作 Savepoint 性能优化
   业界公司 阿里和快手都通过自研的 RemoteStateBackend 实现了读写分离。在这个基础上制作快照的过程可以和作业运行的流程完全解耦，对任务的运行不会产生影响。
 
 ### 相关文档
+* [Fault Tolerance via State Snapshots](https://nightlies.apache.org/flink/flink-docs-release-1.16/docs/learn-flink/fault_tolerance/)
+* [Checkpoints](https://nightlies.apache.org/flink/flink-docs-release-1.16/docs/ops/state/checkpoints/)
 * [Apache Flink中 Savepoints 和 Checkpoints 之间的3个区别](http://www.aboutyun.com/thread-26299-1-1.html)
 * [Flink 状态管理与 checkPoint 数据容错机制深入剖析](https://blog.csdn.net/shenshouniu/article/details/84453692)
 * [Flink 高吞吐，低延迟和 Exactly-Once 语义流处理](http://smartsi.club/high-throughput-low-latency-and-exactly-once-stream-processing-with-apache-flink.html)
+
