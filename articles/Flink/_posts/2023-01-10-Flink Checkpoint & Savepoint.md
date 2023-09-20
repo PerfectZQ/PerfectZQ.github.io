@@ -4,6 +4,8 @@ title: Flink Checkpoint & Savepoint
 tag: Flink
 ---
 
+> **JobManager** 是 Dispatcher、集群框架特定的 ResourceManager、BlobServer 和一组 JobMaster（每个 Job 一个）的集合
+
 ## Checkpoints
 
 Flink 是有状态的流式计算引擎，因此需要定期将状态保存到文件系统，这样在任务重启和 Failover 的时候就可以从最近一次成功的
@@ -17,6 +19,8 @@ Checkpoint 中恢复，达到数据处理的 Exactly Once 语义
 
 ### Checkpoint barrier 在单条数据流中下发
 [一文搞定 Flink Checkpoint Barrier 全流](https://cloud.tencent.com/developer/article/1648856)
+
+> Flink master git commit id: b076c52d8da914e81c3e004c0b0c7883463bb151 (HEAD -> master, origin/master, origin/HEAD) [FLINK-33044][network] Reduce the frequency of triggering flush for the disk tier of tiered storage
 
 ![img_2.png](img_2.png)
 
