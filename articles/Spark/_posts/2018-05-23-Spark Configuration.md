@@ -98,3 +98,27 @@ Spark App 的最大任务并行度为`spark.executor.instances * spark.executor.
 # Max Throughput of a Batch = maxRatePerPartition * batchWindowTime(second) * topicPartitions
 spark.streaming.kafka.maxRatePerPartition 1000
 ```
+
+```agsl
+1: 建议将 spark.executor.memory 设置为 6g
+2: 建议将 spark.vcore.boost.ratio 设置为 2
+3: 建议将 spark.driver.cores 设置为 2
+4: 建议将 spark.sql.fragPartition.maxShuffleBytes 设置为 1073741824
+5: 建议将 spark.executor.milliCores 设置为 3860
+6: 建议将 spark.yarn.batch.smart.heuristic 设置为 160233628
+7: 建议将 spark.sql.files.maxPartitionBytes 设置为 536870912
+8: 建议将 spark.dynamicAllocation.maxExecutors 设置为 94
+9: 建议将 spark.sql.parquet.adaptiveFileSplit 设置为 true
+10: 建议将 spark.sql.fragPartition.parquet.fast.mode.enabled 设置为 true
+11: 建议将 spark.sql.fragPartition.compactEnabled 设置为 true
+12: 建议将 spark.maxRemoteBlockSizeFetchToMem 设置为 268435456
+13: 建议将 spark.sql.fragPartition.skip.failure 设置为 true
+14: 建议将 spark.sql.adaptive.maxNumPostShufflePartitions 设置为 80
+15: 建议将 spark.sql.fragPartition.threshold 设置为 268435456
+16: 建议将 spark.sql.orc.adaptiveFileSplit 设置为 true
+17: 建议将 spark.dynamicAllocation.minExecutors 设置为 1
+18: 建议将 spark.executor.memoryOverhead 设置为 3072
+19: 建议将 spark.dynamicAllocation.initialExecutors 设置为 1
+20: 建议将 spark.executor.instances 设置为 1
+21: 建议将 spark.sql.fragPartition.expectedBytes 设置为 268435456
+```
