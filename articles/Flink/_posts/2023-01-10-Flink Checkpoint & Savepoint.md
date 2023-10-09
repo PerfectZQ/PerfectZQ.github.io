@@ -22,7 +22,7 @@ Checkpoint 中恢复，达到数据处理的 Exactly Once 语义
 
 > Flink master git commit id: b076c52d8da914e81c3e004c0b0c7883463bb151 (HEAD -> master, origin/master, origin/HEAD) [FLINK-33044][network] Reduce the frequency of triggering flush for the disk tier of tiered storage
 
-![img_2.png](../../../assets/flink/flink_checkpoint_barrier.png)
+![img_2.png]({{ site.url }}/assets/flink/flink_checkpoint_barrier.png)
 
 1. 在 Flink Job 启动的时候会通过 startCheckpointScheduler() 在 CheckpointCoordinator 中启动 CheckpointScheduler，其实是一个定时任务，每隔`execution.checkpointing.interval`的时间，定时执行`ScheduledTrigger.run() -> triggerCheckpoint(...) -> startTriggeringCheckpoint(...) -> OperatorCoordinatorCheckpoints.triggerAndAcknowledgeAllCoordinatorCheckpointsWithCompletion(...)` 发送给应用所有的 OperatorCoordinator
 2. 接着在 TaskExecutor 上调用 Task.triggerCheckpointBarrier(...)，委托给 SourceStreamTask 调用 `triggerCheckpoint(...) -> StreamTask.performCheckpoint(...)`，开始具体执行一次 checkpoint
@@ -55,7 +55,7 @@ private Optional<BufferOrEvent> handleEvent(BufferOrEvent bufferOrEvent) throws 
 
 ### Checkpoint barrier 在多条数据流之间对齐
 
-![img_3.png](../../../assets/flink/flink_checkpoint_alignment.png)
+![img_3.png]({{ site.url }}/assets/flink/flink_checkpoint_alignment.png)
 
 当 ExecutionGraph 物理执行图中的 subtask 算子实例接收到 barrier 的时候，subtask 会记录它的状态数据。如果 subtask 有 2
 个上游（例如 KeyedProcessFunction、CoProcessFunction 等)，subtask 会等待上游 2 个 barrier 对齐之后再进行 Checkpoint
