@@ -200,6 +200,8 @@ CREATE  TABLE sink_kafka_eps_instance_detail (
             'connector' = 'kafka-0.10',
             'properties.cluster' = '@{bmq_cluster}',
             'topic' = '@{sink_bmq_topic}',
+            -- https://stackoverflow.com/questions/49802686/understanding-the-max-inflight-property-of-kafka-producer
+            -- https://medium.com/@felipedutratine/kafka-ordering-guarantees-99320db8f87f
             'properties.max.in.flight.requests.per.connection' = '1',
             'format' = 'json',
             'scan.manually-commit-offsets-interval' = '5000ms',
