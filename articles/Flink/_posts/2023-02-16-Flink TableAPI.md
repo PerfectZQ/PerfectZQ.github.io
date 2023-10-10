@@ -119,3 +119,122 @@ LEFT JOIN
         account_dim FOR SYSTEM_TIME AS OF sub_orders.proc AS account
 ON      sub_orders.owner_id = account.id;
 ```
+
+下游存储不支持 Retract 的情况
+```
+-- *******************************************************
+-- 请输入SQL模板，利用@{参数}定义模板的输入参数，使用示例如下：
+-- select @{type1}, @{type2} from @{tablename}...
+-- *******************************************************
+CREATE  FUNCTION nanoTime AS 'com.bytedance.data.bp.udf.bsu.udf.stream.NanoTime';
+
+CREATE  TABLE origin_eps_bill_detail (
+            id                        BIGINT, --id 
+            tm_id                     BIGINT,
+            bill_detail_id            VARCHAR, --账单明细ID 
+            bill_id                   VARCHAR, --账单ID 
+            bill_type                 VARCHAR, --账单类型 
+            sub_bill_type             VARCHAR, --sub_bill_type 
+            `period`                  TINYINT, --结算周期 
+            account_id                BIGINT, --账号ID 
+            ......
+        )
+        WITH (
+            'scan.startup.mode' = 'timestamp',
+            'connector' = 'kafka-0.10',
+            'properties.cluster' = '@{bmq_cluster}',
+            'topic' = '@{source_bmq_topic}',
+            'properties.group.id' = 'job_eps_dwm_trade_bc_bill_instance_detail_rf_8106ece3_@{dc}',
+            'parallelism' = '20',
+            'format' = 'json',
+            'scan.partition-fields' = 'bill_owner_id,id',
+            'scan.manually-commit-offsets-interval' = '5000ms',
+            'scan.startup.timestamp-millis' = '@{source_startup_timestamp}'
+        );
+
+CREATE  VIEW bill_detail AS
+SELECT  *
+FROM    (
+            SELECT  id,
+                    tm_id,
+                    bill_detail_id,
+                    bill_id,
+                    bill_type,
+                    sub_bill_type,
+                    `period`,
+                    account_id,
+                    .....
+                    ROW_NUMBER() OVER(
+                        PARTITION BY
+                                bill_owner_id,
+                                bill_id,
+                                id
+                        ORDER BY
+                                process_nano_time DESC
+                    ) AS rn
+            FROM    origin_eps_bill_detail
+        )
+WHERE   rn = 1;
+
+CREATE  TABLE sink_kafka_eps_instance_detail (
+            unique_id                    VARCHAR,
+            id                           BIGINT,
+            accounting_period            VARCHAR,
+            biz_period                   VARCHAR,
+            .....
+            -- 联合唯一键(需要保证每一个字段不存在 null 数据)，这里主要是为了服务参数 'sink.delete-normalizer' = 'null_for_non_primary_fields'，
+            -- 当上游发生 retract 消息时，由于 BMQ 没有实现 retract 流导致回撤无法下发到下游依赖任务，这个参数的解决方案会将所有非 primary 字段置为
+            -- null，以此来透传回撤消息。但下游 CH 表中有很多非 Nullable 类型的字段，需要保证数据不能为 null，这里主要是主键/排序/分区键，其他非 Nullable
+            -- 字段在下游任务里面会做默认值处理，因此这里虽然 unique_id 已经可以判读唯一，但仍然需要加上下游不准为空的字段，以防止 sink.delete-normalizer 
+            -- 错误的将字段置为 null 
+            -- 下游消费 BMQ 数据时消费到 null 数据主动设置 is_deleted = 1，感知回撤消息
+            PRIMARY                      KEY (
+                unique_id,
+                id,
+                accounting_period,
+                bill_owner_id
+            ) NOT ENFORCED
+        )
+        WITH (
+            'json.timestamp-format.standard' = 'RFC_3339',
+            'connector' = 'kafka-0.10',
+            'properties.cluster' = '@{bmq_cluster}',
+            'topic' = '@{sink_bmq_topic}',
+            'properties.max.in.flight.requests.per.connection' = '1',
+            'format' = 'json',
+            'scan.manually-commit-offsets-interval' = '5000ms',
+            'sink.delete-normalizer' = 'null_for_non_primary_fields',
+            'sink.partition-fields' = 'bill_owner_id',
+            'sink.partitioner' = 'row-fields-hash'
+        );
+
+INSERT INTO sink_kafka_eps_instance_detail
+SELECT  CONCAT_WS(
+            '_',
+            COALESCE(CAST(accounting_period AS VARCHAR), ''),
+            .....
+        ) AS unique_id,
+        MAX(id) AS id,
+        accounting_period,
+        biz_period,
+        expense_begin_date,
+        expense_begin_time,
+        expense_end_time,
+        account_id,
+        ....
+        SUM(original_bill_amount) AS sum_original_bill_amount,
+        ....
+        0 AS is_deleted,
+        UNIX_TIMESTAMP() as process_time,
+        SUM(credit_carried_amount) as sum_credit_carried_amount,
+        MAX(product_form) AS max_product_form,
+        MIN(product_form) AS min_product_form
+FROM    bill_detail
+WHERE   display_status = 1 and is_deleted <> 1
+GROUP BY
+        accounting_period,
+        biz_period,
+        payer_id,
+        account_id,
+        .....
+```
