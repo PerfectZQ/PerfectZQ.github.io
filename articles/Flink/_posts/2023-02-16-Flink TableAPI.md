@@ -126,7 +126,7 @@ ON      sub_orders.owner_id = account.id;
 -- 请输入SQL模板，利用@{参数}定义模板的输入参数，使用示例如下：
 -- select @{type1}, @{type2} from @{tablename}...
 -- *******************************************************
-CREATE  FUNCTION nanoTime AS 'com.bytedance.data.bp.udf.bsu.udf.stream.NanoTime';
+CREATE  FUNCTION nanoTime AS 'com.xxxx.data.bp.udf.bsu.udf.stream.NanoTime';
 
 CREATE  TABLE origin_eps_bill_detail (
             id                        BIGINT, --id 
