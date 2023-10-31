@@ -52,3 +52,6 @@ spark.executor.memoryOverhead 4096
 spark.dynamicAllocation.initialExecutors 1
 spark.executor.instances 1
 ```
+
+## SparkSQL Physical Plan
+[https://masterwangzx.com/2020/11/08/spark-sql-physical-plan/](https://masterwangzx.com/2020/11/08/spark-sql-physical-plan/)
