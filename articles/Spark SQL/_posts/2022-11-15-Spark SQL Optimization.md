@@ -54,4 +54,7 @@ spark.executor.instances 1
 ```
 
 ## SparkSQL Physical Plan
-[https://masterwangzx.com/2020/11/08/spark-sql-physical-plan/](https://masterwangzx.com/2020/11/08/spark-sql-physical-plan/)
+[Spark源码阅读(三十一):SparkSQL之物理计划](https://masterwangzx.com/2020/11/08/spark-sql-physical-plan/)
+
+## Spark Exchange
+[Spark 3.x 的 Exchange 体系源码解析](https://blog.csdn.net/Shockang/article/details/124112509)
