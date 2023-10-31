@@ -9,7 +9,7 @@ tag: Spark SQL
 
 ## AQE
 * [SparkSQL - Adaptive Query Execution(AQE)](https://www.cnblogs.com/importbigdata/p/14318575.html)
-
+* [Spark AQE 的源码初探](https://zhuanlan.zhihu.com/p/535174818)
 ```
 spark.sql.adaptive.allowBroadcastExchange.enabled	true
 spark.sql.adaptive.coalescePartitionsSupportUnion.enabled	true
