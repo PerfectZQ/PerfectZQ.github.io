@@ -11,6 +11,8 @@ tag: Flink
 Flink 是有状态的流式计算引擎，因此需要定期将状态保存到文件系统，这样在任务重启和 Failover 的时候就可以从最近一次成功的
 Checkpoint 中恢复，达到数据处理的 Exactly Once 语义
 
+当数据的 Sink 实际写入(或下游可见)与 Checkpoint 绑定就可以实现端到端的 Exactly Once 语义
+
 > Flink 通过 CheckpointingMode.AT_LEAST_ONCE、CheckpointingMode.EXACTLY_ONCE 控制具体的语义实现方式
 
 ### Checkpoints 如何保证 Exactly Once 语义
