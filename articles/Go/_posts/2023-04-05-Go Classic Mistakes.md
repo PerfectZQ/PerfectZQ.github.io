@@ -107,7 +107,7 @@ common_test.go:25: GoParam - i_2: 0xc000c029b8, e_C:, 0xc000581820, param_B: 0xc
 ```
 
 测试指针类型
-```
+```golang
 type Person struct {
 	Name string
 }
