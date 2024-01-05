@@ -106,6 +106,47 @@ common_test.go:25: GoParam - i_2: 0xc000c029b8, e_C:, 0xc000581820, param_A: 0xc
 common_test.go:25: GoParam - i_2: 0xc000c029b8, e_C:, 0xc000581820, param_B: 0xc00010e2b0
 ```
 
+测试指针类型
+```
+type Person struct {
+	Name string
+}
+
+func TestCommonPtr(t *testing.T) {
+	a := &Person{Name: "A"}
+	t.Logf("Person_A - arg_loc(实参地址): %p, var_loc(变量地址): %p", a, &a)
+	b := &Person{Name: "B"}
+	t.Logf("Person_B - arg_loc(实参地址): %p, var_loc(变量地址): %p", b, &b)
+	c := &Person{Name: "C"}
+	t.Logf("Person_C - arg_loc(实参地址): %p, var_loc(变量地址): %p", c, &c)
+
+	elems := []*Person{a, b, c}
+	wg := sync.WaitGroup{}
+	wg.Add(len(elems))
+	for i, e := range elems {
+		// 形参
+		go func(param *Person) {
+			// Parameter 是形参，在函数定义时放在小括号里，占位使用
+			// Argument 是实参，在函数调用时放在小括号里
+			// 其实，形参的原本英文是 Formal Parameter, 实参的原本英文是 Actual Argument
+			t.Logf("GoParam - i_%v: %v, e_%v: %v, value: %v arg_loc(实参地址): %p, param_loc(形参地址): %v", i, &i, e, &e, param, param, &param)
+			wg.Done()
+		}(e)
+	}
+	wg.Wait()
+}
+```
+
+输出
+```
+common_test.go:55: Person_A - arg_loc(实参地址): 0xc000308d30, var_loc(变量地址): 0xc0004beb30
+common_test.go:57: Person_B - arg_loc(实参地址): 0xc000308dc0, var_loc(变量地址): 0xc0004beb38
+common_test.go:59: Person_C - arg_loc(实参地址): 0xc000308e60, var_loc(变量地址): 0xc0004beb40
+common_test.go:70: GoParam - i_2: 0xc000c069f0, e_&{C}: 0xc0004beb48, value: &{C} arg_loc(实参地址): 0xc000308e60, param_loc(形参地址): 0xc0004beb50
+common_test.go:70: GoParam - i_2: 0xc000c069f0, e_&{C}: 0xc0004beb48, value: &{A} arg_loc(实参地址): 0xc000308d30, param_loc(形参地址): 0xc00033e010
+common_test.go:70: GoParam - i_2: 0xc000c069f0, e_&{C}: 0xc0004beb48, value: &{B} arg_loc(实参地址): 0xc000308dc0, param_loc(形参地址): 0xc000010028
+```
+
 ### 解决方案
 ```golang
 var batchGroups [][]*FileInfo = BatchGroup(fileInfos, batchSize)
