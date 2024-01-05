@@ -25,7 +25,7 @@ for batchId, batchFiles := range batchGroups {
         ...
     })
 }
-// for 循环执行完后，预期是同步 100 个文件，结果只同步了部分文件，而且也没有报错
+// for 循环执行完后，预期是同步 100 个文件，结果只同步成功了部分文件，而且出现了文件写锁冲突异常
 if err := group.Wait(); err != nil {
     return err
 }
