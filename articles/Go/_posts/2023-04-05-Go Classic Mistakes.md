@@ -73,9 +73,8 @@ func TestCommon(t *testing.T) {
 
 > 先验知识: Golang 里面只有值传递，所谓"引用传递"也不过是传递了指针的地址值，实际上还是值传递，和 Java 一样
 
-输出
+实际输出
 ```
-# 实际输出
 common_test.go:15: Common - i_0: 0xc000c029b8, e_A:, 0xc000581820, tmp_A: 0xc000581830
 common_test.go:15: Common - i_1: 0xc000c029b8, e_B:, 0xc000581820, tmp_B: 0xc000581890
 common_test.go:15: Common - i_2: 0xc000c029b8, e_C:, 0xc000581820, tmp_C: 0xc0005818f0
@@ -85,9 +84,10 @@ common_test.go:17: GoClosure - i_2: 0xc000c029b8, e_C:, 0xc000581820, tmp_C: 0xc
 common_test.go:17: GoClosure - i_2: 0xc000c029b8, e_C:, 0xc000581820, tmp_B: 0xc000581890
 common_test.go:25: GoParam - i_2: 0xc000c029b8, e_C:, 0xc000581820, param_A: 0xc00018a010
 common_test.go:25: GoParam - i_2: 0xc000c029b8, e_C:, 0xc000581820, param_B: 0xc00010e2b0
+```
 
-# 分组格式化看下
-
+分组格式化输出
+```
 # 可以看到 for 声明的变量 i 和 e 的内存地址没有发生过变化，而 tmp_* 变量每次都会初始化一块新的内存存储数据
 # 闭包内 tmp 变量指向的内存中的数据没有发生过变化，所以可以正常输出 A,B,C
 common_test.go:15: Common - i_0: 0xc000c029b8, e_A:, 0xc000581820, tmp_A: 0xc000581830
