@@ -89,16 +89,18 @@ common_test.go:25: GoParam - i_2: 0xc000c029b8, e_C:, 0xc000581820, param_B: 0xc
 分组格式化输出
 ```
 # 可以看到 for 声明的变量 i 和 e 的内存地址没有发生过变化，而 tmp_* 变量每次都会初始化一块新的内存存储数据
-# 闭包内 tmp 变量指向的内存中的数据没有发生过变化，所以可以正常输出 A,B,C
 common_test.go:15: Common - i_0: 0xc000c029b8, e_A:, 0xc000581820, tmp_A: 0xc000581830
 common_test.go:15: Common - i_1: 0xc000c029b8, e_B:, 0xc000581820, tmp_B: 0xc000581890
 common_test.go:15: Common - i_2: 0xc000c029b8, e_C:, 0xc000581820, tmp_C: 0xc0005818f0
 
+# 闭包内 tmp 变量指向的内存中的数据没有发生过变化，所以可以正常输出 A,B,C
+# 而 i, e 变量只拿到了后两次循环的值 1,2 和 B,C
 common_test.go:17: GoClosure - i_1: 0xc000c029b8, e_B:, 0xc000581820, tmp_A: 0xc000581830
 common_test.go:17: GoClosure - i_2: 0xc000c029b8, e_C:, 0xc000581820, tmp_C: 0xc0005818f0
 common_test.go:17: GoClosure - i_2: 0xc000c029b8, e_C:, 0xc000581820, tmp_B: 0xc000581890
 
 # 形参也是值传递，将 string A,B,C 的值赋值给了行参变量 param，开辟了新的内存空间，所以这种也没问题
+# 而 i, e 变量只拿到了最后一次循环的值 2 和 C
 common_test.go:25: GoParam - i_2: 0xc000c029b8, e_C:, 0xc000581820, param_C: 0xc000581950
 common_test.go:25: GoParam - i_2: 0xc000c029b8, e_C:, 0xc000581820, param_A: 0xc00018a010
 common_test.go:25: GoParam - i_2: 0xc000c029b8, e_C:, 0xc000581820, param_B: 0xc00010e2b0
