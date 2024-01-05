@@ -45,15 +45,18 @@ func TestCommon(t *testing.T) {
 	elems := []string{"A", "B", "C"}
 	wg := sync.WaitGroup{}
 	wg.Add(len(elems) * 2)
+	
 	// 循环输出，期待输出 A, B, C
 	for i, e := range elems {
 		// 闭包
 		tmp := e
 		t.Logf("Common - i_%v: %v, e_%v:, %v, tmp_%v: %v", i, &i, e, &e, tmp, &tmp)
 		go func() {
+		    // 闭包 = 函数 + 环境(引用函数外的相关变量..)
 			t.Logf("GoClosure - i_%v: %v, e_%v:, %v, tmp_%v: %v", i, &i, e, &e, tmp, &tmp)
 			wg.Done()
 		}()
+		
 		// 形参
 		go func(param string) {
 			// Parameter 是形参，在函数定义时放在小括号里，占位使用
@@ -63,9 +66,12 @@ func TestCommon(t *testing.T) {
 			wg.Done()
 		}(e)
 	}
+	
 	wg.Wait()
 }
 ```
+
+> 先验知识: Golang 里面只有值传递，所谓"引用传递"也不过是传递了指针的地址值，实际上还是值传递，和 Java 一样
 
 输出
 ```
@@ -83,7 +89,7 @@ common_test.go:25: GoParam - i_2: 0xc000c029b8, e_C:, 0xc000581820, param_B: 0xc
 # 分组格式化看下
 
 # 可以看到 for 声明的变量 i 和 e 的内存地址没有发生过变化，而 tmp_* 变量每次都会初始化一块新的内存存储数据
-# Golang 里面只有值传递，闭包传递 tmp_* 参数也都是传递的指针地址
+# 闭包传递 tmp_* 参数也都是传递的指针地址
 common_test.go:15: Common - i_0: 0xc000c029b8, e_A:, 0xc000581820, tmp_A: 0xc000581830
 common_test.go:15: Common - i_1: 0xc000c029b8, e_B:, 0xc000581820, tmp_B: 0xc000581890
 common_test.go:15: Common - i_2: 0xc000c029b8, e_C:, 0xc000581820, tmp_C: 0xc0005818f0
