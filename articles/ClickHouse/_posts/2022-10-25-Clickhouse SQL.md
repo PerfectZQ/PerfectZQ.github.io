@@ -120,8 +120,8 @@ from    (
 
 ## SQL Optimization
 ClickHouse Join 查询模型原理
-* [Colocate Join: ClickHouse的一种高性能分布式join查询模型](https://www.cnblogs.com/huaweiyun/p/16572471.html)
-* [基于ClickHouse的复杂查询实现与优化](https://developer.volcengine.com/articles/7176266450804408377)
+* [Colocate Join: ClickHouse 的一种高性能分布式 Join 查询模型](https://www.cnblogs.com/huaweiyun/p/16572471.html)
+* [基于 ClickHouse 的复杂查询实现与优化](https://developer.volcengine.com/articles/7176266450804408377)
 
 ### 优化场景 - 分页查询
 ```sql
