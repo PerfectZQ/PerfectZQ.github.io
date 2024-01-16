@@ -116,26 +116,14 @@ from    (
         );
 ```
 
-## ClickHouse Join 查询模型原理
+
+
+## SQL Optimization
+ClickHouse Join 查询模型原理
 * [Colocate Join: ClickHouse的一种高性能分布式join查询模型](https://www.cnblogs.com/huaweiyun/p/16572471.html)
 * [基于ClickHouse的复杂查询实现与优化](https://developer.volcengine.com/articles/7176266450804408377)
 
-## SQL Optimization
-### distributed_product_mode
-[distributed_product_mode](https://clickhouse.com/docs/en/operations/settings/settings#distributed-product-mode)，适用于分布式表 IN/JOIN 子查询，优化效果很好，取消数据的 shuffle 的网络 IO 开销
-
-参数使用限制
-* 仅适用于 IN/JOIN 的子查询语句
-* 仅适用当主 FROM 表是包含 1 个分片以上的分布式表
-* 如果涉及的子查询表是包含 1 个分片上分布式表(不然没啥效果)
-* 不能用于 table-valued 远程函数(Not used for a table-valued [remote](https://clickhouse.com/docs/en/sql-reference/table-functions/remote) function.)
-
-可选参数值
-* `deny` — 默认值，禁止使用两个分布式表 IN/JOIN 类型的子查询 (返回 `Double-distributed in/JOIN subqueries is denied` 异常)
-* `local` — 将子查询中的分布式数据库和表替换成远程分片的本地数据库和表，只在每个远程节点本地进行 IN/JOIN 计算(Normal IN/JOIN)，没有数据 Shuffle，涉及网络 IO 开销很小。**`Colocate/Local Join`需要分片键保证参与 JOIN 的数据都分布在一个 Shard 节点上才可以，否则会得出错误的结果。例如涉及 JOIN 的几张表都按 bill_owner_id 作为分片键存储，IN/JOIN 条件包含 bill_owner_id 字段，保证相关联的两条数据都在一个节点上，就可以进行本地计算**
-* `global` — 将 IN/JOIN 替换成 `GLOBAL IN` 或 `GLOBAL JOIN`，对应 `Broadcast Join`，会把子查询的结果广播到各个节点执行，Shuffle 有很大的网络 IO 开销
-* `allow` — 允许使用这些类型的子查询
-
+### 优化场景 - 分页查询
 ```sql
 -- 常规分页查询实现，查询耗时 30s+ (涉及全部数据排序，并且分组聚合计算字段很多，大概几十个...)
 select  accounting_period,
@@ -156,9 +144,72 @@ order by
 limit   10, 20 
 SETTINGS enable_optimize_predicate_expression = 0, 
 prefer_localhost_replica = 0;
+```
 
+#### JOIN 优化
+> 优化思路
+> 1. 通过 Join 子查询减少数据扫描数量，降低磁盘 IO
+> 2. 将 Shuffle Join 改成 Local Join，数据本地计算，避免数据 Shuffle 带来的高额网络 IO 开销
 
--- 优化方案1，测试：耗时6s-12s
+通过 [distributed_product_mode](https://clickhouse.com/docs/en/operations/settings/settings#distributed-product-mode) 参数开启分布式 Join，适用于分布式表 IN/JOIN 子查询，使用该参数时需要注意
+- 仅适用于 IN/JOIN 的子查询语句
+- 仅适用当主 FROM 表是包含 1 个分片以上的分布式表
+- 涉及的子查询表是包含 1 个分片上分布式表（不然没啥效果）
+- 不能用于 table-valued 远程函数（Not used for a table-valued [remote](https://clickhouse.com/docs/en/sql-reference/table-functions/remote) function.）
+
+可选参数值
+* `deny` — 默认值，禁止使用两个分布式表 IN/JOIN 类型的子查询 (返回 `Double-distributed in/JOIN subqueries is denied` 异常)
+* `local` — 将子查询中的分布式数据库和表替换成远程分片的本地数据库和表，只在每个远程节点本地进行 IN/JOIN 计算(Normal IN/JOIN)，没有数据 Shuffle，涉及网络 IO 开销很小。**`Colocate Join`需要分片键保证参与 JOIN 的数据都分布在一个 Shard 节点上才可以，否则会得出错误的结果。例如涉及 JOIN 的几张表都按 bill_owner_id 作为分片键存储，IN/JOIN 条件包含 bill_owner_id 字段，保证相关联的两条数据都在一个节点上，就可以进行本地计算**
+* `global` — 将 IN/JOIN 替换成 `GLOBAL IN` 或 `GLOBAL JOIN`，对应 `Broadcast Join`，会把子查询的结果广播到各个节点执行，Shuffle 有很大的网络 IO 开销
+* `allow` — 允许使用这些类型的子查询
+
+##### Colocate Join
+```sql
+-- 优化方案1: 深分页场景性能不好，但浅分页很快, 2s 左右
+select  accounting_period,
+        owner_id,
+        sum(original_bill_amount) as original_bill_amount,
+    ......
+    from    eps_data_bc.app_trade_bc_bill_charge_item_daily_rf as main
+    join    (
+    select  accounting_period,
+    owner_id,
+    ......
+    from    eps_data_bc.app_trade_bc_bill_charge_item_daily_rf
+    where   biz_period >= '2008-01-01 00:00:00'
+    ......
+    group by
+    accounting_period,
+    owner_id
+    ......
+    having  sum(original_bill_amount) != 0
+    order by
+    accounting_period desc,
+    ......
+        -- 取第 10-20 条时，也把每个节点的 0-20 条全部查出来排序，保证数据全局有序
+        -- Offset 永远是 0，类似 ES 的分页查询，但会随着分页的增加，这里需要查询排序的数据会越来越大
+    limit   0, 20
+    ) as dim
+on      main.accounting_period = dim.accounting_period
+    and     main.owner_id = dim.owner_id
+    and     ......
+    group by
+    accounting_period,
+    owner_id
+    ......
+    order by
+    accounting_period desc,
+    ......
+    limit   10, 10 SETTINGS
+    -- 1. Only applied for IN and JOIN subqueries.
+    -- 2. Only if the FROM section uses a distributed table containing more than one shard.
+    -- Join 只做本地节点的关联聚合，不做全局的关联聚合，需要保证相关联的数据在分布在一个节点上
+    distributed_product_mode = 'local', prefer_localhost_replica = 0;
+```
+
+##### Broadcast Join
+```sql
+-- 优化方案2: 测试耗时 6s-12s
 select  main.accounting_period,
         main.owner_id,
         sum(original_bill_amount) as original_bill_amount,
@@ -166,6 +217,9 @@ select  main.accounting_period,
 from    eps_data_bc.app_trade_bc_bill_charge_item_daily_rf as main
 -- 这里换成 global join 优先级更高，会覆盖 distributed_product_mode 参数配置
 join    (
+            
+            -- 保证数据唯一就行，可以是主键，或者联合唯一键，理论上涉及字段越少速度越快，
+            -- 因此可以用 siphash64(accounting_period, ...) as uid 优化(极少概率出现 Hash 碰撞)
             select  accounting_period,
                     owner_id,
                     ......
@@ -205,89 +259,35 @@ SETTINGS
         -- 这里可以开启 group_by_no_merge，bill_owner_id 分片键已经限制了节点聚合数据
         -- 但整体感觉没什么用... 开不开效果一样不知道是不是继承了子查询的配置
         distributed_group_by_no_merge = 1;
-        
- -- 优化方案2: 深分页场景性能不好，但浅分页很快, 2s 左右
-select  accounting_period,
-        owner_id,
-        sum(original_bill_amount) as original_bill_amount,
-        ......
-from    eps_data_bc.app_trade_bc_bill_charge_item_daily_rf as main
-join    (
-            select  accounting_period,
-                owner_id,
-                ......
-            from    eps_data_bc.app_trade_bc_bill_charge_item_daily_rf
-            where   biz_period >= '2008-01-01 00:00:00'
-            ......
-            group by
-                accounting_period,
-                owner_id
-                ......
-            having  sum(original_bill_amount) != 0
-            order by
-                accounting_period desc,
-                ......           
-            -- 取第 10-20 条时，也把每个节点的 0-20 条全部查出来排序，保证数据全局有序
-            -- Offset 永远是 0，类似 ES 的分页查询，但会随着分页的增加，这里需要查询排序的数据会越来越大
-            limit   0, 20 
-        ) as dim
-on      main.accounting_period = dim.accounting_period
-and     main.owner_id = dim.owner_id
-and     ......
-group by
-        accounting_period,
-        owner_id
-        ......
-order by
-        accounting_period desc,
-        ......
-limit   10, 10 SETTINGS
-        -- 1. Only applied for IN and JOIN subqueries.
-        -- 2. Only if the FROM section uses a distributed table containing more than one shard.
-        -- Join 只做本地节点的关联聚合，不做全局的关联聚合，需要保证相关联的数据在分布在一个节点上
-        distributed_product_mode = 'local', prefer_localhost_replica = 0;
 ```
 
-### IN 子查询优化
+#### IN 子查询优化
+> 优化思路：减少数据扫描数量，降低磁盘 IO 开销
+
 ```sql
 -- 用 IN 子查询（排序键）加速查询
 select  id,
         toYYYYMM(accounting_period) as accounting_period_alias,
         bill_id,
         payer_id,
-        seller_id,
-        owner_id,
-        account_id,
-        business_mode,
-        expense_begin_time,
-        expense_end_time,
-        product,
-        billing_mode,
-        bill_category,
-        instance_no,
-        instance_name,
-        bill_type,
-        sub_bill_type,
-        bill_category_parent,
-        settlement_type,
-        data_display_rule
-from    data_bc_lf.app_trade_bc_bill_rf
+    ...
+    from    data_bc_lf.app_trade_bc_bill_rf
 where
-        accounting_period = '2023-05-01'
-and     bill_owner_id = 2100215562
-and     uid in (
-            select  uid -- 其中 uid 为排序键
-            from    data_bc_lf.app_trade_bc_bill_rf
-            where   accounting_period = '2023-05-01'
-            and     bill_owner_id = 2100215562
-            and     bill_type = 'normal'
-            and     subject_no in ('3423', '2065')
-            and     data_display_rule in ('2', '3')
-            order by
-            expense_begin_time desc,
-            uid
-            limit   1000, 10
-        ) SETTINGS enable_optimize_predicate_expression = 0, max_threads = 80, distributed_group_by_no_merge = 1, prefer_localhost_replica = 0
-        if bill_owner_id is not empty
-        , distributed_product_mode = 'local'
+    accounting_period = '2023-05-01'
+  and     bill_owner_id = 2100215562
+  and     uid in (
+    select  uid -- 其中 uid 为排序键（如果是物理排序键，in 查询还会有额外的加速效果）
+    from    data_bc_lf.app_trade_bc_bill_rf
+    where   accounting_period = '2023-05-01'
+  and     bill_owner_id = 2100215562
+  and     bill_type = 'normal'
+  and     subject_no in ('3423', '2065')
+  and     data_display_rule in ('2', '3')
+    order by
+    expense_begin_time desc,
+    uid
+    limit   1000, 10
+    ) SETTINGS enable_optimize_predicate_expression = 0, max_threads = 80, distributed_group_by_no_merge = 1, prefer_localhost_replica = 0
+    if bill_owner_id is not empty
+    , distributed_product_mode = 'local'
 ```
