@@ -6,6 +6,7 @@ tag:  ClickHouse
 
 
 ## Settings Introduction
+* [Settings Overview](https://clickhouse.com/docs/en/operations/settings)
 * [Command-line Client](https://clickhouse.tech/docs/en/interfaces/cli/)
 
 ```shell
