@@ -15,6 +15,8 @@ MD5 是一种经典的信息摘要算法，由 32 个 十六进制(2^4)的数字
 
 ![有帮助的截图]({{ site.url }}/assets/hash/Hash_Collision.jpg)
 
+以第一行为例子，16bit 一共有 65536 个桶，要想平均发生碰撞的概率为 0.1%，只需要执行 11 次哈希，<2 说明无法达到这么低的概率 
+
 ### 延伸阅读
 * [哈希碰撞与生日攻击](http://www.ruanyifeng.com/blog/2018/09/hash-collision-and-birthday-attack.html)
 * [生日攻击是什么，有什么用？](https://www.zhihu.com/question/54307104/answer/141282747)
