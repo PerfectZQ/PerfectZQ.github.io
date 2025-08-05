@@ -291,3 +291,189 @@ where
     if bill_owner_id is not empty
     , distributed_product_mode = 'local'
 ```
+
+##### arrayJoin
+一张表可以通过这种方式做到多种不同分析维度的动态聚合，而不用担心数据异常膨胀问题，每次只使用一组维度分析时动态膨胀即可
+```
+-- 如果 arrayJoin 的是不同字段，那么多次 arrayJoin 最会导致笛卡尔积，
+-- 如果 arrayJoin 的内容完全相同，只会执行一次，不会产生笛卡尔积
+-- 
+-- 例如下面的 SQL 只会返回两条数据
+-- SELECT 
+--   categories,
+--   arrayJoin(categories_1) AS category_1,
+--   arrayJoin(categories_1) AS category_2
+--   ...
+--
+-- 下面的会产生 2*2=4 条数据，虽然用的是同一个字段，但是实际语句并不相同
+-- SELECT  
+--   categories,
+--   arrayJoin(if(empty(categories_1), [''], categories_1)) AS category_1,
+--   arrayJoin(if(empty(categories_1), ['{}'], categories_1)) AS category_2
+--
+-- 下面的 SQL 会返回 2*2*2=8 条数据
+SELECT  categories,
+        arrayJoin(categories_1) AS category_1,
+        arrayJoin(categories_2) AS category_2,
+        arrayJoin(categories_3) AS category_3
+FROM    (
+            SELECT  categories,
+                    arrayMap(
+                        json -> JSONExtractString(json, 'label'),
+                        categories
+                    ) AS categories_1,
+                    arrayMap(
+                        json -> JSONExtractString(json, 'children', 'label'),
+                        categories
+                    ) AS categories_2,
+                    arrayMap(
+                        json -> JSONExtractString(json, 'children', 'children', 'label'),
+                        categories
+                    ) AS categories_3
+            FROM    (
+                        SELECT  JSONExtractArrayRaw(
+                                    JSONExtractRaw(
+                                        '{
+    "业务模块": {
+        "field_key": "field_a03070",
+        "field_value": [
+            {
+                "label": "平台基础",
+                "value": "cjxocs11a",
+                "children": {
+                    "label": "基础设施",
+                    "value": "cjxocs11a",
+                    "children": {
+                        "label": "IAM",
+                        "value": "cjxocs11a"
+                    }
+                }
+            },
+            {
+                "label": "账务财资",
+                "value": "cjxocs11a",
+                "children": {
+                    "label": "数据平台",
+                    "value": "cjxocs11a",
+                    "children": {
+                        "label": "数据工程",
+                        "value": "cjxocs11a"
+                    }
+                }
+            }
+        ],
+        "target_state": null,
+        "field_type_key": "tree_multi_select",
+        "field_alias": ""
+    }
+}',
+                                        '业务模块'
+                                    ),
+                                    'field_value'
+                                ) AS categories
+                    )
+        )
+```
+
+实际效果，只返回两条数据
+```
+SELECT  JSONExtractRaw(
+            arrayJoin(
+                JSONExtractArrayRaw(
+                    JSONExtractRaw(origin_business, '业务模块'),
+                    'field_value'
+                )
+            ),
+            'label'
+        ) AS category_1,
+        JSONExtractRaw(
+            arrayJoin(
+                JSONExtractArrayRaw(
+                    JSONExtractRaw(origin_business, '业务模块'),
+                    'field_value'
+                )
+            ),
+            'children',
+            'label'
+        ) AS category_2,
+        JSONExtractRaw(
+            arrayJoin(
+                JSONExtractArrayRaw(
+                    JSONExtractRaw(origin_business, '业务模块'),
+                    'field_value'
+                )
+            ),
+            'children',
+            'children',
+            'label'
+        ) AS category_3
+FROM    (
+            SELECT  '{
+    "业务模块": {
+        "field_key": "field_a03070",
+        "field_value": [
+            {
+                "label": "平台基础",
+                "value": "cjxocs11a",
+                "children": {
+                    "label": "基础设施",
+                    "value": "cjxocs11a",
+                    "children": {
+                        "label": "IAM",
+                        "value": "cjxocs11a"
+                    }
+                }
+            },
+            {
+                "label": "账务财资",
+                "value": "cjxocs11a",
+                "children": {
+                    "label": "数据平台",
+                    "value": "cjxocs11a",
+                    "children": {
+                        "label": "数据工程",
+                        "value": "cjxocs11a"
+                    }
+                }
+            }
+        ],
+        "target_state": null,
+        "field_type_key": "tree_multi_select",
+        "field_alias": ""
+    }
+}' AS origin_business
+        )
+GROUP BY
+        JSONExtractRaw(
+            arrayJoin(
+                JSONExtractArrayRaw(
+                    JSONExtractRaw(origin_business, '业务模块'),
+                    'field_value'
+                )
+            ),
+            'label'
+        ) -- category_1 
+        ,
+        JSONExtractRaw(
+            arrayJoin(
+                JSONExtractArrayRaw(
+                    JSONExtractRaw(origin_business, '业务模块'),
+                    'field_value'
+                )
+            ),
+            'children',
+            'label'
+        ) -- category_2
+        ,
+        JSONExtractRaw(
+            arrayJoin(
+                JSONExtractArrayRaw(
+                    JSONExtractRaw(origin_business, '业务模块'),
+                    'field_value'
+                )
+            ),
+            'children',
+            'children',
+            'label'
+        ) -- category_3
+```
